@@ -25,7 +25,10 @@ public class Movement : MonoBehaviour
         vertical = Input.GetAxisRaw("Vertical"); // -1 is down
 
         if (vertical != 0)
+        {
             horizontal = 0;
+        }
+
         Move();
 
     }
