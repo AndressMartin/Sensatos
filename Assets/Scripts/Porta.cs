@@ -6,9 +6,13 @@ public class Porta : MonoBehaviour
 {
     public Item obj;
     private GameObject player;
+    private SpriteRenderer spriteRenderer;
+    bool aberto;
+    public bool trancado;
     // Start is called before the first frame update
     void Start()
     {
+        spriteRenderer = GetComponent<SpriteRenderer>();
         player = FindObjectOfType<Movement>().gameObject;
     }
 
@@ -21,14 +25,49 @@ public class Porta : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player")
         {
-            if (player.GetComponent<Inventario>().itens.Contains(obj))
+            Debug.Log("player encostando na porta");
+            if (player.GetComponent<State>().interagindo)
             {
-                if (player.GetComponent<State>().interagindo)
+                if (player.GetComponent<Inventario>().itens.Contains(obj) && trancado)
                 {
-                    Debug.Log("abriu porta");
-                    gameObject.GetComponent<BoxCollider2D>().enabled = false;
+                    Debug.Log("destrancou porta");
+                    trancado = false;
+                    spriteRenderer.color = (Color.blue);
+                }
+
+                else if(!trancado)
+                {
+                    Debug.Log("abriur porta");
+                    aberto = true;
+                    spriteRenderer.color = (Color.red);
+                    Door(aberto);
+                }
+            }
+
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Player")
+        {
+            if (!trancado && aberto)
+            {
+                if (player.GetComponent<State>().interagindo == false)
+                {
+                    Debug.Log("fechou porta");
+                    aberto = false;
+                    spriteRenderer.color = (Color.yellow);
+                    Door(aberto);
                 }
             }
         }
+    }
+
+ 
+
+    void Door(bool portaAberta)
+    {
+        gameObject.GetComponent<BoxCollider2D>().isTrigger = portaAberta;
     }
 }
