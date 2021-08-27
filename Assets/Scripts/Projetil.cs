@@ -1,0 +1,67 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Projetil : MonoBehaviour
+{
+    public EnemyState enemyState;
+    public Target alvo;
+    private Item item;
+    public Vector3 alvoDef;
+    private Transform player;
+
+    bool teste;
+    bool disparou;
+    public float speed = 10.0f;
+    // Start is called before the first frame update
+    void Start()
+    {
+        alvo = FindObjectOfType<Target>();
+        player = FindObjectOfType<Movement>().GetComponent<Transform>();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        if(disparou)
+        {
+            if (!teste)
+            {
+                alvoDef = alvo.transform.position;
+                teste = true;
+            }
+            float step = speed * Time.deltaTime;        
+            //transform.position = Vector3.MoveTowards(transform.position,alvoDef,step);
+            transform.position = Vector3.MoveTowards(player.position,alvoDef,step); //correto porem esta colidindo com a propria hitbox do player, solução fazer um hitbox externa do player de onde os projeteis irão sair
+        }
+    }
+
+    public void Shooted(Item _item)
+    {
+        disparou = true;
+        item = _item;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Enemy")
+        {
+            HitTarget(collision);
+        }
+        //else if 
+           // Destroy();
+
+    }
+ 
+
+    void HitTarget(Collider2D collision)
+    {
+        enemyState = collision.gameObject.GetComponent<EnemyState>();
+        enemyState.TomarDano(item.dano);
+        Destroy();
+    }
+    void Destroy()
+    {
+        Destroy(gameObject);
+    }
+}

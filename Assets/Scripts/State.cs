@@ -4,15 +4,21 @@ using UnityEngine;
 
 public class State : MonoBehaviour
 {
-    public int movimento=2;
+   
+    public bool estadoCombate = false;
     public bool interagindo;
+    public int movimento = 2;
     public int colldown;
     public int colldowMax;
     private Movement movement;
+    private Inventario inventario;
+    private SpriteRenderer spriteRenderer;
 
     // Start is called before the first frame update
     void Start()
     {
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        inventario = GetComponent<Inventario>();
         movement = GetComponent<Movement>();
         UpdateRunSpeed();
     }
@@ -32,6 +38,16 @@ public class State : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.E) && colldown <= 0)
         {
             colldown = colldowMax;
+        }
+
+        if (Input.GetKeyDown(KeyCode.Space) && estadoCombate)
+        {
+            inventario.UsarItemAtual();
+        }
+
+        if (Input.GetKeyDown(KeyCode.G))
+        {
+            EstadoCombateOnOff();
         }
 
         if (Input.GetKeyDown(KeyCode.LeftControl) && movimento != 1)//se estiver correndo ou em pé, não agachado
@@ -56,6 +72,16 @@ public class State : MonoBehaviour
         }
 
     }
+    void EstadoCombateOnOff()
+    {
+        estadoCombate = !estadoCombate;
+        if(estadoCombate)
+            spriteRenderer.color = (Color.red);
+        else
+            spriteRenderer.color = (Color.white);
+
+    }
+
 
 
 
