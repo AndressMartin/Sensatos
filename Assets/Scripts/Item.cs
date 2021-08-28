@@ -16,11 +16,11 @@ public class Item : MonoBehaviour
         
     }
 
-    public void Shoot()
+    public void Shoot(GameObject quemChamou)//onnde cria o projeti
     {
         Instantiate(bullet, movement);
-
         projetil = FindObjectOfType<Projetil>();
+        projetil.objetoQueChamou = quemChamou;
         projetil.Shooted(this);
     }
 }

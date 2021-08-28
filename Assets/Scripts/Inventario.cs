@@ -33,6 +33,6 @@ public class Inventario : MonoBehaviour
 
     public void UsarItemAtual()
     {
-        itemAtual.Shoot();
+        itemAtual.Shoot(gameObject);
     }
 }

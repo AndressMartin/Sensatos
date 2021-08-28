@@ -4,18 +4,21 @@ using UnityEngine;
 
 public class Projetil : MonoBehaviour
 {
+    public GameObject objetoQueChamou;
     public EnemyState enemyState;
     public Target alvo;
     private Item item;
     public Vector3 alvoDef;
     private Transform player;
+    public PontaArma pontaArma;
 
     bool teste;
     bool disparou;
-    public float speed = 10.0f;
+    public float speed = 1.0f;
     // Start is called before the first frame update
     void Start()
     {
+        pontaArma = transform.parent.GetComponentInChildren<PontaArma>();
         alvo = FindObjectOfType<Target>();
         player = FindObjectOfType<Movement>().GetComponent<Transform>();
     }
@@ -31,8 +34,8 @@ public class Projetil : MonoBehaviour
                 teste = true;
             }
             float step = speed * Time.deltaTime;        
-            //transform.position = Vector3.MoveTowards(transform.position,alvoDef,step);
-            transform.position = Vector3.MoveTowards(player.position,alvoDef,step); //correto porem esta colidindo com a propria hitbox do player, solução fazer um hitbox externa do player de onde os projeteis irão sair
+            //transform.position = Vector3.MoveTowards(pontaArma.transform.position,alvoDef,step);
+            transform.position = Vector3.MoveTowards(alvo.transform.position,alvoDef,step); //correto porem esta colidindo com a propria hitbox do player, solução fazer um hitbox externa do player de onde os projeteis irão sair
         }
     }
 
@@ -44,12 +47,17 @@ public class Projetil : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+
         if (collision.gameObject.tag == "Enemy")
         {
             HitTarget(collision);
         }
-        //else if 
-           // Destroy();
+        else if (collision.gameObject.tag != objetoQueChamou.tag)
+        {
+            Destroy();
+        }
+        else
+            Debug.Log("se atingiu-se");
 
     }
  
@@ -62,6 +70,6 @@ public class Projetil : MonoBehaviour
     }
     void Destroy()
     {
-        Destroy(gameObject);
+        //Destroy(gameObject);
     }
 }

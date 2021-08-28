@@ -8,9 +8,13 @@ public class Movement : MonoBehaviour
     float horizontal;
     float vertical;
     public float runSpeed;
+    public enum Direction { Esquerda,Cima, Direita, Baixo };
+    public Direction direction;
+
     // Start is called before the first frame update
     void Start()
     {
+        
         rb = GetComponent<Rigidbody2D>();
     }
 
@@ -20,6 +24,27 @@ public class Movement : MonoBehaviour
 
         horizontal = Input.GetAxisRaw("Horizontal"); // -1 is left
         vertical = Input.GetAxisRaw("Vertical"); // -1 is down
+
+        switch (horizontal)
+        {
+            case -1 :
+                direction = Direction.Esquerda;
+                break;
+            case 1  :
+                direction = Direction.Direita;
+                break;
+        }
+
+        switch (vertical)
+        {
+            case -1:
+                direction = Direction.Baixo;
+                break;
+            case 1:
+                direction = Direction.Cima;
+                break;
+        }
+
         Move();
 
     }
