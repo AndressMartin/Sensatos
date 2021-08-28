@@ -9,8 +9,9 @@ public class Projetil : MonoBehaviour
     public Target alvo;
     private Item item;
     public Vector3 alvoDef;
+    private Transform pontaArmaDef;
     private Transform player;
-    public PontaArma pontaArma;
+    private PontaArma pontaArma;
 
     bool teste;
     bool disparou;
@@ -26,16 +27,19 @@ public class Projetil : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(disparou)
+        if(disparou)    
         {
             if (!teste)
             {
+                pontaArmaDef = pontaArma.transform;
+                transform.position = pontaArmaDef.position;
                 alvoDef = alvo.transform.position;
                 teste = true;
             }
-            float step = speed * Time.deltaTime;        
-            //transform.position = Vector3.MoveTowards(pontaArma.transform.position,alvoDef,step);
-            transform.position = Vector3.MoveTowards(alvo.transform.position,alvoDef,step); //correto porem esta colidindo com a propria hitbox do player, solução fazer um hitbox externa do player de onde os projeteis irão sair
+            float step = speed * Time.deltaTime;
+            transform.position = Vector3.MoveTowards(transform.position,alvoDef,step);
+            
+
         }
     }
 
@@ -70,6 +74,6 @@ public class Projetil : MonoBehaviour
     }
     void Destroy()
     {
-        //Destroy(gameObject);
+        Destroy(gameObject);
     }
 }
