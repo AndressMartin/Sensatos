@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class State : MonoBehaviour
 {
-   
+
+    public bool strafing=false;
     public bool estadoCombate = false;
     public bool interagindo;
     public int movimento = 2;
@@ -35,34 +36,46 @@ public class State : MonoBehaviour
         else
             interagindo = false;
 
-        if(Input.GetKeyDown(KeyCode.E) && colldown <= 0)
+        if(Input.GetKeyDown(KeyCode.E) && colldown <= 0)//Botão de interação
         {
             colldown = colldowMax;
         }
 
-        if (Input.GetKeyDown(KeyCode.Space) && estadoCombate)
+        if (Input.GetKeyDown(KeyCode.Space) && estadoCombate)//Botão de disparo
         {
             inventario.UsarItemAtual();
         }
 
-        if (Input.GetKeyDown(KeyCode.G))
+        if (Input.GetKeyDown(KeyCode.G))//Botão para entar no modo combate (vermelho == combate)
         {
             EstadoCombateOnOff();
         }
 
-        if (Input.GetKeyDown(KeyCode.LeftControl) && movimento != 1)//se estiver correndo ou em pé, não agachado
+        if (Input.GetKeyDown(KeyCode.B))//Botão para ativar o strafing
+        {
+            strafing = !strafing;
+            if(strafing)
+            {
+                UpdateStrafeSpeed(1);
+            }
+            else
+                UpdateStrafeSpeed(-1);
+
+        }
+
+        if (Input.GetKeyDown(KeyCode.LeftControl) && movimento != 1)//Botão para agachar //se estiver correndo ou em pé, não agachado
         {
             movimento = 1;//agachado
             UpdateRunSpeed();
         }
 
-        else if (Input.GetKeyDown(KeyCode.LeftControl) && movimento == 1)//se estiver agachado
+        else if (Input.GetKeyDown(KeyCode.LeftControl) && movimento == 1)//Botão para ficar de pé //se estiver agachado
         {
             movimento = 2;//em pé
             UpdateRunSpeed();
         }
 
-        if(Input.GetKeyDown(KeyCode.LeftShift))
+        if(Input.GetKeyDown(KeyCode.LeftShift)) //Botão para correr
         {
             if (movimento == 3)
                 movimento = 2;
@@ -82,8 +95,10 @@ public class State : MonoBehaviour
 
     }
 
-
-
+    void UpdateStrafeSpeed(int _velocidade)
+    {
+        movement.UpdateStrafeSPeed(_velocidade);
+    }
 
     public void UpdateRunSpeed()
     {

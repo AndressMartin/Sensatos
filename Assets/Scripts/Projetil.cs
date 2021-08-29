@@ -61,7 +61,7 @@ public class Projetil : MonoBehaviour
             Destroy();
         }
         else
-            Debug.Log("se atingiu-se");
+            Destroy();
 
     }
  

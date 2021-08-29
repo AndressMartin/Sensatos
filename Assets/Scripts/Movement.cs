@@ -4,17 +4,19 @@ using UnityEngine;
 
 public class Movement : MonoBehaviour
 {
+    private State state;
     private Rigidbody2D rb;
     float horizontal;
     float vertical;
     public float runSpeed;
+    public float strafeSpeed;
     public enum Direction { Esquerda,Cima, Direita, Baixo };
     public Direction direction;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        state = GetComponent<State>();
         rb = GetComponent<Rigidbody2D>();
     }
 
@@ -25,32 +27,37 @@ public class Movement : MonoBehaviour
         horizontal = Input.GetAxisRaw("Horizontal"); // -1 is left
         vertical = Input.GetAxisRaw("Vertical"); // -1 is down
 
-        switch (horizontal)
+        if (!state.strafing)
         {
-            case -1 :
-                direction = Direction.Esquerda;
-                break;
-            case 1  :
-                direction = Direction.Direita;
-                break;
-        }
+            switch (horizontal)
+            {
+                case -1:
+                    direction = Direction.Esquerda;
+                    break;
+                case 1:
+                    direction = Direction.Direita;
+                    break;
+            }
 
-        switch (vertical)
-        {
-            case -1:
-                direction = Direction.Baixo;
-                break;
-            case 1:
-                direction = Direction.Cima;
-                break;
+            switch (vertical)
+            {
+                case -1:
+                    direction = Direction.Baixo;
+                    break;
+                case 1:
+                    direction = Direction.Cima;
+                    break;
+            }
+
+            Move();
         }
 
         Move();
 
     }
-    void Move()
+    void Move( )
     {
-        rb.velocity = new Vector2(horizontal, vertical).normalized * runSpeed;
+        rb.velocity = new Vector2(horizontal, vertical).normalized * (runSpeed - strafeSpeed);
     }
 
 
@@ -59,6 +66,11 @@ public class Movement : MonoBehaviour
    public void UpdateRunSpeed(int velocidade)
     {
         runSpeed = velocidade * 2;
+    }
+
+    public void UpdateStrafeSPeed(int velocidade)
+    {
+        strafeSpeed = velocidade;
     }
 }
 
