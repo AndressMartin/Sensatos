@@ -14,10 +14,12 @@ public class State : MonoBehaviour
     private Movement movement;
     private Inventario inventario;
     private SpriteRenderer spriteRenderer;
+    private Target target;
 
     // Start is called before the first frame update
     void Start()
     {
+        target = FindObjectOfType<Target>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         inventario = GetComponent<Inventario>();
         movement = GetComponent<Movement>();
@@ -36,7 +38,12 @@ public class State : MonoBehaviour
         else
             interagindo = false;
 
-        if(Input.GetKeyDown(KeyCode.E) && colldown <= 0)//Botão de interação
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            target.ChangeTarget();
+        }
+
+        if (Input.GetKeyDown(KeyCode.E) && colldown <= 0)//Botão de interação
         {
             colldown = colldowMax;
         }

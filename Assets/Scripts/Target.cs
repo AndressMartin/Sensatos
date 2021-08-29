@@ -26,16 +26,16 @@ public class Target : MonoBehaviour
     void Update()
     {
         
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            if (cont >= objetos.Count)
-                cont = 0;
+       
+        
+    }
+    public void ChangeTarget()
+    {
+        if (cont >= objetos.Count)
+            cont = 0;
 
-            transform.position = objetos[cont].transform.position;
-            if (cont < objetos.Count)
-                cont++;
-
-             
-        }
+        transform.position = objetos[cont].transform.position;
+        if (cont < objetos.Count)
+            cont++;
     }
 }
