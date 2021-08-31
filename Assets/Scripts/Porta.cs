@@ -28,7 +28,7 @@ public class Porta : MonoBehaviour
             Debug.Log("player encostando na porta");
             if (player.GetComponent<State>().interagindo)
             {
-                if (player.GetComponent<Inventario>().itens.Contains(obj) && trancado)
+                if (player.GetComponent<InventarioMissao>().itens.Contains(obj) && trancado)
                 {
                     Debug.Log("destrancou porta");
                     trancado = false;
@@ -53,13 +53,13 @@ public class Porta : MonoBehaviour
         {
             if (!trancado && aberto)
             {
-                if (player.GetComponent<State>().interagindo == false)
-                {
+                //if (player.GetComponent<State>().interagindo == false)
+                //{
                     Debug.Log("fechou porta");
                     aberto = false;
                     spriteRenderer.color = (Color.yellow);
                     Door(aberto);
-                }
+                //}
             }
         }
     }

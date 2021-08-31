@@ -4,48 +4,95 @@ using UnityEngine;
 
 public class Projetil : MonoBehaviour
 {
-    public GameObject objetoQueChamou;
+    private Rigidbody2D rb;
     public EnemyState enemyState;
-    public Target alvo;
+    private ArmaDeFogo armaDeFogo;
     private Item item;
-    public Vector3 alvoDef;
     private Transform pontaArmaDef;
     private Transform player;
     private PontaArma pontaArma;
 
+    Vector3 pontaArmaAoDisparar;
+    float horizontal, vertical;
     bool teste;
     bool disparou;
-    public float speed = 1.0f;
+    public float velocidadeProjetil;
+    public float distanciaMaxProjetil;
+    public int dano;
+
+    public enum Direcao { Esquerda, Cima, Direita, Baixo };
+    public Direcao direcao;
     // Start is called before the first frame update
     void Start()
     {
+        rb = GetComponent<Rigidbody2D>();
         pontaArma = transform.parent.GetComponentInChildren<PontaArma>();
-        alvo = FindObjectOfType<Target>();
         player = FindObjectOfType<Movement>().GetComponent<Transform>();
+
+        pontaArmaDef = pontaArma.transform;
+        transform.position = pontaArmaDef.position;
+        pontaArmaAoDisparar = pontaArmaDef.position;
     }
 
     // Update is called once per frame
     void Update()
     {
+
         if(disparou)    
         {
             if (!teste)
             {
-                pontaArmaDef = pontaArma.transform;
-                transform.position = pontaArmaDef.position;
-                alvoDef = alvo.transform.position;
+                switch (direcao)
+                {
+                    case Direcao.Esquerda:
+                        horizontal = -1;
+                    break;
+                    case Direcao.Direita:
+                        horizontal = 1;
+                        break;
+                    case Direcao.Cima:
+
+                        vertical = 1;
+                        break;
+                    case Direcao.Baixo:
+                        vertical = -1;
+                        break;
+
+                }
                 teste = true;
             }
-            float step = speed * Time.deltaTime;
-            transform.position = Vector3.MoveTowards(transform.position,alvoDef,step);
-            
+            DistanciaProjetil();
 
+            rb.velocity = new Vector2(horizontal, vertical).normalized * velocidadeProjetil;
+
+        }
+    }
+
+    void DistanciaProjetil()
+    {
+        if(horizontal != 0)
+        {
+            float dif = Mathf.Abs(pontaArmaAoDisparar.x) - Mathf.Abs(transform.position.x);
+            if (Mathf.Abs(dif) >= Mathf.Abs(distanciaMaxProjetil))
+            {
+                DestroyGameObject();
+            }
+        }
+
+        else if(vertical !=0)
+        {
+            float dif = Mathf.Abs(pontaArmaAoDisparar.y) - Mathf.Abs(transform.position.y);
+            if (Mathf.Abs(dif) >= Mathf.Abs(distanciaMaxProjetil))
+            {
+                DestroyGameObject();
+            }
         }
     }
 
     public void Shooted(Item _item)
     {
         disparou = true;
+        armaDeFogo = (ArmaDeFogo)_item;
         item = _item;
     }
 
@@ -56,12 +103,8 @@ public class Projetil : MonoBehaviour
         {
             HitTarget(collision);
         }
-        else if (collision.gameObject.tag != objetoQueChamou.tag)
-        {
-            Destroy();
-        }
         else
-            Destroy();
+            DestroyGameObject();
 
     }
  
@@ -69,10 +112,10 @@ public class Projetil : MonoBehaviour
     void HitTarget(Collider2D collision)
     {
         enemyState = collision.gameObject.GetComponent<EnemyState>();
-        enemyState.TomarDano(item.dano);
-        Destroy();
+        enemyState.TomarDano(dano);
+        DestroyGameObject();
     }
-    void Destroy()
+    void DestroyGameObject()
     {
         Destroy(gameObject);
     }

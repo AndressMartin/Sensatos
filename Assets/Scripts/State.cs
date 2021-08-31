@@ -9,17 +9,15 @@ public class State : MonoBehaviour
     public bool estadoCombate = false;
     public bool interagindo;
     public int movimento = 2;
-    public int colldown;
-    public int colldowMax;
+    public float colldown;
+    public float colldowMax;
     private Movement movement;
     private Inventario inventario;
     private SpriteRenderer spriteRenderer;
-    private Target target;
 
     // Start is called before the first frame update
     void Start()
     {
-        target = FindObjectOfType<Target>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         inventario = GetComponent<Inventario>();
         movement = GetComponent<Movement>();
@@ -30,7 +28,7 @@ public class State : MonoBehaviour
     void Update()
     {   
         if(colldown>0)
-            colldown--;
+            colldown=colldown -1 * (Time.deltaTime);
 
         if (colldown > 0 && colldown < colldowMax)
             interagindo = true;
@@ -38,10 +36,7 @@ public class State : MonoBehaviour
         else
             interagindo = false;
 
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            target.ChangeTarget();
-        }
+       
 
         if (Input.GetKeyDown(KeyCode.E) && colldown <= 0)//Botão de interação
         {
@@ -61,12 +56,7 @@ public class State : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.B))//Botão para ativar o strafing
         {
             strafing = !strafing;
-            if(strafing)
-            {
-                UpdateStrafeSpeed(1);
-            }
-            else
-                UpdateStrafeSpeed(-1);
+       
 
         }
 
@@ -102,10 +92,7 @@ public class State : MonoBehaviour
 
     }
 
-    void UpdateStrafeSpeed(int _velocidade)
-    {
-        movement.UpdateStrafeSPeed(_velocidade);
-    }
+   
 
     public void UpdateRunSpeed()
     {

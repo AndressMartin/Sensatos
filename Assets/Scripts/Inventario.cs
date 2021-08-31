@@ -6,6 +6,7 @@ public class Inventario : MonoBehaviour
 {
     public List<Item> itens = new List<Item>();
     public Item itemAtual;
+    private ArmaDeFogo arma;
     // Start is called before the first frame update
     void Start()
     {
@@ -23,6 +24,7 @@ public class Inventario : MonoBehaviour
     public void add(Item item)
     {
         itens.Add(item);
+        EquiparItem(item);
        
     }
 
@@ -33,6 +35,6 @@ public class Inventario : MonoBehaviour
 
     public void UsarItemAtual()
     {
-        itemAtual.Shoot(gameObject);
+            itemAtual.Usar();
     }
 }

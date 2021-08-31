@@ -37,6 +37,6 @@ public class EnemyState : MonoBehaviour
 
     void Destroy()
     {
-        //Destroy(gameObject);
+        Destroy(gameObject);
     }
 }

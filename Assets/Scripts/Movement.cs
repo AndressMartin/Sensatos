@@ -9,7 +9,6 @@ public class Movement : MonoBehaviour
     float horizontal;
     float vertical;
     public float runSpeed;
-    public float strafeSpeed;
     public enum Direction { Esquerda,Cima, Direita, Baixo };
     public Direction direction;
 
@@ -57,7 +56,7 @@ public class Movement : MonoBehaviour
     }
     void Move( )
     {
-        rb.velocity = new Vector2(horizontal, vertical).normalized * (runSpeed - strafeSpeed);
+        rb.velocity = new Vector2(horizontal, vertical).normalized * (runSpeed);
     }
 
 
@@ -68,10 +67,7 @@ public class Movement : MonoBehaviour
         runSpeed = velocidade * 2;
     }
 
-    public void UpdateStrafeSPeed(int velocidade)
-    {
-        strafeSpeed = velocidade;
-    }
+ 
 }
 
 

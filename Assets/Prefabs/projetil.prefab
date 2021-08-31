@@ -97,10 +97,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d03f175c6136e184b8fa927f465eb0a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  objetoQueChamou: {fileID: 0}
   enemyState: {fileID: 0}
-  alvo: {fileID: 0}
-  alvoDef: {x: 0, y: 0, z: 0}
-  speed: 10
+  velocidadeProjetil: 10
+  distanciaMaxProjetil: 5
+  direcao: 0
 --- !u!50 &8583994499093954914
 Rigidbody2D:
   serializedVersion: 4
