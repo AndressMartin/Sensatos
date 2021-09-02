@@ -12,13 +12,16 @@ public class ArmaDeFogo : Item
 
     public override void Usar(GameObject objQueChamou)
     {
-        pontaArma = objQueChamou.transform;
+        if (objQueChamou.GetComponent<State>().estadoCombate)
+        {
+            pontaArma = objQueChamou.transform;
 
-        Instantiate(bullet, pontaArma); //onnde cria o projetil
-        projetil = FindObjectOfType<Projetil>();
-        projetil.direcao = (Projetil.Direcao)pontaArma.GetComponentInChildren<PontaArma>().direction;
-        projetil.dano = dano;
-        projetil.donoDoProjeto = objQueChamou;
-        projetil.Shooted(this);
+            Instantiate(bullet, pontaArma); //onnde cria o projetil
+            projetil = FindObjectOfType<Projetil>();
+            projetil.direcao = (Projetil.Direcao)pontaArma.GetComponentInChildren<PontaArma>().direction;
+            projetil.dano = dano;
+            projetil.donoDoProjeto = objQueChamou;
+            projetil.Shooted(this);
+        }
     }
 }

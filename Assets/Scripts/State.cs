@@ -14,6 +14,7 @@ public class State : MonoBehaviour
     private Movement movement;
     private Inventario inventario;
     private SpriteRenderer spriteRenderer;
+    public ParedeModel objetoQualEstaColidindo;
 
     // Start is called before the first frame update
     void Start()
@@ -43,7 +44,7 @@ public class State : MonoBehaviour
             colldown = colldowMax;
         }
 
-        if (Input.GetKeyDown(KeyCode.Space) && estadoCombate)//Botão de disparo
+        if (Input.GetKeyDown(KeyCode.Space))//Botão de disparo
         {
             inventario.UsarItemAtual();
         }

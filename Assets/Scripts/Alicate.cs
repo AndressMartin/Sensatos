@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Alicate : Ferramenta
 {
+    private State state;
+    [SerializeField] private int dano;
     // Start is called before the first frame update
     void Start()
     {
@@ -18,6 +20,14 @@ public class Alicate : Ferramenta
 
     public override void Usar(GameObject objQueChamou)
     {
-        Debug.Log("cortando");
+        state = objQueChamou.GetComponent<State>();
+
+        if (state.objetoQualEstaColidindo is Cerca)
+        {
+            state.objetoQualEstaColidindo.LevarDano(dano);
+            
+        } 
     }
+
+   
 }
