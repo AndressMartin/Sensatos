@@ -5,16 +5,15 @@ using UnityEngine;
 public class Projetil : MonoBehaviour
 {
     private Rigidbody2D rb;
-    public EnemyState enemyState;
-    private ArmaDeFogo armaDeFogo;
     private Item item;
-    private Transform pontaArmaDef;
-    private Transform player;
+    public EnemyState enemyState;
     private PontaArma pontaArma;
-
+    public GameObject donoDoProjeto;
+    private GameObject alvo;
     Vector3 pontaArmaAoDisparar;
+
     float horizontal, vertical;
-    bool teste;
+    bool saberDirecaoDisparo;
     bool disparou;
     public float velocidadeProjetil;
     public float distanciaMaxProjetil;
@@ -27,11 +26,8 @@ public class Projetil : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         pontaArma = transform.parent.GetComponentInChildren<PontaArma>();
-        player = FindObjectOfType<Movement>().GetComponent<Transform>();
-
-        pontaArmaDef = pontaArma.transform;
-        transform.position = pontaArmaDef.position;
-        pontaArmaAoDisparar = pontaArmaDef.position;
+        transform.position = pontaArma.transform.position;
+        pontaArmaAoDisparar = pontaArma.transform.position;
     }
 
     // Update is called once per frame
@@ -40,7 +36,7 @@ public class Projetil : MonoBehaviour
 
         if(disparou)    
         {
-            if (!teste)
+            if (!saberDirecaoDisparo)
             {
                 switch (direcao)
                 {
@@ -59,7 +55,7 @@ public class Projetil : MonoBehaviour
                         break;
 
                 }
-                teste = true;
+                saberDirecaoDisparo = true;
             }
             DistanciaProjetil();
 
@@ -92,14 +88,14 @@ public class Projetil : MonoBehaviour
     public void Shooted(Item _item)
     {
         disparou = true;
-        armaDeFogo = (ArmaDeFogo)_item;
         item = _item;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
 
-        if (collision.gameObject.tag == "Enemy")
+
+        if (collision.gameObject.tag != "item" && collision.gameObject.tag != "itemChave")
         {
             HitTarget(collision);
         }
@@ -109,11 +105,15 @@ public class Projetil : MonoBehaviour
     }
  
 
-    void HitTarget(Collider2D collision)
+    void HitTarget(Collider2D _collision)
     {
-        enemyState = collision.gameObject.GetComponent<EnemyState>();
-        enemyState.TomarDano(dano);
+        alvo = _collision.gameObject;
+        if (alvo.tag == "Player" || alvo.tag == "Enemy")
+        {
+            alvo.GetComponent<EntityModel>().TomarDano(dano);
+        }
         DestroyGameObject();
+
     }
     void DestroyGameObject()
     {

@@ -8,30 +8,17 @@ public class ArmaDeFogo : Item
     public override string nome { get; protected set; }
     public int dano;
     private Projetil projetil;
-    private Transform movement;
     private Transform pontaArma;
 
-    void Start()
-    {
-
-        movement = FindObjectOfType<Movement>().transform;
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    public override void Usar(GameObject objQueChamou)//onnde cria o projeti
+    public override void Usar(GameObject objQueChamou)
     {
         pontaArma = objQueChamou.transform;
 
-        Instantiate(bullet, movement);
+        Instantiate(bullet, pontaArma); //onnde cria o projetil
         projetil = FindObjectOfType<Projetil>();
         projetil.direcao = (Projetil.Direcao)pontaArma.GetComponentInChildren<PontaArma>().direction;
         projetil.dano = dano;
+        projetil.donoDoProjeto = objQueChamou;
         projetil.Shooted(this);
     }
 }

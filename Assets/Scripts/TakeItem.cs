@@ -6,13 +6,11 @@ public class TakeItem : MonoBehaviour
 {
     private Inventario inventario;
     private InventarioMissao inventarioMissao;
-    private Rigidbody2D rb;
     private Item obj;
     // Start is called before the first frame update
     void Start()
     {
         obj = GetComponent<Item>();
-        rb = GetComponent<Rigidbody2D>();
         inventario = FindObjectOfType<Player>().GetComponent<Inventario>();
         inventarioMissao = FindObjectOfType<Player>().GetComponent<InventarioMissao>();
 
@@ -27,23 +25,25 @@ public class TakeItem : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player")
         {
-            if (gameObject.tag == "Item")
+            if (inventario.gameObject.GetComponent<State>().interagindo)
             {
-                if (inventario.gameObject.GetComponent<State>().interagindo)
-                {
-                    inventario.add(obj);
-                    gameObject.SetActive(false);
-                }
+                AddToInventario();
             }
-            else if(gameObject.tag =="ItemChave")
-            {
-                if (inventario.gameObject.GetComponent<State>().interagindo)
-                {
-                    inventarioMissao.add(obj);
-                    gameObject.SetActive(false);
-                }
-            }
-
         }
+    }
+
+    void AddToInventario()
+    {
+        if (gameObject.tag == "Item")
+        {
+            inventario.add(obj);
+            
+        }
+        else if (gameObject.tag == "ItemChave")
+        {   
+            inventarioMissao.add(obj);
+             
+        }
+        gameObject.SetActive(false);
     }
 }

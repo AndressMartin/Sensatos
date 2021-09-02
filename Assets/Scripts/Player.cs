@@ -24,9 +24,10 @@ public class Player : EntityModel
         Debug.Log(vida);
     }
 
-    public void tomarDano(int _dano)
+    public override void TomarDano(int _dano)
     {
-        vida = -_dano;
+        Debug.Log("tomei tiro, player");
+
     }
 
 }

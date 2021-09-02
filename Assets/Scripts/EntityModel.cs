@@ -30,4 +30,15 @@ public class EntityModel : MonoBehaviour
                 return transform.position;
         }
     }
+
+    public virtual void TomarDano(int _dano)
+    { }
+
+    public virtual IEnumerator Piscar()
+    { yield return new WaitForSeconds(0.1f); }
+
+    private void Destroy()
+    {
+        Destroy(gameObject);
+    }
 }
