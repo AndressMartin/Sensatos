@@ -9,9 +9,11 @@ public class ArmaDeFogo : Item
     public int dano;
     private Projetil projetil;
     private Transform movement;
+    private Transform pontaArma;
 
     void Start()
     {
+
         movement = FindObjectOfType<Movement>().transform;
 
     }
@@ -22,11 +24,13 @@ public class ArmaDeFogo : Item
         
     }
 
-    public override void Usar()//onnde cria o projeti
+    public override void Usar(GameObject objQueChamou)//onnde cria o projeti
     {
+        pontaArma = objQueChamou.transform;
+
         Instantiate(bullet, movement);
         projetil = FindObjectOfType<Projetil>();
-        projetil.direcao = (Projetil.Direcao)movement.gameObject.GetComponent<Movement>().direction;
+        projetil.direcao = (Projetil.Direcao)pontaArma.GetComponentInChildren<PontaArma>().direction;
         projetil.dano = dano;
         projetil.Shooted(this);
     }

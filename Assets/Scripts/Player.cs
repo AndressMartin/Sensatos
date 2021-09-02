@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class Player : EntityModel
 {
-    public override int vida { get; protected set; }
-    
+    [SerializeField]public override int vida { get; protected set; }
+    public int Pv;
     // Start is called before the first frame update
     void Start()
     {
-        
+        vida = Pv;
     }
 
     // Update is called once per frame
@@ -17,4 +17,16 @@ public class Player : EntityModel
     {
         
     }
+    public void curar(int _cura)
+    {
+        Debug.Log(vida);
+        vida = +_cura;
+        Debug.Log(vida);
+    }
+
+    public void tomarDano(int _dano)
+    {
+        vida = -_dano;
+    }
+
 }

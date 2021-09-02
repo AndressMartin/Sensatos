@@ -2,37 +2,38 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PontaArma : MonoBehaviour
+public class PontaArma : EntityModel
 {
-    private Movement movement;
-    float distanciaObjeto = 0.5F;
+    public BoxCollider2D objPai;
+    private GameObject obj;
     // Start is called before the first frame update
     void Start()
     {
-        movement = GetComponentInParent<Movement>();
+        objPai = GetComponentInParent<BoxCollider2D>();
+        obj = objPai.gameObject;
     }
 
     // Update is called once per frame
     void Update()
     {
-
-        switch (movement.direction)//verifica a direção que o player esta se movimentando, seta a posição do objeto para a posicao do player -/+ uma distancia pre configurada
+        transform.position = FrenteDoPersonagem(obj);
+    }
+    public void ChangeDirection(string lado)
+    {
+        switch (lado)
         {
-            case Movement.Direction.Esquerda:
-                transform.position = new Vector3(movement.transform.position.x - distanciaObjeto , movement.transform.position.y, 0);
+            case "Esquerda":
+                direction = Direction.Esquerda;
                 break;
-            case Movement.Direction.Direita:
-                transform.position = new Vector3(movement.transform.position.x + distanciaObjeto, movement.transform.position.y, 0);
+            case "Direita":
+                direction = Direction.Direita;
                 break;
-            case Movement.Direction.Cima:
-                transform.position = new Vector3(movement.transform.position.x , movement.transform.position.y + distanciaObjeto, 0);
+            case "Cima":
+                direction = Direction.Cima;
                 break;
-            case Movement.Direction.Baixo:
-                transform.position = new Vector3(movement.transform.position.x, movement.transform.position.y - distanciaObjeto, 0);
+            case "Baixo":
+                direction = Direction.Baixo;
                 break;
-
         }
-      
-
     }
 }

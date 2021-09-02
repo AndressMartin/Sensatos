@@ -57,7 +57,6 @@ public class State : MonoBehaviour
         {
             strafing = !strafing;
        
-
         }
 
         if (Input.GetKeyDown(KeyCode.LeftControl) && movimento != 1)//Botão para agachar //se estiver correndo ou em pé, não agachado
