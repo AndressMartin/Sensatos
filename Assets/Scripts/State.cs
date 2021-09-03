@@ -27,18 +27,43 @@ public class State : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {   
-        if(colldown>0)
-            colldown=colldown -1 * (Time.deltaTime);
+    {
+        Colldowns();
+        BotoesPressionados();
+        
+
+    }
+
+    
+
+    void EstadoCombateOnOff()
+    {
+        estadoCombate = !estadoCombate;
+        if(estadoCombate)
+            spriteRenderer.color = (Color.red);
+        else
+            spriteRenderer.color = (Color.white);
+
+    }
+    void Colldowns()
+    {
+        if (colldown > 0)
+            colldown = colldown - 1 * (Time.deltaTime);
 
         if (colldown > 0 && colldown < colldowMax)
             interagindo = true;
 
         else
             interagindo = false;
+    }
 
-       
+    public void UpdateRunSpeed()
+    {
+        movement.UpdateRunSpeed(movimento);
+    }
 
+    void BotoesPressionados()
+    {
         if (Input.GetKeyDown(KeyCode.E) && colldown <= 0)//Botão de interação
         {
             colldown = colldowMax;
@@ -57,7 +82,7 @@ public class State : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.B))//Botão para ativar o strafing
         {
             strafing = !strafing;
-       
+
         }
 
         if (Input.GetKeyDown(KeyCode.LeftControl) && movimento != 1)//Botão para agachar //se estiver correndo ou em pé, não agachado
@@ -72,7 +97,7 @@ public class State : MonoBehaviour
             UpdateRunSpeed();
         }
 
-        if(Input.GetKeyDown(KeyCode.LeftShift)) //Botão para correr
+        if (Input.GetKeyDown(KeyCode.LeftShift)) //Botão para correr
         {
             if (movimento == 3)
                 movimento = 2;
@@ -80,22 +105,5 @@ public class State : MonoBehaviour
                 movimento = 3;
             UpdateRunSpeed();
         }
-
-    }
-    void EstadoCombateOnOff()
-    {
-        estadoCombate = !estadoCombate;
-        if(estadoCombate)
-            spriteRenderer.color = (Color.red);
-        else
-            spriteRenderer.color = (Color.white);
-
-    }
-
-   
-
-    public void UpdateRunSpeed()
-    {
-        movement.UpdateRunSpeed(movimento);
     }
 }

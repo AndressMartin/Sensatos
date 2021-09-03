@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ArmaDeFogo : Item
 {
-    [SerializeField] private Transform bullet;
+    [SerializeField] private readonly Transform bullet;
     public override string nome { get; protected set; }
     public int dano;
     private Projetil projetil;
