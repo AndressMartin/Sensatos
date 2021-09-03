@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ArmaDeFogo : Item
 {
-    [SerializeField] private readonly Transform bullet;
+    [SerializeField] private  Transform bullet;
     public override string nome { get; protected set; }
     public int dano;
     private Projetil projetil;
@@ -20,7 +20,6 @@ public class ArmaDeFogo : Item
             projetil = FindObjectOfType<Projetil>();
             projetil.direcao = (Projetil.Direcao)pontaArma.GetComponentInChildren<PontaArma>().direction;
             projetil.dano = dano;
-            projetil.donoDoProjeto = objQueChamou;
             projetil.Shooted(this);
         }
     }

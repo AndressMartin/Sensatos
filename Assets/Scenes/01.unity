@@ -613,7 +613,7 @@ GameObject:
   - component: {fileID: 1484860438}
   m_Layer: 0
   m_Name: cerca1
-  m_TagString: Untagged
+  m_TagString: cerca
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1211,6 +1211,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1281963047238720330, guid: 993152c3fb1a02a43a65ff0ce924dd81, type: 3}
       propertyPath: m_Name
+      value: cerca
+      objectReference: {fileID: 0}
+    - target: {fileID: 1281963047238720330, guid: 993152c3fb1a02a43a65ff0ce924dd81, type: 3}
+      propertyPath: m_TagString
       value: cerca
       objectReference: {fileID: 0}
     m_RemovedComponents: []

@@ -16,14 +16,9 @@ public class Alicate : Ferramenta
     }
 
     // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     public override void Usar(GameObject objQueChamou)
     {
-        Debug.Log(quantidadeUsos);
         if(VerificarFerramenta())
         {
             state = objQueChamou.GetComponent<State>();

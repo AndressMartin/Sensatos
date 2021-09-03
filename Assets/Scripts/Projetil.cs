@@ -8,7 +8,6 @@ public class Projetil : MonoBehaviour
     private Item item;
     public EnemyState enemyState;
     private PontaArma pontaArma;
-    public GameObject donoDoProjeto;
     private GameObject alvo;
     Vector3 pontaArmaAoDisparar;
 
@@ -93,27 +92,22 @@ public class Projetil : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        alvo = collision.gameObject;
 
-
-        if (collision.gameObject.tag != "item" && collision.gameObject.tag != "itemChave")
+        if (alvo.tag == "Enemy" || alvo.tag == "Player")
         {
-            HitTarget(collision);
+            HitTarget();
         }
-        else
+        else if(alvo.tag =="porta" || alvo.tag =="cerca")
             DestroyGameObject();
 
     }
  
 
-    void HitTarget(Collider2D _collision)
+    void HitTarget()
     {
-        alvo = _collision.gameObject;
-        if (alvo.tag == "Player" || alvo.tag == "Enemy")
-        {
-            alvo.GetComponent<EntityModel>().TomarDano(dano);
-        }
+        alvo.GetComponent<EntityModel>().TomarDano(dano);  
         DestroyGameObject();
-
     }
     void DestroyGameObject()
     {
