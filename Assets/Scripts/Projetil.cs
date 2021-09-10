@@ -4,42 +4,83 @@ using UnityEngine;
 
 public class Projetil : MonoBehaviour
 {
-    public GameObject objetoQueChamou;
-    public EnemyState enemyState;
-    public Target alvo;
+    private Rigidbody2D rb;
     private Item item;
-    public Vector3 alvoDef;
-    private Transform pontaArmaDef;
-    private Transform player;
+    public EnemyState enemyState;
     private PontaArma pontaArma;
+    private GameObject alvo;
+    Vector3 pontaArmaAoDisparar;
 
-    bool teste;
+    float horizontal, vertical;
+    bool saberDirecaoDisparo;
     bool disparou;
-    public float speed = 1.0f;
+    public float velocidadeProjetil;
+    public float distanciaMaxProjetil;
+    public int dano;
+
+    public enum Direcao { Esquerda, Cima, Direita, Baixo };
+    public Direcao direcao;
     // Start is called before the first frame update
     void Start()
     {
+        rb = GetComponent<Rigidbody2D>();
         pontaArma = transform.parent.GetComponentInChildren<PontaArma>();
-        alvo = FindObjectOfType<Target>();
-        player = FindObjectOfType<Movement>().GetComponent<Transform>();
+        transform.position = pontaArma.transform.position;
+        pontaArmaAoDisparar = pontaArma.transform.position;
     }
 
     // Update is called once per frame
     void Update()
     {
+
         if(disparou)    
         {
-            if (!teste)
+            if (!saberDirecaoDisparo)
             {
-                pontaArmaDef = pontaArma.transform;
-                transform.position = pontaArmaDef.position;
-                alvoDef = alvo.transform.position;
-                teste = true;
-            }
-            float step = speed * Time.deltaTime;
-            transform.position = Vector3.MoveTowards(transform.position,alvoDef,step);
-            
+                switch (direcao)
+                {
+                    case Direcao.Esquerda:
+                        horizontal = -1;
+                    break;
+                    case Direcao.Direita:
+                        horizontal = 1;
+                        break;
+                    case Direcao.Cima:
 
+                        vertical = 1;
+                        break;
+                    case Direcao.Baixo:
+                        vertical = -1;
+                        break;
+
+                }
+                saberDirecaoDisparo = true;
+            }
+            DistanciaProjetil();
+
+            rb.velocity = new Vector2(horizontal, vertical).normalized * velocidadeProjetil;
+
+        }
+    }
+
+    void DistanciaProjetil()
+    {
+        if(horizontal != 0)
+        {
+            float dif = Mathf.Abs(pontaArmaAoDisparar.x) - Mathf.Abs(transform.position.x);
+            if (Mathf.Abs(dif) >= Mathf.Abs(distanciaMaxProjetil))
+            {
+                DestroyGameObject();
+            }
+        }
+
+        else if(vertical !=0)
+        {
+            float dif = Mathf.Abs(pontaArmaAoDisparar.y) - Mathf.Abs(transform.position.y);
+            if (Mathf.Abs(dif) >= Mathf.Abs(distanciaMaxProjetil))
+            {
+                DestroyGameObject();
+            }
         }
     }
 
@@ -51,28 +92,24 @@ public class Projetil : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        alvo = collision.gameObject;
 
-        if (collision.gameObject.tag == "Enemy")
+        if (alvo.tag == "Enemy" || alvo.tag == "Player")
         {
-            HitTarget(collision);
+            HitTarget();
         }
-        else if (collision.gameObject.tag != objetoQueChamou.tag)
-        {
-            Destroy();
-        }
-        else
-            Destroy();
+        else if(alvo.tag =="porta" || alvo.tag =="cerca")
+            DestroyGameObject();
 
     }
  
 
-    void HitTarget(Collider2D collision)
+    void HitTarget()
     {
-        enemyState = collision.gameObject.GetComponent<EnemyState>();
-        enemyState.TomarDano(item.dano);
-        Destroy();
+        alvo.GetComponent<EntityModel>().TomarDano(dano);  
+        DestroyGameObject();
     }
-    void Destroy()
+    void DestroyGameObject()
     {
         Destroy(gameObject);
     }

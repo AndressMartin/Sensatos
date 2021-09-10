@@ -4,15 +4,16 @@ using UnityEngine;
 
 public class TakeItem : MonoBehaviour
 {
-    public Inventario Inventario;
-    private Rigidbody2D rb;
+    private Inventario inventario;
+    private InventarioMissao inventarioMissao;
     private Item obj;
     // Start is called before the first frame update
     void Start()
     {
         obj = GetComponent<Item>();
-        rb = GetComponent<Rigidbody2D>();
-        Inventario = FindObjectOfType<Movement>().GetComponent<Inventario>();
+        inventario = FindObjectOfType<Player>().GetComponent<Inventario>();
+        inventarioMissao = FindObjectOfType<Player>().GetComponent<InventarioMissao>();
+
     }
 
     // Update is called once per frame
@@ -24,12 +25,25 @@ public class TakeItem : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player")
         {
-            if (FindObjectOfType<State>().GetComponent<State>().interagindo)
+            if (inventario.gameObject.GetComponent<State>().interagindo)
             {
-                Inventario.add(obj);
-                gameObject.SetActive(false);
+                AddToInventario();
             }
-
         }
+    }
+
+    void AddToInventario()
+    {
+        if (gameObject.tag == "Item")
+        {
+            inventario.add(obj);
+            
+        }
+        else if (gameObject.tag == "ItemChave")
+        {   
+            inventarioMissao.add(obj);
+             
+        }
+        gameObject.SetActive(false);
     }
 }

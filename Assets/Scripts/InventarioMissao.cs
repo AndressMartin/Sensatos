@@ -2,12 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyState : MonoBehaviour
+public class InventarioMissao : MonoBehaviour
 {
-    private SpriteRenderer spriteRenderer;
+    public List<Item> itens = new List<Item>();
+
     // Start is called before the first frame update
     void Start()
     {
+        
     }
 
     // Update is called once per frame
@@ -16,9 +18,9 @@ public class EnemyState : MonoBehaviour
         
     }
 
+    public void add(Item item)
+    {
+        itens.Add(item);
 
-
-   
-
-   
+    }
 }

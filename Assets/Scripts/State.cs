@@ -9,17 +9,16 @@ public class State : MonoBehaviour
     public bool estadoCombate = false;
     public bool interagindo;
     public int movimento = 2;
-    public int colldown;
-    public int colldowMax;
+    public float colldown;
+    public float colldowMax;
     private Movement movement;
     private Inventario inventario;
     private SpriteRenderer spriteRenderer;
-    private Target target;
+    public ParedeModel objetoQualEstaColidindo;
 
     // Start is called before the first frame update
     void Start()
     {
-        target = FindObjectOfType<Target>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         inventario = GetComponent<Inventario>();
         movement = GetComponent<Movement>();
@@ -28,27 +27,49 @@ public class State : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {   
-        if(colldown>0)
-            colldown--;
+    {
+        Colldowns();
+        BotoesPressionados();
+        
+
+    }
+
+    
+
+    void EstadoCombateOnOff()
+    {
+        estadoCombate = !estadoCombate;
+        if(estadoCombate)
+            spriteRenderer.color = (Color.red);
+        else
+            spriteRenderer.color = (Color.white);
+
+    }
+    void Colldowns()
+    {
+        if (colldown > 0)
+            colldown = colldown - 1 * (Time.deltaTime);
 
         if (colldown > 0 && colldown < colldowMax)
             interagindo = true;
 
         else
             interagindo = false;
+    }
 
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            target.ChangeTarget();
-        }
+    public void UpdateRunSpeed()
+    {
+        movement.UpdateRunSpeed(movimento);
+    }
 
+    void BotoesPressionados()
+    {
         if (Input.GetKeyDown(KeyCode.E) && colldown <= 0)//Botão de interação
         {
             colldown = colldowMax;
         }
 
-        if (Input.GetKeyDown(KeyCode.Space) && estadoCombate)//Botão de disparo
+        if (Input.GetKeyDown(KeyCode.Space))//Botão de disparo
         {
             inventario.UsarItemAtual();
         }
@@ -61,12 +82,6 @@ public class State : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.B))//Botão para ativar o strafing
         {
             strafing = !strafing;
-            if(strafing)
-            {
-                UpdateStrafeSpeed(1);
-            }
-            else
-                UpdateStrafeSpeed(-1);
 
         }
 
@@ -82,7 +97,7 @@ public class State : MonoBehaviour
             UpdateRunSpeed();
         }
 
-        if(Input.GetKeyDown(KeyCode.LeftShift)) //Botão para correr
+        if (Input.GetKeyDown(KeyCode.LeftShift)) //Botão para correr
         {
             if (movimento == 3)
                 movimento = 2;
@@ -90,25 +105,5 @@ public class State : MonoBehaviour
                 movimento = 3;
             UpdateRunSpeed();
         }
-
-    }
-    void EstadoCombateOnOff()
-    {
-        estadoCombate = !estadoCombate;
-        if(estadoCombate)
-            spriteRenderer.color = (Color.red);
-        else
-            spriteRenderer.color = (Color.white);
-
-    }
-
-    void UpdateStrafeSpeed(int _velocidade)
-    {
-        movement.UpdateStrafeSPeed(_velocidade);
-    }
-
-    public void UpdateRunSpeed()
-    {
-        movement.UpdateRunSpeed(movimento);
     }
 }

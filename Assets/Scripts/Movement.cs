@@ -6,16 +6,17 @@ public class Movement : MonoBehaviour
 {
     private State state;
     private Rigidbody2D rb;
+    private PontaArma pontaArma;
     float horizontal;
     float vertical;
     public float runSpeed;
-    public float strafeSpeed;
-    public enum Direction { Esquerda,Cima, Direita, Baixo };
-    public Direction direction;
+
+   
 
     // Start is called before the first frame update
     void Start()
     {
+        pontaArma = GetComponentInChildren<PontaArma>();
         state = GetComponent<State>();
         rb = GetComponent<Rigidbody2D>();
     }
@@ -29,27 +30,27 @@ public class Movement : MonoBehaviour
 
         if (!state.strafing)
         {
+
             switch (horizontal)
-            {
-                case -1:
-                    direction = Direction.Esquerda;
-                    break;
+            {  
                 case 1:
-                    direction = Direction.Direita;
+                    pontaArma.ChangeDirection("Direita");
+                    break;
+                case -1:
+                    pontaArma.ChangeDirection("Esquerda");
                     break;
             }
 
             switch (vertical)
             {
                 case -1:
-                    direction = Direction.Baixo;
+                    pontaArma.ChangeDirection("Baixo");
                     break;
                 case 1:
-                    direction = Direction.Cima;
+                    pontaArma.ChangeDirection("Cima");
                     break;
             }
 
-            Move();
         }
 
         Move();
@@ -57,7 +58,7 @@ public class Movement : MonoBehaviour
     }
     void Move( )
     {
-        rb.velocity = new Vector2(horizontal, vertical).normalized * (runSpeed - strafeSpeed);
+        rb.velocity = new Vector2(horizontal, vertical).normalized * (runSpeed);
     }
 
 
@@ -68,10 +69,7 @@ public class Movement : MonoBehaviour
         runSpeed = velocidade * 2;
     }
 
-    public void UpdateStrafeSPeed(int velocidade)
-    {
-        strafeSpeed = velocidade;
-    }
+ 
 }
 
 

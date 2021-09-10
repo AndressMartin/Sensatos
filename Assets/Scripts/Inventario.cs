@@ -23,6 +23,7 @@ public class Inventario : MonoBehaviour
     public void add(Item item)
     {
         itens.Add(item);
+        //EquiparItem(item);
        
     }
 
@@ -33,6 +34,6 @@ public class Inventario : MonoBehaviour
 
     public void UsarItemAtual()
     {
-        itemAtual.Shoot(gameObject);
+            itemAtual.Usar(gameObject);
     }
 }
