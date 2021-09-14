@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Movement : MonoBehaviour
 {
+    private Player player;
     private State state;
     private Rigidbody2D rb;
     private PontaArma pontaArma;
@@ -16,6 +17,7 @@ public class Movement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        player = GetComponent<Player>();
         pontaArma = GetComponentInChildren<PontaArma>();
         state = GetComponent<State>();
         rb = GetComponent<Rigidbody2D>();
@@ -34,23 +36,23 @@ public class Movement : MonoBehaviour
             switch (horizontal)
             {  
                 case 1:
-                    pontaArma.ChangeDirection("Direita");
+                    player.ChangeDirection("Direita");
                     break;
                 case -1:
-                    pontaArma.ChangeDirection("Esquerda");
+                    player.ChangeDirection("Esquerda");
                     break;
             }
 
             switch (vertical)
             {
                 case -1:
-                    pontaArma.ChangeDirection("Baixo");
+                    player.ChangeDirection("Baixo");
                     break;
                 case 1:
-                    pontaArma.ChangeDirection("Cima");
+                    player.ChangeDirection("Cima");
                     break;
             }
-
+            pontaArma.direction = player.direction;
         }
 
         Move();

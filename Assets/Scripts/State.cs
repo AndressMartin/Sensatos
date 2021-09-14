@@ -8,17 +8,22 @@ public class State : MonoBehaviour
     public bool strafing=false;
     public bool estadoCombate = false;
     public bool interagindo;
+    public bool usandoItem;
     public int movimento = 2;
-    public float colldown;
-    public float colldowMax;
+
+    [SerializeField] private float colldown;
+    [SerializeField] private float colldowMax;
+    [SerializeField] private float colldownUsandoItem;
+    [SerializeField] private float colldowMaxUsandoItem;
+
     private Movement movement;
     private Inventario inventario;
     private SpriteRenderer spriteRenderer;
-    public ParedeModel objetoQualEstaColidindo;
-
+    private DirectionHitbox directionHitbox;
     // Start is called before the first frame update
     void Start()
     {
+        directionHitbox = GetComponentInChildren<DirectionHitbox>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         inventario = GetComponent<Inventario>();
         movement = GetComponent<Movement>();
@@ -28,9 +33,9 @@ public class State : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Colldowns();
+       
         BotoesPressionados();
-        
+        Colldowns();
 
     }
 
@@ -55,6 +60,16 @@ public class State : MonoBehaviour
 
         else
             interagindo = false;
+
+
+        if (colldownUsandoItem > 0)
+            colldownUsandoItem = colldownUsandoItem - 1 * (Time.deltaTime);
+
+        if (colldownUsandoItem > 0 && colldownUsandoItem < colldowMaxUsandoItem)
+            usandoItem = true;
+
+        else
+            usandoItem = false;
     }
 
     public void UpdateRunSpeed()
@@ -69,9 +84,12 @@ public class State : MonoBehaviour
             colldown = colldowMax;
         }
 
-        if (Input.GetKeyDown(KeyCode.Space))//Botão de disparo
+        if (Input.GetKeyDown(KeyCode.Space) && colldownUsandoItem <= 0)//Botão de usar item
         {
+            colldownUsandoItem = colldowMaxUsandoItem;
+            usandoItem = true;
             inventario.UsarItemAtual();
+            
         }
 
         if (Input.GetKeyDown(KeyCode.G))//Botão para entar no modo combate (vermelho == combate)
@@ -105,5 +123,6 @@ public class State : MonoBehaviour
                 movimento = 3;
             UpdateRunSpeed();
         }
+        
     }
 }

@@ -6,44 +6,41 @@ public class TakeItem : MonoBehaviour
 {
     private Inventario inventario;
     private InventarioMissao inventarioMissao;
-    private Item obj;
+    private ItemDirectionHitbox itemDirectionHitbox;
+
     // Start is called before the first frame update
     void Start()
     {
-        obj = GetComponent<Item>();
-        inventario = FindObjectOfType<Player>().GetComponent<Inventario>();
-        inventarioMissao = FindObjectOfType<Player>().GetComponent<InventarioMissao>();
-
+        inventario = GetComponentInParent<Inventario>();
+        inventarioMissao =GetComponentInParent<InventarioMissao>();
+        itemDirectionHitbox = GetComponent<ItemDirectionHitbox>();
     }
 
     // Update is called once per frame
     void Update()
     {
-
-    }
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        if (collision.gameObject.tag == "Player")
+        if(itemDirectionHitbox.objetectCollision != null)
         {
-            if (inventario.gameObject.GetComponent<State>().interagindo)
-            {
-                AddToInventario();
-            }
+            AddToInventario(itemDirectionHitbox.objetectCollision);
         }
     }
 
-    void AddToInventario()
+    void AddToInventario(Item _obj)
     {
-        if (gameObject.tag == "Item")
+        if (itemDirectionHitbox.objetectCollision.gameObject.tag == "Item")
         {
-            inventario.add(obj);
+            inventario.add(_obj);
+            Debug.Log("chamou item");
             
         }
-        else if (gameObject.tag == "ItemChave")
+        else if (itemDirectionHitbox.objetectCollision.gameObject.tag == "ItemChave")
         {   
-            inventarioMissao.add(obj);
+            inventarioMissao.add(_obj);
              
         }
-        gameObject.SetActive(false);
+        itemDirectionHitbox.objetectCollision.gameObject.SetActive(false);//item sumuir
+        itemDirectionHitbox.objetectCollision = null; //perder referencia
+
+
     }
 }

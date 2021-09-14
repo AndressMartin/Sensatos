@@ -5,30 +5,37 @@ using UnityEngine;
 public class Alicate : Ferramenta
 {
     [SerializeField] private int dano;
-    private State state;
+    private DirectionHitbox directionHitbox;
+    private Cerca parede;
     public int nivel;
     public override int quantidadeUsos { get; protected set; }
-    // Start is called before the first frame update
+
     void Start()
     {
         quantidadeUsos = 1;
         quantidadeUsos = quantidadeUsos * nivel;
     }
 
-    // Update is called once per frame
+    private void Update()
+    {
+        if(directionHitbox != null)
+        {
+            parede = (Cerca)directionHitbox.objetectCollision;
+            if (parede != null)
+            {
+                parede.LevarDano(dano);
+                ConsumirRecurso();
+                directionHitbox = null;
+            }
+        }
+    }
+
 
     public override void Usar(GameObject objQueChamou)
     {
-        if(VerificarFerramenta())
+        if(VerificarFerramenta())//caso o item tenha uso
         {
-            state = objQueChamou.GetComponent<State>();
-
-            if (state.objetoQualEstaColidindo is Cerca)
-            {
-                state.objetoQualEstaColidindo.LevarDano(dano);
-                ConsumirRecurso();
-                Debug.Log(quantidadeUsos);
-            }
+            directionHitbox = objQueChamou.GetComponentInChildren<DirectionHitbox>();         
         }
     }
 
