@@ -20,23 +20,24 @@ public class Alicate : Ferramenta
     {
         if(directionHitbox != null)
         {
+            Debug.Log("chmado");
             parede = (Cerca)directionHitbox.objetectCollision;
             if (parede != null)
             {
+                Debug.Log("chmad1212121o");
+
                 parede.LevarDano(dano);
                 ConsumirRecurso();
                 directionHitbox = null;
             }
+            
         }
     }
 
 
     public override void Usar(GameObject objQueChamou)
     {
-        if(VerificarFerramenta())//caso o item tenha uso
-        {
-            directionHitbox = objQueChamou.GetComponentInChildren<DirectionHitbox>();         
-        }
+        directionHitbox = objQueChamou.GetComponentInChildren<DirectionHitbox>();            
     }
 
   

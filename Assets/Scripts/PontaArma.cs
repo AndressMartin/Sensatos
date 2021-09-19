@@ -8,9 +8,11 @@ public class PontaArma : EntityModel
     private GameObject obj;
     private SpriteRenderer spriteRenderer;
     private EntityModel entity;
+    [SerializeField]private float distanceFromChar;
 
     void Start()
     {
+        spriteRenderer = GetComponent<SpriteRenderer>();
         objPai = GetComponentInParent<BoxCollider2D>();
         obj = objPai.gameObject;
         entity = obj.GetComponent<Player>();
@@ -19,7 +21,34 @@ public class PontaArma : EntityModel
     // Update is called once per frame
     void Update()
     {
-        transform.position = FrenteDoPersonagem(obj.transform,0.5F);
+        switch (direction)
+        {
+            case Direction.Direita:
+                spriteRenderer.flipX = false;
+                spriteRenderer.flipY = false;
+                break;
+
+            case Direction.Esquerda:
+                spriteRenderer.flipX = true;
+                spriteRenderer.flipY = false;
+                break;
+
+            case Direction.Cima:
+                spriteRenderer.flipY = false;
+                break;
+          
+
+            case Direction.Baixo:
+                spriteRenderer.flipY = true;
+                break;
+
+        }
+
+        transform.position = FrenteDoPersonagem(obj.transform,distanceFromChar);
+
+        
+    
+       
     }
     
 }
