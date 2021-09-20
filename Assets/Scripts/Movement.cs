@@ -69,79 +69,94 @@ public class Movement : MonoBehaviour
     {
         if (horizontal != 0)
         {
-            if (Mathf.Abs(rb.velocity.x) <= velocityMaxX)
+            rb.AddForce(new Vector2(horizontal, 0).normalized * (runSpeed));
+            if(rb.velocity.x >= velocityMaxX)
             {
-                if(horizontal ==1)
-                {
-                    if (_horizontal != horizontal)
-                    {
-                        rb.velocity = new Vector2(0, rb.velocity.y);
-                        _horizontal = horizontal;
-                    }
-                
-                    else
-                    {
-                        rb.AddForce(new Vector2(Mathf.Abs(horizontal), 0).normalized * (runSpeed));
-                    }
-                }
-
-                else if (horizontal == -1)
-                {
-                    if (_horizontal != horizontal)
-                    {
-                        rb.velocity = new Vector2(0, rb.velocity.y);
-                        _horizontal = horizontal;
-
-                    }
-                    else
-                    {
-                        rb.AddForce(new Vector2(-Mathf.Abs(horizontal), 0).normalized * (runSpeed));
-                    }
-                }
+                rb.velocity = new Vector2(velocityMaxX,rb.velocity.y);
+            }
+            else if(rb.velocity.x <= -velocityMaxX)
+            {
+                rb.velocity = new Vector2(-velocityMaxX, rb.velocity.y);
             }
         }
         else
         {
-            rb.velocity = new Vector2(0,rb.velocity.y);
+            if (Mathf.Abs(rb.velocity.x) >= 0.1)
+            {
+               
+                rb.velocity = new Vector2(rb.velocity.x * 0.99F, rb.velocity.y);
+            }
+            else
+            {
+                rb.velocity = new Vector2(0, rb.velocity.y);
+            }          
         }
 
         if (vertical != 0)
         {
-            if (Mathf.Abs(rb.velocity.y) <= velocityMaxY)
+            rb.AddForce(new Vector2(0, vertical).normalized * (runSpeed));
+            if (rb.velocity.y >= velocityMaxY)
             {
-                if (vertical == 1)
-                {
-                    if (_vertical != vertical)
-                    {
-                        rb.velocity = new Vector2(rb.velocity.x, 0);
-                        _vertical = vertical;
-                    }
-
-                    else
-                    {
-                        rb.AddForce(new Vector2(0, Mathf.Abs(vertical)).normalized * (runSpeed));
-                    }
-                }
-
-                else if (vertical == -1)
-                {
-                    if (_vertical != vertical)
-                    {
-                        rb.velocity = new Vector2(rb.velocity.x, 0);
-                        _vertical = vertical;
-
-                    }
-                    else
-                    {
-                        rb.AddForce(new Vector2(0, -Mathf.Abs(vertical)).normalized * (runSpeed));
-                    }
-                }
+                rb.velocity = new Vector2(rb.velocity.x, velocityMaxX);
+            }
+            else if (rb.velocity.y <= -velocityMaxX)
+            {
+                rb.velocity = new Vector2(rb.velocity.x, -velocityMaxX);
             }
         }
         else
         {
-            rb.velocity = new Vector2(rb.velocity.x, 0);
+            if (Mathf.Abs(rb.velocity.y) >= 0.1)
+            {
+
+                rb.velocity = new Vector2(rb.velocity.x , rb.velocity.y * 0.99F);
+            }
+            else
+            {
+                rb.velocity = new Vector2(rb.velocity.x, 0);
+            }
         }
+
+
+
+
+        /* if (vertical != 0)
+         {
+             if (Mathf.Abs(rb.velocity.y) <= velocityMaxY)
+             {
+                 if (vertical == 1)
+                 {
+                     if (_vertical != vertical)
+                     {
+                         rb.velocity = new Vector2(rb.velocity.x, 0);
+                         _vertical = vertical;
+                     }
+
+                     else
+                     {
+                         rb.AddForce(new Vector2(0, Mathf.Abs(vertical)).normalized * (runSpeed));
+                     }
+                 }
+
+                 else if (vertical == -1)
+                 {
+                     if (_vertical != vertical)
+                     {
+                         rb.velocity = new Vector2(rb.velocity.x, 0);
+                         _vertical = vertical;
+
+                     }
+                     else
+                     {
+                         rb.AddForce(new Vector2(0, -Mathf.Abs(vertical)).normalized * (runSpeed));
+                     }
+                 }
+             }
+         }
+         else
+         {
+             rb.velocity = new Vector2(rb.velocity.x, 0);
+         }*/
 
 
         //rb.AddForce(new Vector2(horizontal, 0).normalized * (runSpeed));
