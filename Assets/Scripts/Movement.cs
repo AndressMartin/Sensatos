@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Movement : MonoBehaviour
+public class Movement : SingletonInstance<Movement>
 {
     private Player player;
     private State state;
@@ -13,6 +13,7 @@ public class Movement : MonoBehaviour
     float _horizontal;
     float _vertical;
     public float runSpeed;
+    public bool canMove = true;
     [SerializeField] private float velocityMaxX;
     [SerializeField] private float velocityMaxY;
 
@@ -37,7 +38,7 @@ public class Movement : MonoBehaviour
         
 
 
-        if (!state.strafing)
+        if (!state.strafing && canMove)
         {
 
             switch (horizontal)
@@ -73,14 +74,15 @@ public class Movement : MonoBehaviour
 
     }
 
+
     void Move( )
     {
         float _tempX=0;
         float _tempY=0;
 
-        if (!knockBacking)//movimentação padrão, caso esteja sendo empurado não fazer contas para se movimentar
+        if (!knockBacking)//movimentaï¿½ï¿½o padrï¿½o, caso esteja sendo empurado nï¿½o fazer contas para se movimentar
         {
-            if (horizontal != 0)//se esta andando na vertical guarda em uma variavel a aceleração e soma no final com addForce
+            if (horizontal != 0)//se esta andando na vertical guarda em uma variavel a aceleraï¿½ï¿½o e soma no final com addForce
             {
 
                 _tempX = horizontal * (acelerationSpeed) * (Time.deltaTime);
