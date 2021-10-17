@@ -6,10 +6,11 @@ public class Projetil : MonoBehaviour
 {
     private Rigidbody2D rb;
     private Item item;
-    public EnemyState enemyState;
     private PontaArma pontaArma;
     private GameObject alvo;
     Vector3 pontaArmaAoDisparar;
+
+    public GameObject FatherFromGun;
 
     float horizontal, vertical;
     bool saberDirecaoDisparo;
@@ -96,7 +97,8 @@ public class Projetil : MonoBehaviour
 
         if (alvo.tag == "Enemy" || alvo.tag == "Player")
         {
-            HitTarget();
+            if(alvo.tag != FatherFromGun.tag)
+                HitTarget();
         }
         else if(alvo.tag =="porta" || alvo.tag =="cerca")
             DestroyGameObject();

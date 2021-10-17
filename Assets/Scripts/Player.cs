@@ -5,10 +5,14 @@ using UnityEngine;
 public class Player : EntityModel
 {
     [SerializeField]public override int vida { get; protected set; }
+    private DirectionHitbox directionHitbox;
+    private ItemDirectionHitbox itemDirectionHitbox;
     public int Pv;
     // Start is called before the first frame update
     void Start()
     {
+        directionHitbox = GetComponentInChildren<DirectionHitbox>();
+        itemDirectionHitbox = GetComponentInChildren<ItemDirectionHitbox>();
         vida = Pv;
     }
 
@@ -28,6 +32,26 @@ public class Player : EntityModel
     {
         Debug.Log("tomei tiro, player");
 
+    }
+    public void ChangeDirection(string lado)
+    {
+        switch (lado)
+        {
+            case "Esquerda":
+                direction = Direction.Esquerda;
+                break;
+            case "Direita":
+                direction = Direction.Direita;
+                break;
+            case "Cima":
+                direction = Direction.Cima;
+                break;
+            case "Baixo":
+                direction = Direction.Baixo;
+                break;
+        }
+        directionHitbox.ChangeDirection(direction);
+        itemDirectionHitbox.ChangeDirection(direction);
     }
 
 }

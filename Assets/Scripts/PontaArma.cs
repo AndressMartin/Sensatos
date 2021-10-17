@@ -4,36 +4,51 @@ using UnityEngine;
 
 public class PontaArma : EntityModel
 {
-    public BoxCollider2D objPai;
+     private BoxCollider2D objPai;
     private GameObject obj;
-    // Start is called before the first frame update
+    private SpriteRenderer spriteRenderer;
+    private EntityModel entity;
+    [SerializeField]private float distanceFromChar;
+
     void Start()
     {
+        spriteRenderer = GetComponent<SpriteRenderer>();
         objPai = GetComponentInParent<BoxCollider2D>();
         obj = objPai.gameObject;
+        entity = obj.GetComponent<Player>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        transform.position = FrenteDoPersonagem(obj);
-    }
-    public void ChangeDirection(string lado)
-    {
-        switch (lado)
+        switch (direction)
         {
-            case "Esquerda":
-                direction = Direction.Esquerda;
+            case Direction.Direita:
+                spriteRenderer.flipX = false;
+                spriteRenderer.flipY = false;
                 break;
-            case "Direita":
-                direction = Direction.Direita;
+
+            case Direction.Esquerda:
+                spriteRenderer.flipX = true;
+                spriteRenderer.flipY = false;
                 break;
-            case "Cima":
-                direction = Direction.Cima;
+
+            case Direction.Cima:
+                spriteRenderer.flipY = false;
                 break;
-            case "Baixo":
-                direction = Direction.Baixo;
+          
+
+            case Direction.Baixo:
+                spriteRenderer.flipY = true;
                 break;
+
         }
+
+        transform.position = FrenteDoPersonagem(obj.transform,distanceFromChar);
+
+        
+    
+       
     }
+    
 }
