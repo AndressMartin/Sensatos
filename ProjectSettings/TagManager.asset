@@ -9,6 +9,9 @@ TagManager:
   - ItemChave
   - Item
   - cerca
+  - FishingSpot
+  - FishingSite
+  - MinigameTrigger
   layers:
   - Default
   - TransparentFX
@@ -45,4 +48,7 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: UI
+    uniqueID: 2725369581
     locked: 0
