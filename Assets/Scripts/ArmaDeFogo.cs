@@ -6,24 +6,42 @@ public class ArmaDeFogo : Item
 {
     [SerializeField] private  Transform bullet;
     private Projetil projetil;
-    private Transform pontaArma;
+    private BulletCreator bulletCreator;
 
     public override string nome { get; protected set; }
     public int dano;
-   
+
+
+    private void Start()
+    {
+        bulletCreator = FindObjectOfType<BulletCreator>();
+    }
 
     public override void Usar(GameObject objQueChamou)
     {
-        if (objQueChamou.GetComponent<State>().estadoCombate)
+        if (objQueChamou.gameObject.tag == "Enemy")
         {
-            pontaArma = objQueChamou.GetComponentInChildren<PontaArma>().transform;
-            
-            Instantiate(bullet, pontaArma); //onde cria o projetil
-            projetil = FindObjectOfType<Projetil>();
-            projetil.direcao = (Projetil.Direcao)pontaArma.GetComponentInChildren<PontaArma>().direction;
-            projetil.dano = dano;
-            projetil.FatherFromGun = objQueChamou;
-            projetil.Shooted(this);
+            CreateShoot(objQueChamou);
         }
+
+        else if(objQueChamou.GetComponent<State>().estadoCombate)
+        {
+            CreateShoot(objQueChamou);
+        }
+    }
+
+    void CreateShoot(GameObject _objQueChamou)
+    {
+        Transform pontaArma = _objQueChamou.GetComponentInChildren<PontaArma>().transform;
+        bulletCreator.BulletReference(_objQueChamou,bullet,pontaArma);
+
+        /*pontaArma = _objQueChamou.GetComponentInChildren<PontaArma>().transform;
+        Instantiate(bullet, pontaArma); //onde cria o projetil
+        projetil = FindObjectOfType<Projetil>();
+        projetil.direcao = (Projetil.Direcao)pontaArma.GetComponentInChildren<PontaArma>().direction;
+        projetil.dano = dano;
+        projetil.FatherFromGun = _objQueChamou;
+        projetil.Shooted();*/
+
     }
 }

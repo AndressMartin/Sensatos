@@ -18,20 +18,33 @@ public class Lanca : Item
 
     public override void Usar(GameObject _objQueChamou)
     {
-        if (_objQueChamou.GetComponent<State>().estadoCombate)
+        if (_objQueChamou.gameObject.tag == "Enemy")
         {
-            pontaArma = _objQueChamou.GetComponentInChildren<PontaArma>().transform;
-
-            Instantiate(lancaTransform, pontaArma); //onde cria a lança
-            FisicalAttack = FindObjectOfType<FisicalAttack>();
-            FisicalAttack.direcao = (FisicalAttack.Direcao)pontaArma.GetComponentInChildren<PontaArma>().direction;
-            FisicalAttack.widthTemp = width;
-            FisicalAttack.heightTemp = height;
-            FisicalAttack.FatherFromWeapon = _objQueChamou;
-            FisicalAttack.dano = dano;
-
-            FisicalAttack.Usou(this);
+            CreateShoot(_objQueChamou);
         }
+
+        else if (_objQueChamou.GetComponent<State>().estadoCombate)
+        {
+            CreateShoot(_objQueChamou);
+        }
+
+       
+            
+        
+    }
+    void CreateShoot(GameObject __objQueChamou)
+    {
+        pontaArma = __objQueChamou.GetComponentInChildren<PontaArma>().transform;
+
+        Instantiate(lancaTransform, pontaArma); //onde cria a lança
+        FisicalAttack = FindObjectOfType<FisicalAttack>();
+        FisicalAttack.direcao = (FisicalAttack.Direcao)pontaArma.GetComponentInChildren<PontaArma>().direction;
+        FisicalAttack.widthTemp = width;
+        FisicalAttack.heightTemp = height;
+        FisicalAttack.FatherFromWeapon = __objQueChamou;
+        FisicalAttack.dano = dano;
+
+        FisicalAttack.Usou();
     }
 
     /*

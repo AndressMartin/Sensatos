@@ -25,7 +25,7 @@ public class HandWeapon : Item
             fisicalAttack.FatherFromWeapon = _objQueChamou;
             fisicalAttack.dano = dano;
 
-            fisicalAttack.Usou(this);
+            fisicalAttack.Usou();
         }
     }
 }

@@ -111,7 +111,7 @@ public class State : MonoBehaviour
 
         else if (Input.GetKeyDown(KeyCode.LeftControl) && movimento == 1)//Botão para ficar de pé //se estiver agachado
         {
-            movimento = 2;//em pé
+            movimento = 8;//em pé
             UpdateRunSpeed();
         }
 

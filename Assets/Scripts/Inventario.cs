@@ -34,6 +34,9 @@ public class Inventario : MonoBehaviour
 
     public void UsarItemAtual()
     {
+        if (itemAtual != null)
+        {
             itemAtual.Usar(gameObject);
+        }
     }
 }

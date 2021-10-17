@@ -15,7 +15,13 @@ public class PontaArma : EntityModel
         spriteRenderer = GetComponent<SpriteRenderer>();
         objPai = GetComponentInParent<BoxCollider2D>();
         obj = objPai.gameObject;
-        entity = obj.GetComponent<Player>();
+
+
+        if(obj.tag =="Player")
+            entity = obj.GetComponent<Player>();
+
+        if (obj.tag == "Enemy")
+            entity = obj.GetComponent<Enemy>();
     }
 
     // Update is called once per frame
@@ -43,12 +49,10 @@ public class PontaArma : EntityModel
                 break;
 
         }
+        direction = entity.direction;
 
         transform.position = FrenteDoPersonagem(obj.transform,distanceFromChar);
-
-        
-    
-       
+ 
     }
     
 }

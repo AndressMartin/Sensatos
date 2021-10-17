@@ -5,13 +5,13 @@ using UnityEngine;
 public class Projetil : MonoBehaviour
 {
     private Rigidbody2D rb;
-    private Item item;
-    private PontaArma pontaArma;
     private GameObject alvo;
     Vector3 pontaArmaAoDisparar;
 
+    public Vector3 playerVector3;
     public GameObject FatherFromGun;
 
+    Vector3 directionPlayer;
     float horizontal, vertical;
     bool saberDirecaoDisparo;
     bool disparou;
@@ -21,28 +21,39 @@ public class Projetil : MonoBehaviour
 
     public enum Direcao { Esquerda, Cima, Direita, Baixo };
     public Direcao direcao;
+    private Direcao tempDirecao;
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        pontaArma = transform.parent.GetComponentInChildren<PontaArma>();
-        transform.position = pontaArma.transform.position;
-        pontaArmaAoDisparar = pontaArma.transform.position;
+        
     }
 
     // Update is called once per frame
     void Update()
     {
+        if(FatherFromGun.GetComponent<Player>())
+        {
+            FatherPlayer();
+        }
+        else if (FatherFromGun.GetComponent<Enemy>())
+        {
+            FatherEnemy();
+        }
 
-        if(disparou)    
+    }
+    void FatherPlayer()
+    {
+        if (disparou)
         {
             if (!saberDirecaoDisparo)
             {
+
                 switch (direcao)
                 {
                     case Direcao.Esquerda:
                         horizontal = -1;
-                    break;
+                        break;
                     case Direcao.Direita:
                         horizontal = 1;
                         break;
@@ -59,23 +70,49 @@ public class Projetil : MonoBehaviour
             }
             DistanciaProjetil();
 
-            rb.velocity = new Vector2(horizontal, vertical).normalized * velocidadeProjetil;
+            rb.velocity = new Vector2(horizontal, vertical) * velocidadeProjetil;
 
         }
     }
+    void FatherEnemy()
+    {
+        if (disparou)
+        {
+            if (!saberDirecaoDisparo)
+            {
+                Vector3 temp = FindObjectOfType<Player>().GetComponent<Transform>().position;
+                playerVector3 = new Vector3(temp.x,temp.y,temp.z);
+                horizontal = transform.position.x;
+                vertical = transform.position.y;
+                directionPlayer = playerVector3 - transform.position;
+                directionPlayer.Normalize();
+                saberDirecaoDisparo = true;
+                disparou = false;
+            }
+                   
+        }
+        MOVE(directionPlayer);
+        
+    }
+    void MOVE(Vector2 _direction)
+    {
+        DistanciaProjetil();
+        rb.MovePosition((Vector2)transform.position + (_direction * velocidadeProjetil * Time.deltaTime));
+    }
+
 
     void DistanciaProjetil()
     {
-        if(horizontal != 0)
+        if(direcao == Direcao.Esquerda || direcao == Direcao.Direita)
         {
             float dif = Mathf.Abs(pontaArmaAoDisparar.x) - Mathf.Abs(transform.position.x);
             if (Mathf.Abs(dif) >= Mathf.Abs(distanciaMaxProjetil))
             {
-                DestroyGameObject();
+               DestroyGameObject();
             }
         }
 
-        else if(vertical !=0)
+        else if(direcao == Direcao.Cima || direcao == Direcao.Baixo)
         {
             float dif = Mathf.Abs(pontaArmaAoDisparar.y) - Mathf.Abs(transform.position.y);
             if (Mathf.Abs(dif) >= Mathf.Abs(distanciaMaxProjetil))
@@ -85,10 +122,11 @@ public class Projetil : MonoBehaviour
         }
     }
 
-    public void Shooted(Item _item)
+    public void Shooted(Transform _pontaArma)
     {
         disparou = true;
-        item = _item;
+        transform.position = _pontaArma.transform.position;
+        pontaArmaAoDisparar = transform.position;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -108,7 +146,10 @@ public class Projetil : MonoBehaviour
 
     void HitTarget()
     {
-        alvo.GetComponent<EntityModel>().TomarDano(dano);  
+
+        EntityModel temp;
+        temp = alvo.GetComponent<EntityModel>();
+        temp.TomarDano(dano, horizontal, vertical);
         DestroyGameObject();
     }
     void DestroyGameObject()

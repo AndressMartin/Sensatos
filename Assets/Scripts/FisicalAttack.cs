@@ -15,7 +15,6 @@ public class FisicalAttack : MonoBehaviour
 
     [SerializeField] private float tempoHitboxAtiva;
     private Rigidbody2D rb;
-    private Item item;
     private PontaArma pontaArma;
     private GameObject alvo;
     private Vector3 pontaArmaAoDisparar;
@@ -136,15 +135,19 @@ public class FisicalAttack : MonoBehaviour
             DestroyGameObject();
     }
 
-    public void Usou(Item _item)
+    public void Usou()
     {
         disparou = true;
-        item = _item;
+
     }
 
     void HitTarget()
     {
-        alvo.GetComponent<EntityModel>().TomarDano(dano);
+        EntityModel temp;
+
+        temp = alvo.GetComponent<EntityModel>();
+        temp.TomarDano(dano, horizontal, vertical);
+
         DestroyGameObject();
     }
 

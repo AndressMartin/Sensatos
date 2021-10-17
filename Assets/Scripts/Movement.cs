@@ -16,8 +16,10 @@ public class Movement : MonoBehaviour
     [SerializeField] private float velocityMaxX;
     [SerializeField] private float velocityMaxY;
 
+    [SerializeField] private float acelerationSpeed;
 
-
+    bool knockBacking;
+    public float knockBackHorizontal, knockBackVertical;
     // Start is called before the first frame update
     void Start()
     {
@@ -60,116 +62,130 @@ public class Movement : MonoBehaviour
             pontaArma.direction = player.direction;
         }
 
-       
-
-        Move();
+       Move();
+    }
+    public void KnockBack(float _horizontal, float _vertical)
+    {
+        knockBacking = true; 
+        knockBackHorizontal = _horizontal;
+        knockBackVertical = _vertical;
+        Debug.Log("movement :" + knockBackHorizontal + "" + knockBackVertical);
 
     }
+
     void Move( )
     {
-        if (horizontal != 0)
+        float _tempX=0;
+        float _tempY=0;
+
+        if (!knockBacking)//movimentação padrão, caso esteja sendo empurado não fazer contas para se movimentar
         {
-            rb.AddForce(new Vector2(horizontal, 0).normalized * (runSpeed));
-            if(rb.velocity.x >= velocityMaxX)
+            if (horizontal != 0)//se esta andando na vertical guarda em uma variavel a aceleração e soma no final com addForce
             {
-                rb.velocity = new Vector2(velocityMaxX,rb.velocity.y);
-            }
-            else if(rb.velocity.x <= -velocityMaxX)
-            {
-                rb.velocity = new Vector2(-velocityMaxX, rb.velocity.y);
-            }
-        }
-        else
-        {
-            if (Mathf.Abs(rb.velocity.x) >= 0.1)
-            {
-               
-                rb.velocity = new Vector2(rb.velocity.x * 0.99F, rb.velocity.y);
+
+                _tempX = horizontal * (acelerationSpeed) * (Time.deltaTime);
+                if (rb.velocity.x >= velocityMaxX)
+                {
+                    rb.velocity = new Vector2(velocityMaxX, rb.velocity.y);
+                }
+                else if (rb.velocity.x <= -velocityMaxX)
+                {
+                    rb.velocity = new Vector2(-velocityMaxX, rb.velocity.y);
+                }
             }
             else
             {
-                rb.velocity = new Vector2(0, rb.velocity.y);
-            }          
-        }
+                if (rb.velocity.x > 0)
+                {
 
-        if (vertical != 0)
-        {
-            rb.AddForce(new Vector2(0, vertical).normalized * (runSpeed));
-            if (rb.velocity.y >= velocityMaxY)
-            {
-                rb.velocity = new Vector2(rb.velocity.x, velocityMaxX);
+                    _tempX = -1 * (acelerationSpeed) * (Time.deltaTime);
+
+                    if (rb.velocity.x < 0)
+                        rb.velocity = new Vector2(0, rb.velocity.y);
+
+
+                }
+                else if (rb.velocity.x < 0)
+                {
+                    _tempX = 1 * (acelerationSpeed) * (Time.deltaTime);
+
+                    if (rb.velocity.x > 0)
+                        rb.velocity = new Vector2(0, rb.velocity.y);
+                }
+                if (Mathf.Abs(rb.velocity.x) > 0 && Mathf.Abs(rb.velocity.x) < 1)
+                {
+                    _tempX = 0 * (acelerationSpeed) * (Time.deltaTime);
+                    rb.velocity = new Vector2(0, rb.velocity.y);
+                }
             }
-            else if (rb.velocity.y <= -velocityMaxX)
-            {
-                rb.velocity = new Vector2(rb.velocity.x, -velocityMaxX);
-            }
-        }
-        else
-        {
-            if (Mathf.Abs(rb.velocity.y) >= 0.1)
+
+            if (vertical != 0)
             {
 
-                rb.velocity = new Vector2(rb.velocity.x , rb.velocity.y * 0.99F);
+                _tempY = vertical * (acelerationSpeed) * (Time.deltaTime);
+                if (rb.velocity.y >= velocityMaxY)
+                {
+                    rb.velocity = new Vector2(rb.velocity.x, velocityMaxY);
+                }
+                else if (rb.velocity.y <= -velocityMaxY)
+                {
+                    rb.velocity = new Vector2(rb.velocity.x, -velocityMaxY);
+                }
             }
             else
             {
-                rb.velocity = new Vector2(rb.velocity.x, 0);
+                if (rb.velocity.y > 0)
+                {
+                    _tempY = -1 * (acelerationSpeed) * (Time.deltaTime);
+                    if (rb.velocity.y < 0)
+                        rb.velocity = new Vector2(rb.velocity.x, 0);
+                }
+                else if (rb.velocity.y < 0)
+                {
+                    _tempY = 1 * (acelerationSpeed) * (Time.deltaTime);
+                    if (rb.velocity.y > 0)
+                        rb.velocity = new Vector2(rb.velocity.x, 0);
+                }
+                if (Mathf.Abs(rb.velocity.y) > 0 && Mathf.Abs(rb.velocity.y) < 1)
+                {
+                    _tempY = 0 * (acelerationSpeed) * (Time.deltaTime);
+                    rb.velocity = new Vector2(rb.velocity.x, 0);
+                }
             }
+            //rb.AddForce(new Vector2(_tempX, _tempY), ForceMode2D.Impulse);
+
         }
 
+        else
+        {
+            _tempX = knockBackHorizontal;
+            _tempY = knockBackVertical;
+            knockBacking = false;
+            //abc();
+        }
 
-
-
-        /* if (vertical != 0)
-         {
-             if (Mathf.Abs(rb.velocity.y) <= velocityMaxY)
-             {
-                 if (vertical == 1)
-                 {
-                     if (_vertical != vertical)
-                     {
-                         rb.velocity = new Vector2(rb.velocity.x, 0);
-                         _vertical = vertical;
-                     }
-
-                     else
-                     {
-                         rb.AddForce(new Vector2(0, Mathf.Abs(vertical)).normalized * (runSpeed));
-                     }
-                 }
-
-                 else if (vertical == -1)
-                 {
-                     if (_vertical != vertical)
-                     {
-                         rb.velocity = new Vector2(rb.velocity.x, 0);
-                         _vertical = vertical;
-
-                     }
-                     else
-                     {
-                         rb.AddForce(new Vector2(0, -Mathf.Abs(vertical)).normalized * (runSpeed));
-                     }
-                 }
-             }
-         }
-         else
-         {
-             rb.velocity = new Vector2(rb.velocity.x, 0);
-         }*/
-
-
-        //rb.AddForce(new Vector2(horizontal, 0).normalized * (runSpeed));
-        //Debug.Log((horizontal) * (runSpeed));
-        //rb.velocity = new Vector2(horizontal, vertical).normalized * (runSpeed);
+        walk(_tempX, _tempY);
+        knockBackHorizontal = 0;
+        knockBackVertical = 0;
+        //rb.velocity = new Vector2(_tempX, _tempY).normalized;
     }
 
 
-
-
-   public void UpdateRunSpeed(int _velocidade)
+    void walk(float _horizontal,float _vertical)
     {
-        runSpeed = _velocidade * 2;
+        rb.AddForce(new Vector2(_horizontal, _vertical), ForceMode2D.Impulse);
+    }
+
+
+    void abc()
+    {
+        transform.position = new Vector3(transform.position.x + knockBackHorizontal, transform.position.y + knockBackVertical, transform.position.z);
+        rb.AddForce(new Vector2(knockBackHorizontal, knockBackVertical), ForceMode2D.Impulse);
+    }
+
+    public void UpdateRunSpeed(int _velocidade)
+    {
+        runSpeed = _velocidade;
     }
 
     void ChageDirection()
