@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Movement : MonoBehaviour
+public class Movement : SingletonInstance<Movement>
 {
     private State state;
     private Rigidbody2D rb;
@@ -10,9 +10,7 @@ public class Movement : MonoBehaviour
     float horizontal;
     float vertical;
     public float runSpeed;
-
-   
-
+    public bool canMove = true;
     // Start is called before the first frame update
     void Start()
     {
@@ -27,34 +25,36 @@ public class Movement : MonoBehaviour
 
         horizontal = Input.GetAxisRaw("Horizontal"); // -1 is left
         vertical = Input.GetAxisRaw("Vertical"); // -1 is down
-
-        if (!state.strafing)
+        if (canMove)
         {
-
-            switch (horizontal)
-            {  
-                case 1:
-                    pontaArma.ChangeDirection("Direita");
-                    break;
-                case -1:
-                    pontaArma.ChangeDirection("Esquerda");
-                    break;
-            }
-
-            switch (vertical)
+            if (!state.strafing)
             {
-                case -1:
-                    pontaArma.ChangeDirection("Baixo");
-                    break;
-                case 1:
-                    pontaArma.ChangeDirection("Cima");
-                    break;
+
+                switch (horizontal)
+                {
+                    case 1:
+                        pontaArma.ChangeDirection("Direita");
+                        break;
+                    case -1:
+                        pontaArma.ChangeDirection("Esquerda");
+                        break;
+                }
+
+                switch (vertical)
+                {
+                    case -1:
+                        pontaArma.ChangeDirection("Baixo");
+                        break;
+                    case 1:
+                        pontaArma.ChangeDirection("Cima");
+                        break;
+                }
+
             }
 
+            Move();
         }
-
-        Move();
-
+        
     }
     void Move( )
     {
