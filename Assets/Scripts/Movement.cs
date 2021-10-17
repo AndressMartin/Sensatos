@@ -70,8 +70,6 @@ public class Movement : SingletonInstance<Movement>
         knockBacking = true; 
         knockBackHorizontal = _horizontal;
         knockBackVertical = _vertical;
-        Debug.Log("movement :" + knockBackHorizontal + "" + knockBackVertical);
-
     }
 
 

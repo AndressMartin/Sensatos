@@ -111,7 +111,6 @@ public class Player : EntityModel
 
     public override void KnockBack(float _horizontal, float _vertical)
     {
-        Debug.Log("player :" + _horizontal + "" + _vertical);
 
         movement.KnockBack(_horizontal, _vertical);
     }

@@ -82,9 +82,10 @@ public class Projetil : MonoBehaviour
             {
                 Vector3 temp = FindObjectOfType<Player>().GetComponent<Transform>().position;
                 playerVector3 = new Vector3(temp.x,temp.y,temp.z);
-                horizontal = transform.position.x;
-                vertical = transform.position.y;
+               
                 directionPlayer = playerVector3 - transform.position;
+                horizontal = directionPlayer.x;
+                vertical = directionPlayer.y;
                 directionPlayer.Normalize();
                 saberDirecaoDisparo = true;
                 disparou = false;
@@ -103,23 +104,21 @@ public class Projetil : MonoBehaviour
 
     void DistanciaProjetil()
     {
-        if(direcao == Direcao.Esquerda || direcao == Direcao.Direita)
-        {
-            float dif = Mathf.Abs(pontaArmaAoDisparar.x) - Mathf.Abs(transform.position.x);
-            if (Mathf.Abs(dif) >= Mathf.Abs(distanciaMaxProjetil))
-            {
-               DestroyGameObject();
-            }
-        }
+        
+            float difX = Mathf.Abs(pontaArmaAoDisparar.x) - Mathf.Abs(transform.position.x);
+            //if (Mathf.Abs(difX) >= Mathf.Abs(distanciaMaxProjetil))
+            //{
+            //   DestroyGameObject();
+            //}
+        
 
-        else if(direcao == Direcao.Cima || direcao == Direcao.Baixo)
-        {
-            float dif = Mathf.Abs(pontaArmaAoDisparar.y) - Mathf.Abs(transform.position.y);
-            if (Mathf.Abs(dif) >= Mathf.Abs(distanciaMaxProjetil))
+        
+            float difY = Mathf.Abs(pontaArmaAoDisparar.y) - Mathf.Abs(transform.position.y);
+            if (Mathf.Abs(difY) >= Mathf.Abs(distanciaMaxProjetil) || Mathf.Abs(difX) >= Mathf.Abs(distanciaMaxProjetil))
             {
                 DestroyGameObject();
             }
-        }
+        
     }
 
     public void Shooted(Transform _pontaArma)
