@@ -86,7 +86,7 @@ public class Player : EntityModel
         itemDirectionHitbox.ChangeDirection(direction);
     }
 
-    public override void TomarDano(int _dano, float _horizontal, float _vertical)
+    public override void TomarDano(int _dano, float _horizontal, float _vertical, float _knockBack)
     {
         if (!imune)
         {
@@ -104,15 +104,15 @@ public class Player : EntityModel
                 imune = true;
                 timeMax = 0.3F;
                 time = 0;
-                KnockBack(_horizontal,_vertical);
+                KnockBack(_horizontal,_vertical,_knockBack);
             }
         }
     }
 
-    public override void KnockBack(float _horizontal, float _vertical)
+    public override void KnockBack(float _horizontal, float _vertical,float _knockBack)
     {
 
-        movement.KnockBack(_horizontal, _vertical);
+        movement.KnockBack(_horizontal, _vertical,_knockBack);
     }
 
     public override IEnumerator Piscar()

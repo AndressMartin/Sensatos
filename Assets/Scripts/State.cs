@@ -123,6 +123,10 @@ public class State : MonoBehaviour
                 movimento = 3;
             UpdateRunSpeed();
         }
+        if(Input.GetKeyDown(KeyCode.Tab))
+        {
+            inventario.TrocarArma();
+        }
         
     }
 }

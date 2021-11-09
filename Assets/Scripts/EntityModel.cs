@@ -30,10 +30,10 @@ public class EntityModel : MonoBehaviour
         }
     }
 
-    public virtual void TomarDano(int _dano, float _horizontal, float _vertical)
+    public virtual void TomarDano(int _dano, float _horizontal, float _vertical, float _knockBack)
     { }
 
-    public virtual void KnockBack(float _horizontal,float _vertical)
+    public virtual void KnockBack(float _horizontal,float _vertical, float _knockBack)
     { }
 
     public virtual IEnumerator Piscar()

@@ -39,7 +39,7 @@ public class EnemyVision : EntityModel
         v1 = new Vector2(xPointOrigin, yPointOrigin);
     }
 
-    private void Update()
+    public void Main()
     {
 
         xp = transformFather.position.x;
@@ -123,27 +123,42 @@ public class EnemyVision : EntityModel
     }
     void ChangeCollision(bool _poligon)
     {
-        polygonCollider.enabled = _poligon;
-        circleCollider2D.enabled = !_poligon;
-        if (circleCollider2D.enabled == true)
-            seePlayer = true;
+        if (!enemyModel.dead)
+        {
+            polygonCollider.enabled = _poligon;
+            circleCollider2D.enabled = !_poligon;
+            if (circleCollider2D.enabled == true)
+                seePlayer = true;
+        }
     }
 
     private void OnTriggerStay2D(Collider2D collision)
     {//Debug.DrawRay(new Vector3(xp, yp, 0), new Vector3(cerca.transform.localPosition.x - xp, cerca.transform.localPosition.y - yp, cerca.transform.localPosition.z), Color.red);
 
-
-        if (polygonCollider.enabled && !seePlayer)
+        if (!enemyModel.dead)
         {
-            PollygonCollider(collision);
-        }
-        if(circleCollider2D.enabled)
-        {
-            CircleCollider(collision);
+            if (polygonCollider.enabled && !seePlayer)
+            {
+                PollygonCollider(collision);
+            }
+            if (circleCollider2D.enabled)
+            {
+                CircleCollider(collision);
+            }
         }
     }
     void PollygonCollider(Collider2D collision)
     {
+        Enemy entityTemp = collision.gameObject.GetComponent<Enemy>();
+        if (entityTemp != null)
+        {
+            if(entityTemp.dead)
+            {
+                Debug.Log("To vendo um corpo");
+                //deteceta um corpo de inimigo no chao
+            }
+        }
+
         entityModelTemp = collision.gameObject.GetComponent<Player>();
         if (entityModelTemp != null)
         {
@@ -223,19 +238,22 @@ public class EnemyVision : EntityModel
     
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Player" && polygonCollider.enabled == true)
+        if (!enemyModel.dead)
         {
-            wallDistance = Vector3.zero;
-           // seePlayer = false;
-            enemyMove.SawEnemy(null);
-        }
+            if (collision.gameObject.tag == "Player" && polygonCollider.enabled == true)
+            {
+                wallDistance = Vector3.zero;
+                // seePlayer = false;
+                enemyMove.SawEnemy(null);
+            }
 
-        else if (collision.gameObject.tag == "Player" && circleCollider2D.enabled==true)
-        {
-            wallDistance = Vector3.zero;
-            enemyMove.SawEnemy(null);
-            lastPlayerPosition = collision.transform.position;
-            ZerarVariaveis();
+            else if (collision.gameObject.tag == "Player" && circleCollider2D.enabled == true)
+            {
+                wallDistance = Vector3.zero;
+                enemyMove.SawEnemy(null);
+                lastPlayerPosition = collision.transform.position;
+                ZerarVariaveis();
+            }
         }
 
     }
@@ -246,9 +264,12 @@ public class EnemyVision : EntityModel
     }
     public void OnAttackRange(bool _playerVisible,GameObject _playerGameObject)
     {
-        playerOnAttackRange = _playerVisible;
+        if (!enemyModel.dead)
+        {
+            playerOnAttackRange = _playerVisible;
 
-        if (playerOnAttackRange) { SeePlayer(seePlayer, _playerGameObject); ChangeCollision(false); }
+            if (playerOnAttackRange) { SeePlayer(seePlayer, _playerGameObject); ChangeCollision(false); }
+        }
     }
 
     void ZerarVariaveis()

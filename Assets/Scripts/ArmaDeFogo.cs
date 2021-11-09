@@ -4,17 +4,25 @@ using UnityEngine;
 
 public class ArmaDeFogo : Item
 {
-    [SerializeField] private  Transform bullet;
+    [SerializeField] public  Transform bullet;
     private Projetil projetil;
     private BulletCreator bulletCreator;
-
+    public Transform pontaArma;
     public override string nome { get; protected set; }
     public int dano;
-
-
+    public float velocityProjetil;
+    public GameObject objQueChamou;
+    public string tempNome;
+    public float knockbackValue;
     private void Start()
     {
         bulletCreator = FindObjectOfType<BulletCreator>();
+        nome = tempNome;
+        if(knockbackValue <=0)
+        {
+            knockbackValue = 1;
+        }
+        
     }
 
     public override void Usar(GameObject objQueChamou)
@@ -32,9 +40,10 @@ public class ArmaDeFogo : Item
 
     void CreateShoot(GameObject _objQueChamou)
     {
-        Transform pontaArma = _objQueChamou.GetComponentInChildren<PontaArma>().transform;
-        bulletCreator.BulletReference(_objQueChamou,bullet,pontaArma);
-
+        pontaArma = _objQueChamou.GetComponentInChildren<PontaArma>().transform;
+        objQueChamou = _objQueChamou;
+        //bulletCreator.BulletReference(_objQueChamou,bullet,pontaArma);
+        bulletCreator.BulletReference(this);
         /*pontaArma = _objQueChamou.GetComponentInChildren<PontaArma>().transform;
         Instantiate(bullet, pontaArma); //onde cria o projetil
         projetil = FindObjectOfType<Projetil>();

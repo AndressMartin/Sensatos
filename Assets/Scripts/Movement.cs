@@ -20,7 +20,11 @@ public class Movement : SingletonInstance<Movement>
     [SerializeField] private float acelerationSpeed;
 
     bool knockBacking;
+   
     public float knockBackHorizontal, knockBackVertical;
+    public bool Knock;
+    float time, timeMax;
+    [SerializeField]private float timeMaxOriginal;
     // Start is called before the first frame update
     void Start()
     {
@@ -63,20 +67,25 @@ public class Movement : SingletonInstance<Movement>
             pontaArma.direction = player.direction;
         }
 
-       Move();
+        Move();
+        KnockBackContador();
     }
-    public void KnockBack(float _horizontal, float _vertical)
+    public void KnockBack(float _horizontal, float _vertical, float _knockBack)
     {
         knockBacking = true; 
         knockBackHorizontal = _horizontal;
         knockBackVertical = _vertical;
+
+        Knock = true;
+        timeMax = timeMaxOriginal;
+        time = 0;
     }
 
 
-    void Move( )
+    void Move()
     {
-        float _tempX=0;
-        float _tempY=0;
+        float _tempX = 0;
+        float _tempY = 0;
 
         if (!knockBacking)//movimenta��o padr�o, caso esteja sendo empurado n�o fazer contas para se movimentar
         {
@@ -160,20 +169,40 @@ public class Movement : SingletonInstance<Movement>
         {
             _tempX = knockBackHorizontal;
             _tempY = knockBackVertical;
-            knockBacking = false;
             //abc();
         }
 
         walk(_tempX, _tempY);
-        knockBackHorizontal = 0;
-        knockBackVertical = 0;
         //rb.velocity = new Vector2(_tempX, _tempY).normalized;
+    }
+    void KnockBackContador()
+    {
+        if (Knock)
+        {
+            time += Time.deltaTime;
+            if (time > timeMax)
+            {
+                Knock = false;
+                timeMax = 0.0F;
+                time = 0;
+            }
+        }
+        else
+        {
+            knockBackHorizontal = 0;
+            knockBackVertical = 0;
+            knockBacking = false;
+        }
     }
 
 
     void walk(float _horizontal,float _vertical)
     {
+        if(!Knock)
         rb.AddForce(new Vector2(_horizontal, _vertical), ForceMode2D.Impulse);
+
+        else
+            rb.AddForce(new Vector2(_horizontal, _vertical));
     }
 
 

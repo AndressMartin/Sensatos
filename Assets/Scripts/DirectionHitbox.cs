@@ -50,5 +50,7 @@ public class DirectionHitbox : EntityModel
 
             objetectCollision = collision.gameObject.GetComponent<ParedeModel>();
         }
+
+
     }
 }

@@ -29,9 +29,7 @@ public class TakeItem : MonoBehaviour
     {
         if (itemDirectionHitbox.objetectCollision.gameObject.tag == "Item")
         {
-            inventario.add(_obj);
-            Debug.Log("chamou item");
-            
+            inventario.add(_obj);            
         }
         else if (itemDirectionHitbox.objetectCollision.gameObject.tag == "ItemChave")
         {   

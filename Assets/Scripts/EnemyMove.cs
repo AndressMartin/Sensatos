@@ -11,7 +11,7 @@ public class EnemyMove : MonoBehaviour
     private Rigidbody2D rb;
     private Enemy enemy;
     [SerializeField]private float horizontal=0, vertical=0;
-
+    private bool hearEnemy;
 
     [SerializeField] private bool lastPlayerPositionChecked;
     [SerializeField] private Vector3 lastPlayerPosition;
@@ -25,20 +25,43 @@ public class EnemyMove : MonoBehaviour
     [SerializeField] private float timePlayerResrvaMax = 0;
     public GameObject gameObjectPlayerReserva;
     bool firstTimeOnLoop=true;
+
+    [SerializeField] private PathFinding pathFinding;
+
+    public float knockBackHorizontal, knockBackVertical;
+    public bool Knock;
+    [SerializeField] private float timeKnock, timeMaxKnock;
+    private float timeMaxOriginalKnock;
+
+    [SerializeField] private float timeKnockCont, timeMaxKnockCont;
+    private float timeMaxOriginalKnockCont;
+    bool knockBacking;
+    int knockBackCont=0;
+    [SerializeField]private int contQuantosTirosParaTomarKnockBack;
+
+
     private void Start()
     {
-
+        pathFinding = GetComponent<PathFinding>();
         rb = GetComponent<Rigidbody2D>();
         initialPosition.x = transform.position.x;
         initialPosition.y = transform.position.y;
         enemy = GetComponent<Enemy>();
+        timeMaxOriginalKnock = timeMaxKnock;
+        timeMaxOriginalKnockCont = timeMaxKnockCont;
     }
 
-    private void Update()
+    public void Main()
     {
+        /*if (playerGameObject != null)
+        {
+            pathFinding.ReceivePlayerGameObject(playerGameObject);
+        }
+        else
+            pathFinding.ReceivePlayerGameObject(null);*/
         
         
-        if (playerGameObject != null)//caso esteja vendo o player
+        if (playerGameObject != null && !knockBacking)//caso esteja vendo o player
         {
             if (firstTimeOnLoop)
             {
@@ -75,6 +98,11 @@ public class EnemyMove : MonoBehaviour
                 gameObjectPlayerReserva=null;
             }
         }
+        /*if()
+        {
+
+        }*/
+
         if(!firstTimeOnLoop && playerGameObject == null)
         {
             if (!lastPlayerPositionChecked)//se o inimigo ja checou a ulitma posicao conehceida
@@ -112,7 +140,7 @@ public class EnemyMove : MonoBehaviour
                      MOVE(direction);
                      Debug.Log("voltando origemr");
                 }
-                /*if (transform.position.x < initialPosition.x)//Inimigo A esquerda origem a direita
+                if (transform.position.x < initialPosition.x)//Inimigo A esquerda origem a direita
                     horizontal = 1;
 
                 else if (transform.position.x > initialPosition.x)//Inimigo a direita origem A esquerda 
@@ -122,16 +150,51 @@ public class EnemyMove : MonoBehaviour
                     vertical = 1;
 
                 else if (transform.position.y > initialPosition.y)//origem a baixo do inimigo
-                    vertical = -1;*/
+                    vertical = -1;
 
-                //Debug.Log("Não vejo o player, voltando a origem");
+                Debug.Log("Não vejo o player, voltando a origem");
             }
         }
-       
+        ResetKnockBackCont();
+        KnockBackContador();
     }
-    public void KnockBack(float _horizontal, float _vertical)
+    public void HearEnemy()
     {
-        transform.position = new Vector3(transform.position.x + _horizontal, transform.position.y + _vertical, transform.position.z);
+
+    }
+    public void KnockBack(float _horizontal, float _vertical,float _knockBack)
+    {
+        knockBackCont++;
+        timeKnockCont = 0;
+        if (knockBackCont == contQuantosTirosParaTomarKnockBack)
+            KnockBackComplex(_horizontal, _vertical, _knockBack);
+        else
+            KnockBackSimple(_horizontal,_vertical,_knockBack);
+    }
+    void ResetKnockBackCont()
+    {
+        if(knockBackCont !=0)
+        {
+            //inicia contador de tempo para levar o knockback forte
+            timeKnockCont += Time.deltaTime;
+            if (timeKnockCont > timeMaxKnockCont)
+            {
+                knockBackCont = 0;
+                timeMaxKnockCont = timeMaxOriginalKnockCont;
+                timeKnockCont = 0;
+            }
+        }
+    }
+    void KnockBackSimple (float _horizontal, float _vertical, float _knockBack)
+    {
+        transform.position = new Vector3(transform.position.x + _horizontal * _knockBack, transform.position.y + _vertical * _knockBack, transform.position.z);
+    }
+    void KnockBackComplex(float _horizontal, float _vertical, float _knockBack)
+    {
+        transform.position = new Vector3(transform.position.x + _horizontal * _knockBack, transform.position.y + _vertical * _knockBack, transform.position.z);
+        knockBacking = true;
+        Knock = true;
+        knockBackCont = 0;
     }
 
     public void EnemyVissionReference(EnemyVision _enemyVision)
@@ -154,6 +217,24 @@ public class EnemyMove : MonoBehaviour
         rb.MovePosition((Vector2)transform.position + (_direction * velocity * Time.deltaTime));
     }
 
+    void KnockBackContador()
+    {
+        if (Knock)
+        {
+            timeKnock += Time.deltaTime;
+            if (timeKnock > timeMaxKnock)
+            {
+                Knock = false;
+                timeMaxKnock = 0.0F;
+                timeKnock = 0;
+            }
+        }
+        else
+        {
+            timeMaxKnock = timeMaxOriginalKnock;
+            knockBacking = false;
+        }
+    }
 
 
 }

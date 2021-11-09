@@ -33,6 +33,7 @@ public class FisicalAttack : MonoBehaviour
     bool saberDirecaoDisparo;
     bool disparou;
     float dif;
+    float knockBack;
     void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -146,7 +147,7 @@ public class FisicalAttack : MonoBehaviour
         EntityModel temp;
 
         temp = alvo.GetComponent<EntityModel>();
-        temp.TomarDano(dano, horizontal, vertical);
+        temp.TomarDano(dano, horizontal, vertical,knockBack);
 
         DestroyGameObject();
     }
