@@ -6,6 +6,7 @@ public class EnemyAttackRange : MonoBehaviour
 {
     [SerializeField]private EnemyVision enemyVision;
     private Enemy enemy;
+
     // Start is called before the first frame update
     void Start()
     {
