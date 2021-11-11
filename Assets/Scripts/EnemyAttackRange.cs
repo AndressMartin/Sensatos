@@ -32,7 +32,7 @@ public class EnemyAttackRange : MonoBehaviour
         Player temp = collision.gameObject.GetComponent<Player>();
         if (temp != null)
         {
-            Debug.Log("Ta me colididno");
+            //Debug.Log("Ta me colididno");
 
             if (enemyVision.polygonCollider.enabled == true)
             {

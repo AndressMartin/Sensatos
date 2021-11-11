@@ -10,22 +10,22 @@ public class EnemyMove : MonoBehaviour
     [SerializeField] private GameObject playerGameObject;
     private Rigidbody2D rb;
     private Enemy enemy;
-    [SerializeField]private float horizontal=0, vertical=0;
+    [SerializeField] private float horizontal = 0, vertical = 0;
 
-    
+
 
     [SerializeField] private bool lastPlayerPositionChecked;
     [SerializeField] private Vector3 lastPlayerPosition;
     [SerializeField] private float time = 0.0F;
     [SerializeField] private float timeMax = 0;
 
-    private enum state {followPlayer,attackingPlayer,searchingPlayer,BackingOriginalPosition,OriginalPosition }
+    private enum state { followPlayer, attackingPlayer, searchingPlayer, BackingOriginalPosition, OriginalPosition }
     private state enemyState;
 
     [SerializeField] private float timePlayerResrva = 0.0F;
     [SerializeField] private float timePlayerResrvaMax = 0;
     public GameObject gameObjectPlayerReserva;
-    bool firstTimeOnLoop=true;
+    bool firstTimeOnLoop = true;
 
     [SerializeField] private PathFinding pathFinding;
 
@@ -37,12 +37,22 @@ public class EnemyMove : MonoBehaviour
     [SerializeField] private float timeKnockCont, timeMaxKnockCont;
     private float timeMaxOriginalKnockCont;
     bool knockBacking;
-    int knockBackCont=0;
-    [SerializeField]private int contQuantosTirosParaTomarKnockBack;
+    int knockBackCont = 0;
+    [SerializeField] private int contQuantosTirosParaTomarKnockBack;
 
     public Vector3 enemySoundPosition;
     [SerializeField] private bool hearEnemy;
     [SerializeField] private GameObject enemySound;
+
+    public enum Estado { rotina, alerta, combate };
+
+    public Estado estado;
+    [SerializeField] private float timeAlert;
+    [SerializeField] private float timeMaxAlert;
+    [SerializeField]private float timeMaxAlertOriginal;
+    int vezesNoMetodoAlerta;
+    public Vector3 transformtemp;
+
     private void Start()
     {
         pathFinding = GetComponent<PathFinding>();
@@ -52,6 +62,9 @@ public class EnemyMove : MonoBehaviour
         enemy = GetComponent<Enemy>();
         timeMaxOriginalKnock = timeMaxKnock;
         timeMaxOriginalKnockCont = timeMaxKnockCont;
+
+        timeMaxAlert = timeMaxAlertOriginal;
+
     }
     public void HearEnemy(Player _gameObject)
     {
@@ -59,24 +72,30 @@ public class EnemyMove : MonoBehaviour
         enemySoundPosition = enemySound.transform.position;
         hearEnemy = true;
     }
+    void counterAlert()
+    { 
+        if (estado == Estado.alerta)
+        {
+            vezesNoMetodoAlerta++;
+            timeAlert += Time.deltaTime;
+            if (timeAlert > timeMaxAlert)
+            {
+                vezesNoMetodoAlerta = 0; 
+                estado = Estado.combate;
+            }
+        }  
+    }
 
-    public void Main()
+    public void seguirAtacarPlayer()
     {
-        /*if (playerGameObject != null)
+        if (!knockBacking) //entrar em modo de alerta por x tempos, caso continue vendo o player executa os ifs abaixo
         {
-            pathFinding.ReceivePlayerGameObject(playerGameObject);
-        }
-        else
-            pathFinding.ReceivePlayerGameObject(null);*/
-        
-        if (playerGameObject != null && !knockBacking)//caso esteja vendo o player
-        {
-            //entrar em modo de alerta por x tempos, caso continue vendo o player executa os ifs abaixo
+
             if (firstTimeOnLoop)
             {
                 firstTimeOnLoop = false;
             }
-            if(gameObjectPlayerReserva == null)
+            if (gameObjectPlayerReserva == null)
                 gameObjectPlayerReserva = playerGameObject;
 
 
@@ -91,55 +110,64 @@ public class EnemyMove : MonoBehaviour
                 Vector3 direction = playerGameObject.transform.position - transform.position;
                 direction.Normalize();
                 MOVE(direction);
-                Debug.Log("seguind player");
+                //Debug.Log("seguind player");
             }
+        }
+    }
+    public void Main()
+    {
 
+        /*if (playerGameObject != null)
+        {
+            pathFinding.ReceivePlayerGameObject(playerGameObject);
+        }
+        else
+            pathFinding.ReceivePlayerGameObject(null);*/
+        //Debug.Log(estado);
+
+        if (playerGameObject != null)//caso esteja vendo o player
+        {
+            switch (estado)
+            {
+                case Estado.combate:
+                    seguirAtacarPlayer();
+                    break;
+                case Estado.alerta:
+                    counterAlert();
+                    break;
+                case Estado.rotina:
+                    estado = Estado.alerta;
+                    break;
             
-        }
-        else if(playerGameObject == null && gameObjectPlayerReserva != null)//acho que é caso o inimigo não veje mais o player e a sua ultima referencia não seja nula/ ainda estou procurando ele
-        {
-            lastPlayerPosition = gameObjectPlayerReserva.transform.position;
-            timePlayerResrva += Time.deltaTime;
-            if (timePlayerResrva > timePlayerResrvaMax)//pega a ultima posicao do player conhecida e passa a pra variavel, zera as outras coisas
-            {
-                timePlayerResrvaMax = 0.0F;
-                timePlayerResrva = 0;
-                gameObjectPlayerReserva=null;//depois daquele tempo em que segue o jogador voltar pro alerta
             }
         }
-        if(hearEnemy)//caso ouça o inimigo
-        {
-            if (Mathf.Abs(enemySoundPosition.x - transform.position.x) >= 0.1 && Mathf.Abs(enemySoundPosition.y - transform.position.y) >= 0.1)//caso o inimigo não tenha chego na ultima posicao do player
-            {
-                Vector3 direction = enemySoundPosition - transform.position;
-                direction.Normalize();
-                MOVE(direction);
-            }
-            else
-            {
-                hearEnemy = false;
-            }
-
-        }
-
-        else if (playerGameObject == null)
-        {
-            
-
+        else if (playerGameObject == null)//caso não veja o player
+        {           
             if (!lastPlayerPositionChecked)//se o inimigo ja checou a ulitma posicao conehceida
             {
-                Debug.Log("else");
+                if (gameObjectPlayerReserva != null)
+                {
+                    estado = Estado.alerta;
+                    lastPlayerPosition = gameObjectPlayerReserva.transform.position;
+                    timePlayerResrva += Time.deltaTime;
+                    if (timePlayerResrva > timePlayerResrvaMax)//pega a ultima posicao do player conhecida e passa a pra variavel, zera as outras coisas
+                    {
+                        timePlayerResrvaMax = 0.0F;
+                        timePlayerResrva = 0;
+                        gameObjectPlayerReserva = null;//depois daquele tempo em que segue o jogador voltar pro alerta
+                    }
+                }   
 
-                if (Mathf.Abs( lastPlayerPosition.x - transform.position.x) >= 0.1 && Mathf.Abs( lastPlayerPosition.y - transform.position.y) >= 0.1)//caso o inimigo não tenha chego na ultima posicao do player
+                if (Mathf.Abs(lastPlayerPosition.x - transform.position.x) >= 0.1 && Mathf.Abs(lastPlayerPosition.y - transform.position.y) >= 0.1)//caso o inimigo não tenha chego na ultima posicao do player
                 {
                     Vector3 direction = lastPlayerPosition - transform.position;
-                    direction.Normalize();                                         
+                    direction.Normalize();
                     MOVE(direction);
-                    Debug.Log("ultima posicao do  player");
+                    //Debug.Log("indo até a ultima posicao do  player");
                 }
                 else
                 {                                         //inimigo começa a contar como se estivesse procurando o player por um tempo na região                  
-                    Debug.Log("contador player");
+                    //Debug.Log("contador player");
 
                     time += Time.deltaTime;
                     if (time > timeMax)
@@ -152,16 +180,18 @@ public class EnemyMove : MonoBehaviour
             }
             else // caso o inimigo ja tenha checado a ultima posicao do player ele volta para sua origem, ou rotina;
             {
+                estado = Estado.rotina;
+                timeAlert = 0;
                 if (Mathf.Abs(initialPosition.x - transform.position.x) <= 0.1 && Mathf.Abs(initialPosition.y - transform.position.y) <= 0.1) // voltar para origem
                 {
-                    Debug.Log("Cheguei a minha origme");
+                    //Debug.Log("Cheguei a minha origme");
                 }
                 else
                 {
-                     Vector3 direction = initialPosition - transform.position;
-                     direction.Normalize();
-                     MOVE(direction);
-                     Debug.Log("voltando origemr");
+                    Vector3 direction = initialPosition - transform.position;
+                    direction.Normalize();
+                    MOVE(direction);
+                    //Debug.Log("voltando origemr");
                 }
 
                 if (transform.position.x < initialPosition.x)//Inimigo A esquerda origem a direita
@@ -176,15 +206,32 @@ public class EnemyMove : MonoBehaviour
                 else if (transform.position.y > initialPosition.y)//origem a baixo do inimigo
                     vertical = -1;
 
-                Debug.Log("Não vejo o player, voltando a origem");
-            }
+                //Debug.Log("Não vejo o player, voltando a origem");
+            }  
         }
+        if (hearEnemy && estado != Estado.combate)//caso ouça o inimigo
+        {
+            if (estado == Estado.alerta)
+            {
+                if (Mathf.Abs(enemySoundPosition.x - transform.position.x) >= 0.1 && Mathf.Abs(enemySoundPosition.y - transform.position.y) >= 0.1)//caso o inimigo não tenha chego na ultima posicao do player
+                {
+                    Vector3 direction = enemySoundPosition - transform.position;
+                    direction.Normalize();
+                    MOVE(direction);
+                }
+                else
+                {
+                    hearEnemy = false;
+                }
+            }
+            else
+            {
+                estado = Estado.alerta;
+            }
+        }        
         ResetKnockBackCont();
-        KnockBackContador();
-    }
-    public void HearEnemy()
-    {
-
+        KnockBackContador(); 
+        transformtemp = transform.position;   
     }
     public void KnockBack(float _horizontal, float _vertical,float _knockBack)
     {
@@ -235,11 +282,42 @@ public class EnemyMove : MonoBehaviour
         timePlayerResrvaMax = 1.5F;
         timePlayerResrva = 0;
     }
-
     private void MOVE(Vector2 _direction)
     {
+        float xdif = transformtemp.x - transform.position.x;
+        float ydif = transformtemp.y - transform.position.y;
+
+        Debug.Log("X: "+ Mathf.Abs(xdif) + "\nY: "+ Mathf.Abs(ydif));
+
+        if (Mathf.Abs(ydif) >= Mathf.Abs(xdif))
+        {
+            if (ydif < 0)
+            {
+                //("cima");
+                enemy.ChangeDirection(Enemy.Direction.Cima);
+
+            }
+            else if (ydif > 0)
+            {
+                //"baixo");
+                enemy.ChangeDirection(Enemy.Direction.Baixo);
+            }
+        }
+
+        else if (xdif > 0)
+        {
+            //("esquerda");
+            enemy.ChangeDirection(Enemy.Direction.Esquerda);
+        }
+        else if (xdif < 0)
+        {
+            //("direita");
+            enemy.ChangeDirection(Enemy.Direction.Direita);
+        }
+       
         rb.MovePosition((Vector2)transform.position + (_direction * velocity * Time.deltaTime));
     }
+
 
     void KnockBackContador()
     {

@@ -16,6 +16,7 @@ public class Enemy : EntityModel
     [SerializeField] private int pontosVida;
     float horizontal;
     float vertical;
+    float enemyDirection;
     public bool dead = false;
 
 
@@ -51,25 +52,6 @@ public class Enemy : EntityModel
             direction = Direction.Direita;
         }*/
 
-        switch (horizontal)
-        {
-            case -1:
-                direction = Direction.Esquerda;
-                break;
-            case 1:
-                direction = Direction.Direita;
-                break;
-        }
-
-        switch (vertical)
-        {
-            case -1:
-                direction = Direction.Baixo;
-                break;
-            case 1:
-                direction = Direction.Cima;
-                break;
-        }
         AllEnemySubClass();
     }
     void AllEnemySubClass()
@@ -115,6 +97,15 @@ public class Enemy : EntityModel
     public void ChangeDirection(Direction _direction)
     {
         direction = _direction;
+
+    }
+    public void ChangeHorizontal(float _direction)
+    {
+        horizontal = _direction;
+    }
+    public void ChangeVertical(float _direction)
+    {
+        vertical = _direction;
     }
 
     public override IEnumerator Piscar()

@@ -154,7 +154,7 @@ public class EnemyVision : EntityModel
         {
             if(entityTemp.dead)
             {
-                Debug.Log("To vendo um corpo");
+                //Debug.Log("To vendo um corpo");
                 //deteceta um corpo de inimigo no chao
             }
         }
