@@ -10,8 +10,6 @@ public class Movement : SingletonInstance<Movement>
     private PontaArma pontaArma;
     float horizontal;
     float vertical;
-    float _horizontal;
-    float _vertical;
     public float runSpeed;
     public bool canMove = true;
     [SerializeField] private float velocityMaxX;
@@ -20,14 +18,16 @@ public class Movement : SingletonInstance<Movement>
     [SerializeField] private float acelerationSpeed;
 
     bool knockBacking;
-   
+    int raio = 2;
     public float knockBackHorizontal, knockBackVertical;
     public bool Knock;
     float time, timeMax;
     [SerializeField]private float timeMaxOriginal;
+    Sound sound;
     // Start is called before the first frame update
     void Start()
     {
+        sound = GetComponentInChildren<Sound>();
         player = GetComponent<Player>();
         pontaArma = GetComponentInChildren<PontaArma>();
         state = GetComponent<State>();
@@ -196,17 +196,27 @@ public class Movement : SingletonInstance<Movement>
     }
 
 
-    void walk(float _horizontal,float _vertical)
+    void walk(float _horizontal, float _vertical)
     {
-        if(!Knock)
-        rb.AddForce(new Vector2(_horizontal, _vertical), ForceMode2D.Impulse);
+
+        if (!Knock)
+        {
+            if (_horizontal != 0 || vertical != 0)
+            {
+                rb.AddForce(new Vector2(_horizontal, _vertical), ForceMode2D.Impulse);
+                sound.changeColliderRadius(raio);
+
+            }
+        }
 
         else
             rb.AddForce(new Vector2(_horizontal, _vertical));
+
+        
     }
 
 
-    void abc()
+        void abc()
     {
         transform.position = new Vector3(transform.position.x + knockBackHorizontal, transform.position.y + knockBackVertical, transform.position.z);
         rb.AddForce(new Vector2(knockBackHorizontal, knockBackVertical), ForceMode2D.Impulse);

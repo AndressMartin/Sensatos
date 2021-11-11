@@ -27,7 +27,7 @@ public class EnemyMove : MonoBehaviour
     public GameObject gameObjectPlayerReserva;
     bool firstTimeOnLoop = true;
 
-    [SerializeField] private PathFinding pathFinding;
+    private PathFinding pathFinding;
 
     public float knockBackHorizontal, knockBackVertical;
     public bool Knock;
@@ -40,21 +40,34 @@ public class EnemyMove : MonoBehaviour
     int knockBackCont = 0;
     [SerializeField] private int contQuantosTirosParaTomarKnockBack;
 
-    public Vector3 enemySoundPosition;
+    private Vector3 enemySoundPosition;
     [SerializeField] private bool hearEnemy;
-    [SerializeField] private GameObject enemySound;
+    private GameObject enemySound;
 
     public enum Estado { rotina, alerta, combate };
 
     public Estado estado;
-    [SerializeField] private float timeAlert;
-    [SerializeField] private float timeMaxAlert;
+    private float timeAlert;
+    private float timeMaxAlert;
     [SerializeField]private float timeMaxAlertOriginal;
-    int vezesNoMetodoAlerta;
-    public Vector3 transformtemp;
+    private Vector3 transformtemp;
 
+    public enum Stances { idle, patrolling };
+    public Stances stance = Stances.idle;
+    public float waitTime;
+    public float startWaitTime;
+    public List<Transform> moveSpots = new List<Transform>();
+    private int lastMoveSpot;
+    private int randomSpot;
+    bool hearShoot;
+
+    private Transform ultimaposicaoOrigem;
     private void Start()
     {
+        waitTime = startWaitTime;
+        stance = Stances.patrolling;
+        randomSpot = Random.Range(0, moveSpots.Count);
+
         pathFinding = GetComponent<PathFinding>();
         rb = GetComponent<Rigidbody2D>();
         initialPosition.x = transform.position.x;
@@ -66,21 +79,21 @@ public class EnemyMove : MonoBehaviour
         timeMaxAlert = timeMaxAlertOriginal;
 
     }
-    public void HearEnemy(Player _gameObject)
+    public void HearEnemy(Player _gameObject,float _tamanhoRaio)
     {
         enemySound = _gameObject.gameObject;
         enemySoundPosition = enemySound.transform.position;
         hearEnemy = true;
+        if (_tamanhoRaio > 2)
+            hearShoot = true;
     }
     void counterAlert()
     { 
         if (estado == Estado.alerta)
         {
-            vezesNoMetodoAlerta++;
             timeAlert += Time.deltaTime;
             if (timeAlert > timeMaxAlert)
             {
-                vezesNoMetodoAlerta = 0; 
                 estado = Estado.combate;
             }
         }  
@@ -94,9 +107,10 @@ public class EnemyMove : MonoBehaviour
             if (firstTimeOnLoop)
             {
                 firstTimeOnLoop = false;
+                ultimaposicaoOrigem.position = new Vector3( transform.position.x, transform.position.y, transform.position.z);
+                Debug.Log(ultimaposicaoOrigem);
             }
-            if (gameObjectPlayerReserva == null)
-                gameObjectPlayerReserva = playerGameObject;
+            
 
 
             lastPlayerPosition = playerGameObject.transform.position;
@@ -140,6 +154,8 @@ public class EnemyMove : MonoBehaviour
                     break;
             
             }
+            if (gameObjectPlayerReserva == null)
+                gameObjectPlayerReserva = playerGameObject;
         }
         else if (playerGameObject == null)//caso não veja o player
         {           
@@ -160,14 +176,16 @@ public class EnemyMove : MonoBehaviour
 
                 if (Mathf.Abs(lastPlayerPosition.x - transform.position.x) >= 0.1 && Mathf.Abs(lastPlayerPosition.y - transform.position.y) >= 0.1)//caso o inimigo não tenha chego na ultima posicao do player
                 {
-                    Vector3 direction = lastPlayerPosition - transform.position;
+
+                    Vector2 direction = lastPlayerPosition - transform.position;
                     direction.Normalize();
                     MOVE(direction);
-                    //Debug.Log("indo até a ultima posicao do  player");
+
+                    Debug.Log("indo até a ultima posicao do  player");
                 }
                 else
                 {                                         //inimigo começa a contar como se estivesse procurando o player por um tempo na região                  
-                    //Debug.Log("contador player");
+                    Debug.Log("contador player");
 
                     time += Time.deltaTime;
                     if (time > timeMax)
@@ -180,58 +198,98 @@ public class EnemyMove : MonoBehaviour
             }
             else // caso o inimigo ja tenha checado a ultima posicao do player ele volta para sua origem, ou rotina;
             {
-                estado = Estado.rotina;
                 timeAlert = 0;
+                initialPosition = ultimaposicaoOrigem.position;
+
                 if (Mathf.Abs(initialPosition.x - transform.position.x) <= 0.1 && Mathf.Abs(initialPosition.y - transform.position.y) <= 0.1) // voltar para origem
                 {
-                    //Debug.Log("Cheguei a minha origme");
+                    estado = Estado.rotina;
+
+                    Debug.Log("Cheguei a minha origme");
                 }
                 else
                 {
-                    Vector3 direction = initialPosition - transform.position;
+                    Vector2 direction = initialPosition - transform.position;
                     direction.Normalize();
                     MOVE(direction);
-                    //Debug.Log("voltando origemr");
+
+                    //MoveTransform(direction);
+                    Debug.Log("voltando origemr");
                 }
 
-                if (transform.position.x < initialPosition.x)//Inimigo A esquerda origem a direita
-                    horizontal = 1;
-
-                else if (transform.position.x > initialPosition.x)//Inimigo a direita origem A esquerda 
-                    horizontal = -1;
-
-                else if (transform.position.y < initialPosition.y)//Iniimgo a baixo do origem
-                    vertical = 1;
-
-                else if (transform.position.y > initialPosition.y)//origem a baixo do inimigo
-                    vertical = -1;
-
-                //Debug.Log("Não vejo o player, voltando a origem");
+                Debug.Log("Não vejo o player, voltando a origem");
             }  
+        }
+        if (playerGameObject == null && estado==Estado.rotina)//patrulando
+        {
+            
+            //Vector3 direction = moveSpots[randomSpot].position - transform.position;
+            //direction.Normalize();
+            //MOVE(direction);
+            MoveTransform(moveSpots[randomSpot].position);
+
+            if (Vector2.Distance(transform.position, moveSpots[randomSpot].position) < 0.2f)
+            {
+                //gera um novo lugar de waypoint
+                randomSpot = Random.Range(0, moveSpots.Count);
+                if (randomSpot != lastMoveSpot)
+                {
+                    lastMoveSpot = randomSpot;
+                    ultimaposicaoOrigem = moveSpots[lastMoveSpot];
+                }
+                else
+                {
+                    while (randomSpot == lastMoveSpot)
+                    {
+                        randomSpot = Random.Range(0, moveSpots.Count);
+                    }
+                }
+            }
+            else
+            {
+                stance = Stances.patrolling;
+            }
         }
         if (hearEnemy && estado != Estado.combate)//caso ouça o inimigo
         {
-            if (estado == Estado.alerta)
+            if (hearShoot)
             {
+                estado = Estado.alerta;
                 if (Mathf.Abs(enemySoundPosition.x - transform.position.x) >= 0.1 && Mathf.Abs(enemySoundPosition.y - transform.position.y) >= 0.1)//caso o inimigo não tenha chego na ultima posicao do player
                 {
                     Vector3 direction = enemySoundPosition - transform.position;
                     direction.Normalize();
                     MOVE(direction);
                 }
-                else
-                {
-                    hearEnemy = false;
-                }
             }
             else
             {
-                estado = Estado.alerta;
+                /*if (estado == Estado.alerta)
+                {
+                    if (Mathf.Abs(enemySoundPosition.x - transform.position.x) >= 0.1 && Mathf.Abs(enemySoundPosition.y - transform.position.y) >= 0.1)//caso o inimigo não tenha chego na ultima posicao do player
+                    {
+                        Vector3 direction = enemySoundPosition - transform.position;
+                        direction.Normalize();
+                        MOVE(direction);
+                    }
+                    else
+                    {
+                        hearEnemy = false;
+                    }
+                }
+                else
+                {
+                    estado = Estado.alerta;
+                }*/
             }
         }        
         ResetKnockBackCont();
-        KnockBackContador(); 
-        transformtemp = transform.position;   
+        KnockBackContador();
+        float x, y, z;
+        x = transform.position.x;
+        y = transform.position.y;
+        z = transform.position.z;
+        transformtemp =new Vector3(x,y,z);   
     }
     public void KnockBack(float _horizontal, float _vertical,float _knockBack)
     {
@@ -282,41 +340,46 @@ public class EnemyMove : MonoBehaviour
         timePlayerResrvaMax = 1.5F;
         timePlayerResrva = 0;
     }
+
+    private void MoveTransform(Vector2 _direction)
+    {
+        transform.position = Vector2.MoveTowards(transform.position, _direction, velocity / 3 * Time.deltaTime);
+        CollisionDirection();
+        
+    }
     private void MOVE(Vector2 _direction)
+    {
+        rb.MovePosition((Vector2)transform.position + (_direction * velocity * Time.deltaTime));
+        CollisionDirection();
+    }
+    private void CollisionDirection()
     {
         float xdif = transformtemp.x - transform.position.x;
         float ydif = transformtemp.y - transform.position.y;
 
-        Debug.Log("X: "+ Mathf.Abs(xdif) + "\nY: "+ Mathf.Abs(ydif));
 
         if (Mathf.Abs(ydif) >= Mathf.Abs(xdif))
         {
             if (ydif < 0)
             {
-                //("cima");
                 enemy.ChangeDirection(Enemy.Direction.Cima);
-
             }
             else if (ydif > 0)
             {
-                //"baixo");
                 enemy.ChangeDirection(Enemy.Direction.Baixo);
             }
         }
 
         else if (xdif > 0)
         {
-            //("esquerda");
             enemy.ChangeDirection(Enemy.Direction.Esquerda);
         }
         else if (xdif < 0)
         {
-            //("direita");
             enemy.ChangeDirection(Enemy.Direction.Direita);
         }
-       
-        rb.MovePosition((Vector2)transform.position + (_direction * velocity * Time.deltaTime));
     }
+    
 
 
     void KnockBackContador()
