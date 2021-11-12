@@ -18,7 +18,6 @@ public class Movement : SingletonInstance<Movement>
     [SerializeField] private float acelerationSpeed;
 
     bool knockBacking;
-    int raio = 2;
     public float knockBackHorizontal, knockBackVertical;
     public bool Knock;
     float time, timeMax;
@@ -204,8 +203,7 @@ public class Movement : SingletonInstance<Movement>
             if (_horizontal != 0 || vertical != 0)
             {
                 rb.AddForce(new Vector2(_horizontal, _vertical), ForceMode2D.Impulse);
-                sound.changeColliderRadius(raio);
-
+                sound.changeColliderRadius(runSpeed);
             }
         }
 
