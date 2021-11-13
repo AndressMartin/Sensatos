@@ -28,19 +28,18 @@ public class Sound : MonoBehaviour {
     {
         if (shoot)
         {
-            circleCollider2D.radius = raiotemp;
+            circleCollider2D.radius = 5;
             shootCont();
         }
 
         else if (agachado)
         {
-            Debug.Log("agachado");
-             circleCollider2D.radius = raiotemp;
+             circleCollider2D.radius = 0.1f;
 
         }
         else 
         {
-            circleCollider2D.radius = raioOriginal;
+            circleCollider2D.radius = 0.5f;
 
         }
 

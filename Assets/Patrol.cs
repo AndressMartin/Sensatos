@@ -27,21 +27,23 @@ public class Patrol : MonoBehaviour
         spriteRend = GetComponent<SpriteRenderer>();
         defaultSprite = spriteRend.sprite;
         stance = Stances.patrolling;
-        randomSpot = Random.Range(0, moveSpots.Count);
+        randomSpot = 0;
     }
 
     // Update is called once per frame
     void Update()
-    {
-        //transform.position = Vector2.MoveTowards(transform.position, moveSpots[randomSpot].position, speed * Time.deltaTime);
+    {        
+        transform.position = Vector2.MoveTowards(transform.position, moveSpots[randomSpot].position, speed * Time.deltaTime);
 
-        rigidbody2D.MovePosition(transform.position+(moveSpots[randomSpot].position-transform.position) * speed * Time.deltaTime);
-
-
+        //rigidbody2D.MovePosition(transform.position+(moveSpots[randomSpot].position-transform.position) * speed * Time.deltaTime);
         if (Vector2.Distance(transform.position, moveSpots[randomSpot].position) < 0.2f)
         {
             //gera um novo lugar de waypoint
-            randomSpot = Random.Range(0, moveSpots.Count);
+            if (randomSpot >= moveSpots.Count-1)
+                randomSpot = 0;
+            else
+                randomSpot ++;
+
             if (randomSpot != lastMoveSpot)
             {
                 lastMoveSpot = randomSpot;

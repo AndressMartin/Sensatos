@@ -200,11 +200,10 @@ public class Movement : SingletonInstance<Movement>
 
         if (!Knock)
         {
-            if (_horizontal != 0 || vertical != 0)
-            {
-                rb.AddForce(new Vector2(_horizontal, _vertical), ForceMode2D.Impulse);
-                sound.changeColliderRadius(runSpeed);
-            }
+
+            rb.AddForce(new Vector2(_horizontal, _vertical), ForceMode2D.Impulse);
+            sound.changeColliderRadius(runSpeed);
+            
         }
 
         else

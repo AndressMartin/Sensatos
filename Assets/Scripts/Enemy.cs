@@ -35,22 +35,30 @@ public class Enemy : EntityModel
     // Update is called once per frame
     void Update()
     {
-       /* if (Input.GetKeyDown(KeyCode.W))
+        if(direction==Direction.Esquerda && !spriteRenderer.flipX)
         {
-            direction = Direction.Cima;
+            spriteRenderer.flipX = true;
         }
-        if (Input.GetKeyDown(KeyCode.S))
+        if (direction == Direction.Direita && spriteRenderer.flipX)
         {
-            direction = Direction.Baixo;
+            spriteRenderer.flipX = false;
         }
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            direction = Direction.Esquerda;
-        }
-        if (Input.GetKeyDown(KeyCode.D))
-        {
-            direction = Direction.Direita;
-        }*/
+        /* if (Input.GetKeyDown(KeyCode.W))
+         {
+             direction = Direction.Cima;
+         }
+         if (Input.GetKeyDown(KeyCode.S))
+         {
+             direction = Direction.Baixo;
+         }
+         if (Input.GetKeyDown(KeyCode.A))
+         {
+             direction = Direction.Esquerda;
+         }
+         if (Input.GetKeyDown(KeyCode.D))
+         {
+             direction = Direction.Direita;
+         }*/
 
         AllEnemySubClass();
     }

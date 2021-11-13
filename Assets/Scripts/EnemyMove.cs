@@ -68,7 +68,7 @@ public class EnemyMove : MonoBehaviour
         
         waitTime = startWaitTime;
         stance = Stances.patrolling;
-        randomSpot = Random.Range(0, moveSpots.Count);
+        randomSpot = 0;
 
         pathFinding = GetComponent<PathFinding>();
         rb = GetComponent<Rigidbody2D>();
@@ -237,7 +237,11 @@ public class EnemyMove : MonoBehaviour
             if (Vector2.Distance(transform.position, moveSpots[randomSpot].position) < 0.2f)
             {
                 //gera um novo lugar de waypoint
-                randomSpot = Random.Range(0, moveSpots.Count);
+                if (randomSpot >= moveSpots.Count - 1)
+                    randomSpot = 0;
+                else
+                    randomSpot++;
+
                 if (randomSpot != lastMoveSpot)
                 {
                     lastMoveSpot = randomSpot;
