@@ -1,0 +1,50 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using static EntityModel;
+
+public class AnimacaoJogador : MonoBehaviour
+{
+    private Animator corpo; //Animator do corpo
+    private Animator braco; //Animator dos bracos
+    private string armaEquipadaVisual; //Guarda a arma equipada
+    private string animacaoAtual; //Guarda a animacao atual
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        corpo = transform.Find("Corpo").GetComponent<Animator>();
+        braco = transform.Find("Bracos").GetComponent<Animator>();
+        armaEquipadaVisual = "";
+        animacaoAtual = "Idle";
+    }
+
+    //Atualiza o valor dos parametros de direcao nos animators
+    public void AtualizarDirecao(Direcao direcao, Direcao direcaoMovimento)
+    {
+        corpo.SetFloat("Direcao", (float)direcao);
+        corpo.SetFloat("DirecaoMovimento", (float)direcaoMovimento);
+        braco.SetFloat("Direcao", (float)direcao);
+        braco.SetFloat("DirecaoMovimento", (float)direcaoMovimento);
+    }
+
+    //Troca a animacao atual
+    public void TrocarAnimacao(string animacao)
+    {
+        animacaoAtual = animacao;
+        corpo.Play(animacaoAtual);
+        braco.Play(armaEquipadaVisual + animacaoAtual);
+    }
+
+    //Troca apenas a animacao dos bracos e sincroniza o tempo dela com a do corpo, para quando arma equipada for trocada
+    public void AtualizarArmaBracos(string armaEquipada)
+    {
+        armaEquipadaVisual = armaEquipada;
+        braco.Play(armaEquipadaVisual + animacaoAtual, 1, corpo.GetCurrentAnimatorStateInfo(0).normalizedTime);
+    }
+
+    public string GetAnimacaoAtual()
+    {
+        return animacaoAtual;
+    }
+}

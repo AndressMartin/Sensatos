@@ -6,15 +6,20 @@ public class Player : EntityModel
 {
     public override int vida { get; protected set; }
     private DirectionHitbox directionHitbox;
+    private Rigidbody2D rb;
     private ItemDirectionHitbox itemDirectionHitbox;
     private SpriteRenderer spriteRenderer;
     private Movement movement;
     private BoxCollider2D boxCollider2D;
     public Enemy[] enemies;
 
+    private PontaArma pontaArma;
+    private AnimacaoJogador animacao;
+
     public Direcao direcaoMovimento;
 
-    public int initialLife; 
+    public int initialLife;
+    public bool andandoSorrateiramente;
 
     [SerializeField] private float time = 0.0F;
     [SerializeField] private float timeMax = 0;
@@ -30,8 +35,12 @@ public class Player : EntityModel
         spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
         directionHitbox = GetComponentInChildren<DirectionHitbox>();
         itemDirectionHitbox = GetComponentInChildren<ItemDirectionHitbox>();
+        rb = GetComponent<Rigidbody2D>();
         vida = initialLife;
+        andandoSorrateiramente = false;
 
+        pontaArma = GetComponentInChildren<PontaArma>();
+        animacao = transform.GetComponent<AnimacaoJogador>();
 
         enemies = FindObjectsOfType<Enemy>();//pegando todos os inmigos
     }
@@ -57,7 +66,35 @@ public class Player : EntityModel
             }
             collisionState = false;
         }
+
+        movement.Mover();
+
+        animacao.AtualizarDirecao(direcao, direcaoMovimento);
+        Animar();
     }
+
+    private void Animar()
+    {
+        if((rb.velocity.x == 0 && rb.velocity.y == 0) && animacao.GetAnimacaoAtual() != "Idle")
+        {
+            animacao.TrocarAnimacao("Idle");
+        }
+        else if ((rb.velocity.x != 0 || rb.velocity.y != 0))
+        {
+            if(andandoSorrateiramente == true)
+            {
+                if(animacao.GetAnimacaoAtual() != "AndandoSorrateiramente")
+                {
+                    animacao.TrocarAnimacao("AndandoSorrateiramente");
+                }
+            }
+            else if (animacao.GetAnimacaoAtual() != "Andando")
+            {
+                animacao.TrocarAnimacao("Andando");
+            }
+        }
+    }
+
     public void curar(int _cura)
     {
         Debug.Log(vida);
@@ -83,8 +120,28 @@ public class Player : EntityModel
                 direcao = Direcao.Baixo;
                 break;
         }
+        pontaArma.AtualizarPontaArma(direcao);
         directionHitbox.ChangeDirection(direcao);
         itemDirectionHitbox.ChangeDirection(direcao);
+    }
+
+    public void ChangeDirectionMovement(string lado)
+    {
+        switch (lado)
+        {
+            case "Esquerda":
+                direcaoMovimento = Direcao.Esquerda;
+                break;
+            case "Direita":
+                direcaoMovimento = Direcao.Direita;
+                break;
+            case "Cima":
+                direcaoMovimento = Direcao.Cima;
+                break;
+            case "Baixo":
+                direcaoMovimento = Direcao.Baixo;
+                break;
+        }
     }
 
     public override void TomarDano(int _dano, float _horizontal, float _vertical, float _knockBack)

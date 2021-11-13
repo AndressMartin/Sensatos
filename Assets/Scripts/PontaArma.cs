@@ -24,8 +24,8 @@ public class PontaArma : EntityModel
             entity = obj.GetComponent<Enemy>();
     }
 
-    // Update is called once per frame
-    void Update()
+    // Atualiza a ponta da arma
+    public void AtualizarPontaArma(Direcao direcao)
     {
         switch (direcao)
         {
@@ -49,7 +49,7 @@ public class PontaArma : EntityModel
                 break;
 
         }
-        direcao = entity.direcao;
+        //direcao = entity.direcao;
 
         transform.position = FrenteDoPersonagem(obj.transform,distanceFromChar);
  
