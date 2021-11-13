@@ -63,7 +63,7 @@ public class Movement : SingletonInstance<Movement>
                     player.ChangeDirection("Cima");
                     break;
             }
-            pontaArma.direction = player.direction;
+            pontaArma.direcao = player.direcao;
         }
 
         Move();

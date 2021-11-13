@@ -35,11 +35,11 @@ public class Enemy : EntityModel
     // Update is called once per frame
     void Update()
     {
-        if(direction==Direction.Esquerda && !spriteRenderer.flipX)
+        if(direcao==Direcao.Esquerda && !spriteRenderer.flipX)
         {
             spriteRenderer.flipX = true;
         }
-        if (direction == Direction.Direita && spriteRenderer.flipX)
+        if (direcao == Direcao.Direita && spriteRenderer.flipX)
         {
             spriteRenderer.flipX = false;
         }
@@ -102,9 +102,9 @@ public class Enemy : EntityModel
 
         
     }
-    public void ChangeDirection(Direction _direction)
+    public void ChangeDirection(Direcao _direction)
     {
-        direction = _direction;
+        direcao = _direction;
 
     }
     public void ChangeHorizontal(float _direction)

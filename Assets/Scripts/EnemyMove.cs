@@ -372,21 +372,21 @@ public class EnemyMove : MonoBehaviour
         {
             if (ydif < 0)
             {
-                enemy.ChangeDirection(Enemy.Direction.Cima);
+                enemy.ChangeDirection(Enemy.Direcao.Cima);
             }
             else if (ydif > 0)
             {
-                enemy.ChangeDirection(Enemy.Direction.Baixo);
+                enemy.ChangeDirection(Enemy.Direcao.Baixo);
             }
         }
 
         else if (xdif > 0)
         {
-            enemy.ChangeDirection(Enemy.Direction.Esquerda);
+            enemy.ChangeDirection(Enemy.Direcao.Esquerda);
         }
         else if (xdif < 0)
         {
-            enemy.ChangeDirection(Enemy.Direction.Direita);
+            enemy.ChangeDirection(Enemy.Direcao.Direita);
         }
     }
 

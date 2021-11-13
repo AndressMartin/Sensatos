@@ -29,7 +29,7 @@ public class BulletCreator : MonoBehaviour
 
         Instantiate(bullet, pontaArma);
         projetil = FindObjectOfType<Projetil>();
-        projetil.direcao = (Projetil.Direcao)pontaArma.GetComponentInChildren<PontaArma>().direction;
+        projetil.direcao = (Projetil.Direcao)pontaArma.GetComponentInChildren<PontaArma>().direcao;
         projetil.dano = dano;
         projetil.FatherFromGun = FatherFromGun;
         projetil.Shooted(pontaArma);
@@ -47,7 +47,7 @@ public class BulletCreator : MonoBehaviour
 
         Instantiate(bullet, pontaArma); //onde cria o projetil
         projetil = FindObjectOfType<Projetil>();
-        projetil.direcao = (Projetil.Direcao)pontaArma.GetComponentInChildren<PontaArma>().direction;
+        projetil.direcao = (Projetil.Direcao)pontaArma.GetComponentInChildren<PontaArma>().direcao;
         projetil.dano = dano;
         projetil.FatherFromGun = _objQueChamou;
         projetil.Shooted(pontaArma);

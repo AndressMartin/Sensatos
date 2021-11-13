@@ -29,9 +29,9 @@ public class DirectionHitbox : EntityModel
 
        transform.position = FrenteDoPersonagem(transformFatherObject, 0.5F);
     }
-    public void ChangeDirection(Direction _direction)
+    public void ChangeDirection(Direcao _direction)
     {
-        direction = _direction;
+        direcao = _direction;
     }
 
     void ChangeColliderItem(bool _OnOff)

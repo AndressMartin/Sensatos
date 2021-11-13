@@ -38,7 +38,7 @@ public class Lanca : Item
 
         Instantiate(lancaTransform, pontaArma); //onde cria a lança
         FisicalAttack = FindObjectOfType<FisicalAttack>();
-        FisicalAttack.direcao = (FisicalAttack.Direcao)pontaArma.GetComponentInChildren<PontaArma>().direction;
+        FisicalAttack.direcao = (FisicalAttack.Direcao)pontaArma.GetComponentInChildren<PontaArma>().direcao;
         FisicalAttack.widthTemp = width;
         FisicalAttack.heightTemp = height;
         FisicalAttack.FatherFromWeapon = __objQueChamou;

@@ -27,29 +27,29 @@ public class PontaArma : EntityModel
     // Update is called once per frame
     void Update()
     {
-        switch (direction)
+        switch (direcao)
         {
-            case Direction.Direita:
+            case Direcao.Direita:
                 spriteRenderer.flipX = false;
                 spriteRenderer.flipY = false;
                 break;
 
-            case Direction.Esquerda:
+            case Direcao.Esquerda:
                 spriteRenderer.flipX = true;
                 spriteRenderer.flipY = false;
                 break;
 
-            case Direction.Cima:
+            case Direcao.Cima:
                 spriteRenderer.flipY = false;
                 break;
           
 
-            case Direction.Baixo:
+            case Direcao.Baixo:
                 spriteRenderer.flipY = true;
                 break;
 
         }
-        direction = entity.direction;
+        direcao = entity.direcao;
 
         transform.position = FrenteDoPersonagem(obj.transform,distanceFromChar);
  

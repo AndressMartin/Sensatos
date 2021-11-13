@@ -54,7 +54,7 @@ public class EnemyVision : EntityModel
 
         xp = transformFather.position.x;
         yp = transformFather.position.y;
-        direction = enemyModel.direction;
+        direcao = enemyModel.direcao;
         if (seePlayer)
         {
             spriteRenderer.color = Color.black;
@@ -70,26 +70,26 @@ public class EnemyVision : EntityModel
 
         }
 
-        switch (direction)
+        switch (direcao)
         {
             //rodar plano cartesiano
-            case Direction.Esquerda:
+            case Direcao.Esquerda:
                 v2 = new Vector2(-(xPointMax - xPointOrigin), (yPointMax + yPointOrigin));
                 v3 = new Vector2(-(xPointMax - xPointOrigin), -(yPointMax - yPointOrigin));
 
                 break;
 
-            case Direction.Direita:
+            case Direcao.Direita:
                 v2 = new Vector2((xPointMax + xPointOrigin), (yPointMax + yPointOrigin));
                 v3 = new Vector2((xPointMax + xPointOrigin), -(yPointMax - yPointOrigin));
                 break;
 
-            case Direction.Cima:
+            case Direcao.Cima:
                 v2 = new Vector2(-( yPointMax - xPointOrigin), (xPointMax + yPointOrigin));
                 v3 = new Vector2(+( yPointMax + xPointOrigin), (xPointMax + yPointOrigin));
                 break;
             
-            case Direction.Baixo:
+            case Direcao.Baixo:
                 v2 = new Vector2((yPointMax + xPointOrigin), -(xPointMax - yPointOrigin));
                 v3 = new Vector2(-(yPointMax - xPointOrigin), -(xPointMax - yPointOrigin));
                 break;
@@ -111,12 +111,12 @@ public class EnemyVision : EntityModel
                 Debug.Log("ta entre");
                 if (playerGameObject.transform.position.x > transform.position.x)
                 {
-                    enemyModel.ChangeDirection(Direction.Direita);
+                    enemyModel.ChangeDirection(Direcao.Direita);
                 }
 
                 else
                 {
-                    enemyModel.ChangeDirection(Direction.Esquerda);
+                    enemyModel.ChangeDirection(Direcao.Esquerda);
                 }
             }
 

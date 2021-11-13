@@ -12,6 +12,7 @@ public class Player : EntityModel
     private BoxCollider2D boxCollider2D;
     public Enemy[] enemies;
 
+    public Direcao direcaoMovimento;
 
     public int initialLife; 
 
@@ -70,20 +71,20 @@ public class Player : EntityModel
         switch (lado)
         {
             case "Esquerda":
-                direction = Direction.Esquerda;
+                direcao = Direcao.Esquerda;
                 break;
             case "Direita":
-                direction = Direction.Direita;
+                direcao = Direcao.Direita;
                 break;
             case "Cima":
-                direction = Direction.Cima;
+                direcao = Direcao.Cima;
                 break;
             case "Baixo":
-                direction = Direction.Baixo;
+                direcao = Direcao.Baixo;
                 break;
         }
-        directionHitbox.ChangeDirection(direction);
-        itemDirectionHitbox.ChangeDirection(direction);
+        directionHitbox.ChangeDirection(direcao);
+        itemDirectionHitbox.ChangeDirection(direcao);
     }
 
     public override void TomarDano(int _dano, float _horizontal, float _vertical, float _knockBack)
