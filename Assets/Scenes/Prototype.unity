@@ -1889,15 +1889,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1193014887, guid: 7bb8e4c1f32bbe84cb8f208ad0a21a8a, type: 3}
       propertyPath: m_UpscaleRT
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1193014887, guid: 7bb8e4c1f32bbe84cb8f208ad0a21a8a, type: 3}
       propertyPath: m_CropFrameX
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1193014887, guid: 7bb8e4c1f32bbe84cb8f208ad0a21a8a, type: 3}
       propertyPath: m_CropFrameY
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1193014887, guid: 7bb8e4c1f32bbe84cb8f208ad0a21a8a, type: 3}
       propertyPath: m_StretchFill
@@ -2448,6 +2448,18 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1104134173, guid: 0861576f6c045b74b9f9b572e24d2a9d, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 43.943558
+      objectReference: {fileID: 0}
+    - target: {fileID: 1104134173, guid: 0861576f6c045b74b9f9b572e24d2a9d, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 18.05433
+      objectReference: {fileID: 0}
+    - target: {fileID: 1104134173, guid: 0861576f6c045b74b9f9b572e24d2a9d, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 27.251818
+      objectReference: {fileID: 0}
+    - target: {fileID: 1104134173, guid: 0861576f6c045b74b9f9b572e24d2a9d, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -2466,6 +2478,22 @@ PrefabInstance:
     - target: {fileID: 8886423969297461224, guid: 0861576f6c045b74b9f9b572e24d2a9d, type: 3}
       propertyPath: m_LocalPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8886423969324109058, guid: 0861576f6c045b74b9f9b572e24d2a9d, type: 3}
+      propertyPath: velocityMax
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8886423969324109058, guid: 0861576f6c045b74b9f9b572e24d2a9d, type: 3}
+      propertyPath: velocityMaxX
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8886423969324109058, guid: 0861576f6c045b74b9f9b572e24d2a9d, type: 3}
+      propertyPath: velocityMaxY
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8886423969324109058, guid: 0861576f6c045b74b9f9b572e24d2a9d, type: 3}
+      propertyPath: acelerationSpeed
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 8886423969324109064, guid: 0861576f6c045b74b9f9b572e24d2a9d, type: 3}
       propertyPath: itemAtual

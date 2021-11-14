@@ -19,7 +19,8 @@ public class Player : EntityModel
     public Direcao direcaoMovimento;
 
     public int initialLife;
-    public bool andandoSorrateiramente;
+    public bool andandoSorrateiramente,
+                strafing;
 
     [SerializeField] private float time = 0.0F;
     [SerializeField] private float timeMax = 0;
@@ -38,6 +39,7 @@ public class Player : EntityModel
         rb = GetComponent<Rigidbody2D>();
         vida = initialLife;
         andandoSorrateiramente = false;
+        strafing = false;
 
         pontaArma = GetComponentInChildren<PontaArma>();
         animacao = transform.GetComponent<AnimacaoJogador>();
