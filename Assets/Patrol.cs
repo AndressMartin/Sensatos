@@ -17,6 +17,71 @@ public class Patrol : MonoBehaviour
     private Animator myAnim;
     private Sprite defaultSprite;
     private SpriteRenderer spriteRend;
+    private Rigidbody2D rigidbody2D;
+    // Start is called before the first frame update
+    void Start()
+    {
+        rigidbody2D = GetComponent<Rigidbody2D>();
+        waitTime = startWaitTime;
+        myAnim = GetComponent<Animator>();
+        spriteRend = GetComponent<SpriteRenderer>();
+        defaultSprite = spriteRend.sprite;
+        stance = Stances.patrolling;
+        randomSpot = 0;
+    }
+
+    // Update is called once per frame
+    void Update()
+    {        
+        transform.position = Vector2.MoveTowards(transform.position, moveSpots[randomSpot].position, speed * Time.deltaTime);
+
+        //rigidbody2D.MovePosition(transform.position+(moveSpots[randomSpot].position-transform.position) * speed * Time.deltaTime);
+        if (Vector2.Distance(transform.position, moveSpots[randomSpot].position) < 0.2f)
+        {
+            //gera um novo lugar de waypoint
+            if (randomSpot >= moveSpots.Count-1)
+                randomSpot = 0;
+            else
+                randomSpot ++;
+
+            if (randomSpot != lastMoveSpot)
+            {
+                lastMoveSpot = randomSpot;
+            }
+            else
+            {
+                while (randomSpot == lastMoveSpot)
+                {
+                    randomSpot = Random.Range(0, moveSpots.Count);
+                }
+            }
+        }
+        else
+        {
+            stance = Stances.patrolling;
+        }
+
+    }
+}
+/*using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Patrol : MonoBehaviour
+{
+    public enum Stances { idle, patrolling };
+    public Stances stance = Stances.idle;
+    public float speed;
+
+    public float waitTime;
+    public float startWaitTime;
+
+    public List<Transform> moveSpots = new List<Transform>();
+    private int lastMoveSpot;
+    private int randomSpot;
+    private Animator myAnim;
+    private Sprite defaultSprite;
+    private SpriteRenderer spriteRend;
     // Start is called before the first frame update
     void Start()
     {
@@ -75,3 +140,4 @@ public class Patrol : MonoBehaviour
         }
     }
 }
+*/

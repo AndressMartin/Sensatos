@@ -35,7 +35,7 @@ public class Sword : Item
 
         Instantiate(lancaTransform, pontaArma); //onde cria a lança
         fisicalAttack = FindObjectOfType<FisicalAttack>();
-        fisicalAttack.direcao = (FisicalAttack.Direcao)pontaArma.GetComponentInChildren<PontaArma>().direction;
+        fisicalAttack.direcao = (FisicalAttack.Direcao)pontaArma.GetComponentInChildren<PontaArma>().direcao;
         fisicalAttack.widthTemp = width;
         fisicalAttack.heightTemp = height;
         fisicalAttack.FatherFromWeapon = __objQueChamou;

@@ -18,6 +18,7 @@ public class Projetil : MonoBehaviour
     public float velocidadeProjetil;
     public float distanciaMaxProjetil;
     public int dano;
+    public float knockBackValue;
 
     public enum Direcao { Esquerda, Cima, Direita, Baixo };
     public Direcao direcao;
@@ -71,7 +72,6 @@ public class Projetil : MonoBehaviour
             DistanciaProjetil();
 
             rb.velocity = new Vector2(horizontal, vertical) * velocidadeProjetil;
-
         }
     }
     void FatherEnemy()
@@ -99,6 +99,7 @@ public class Projetil : MonoBehaviour
     {
         DistanciaProjetil();
         rb.MovePosition((Vector2)transform.position + (_direction * velocidadeProjetil * Time.deltaTime));
+
     }
 
 
@@ -142,14 +143,15 @@ public class Projetil : MonoBehaviour
 
     }
  
-
+ 
     void HitTarget()
     {
 
         EntityModel temp;
         temp = alvo.GetComponent<EntityModel>();
-        temp.TomarDano(dano, horizontal, vertical);
+        temp.TomarDano(dano, horizontal, vertical,knockBackValue);
         DestroyGameObject();
+        
     }
     void DestroyGameObject()
     {

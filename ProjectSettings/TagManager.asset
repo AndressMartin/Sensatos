@@ -12,6 +12,9 @@ TagManager:
   - FishingSpot
   - FishingSite
   - MinigameTrigger
+  - HitboxTile
+  - EnemyHitboxTile
+  - Wall
   layers:
   - Default
   - TransparentFX
@@ -19,7 +22,7 @@ TagManager:
   - EnemyCollision
   - Water
   - UI
-  - 
+  - Not Ignore Raycast
   - 
   - 
   - 

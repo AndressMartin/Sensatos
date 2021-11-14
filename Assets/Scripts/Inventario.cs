@@ -13,13 +13,7 @@ public class Inventario : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
-    {
-        foreach (var item in itens)
-        {
-           // Debug.Log(item); 
-        }
-    }
+
     public void add(Item item)
     {
         itens.Add(item);
@@ -38,5 +32,20 @@ public class Inventario : MonoBehaviour
         {
             itemAtual.Usar(gameObject);
         }
+    }
+    public void TrocarArma()
+    {
+        
+        foreach (Item item in itens)
+        {
+            if(item.GetComponent<ArmaDeFogo>() !=null)
+            {
+                if(item.GetComponent<ArmaDeFogo>() !=  itemAtual)
+                {
+                    itemAtual = item;
+                    break;
+                }
+            }
+        }             
     }
 }

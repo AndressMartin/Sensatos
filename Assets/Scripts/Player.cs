@@ -6,14 +6,24 @@ public class Player : EntityModel
 {
     public override int vida { get; protected set; }
     private DirectionHitbox directionHitbox;
+    private Rigidbody2D rb;
     private ItemDirectionHitbox itemDirectionHitbox;
     private SpriteRenderer spriteRenderer;
     private Movement movement;
     private BoxCollider2D boxCollider2D;
     public Enemy[] enemies;
 
+    private PontaArma pontaArma;
+    private AnimacaoJogador animacao;
 
-    public int initialLife; 
+    public Direcao direcaoMovimento;
+
+    private float tempoImunidade;
+
+    public int initialLife;
+    public bool andandoSorrateiramente,
+                strafing,
+                tomandoDano;
 
     [SerializeField] private float time = 0.0F;
     [SerializeField] private float timeMax = 0;
@@ -29,8 +39,14 @@ public class Player : EntityModel
         spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
         directionHitbox = GetComponentInChildren<DirectionHitbox>();
         itemDirectionHitbox = GetComponentInChildren<ItemDirectionHitbox>();
+        rb = GetComponent<Rigidbody2D>();
         vida = initialLife;
+        andandoSorrateiramente = false;
+        strafing = false;
 
+        tempoImunidade = 1f;
+        pontaArma = GetComponentInChildren<PontaArma>();
+        animacao = transform.GetComponent<AnimacaoJogador>();
 
         enemies = FindObjectsOfType<Enemy>();//pegando todos os inmigos
     }
@@ -40,9 +56,11 @@ public class Player : EntityModel
     {
         if (imune)
         {
+            animacao.Piscar();
             time += Time.deltaTime;
             if (time > timeMax)
             {
+                animacao.SetarVisibilidade(true);
                 imune = false;
                 timeMax = 0.0F;
                 time = 0;
@@ -56,7 +74,50 @@ public class Player : EntityModel
             }
             collisionState = false;
         }
+
+        movement.Mover();
+
+        animacao.AtualizarDirecao(direcao, direcaoMovimento);
+        Animar();
     }
+
+    private void Animar()
+    {
+        if(tomandoDano == false)
+        {
+            if ((rb.velocity.x == 0 && rb.velocity.y == 0) && animacao.GetAnimacaoAtual() != "Idle")
+            {
+                animacao.TrocarAnimacao("Idle");
+            }
+            else if ((rb.velocity.x != 0 || rb.velocity.y != 0))
+            {
+                if (andandoSorrateiramente == true)
+                {
+                    if (animacao.GetAnimacaoAtual() != "AndandoSorrateiramente")
+                    {
+                        animacao.TrocarAnimacao("AndandoSorrateiramente");
+                    }
+                }
+                else if (animacao.GetAnimacaoAtual() != "Andando")
+                {
+                    animacao.TrocarAnimacao("Andando");
+                }
+            }
+        }
+        else
+        {
+            if(animacao.GetAnimacaoAtual() != "TomandoDano")
+            {
+                animacao.TrocarAnimacao("TomandoDano");
+            }
+        }
+    }
+
+    public void FinalizarKnockback()
+    {
+        animacao.TrocarAnimacao("Idle");
+    }
+
     public void curar(int _cura)
     {
         Debug.Log(vida);
@@ -70,23 +131,43 @@ public class Player : EntityModel
         switch (lado)
         {
             case "Esquerda":
-                direction = Direction.Esquerda;
+                direcao = Direcao.Esquerda;
                 break;
             case "Direita":
-                direction = Direction.Direita;
+                direcao = Direcao.Direita;
                 break;
             case "Cima":
-                direction = Direction.Cima;
+                direcao = Direcao.Cima;
                 break;
             case "Baixo":
-                direction = Direction.Baixo;
+                direcao = Direcao.Baixo;
                 break;
         }
-        directionHitbox.ChangeDirection(direction);
-        itemDirectionHitbox.ChangeDirection(direction);
+        pontaArma.AtualizarPontaArma(direcao);
+        directionHitbox.ChangeDirection(direcao);
+        itemDirectionHitbox.ChangeDirection(direcao);
     }
 
-    public override void TomarDano(int _dano, float _horizontal, float _vertical)
+    public void ChangeDirectionMovement(string lado)
+    {
+        switch (lado)
+        {
+            case "Esquerda":
+                direcaoMovimento = Direcao.Esquerda;
+                break;
+            case "Direita":
+                direcaoMovimento = Direcao.Direita;
+                break;
+            case "Cima":
+                direcaoMovimento = Direcao.Cima;
+                break;
+            case "Baixo":
+                direcaoMovimento = Direcao.Baixo;
+                break;
+        }
+    }
+
+    public override void TomarDano(int _dano, float _horizontal, float _vertical, float _knockBack)
     {
         if (!imune)
         {
@@ -102,17 +183,17 @@ public class Player : EntityModel
                 vida -= _dano;
 
                 imune = true;
-                timeMax = 0.3F;
+                timeMax = tempoImunidade;
                 time = 0;
-                KnockBack(_horizontal,_vertical);
+                KnockBack(_horizontal,_vertical,_knockBack);
             }
         }
     }
 
-    public override void KnockBack(float _horizontal, float _vertical)
+    public override void KnockBack(float _horizontal, float _vertical,float _knockBack)
     {
 
-        movement.KnockBack(_horizontal, _vertical);
+        movement.KnockBack(_horizontal, _vertical, _knockBack);
     }
 
     public override IEnumerator Piscar()

@@ -12,13 +12,14 @@ public class Alicate : Ferramenta
 
     void Start()
     {
+        directionHitbox=FindObjectOfType<DirectionHitbox>();
         quantidadeUsos = 1;
         quantidadeUsos = quantidadeUsos * nivel;
     }
 
     private void Update()
     {
-        if(directionHitbox != null)
+        /*if(directionHitbox != null)
         {
             Debug.Log("chmado");
             parede = (Cerca)directionHitbox.objetectCollision;
@@ -31,13 +32,17 @@ public class Alicate : Ferramenta
                 directionHitbox = null;
             }
             
-        }
+        }*/
     }
 
 
     public override void Usar(GameObject objQueChamou)
     {
-        directionHitbox = objQueChamou.GetComponentInChildren<DirectionHitbox>();            
+        //directionHitbox = objQueChamou.GetComponentInChildren<DirectionHitbox>();
+
+        if(directionHitbox.objetectCollision != null)
+            directionHitbox.objetectCollision.LevarDano(dano);
+        
     }
 
   

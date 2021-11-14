@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class State : MonoBehaviour
 {
-
-    public bool strafing=false;
     public bool estadoCombate = false;
     public bool interagindo;
     public bool usandoItem;
@@ -16,6 +14,7 @@ public class State : MonoBehaviour
     [SerializeField] private float colldownUsandoItem;
     [SerializeField] private float colldowMaxUsandoItem;
 
+    private Player player;
     private Movement movement;
     private Inventario inventario;
     private SpriteRenderer spriteRenderer;
@@ -27,7 +26,7 @@ public class State : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         inventario = GetComponent<Inventario>();
         movement = GetComponent<Movement>();
-        UpdateRunSpeed();
+        player = GetComponent<Player>();
     }
 
     // Update is called once per frame
@@ -72,16 +71,16 @@ public class State : MonoBehaviour
             usandoItem = false;
     }
 
-    public void UpdateRunSpeed()
-    {
-        movement.UpdateRunSpeed(movimento);
-    }
-
     void BotoesPressionados()
     {
         if (Input.GetKeyDown(KeyCode.E) && colldown <= 0)//Botão de interação
         {
             colldown = colldowMax;
+        }
+
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            player.TomarDano(0, Random.Range(-1f, 1f), Random.Range(-1f, 1f), 2);
         }
 
         if (Input.GetKeyDown(KeyCode.Space) && colldownUsandoItem <= 0)//Botão de usar item
@@ -97,31 +96,21 @@ public class State : MonoBehaviour
             EstadoCombateOnOff();
         }
 
-        if (Input.GetKeyDown(KeyCode.B))//Botão para ativar o strafing
+        if (Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.X))//Botão para ativar o strafing
         {
-            strafing = !strafing;
-
+            player.strafing = !player.strafing;
+            player.andandoSorrateiramente = false;
         }
 
-        if (Input.GetKeyDown(KeyCode.LeftControl) && movimento != 1)//Botão para agachar //se estiver correndo ou em pé, não agachado
+        if (Input.GetKeyDown(KeyCode.LeftControl) || Input.GetKeyDown(KeyCode.C))//Botão para agachar //se estiver correndo ou em pé, não agachado
         {
-            movimento = 1;//agachado
-            UpdateRunSpeed();
+            player.andandoSorrateiramente = !player.andandoSorrateiramente;
+            player.strafing = false;
         }
 
-        else if (Input.GetKeyDown(KeyCode.LeftControl) && movimento == 1)//Botão para ficar de pé //se estiver agachado
+        if(Input.GetKeyDown(KeyCode.Q))
         {
-            movimento = 8;//em pé
-            UpdateRunSpeed();
-        }
-
-        if (Input.GetKeyDown(KeyCode.LeftShift)) //Botão para correr
-        {
-            if (movimento == 3)
-                movimento = 2;
-            else
-                movimento = 3;
-            UpdateRunSpeed();
+            inventario.TrocarArma();
         }
         
     }

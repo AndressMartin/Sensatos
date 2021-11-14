@@ -11,15 +11,20 @@ public class Enemy : EntityModel
     private SpriteRenderer spriteRenderer;
     private Inventario inventario;
     private EnemyMove enemyMove;
-
+    private EnemyVision enemyVision;
     
     [SerializeField] private int pontosVida;
     float horizontal;
     float vertical;
+    float enemyDirection;
+    public bool dead = false;
+
+
 
     // Start is called before the first frame update
     void Start()
     {
+        enemyVision = GetComponentInChildren<EnemyVision>();
         enemyMove = GetComponent<EnemyMove>();
         spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
         inventario = GetComponent<Inventario>();
@@ -30,68 +35,85 @@ public class Enemy : EntityModel
     // Update is called once per frame
     void Update()
     {
-       /* if (Input.GetKeyDown(KeyCode.W))
+        if(direcao==Direcao.Esquerda && !spriteRenderer.flipX)
         {
-            direction = Direction.Cima;
+            spriteRenderer.flipX = true;
         }
-        if (Input.GetKeyDown(KeyCode.S))
+        if (direcao == Direcao.Direita && spriteRenderer.flipX)
         {
-            direction = Direction.Baixo;
+            spriteRenderer.flipX = false;
         }
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            direction = Direction.Esquerda;
-        }
-        if (Input.GetKeyDown(KeyCode.D))
-        {
-            direction = Direction.Direita;
-        }*/
+        /* if (Input.GetKeyDown(KeyCode.W))
+         {
+             direction = Direction.Cima;
+         }
+         if (Input.GetKeyDown(KeyCode.S))
+         {
+             direction = Direction.Baixo;
+         }
+         if (Input.GetKeyDown(KeyCode.A))
+         {
+             direction = Direction.Esquerda;
+         }
+         if (Input.GetKeyDown(KeyCode.D))
+         {
+             direction = Direction.Direita;
+         }*/
 
-        switch (horizontal)
+        AllEnemySubClass();
+    }
+    void AllEnemySubClass()
+    {
+        if (!dead)
         {
-            case -1:
-                direction = Direction.Esquerda;
-                break;
-            case 1:
-                direction = Direction.Direita;
-                break;
-        }
-
-        switch (vertical)
-        {
-            case -1:
-                direction = Direction.Baixo;
-                break;
-            case 1:
-                direction = Direction.Cima;
-                break;
-        }
+            enemyMove.Main();
+            enemyVision.Main();
+        } 
     }
 
     public void UseItem()
     {
         inventario.UsarItemAtual();
     }
+    public void die()
+    {
+        dead = true;
+        Debug.Log("to morto");
+    }
+    public void stealthKill()
+    {
+        dead = true;
+        gameObject.SetActive(false);
+    }
 
-    public override void TomarDano(int _dano, float _horizontal, float _vertical)
+    public override void TomarDano(int _dano, float _horizontal, float _vertical,float _knockBack)
     {
        
         if (vida <= 0)
-        { 
-            Destroy(gameObject);
+        {
+            die();
         }
         else
         {
             StartCoroutine(Piscar());
-            KnockBack(_horizontal, _vertical);
+            KnockBack(_horizontal, _vertical , _knockBack);
             vida -= _dano;
         }
 
         
     }
-    public void ChangeDirection(Direction _direction)
+    public void ChangeDirection(Direcao _direction)
     {
-        direction = _direction;
+        direcao = _direction;
+
+    }
+    public void ChangeHorizontal(float _direction)
+    {
+        horizontal = _direction;
+    }
+    public void ChangeVertical(float _direction)
+    {
+        vertical = _direction;
     }
 
     public override IEnumerator Piscar()
@@ -100,9 +122,13 @@ public class Enemy : EntityModel
         yield return new WaitForSeconds(0.1f);
         spriteRenderer.color = Color.white;
     }
-    public override void KnockBack(float _horizontal, float _vertical)
+    public override void KnockBack(float _horizontal, float _vertical,float _knockBack)
     {
-        enemyMove.KnockBack(_horizontal, _vertical);
+        enemyMove.KnockBack(_horizontal, _vertical,_knockBack);
         
+    }
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+       
     }
 }

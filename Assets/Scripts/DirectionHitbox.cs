@@ -29,17 +29,17 @@ public class DirectionHitbox : EntityModel
 
        transform.position = FrenteDoPersonagem(transformFatherObject, 0.5F);
     }
-    public void ChangeDirection(Direction _direction)
+    public void ChangeDirection(Direcao _direction)
     {
-        direction = _direction;
+        direcao = _direction;
     }
 
     void ChangeColliderItem(bool _OnOff)
     {
-        boxCollider2D.enabled = _OnOff;
+        //boxCollider2D.enabled = _OnOff;
         usandoItem = boxCollider2D.enabled;
-        if (!_OnOff)
-            objetectCollision = null;
+        //if (!_OnOff)
+            //objetectCollision = null;
     }
 
    
@@ -47,8 +47,16 @@ public class DirectionHitbox : EntityModel
     {
         if (collision.GetComponent<ParedeModel>())
         {
-
             objetectCollision = collision.gameObject.GetComponent<ParedeModel>();
+        }
+
+
+    }
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.GetComponent<ParedeModel>())
+        {
+            objetectCollision = null;
         }
     }
 }
