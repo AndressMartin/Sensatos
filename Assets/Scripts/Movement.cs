@@ -7,7 +7,6 @@ public class Movement : SingletonInstance<Movement>
     private Player player;
     private State state;
     private Rigidbody2D rb;
-    private PontaArma pontaArma;
     float horizontal;
     float vertical;
     public float runSpeed;
@@ -28,18 +27,15 @@ public class Movement : SingletonInstance<Movement>
     {
         sound = GetComponentInChildren<Sound>();
         player = GetComponent<Player>();
-        pontaArma = GetComponentInChildren<PontaArma>();
         state = GetComponent<State>();
         rb = GetComponent<Rigidbody2D>();
     }
 
-    // Update is called once per frame
-    void Update()
+    //Pega os inputs e move o personagem
+    public void Mover()
     {
         horizontal = Input.GetAxisRaw("Horizontal"); // -1 is left
         vertical = Input.GetAxisRaw("Vertical"); // -1 is down
-        
-
 
         if (!state.strafing && canMove)
         {
@@ -63,11 +59,28 @@ public class Movement : SingletonInstance<Movement>
                     player.ChangeDirection("Cima");
                     break;
             }
-            pontaArma.direcao = player.direcao;
         }
 
         Move();
         KnockBackContador();
+
+        if(rb.velocity.x > 0)
+        {
+            player.ChangeDirectionMovement("Direita");
+        }
+        else if (rb.velocity.x < 0)
+        {
+            player.ChangeDirectionMovement("Esquerda");
+        }
+
+        if (rb.velocity.y > 0)
+        {
+            player.ChangeDirectionMovement("Cima");
+        }
+        else if (rb.velocity.y < 0)
+        {
+            player.ChangeDirectionMovement("Baixo");
+        }
     }
     public void KnockBack(float _horizontal, float _vertical, float _knockBack)
     {
@@ -208,8 +221,6 @@ public class Movement : SingletonInstance<Movement>
 
         else
             rb.AddForce(new Vector2(_horizontal, _vertical));
-
-        
     }
 
 
@@ -222,6 +233,14 @@ public class Movement : SingletonInstance<Movement>
     public void UpdateRunSpeed(int _velocidade)
     {
         runSpeed = _velocidade;
+        if(runSpeed == 1)
+        {
+            player.andandoSorrateiramente = true;
+        }
+        else
+        {
+            player.andandoSorrateiramente = false;
+        }
     }
 
     void ChageDirection()
