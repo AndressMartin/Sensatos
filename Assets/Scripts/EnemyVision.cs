@@ -27,7 +27,8 @@ public class EnemyVision : EntityModel
     public float difDistance;
     private Vector3 lastPlayerPosition;
     public List<ParedeModel> paredeModels;
-
+    public List<GameObject> listaDeParedes;
+    [SerializeField] LayerMask mask;
 
     // Start is called before the first frame update
     void Start()
@@ -42,7 +43,7 @@ public class EnemyVision : EntityModel
         wallDistance = transform.position;
         v1 = new Vector2(xPointOrigin, yPointOrigin);
         tempPlayer = FindObjectOfType<HitboxTile>();
-
+       
 
     }
 
@@ -50,7 +51,6 @@ public class EnemyVision : EntityModel
     {
         distanceWallsZero();
         distanceWalls();
-        difDistance = Vector2.Distance(transform.position, tempPlayer.transform.position);
 
         xp = transformFather.position.x;
         yp = transformFather.position.y;
@@ -180,6 +180,13 @@ public class EnemyVision : EntityModel
                 //deteceta um corpo de inimigo no chao
             }
         }
+        if (collision.gameObject.tag == "Wall")
+        {
+            if (!listaDeParedes.Contains(collision.gameObject))
+            {
+                listaDeParedes.Add(collision.gameObject);
+            }
+        }
 
         entityModelTemp = collision.gameObject.GetComponent<Player>();
         if (entityModelTemp != null)
@@ -194,21 +201,93 @@ public class EnemyVision : EntityModel
                 }
                 else
                 {
-                    foreach (float item in wallsDistance)
+                    float wDif=0.0F;
+                    RaycastHit2D hits;
+                    hits = Physics2D.Raycast(new Vector2(xp, yp), new Vector2(entityModelTemp.transform.position.x - xp, entityModelTemp.transform.position.y - yp),11000,mask.value);
+
+                    if (hits)
                     {
-                        if(item < difDistance)
+                        Debug.Log(hits.transform.gameObject.name);
+                        Debug.DrawRay(new Vector2(xp, yp), new Vector2(hits.transform.position.x - xp, hits.transform.position.y - yp), Color.red);
+
+                        if (hits.transform.GetComponent<ParedeModel>() != null)
                         {
-                            Debug.Log("Estou mais perto que o player");
+                            if (!walls.Contains(hits.transform.gameObject))
+                            {
+                                walls.Add(hits.transform.gameObject);// =new Vector3(hit.transform.position.x, hit.transform.position.y, hit.transform.position.z);
+                            }
+
                         }
-                        if (item > difDistance)
+
+                        if (hits.transform.GetComponent<Player>() != null)
                         {
-                            Debug.Log("Estou mais longe que o player");
-                            wallDistance = Vector3.zero;
-                            SeePlayer(true, collision.gameObject);
+                            Debug.Log("player aqui");
+                            // =new Vector3(hit.transform.position.x, hit.transform.position.y, hit.transform.position.z); 
                         }
                     }
+                    
 
-                
+                        /*if (item.transform.GetComponent<Player>() != null)
+                        {
+                            Debug.DrawRay(new Vector2(xp, yp), new Vector2(item.transform.position.x - xp, item.transform.position.y - yp), Color.red);
+                           Debug.Log(item.transform.gameObject.name);
+                        }
+                        if(item.transform.gameObject.GetComponent<ParedeModel>() != null)
+                        {
+                            Debug.Log("Parede");
+                            wDif = Vector2.Distance(new Vector2(xp, yp),new Vector2( item.transform.position.x, item.transform.position.y));
+                        }
+
+                        else if (item.transform.gameObject.GetComponent<Player>() != null)
+                        {
+                            Debug.Log("Player");
+                            difDistance= Vector2.Distance(new Vector2(xp, yp), new Vector2(item.transform.position.x, item.transform.position.y));
+                        }*/
+
+
+                    
+
+                    /*foreach (GameObject item in listaDeParedes)
+                    {
+                        RaycastHit2D hits;
+                        hits = Physics2D.Raycast(new Vector2(xp, yp), new Vector2(item.transform.position.x - xp, item.transform.position.y - yp));
+
+                        wallsDistance.Add(Vector2.Distance(hits.transform.position, new Vector2(xp, yp)));
+                        Debug.Log("entroi aui");
+                    }
+                    Transform player = FindObjectOfType<Player>().transform;
+                    RaycastHit2D hit;
+                    hit = Physics2D.Raycast(new Vector2(xp, yp), new Vector2(player.position.x - xp, player.position.y - yp));
+
+                    difDistance = Vector2.Distance(new Vector2(xp, yp), entityModelTemp.transform.position);
+
+                    foreach (GameObject item in listaDeParedes)
+                    {
+                        if (Vector2.Distance(new Vector2(xp, yp), new Vector2(item.transform.position.x , item.transform.position.y )) < difDistance)
+                        {
+                            
+                             Debug.Log("jorge lonjão");
+                            
+                        }
+                        if (Vector2.Distance(new Vector2(xp, yp), new Vector2(item.transform.position.x, item.transform.position.y)) > difDistance)
+                        {
+
+                            Debug.Log("jorge pertão");
+
+                        }
+                        /*if (item > difDistance)
+                        {
+                            if (difDistance > 0)
+                            {
+                                RaycastHit2D hitEnemy;
+                                hitEnemy = Physics2D.Raycast(new Vector2(xp, yp), new Vector2(item..x - xp, player.position.y - yp));
+
+                                Debug.Log("jorge pertão");
+                                Debug.Log("Distancia parede: "+item+"Distancia Inimigo: "+difDistance);
+                            }
+                        }*/
+                    //}
+
                     /*wallDistance = Vector3.zero;
                     RaycastHit2D[] hits;
                     hits = Physics2D.RaycastAll(new Vector2(xp, yp), new Vector2(entityModelTemp.transform.position.x - xp, entityModelTemp.transform.position.y - yp));
@@ -282,7 +361,7 @@ public class EnemyVision : EntityModel
                             //Debug.Log("Sem parede no caminho to vendo o player");//caso o player esteja mais perto do inimigo que a parede(caso nem tenha parede)
                             SeePlayer(true, collision.gameObject);
                         }*/
-                           
+
                 }
             }
         }
