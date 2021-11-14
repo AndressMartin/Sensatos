@@ -18,9 +18,12 @@ public class Player : EntityModel
 
     public Direcao direcaoMovimento;
 
+    private float tempoImunidade;
+
     public int initialLife;
     public bool andandoSorrateiramente,
-                strafing;
+                strafing,
+                tomandoDano;
 
     [SerializeField] private float time = 0.0F;
     [SerializeField] private float timeMax = 0;
@@ -41,6 +44,7 @@ public class Player : EntityModel
         andandoSorrateiramente = false;
         strafing = false;
 
+        tempoImunidade = 1f;
         pontaArma = GetComponentInChildren<PontaArma>();
         animacao = transform.GetComponent<AnimacaoJogador>();
 
@@ -52,9 +56,11 @@ public class Player : EntityModel
     {
         if (imune)
         {
+            animacao.Piscar();
             time += Time.deltaTime;
             if (time > timeMax)
             {
+                animacao.SetarVisibilidade(true);
                 imune = false;
                 timeMax = 0.0F;
                 time = 0;
@@ -77,24 +83,39 @@ public class Player : EntityModel
 
     private void Animar()
     {
-        if((rb.velocity.x == 0 && rb.velocity.y == 0) && animacao.GetAnimacaoAtual() != "Idle")
+        if(tomandoDano == false)
         {
-            animacao.TrocarAnimacao("Idle");
-        }
-        else if ((rb.velocity.x != 0 || rb.velocity.y != 0))
-        {
-            if(andandoSorrateiramente == true)
+            if ((rb.velocity.x == 0 && rb.velocity.y == 0) && animacao.GetAnimacaoAtual() != "Idle")
             {
-                if(animacao.GetAnimacaoAtual() != "AndandoSorrateiramente")
+                animacao.TrocarAnimacao("Idle");
+            }
+            else if ((rb.velocity.x != 0 || rb.velocity.y != 0))
+            {
+                if (andandoSorrateiramente == true)
                 {
-                    animacao.TrocarAnimacao("AndandoSorrateiramente");
+                    if (animacao.GetAnimacaoAtual() != "AndandoSorrateiramente")
+                    {
+                        animacao.TrocarAnimacao("AndandoSorrateiramente");
+                    }
+                }
+                else if (animacao.GetAnimacaoAtual() != "Andando")
+                {
+                    animacao.TrocarAnimacao("Andando");
                 }
             }
-            else if (animacao.GetAnimacaoAtual() != "Andando")
+        }
+        else
+        {
+            if(animacao.GetAnimacaoAtual() != "TomandoDano")
             {
-                animacao.TrocarAnimacao("Andando");
+                animacao.TrocarAnimacao("TomandoDano");
             }
         }
+    }
+
+    public void FinalizarKnockback()
+    {
+        animacao.TrocarAnimacao("Idle");
     }
 
     public void curar(int _cura)
@@ -162,7 +183,7 @@ public class Player : EntityModel
                 vida -= _dano;
 
                 imune = true;
-                timeMax = 0.3F;
+                timeMax = tempoImunidade;
                 time = 0;
                 KnockBack(_horizontal,_vertical,_knockBack);
             }
@@ -172,7 +193,7 @@ public class Player : EntityModel
     public override void KnockBack(float _horizontal, float _vertical,float _knockBack)
     {
 
-        movement.KnockBack(_horizontal, _vertical,_knockBack);
+        movement.KnockBack(_horizontal, _vertical, _knockBack);
     }
 
     public override IEnumerator Piscar()

@@ -19,9 +19,7 @@ public class Movement : SingletonInstance<Movement>
 
     public float _tempX = 0;
     public float _tempY = 0;
-    bool knockBacking;
     public float knockBackHorizontal, knockBackVertical;
-    public bool Knock;
     float time, timeMax;
     [SerializeField]private float timeMaxOriginal;
     Sound sound;
@@ -36,6 +34,7 @@ public class Movement : SingletonInstance<Movement>
         velocityMaxAndando = 5;
         velocityMaxAndandoSorrateiramente = 2.5f;
         velocityMax = velocityMaxAndando;
+        timeMaxOriginal = 0.5f;
 
         acelerationSpeed = velocityMaxAndando * 3;
     }
@@ -93,15 +92,17 @@ public class Movement : SingletonInstance<Movement>
         }
 
         Move();
-        KnockBackContador();
+        if(player.tomandoDano == true)
+        {
+            KnockBackContador();
+        }
     }
     public void KnockBack(float _horizontal, float _vertical, float _knockBack)
     {
-        knockBacking = true; 
-        knockBackHorizontal = _horizontal;
-        knockBackVertical = _vertical;
+        knockBackHorizontal = _horizontal * _knockBack;
+        knockBackVertical = _vertical * _knockBack;
 
-        Knock = true;
+        player.tomandoDano = true;
         timeMax = timeMaxOriginal;
         time = 0;
     }
@@ -118,7 +119,7 @@ public class Movement : SingletonInstance<Movement>
             velocityMax = velocityMaxAndando;
         }
 
-        if (!knockBacking)//movimenta��o padr�o, caso esteja sendo empurado n�o fazer contas para se movimentar
+        if (player.tomandoDano == false)//movimenta��o padr�o, caso esteja sendo empurado n�o fazer contas para se movimentar
         {
             if (horizontal != 0)//se esta andando na vertical guarda em uma variavel a acelera��o e soma no final com addForce
             {
@@ -259,7 +260,6 @@ public class Movement : SingletonInstance<Movement>
         {
             _tempX = knockBackHorizontal;
             _tempY = knockBackVertical;
-            //abc();
         }
 
         walk(_tempX, _tempY);
@@ -267,59 +267,36 @@ public class Movement : SingletonInstance<Movement>
     }
     void KnockBackContador()
     {
-        if (Knock)
+        canMove = false;
+        time += Time.deltaTime;
+        if (time > timeMax)
         {
-            time += Time.deltaTime;
-            if (time > timeMax)
-            {
-                Knock = false;
-                timeMax = 0.0F;
-                time = 0;
-            }
-        }
-        else
-        {
+            player.tomandoDano = false;
+            timeMax = 0.0F;
+            time = 0;
+            canMove = true;
             knockBackHorizontal = 0;
             knockBackVertical = 0;
-            knockBacking = false;
+            player.FinalizarKnockback();
         }
     }
 
 
     void walk(float _horizontal, float _vertical)
     {
-
-        if (!Knock)
+        //Debug.Log("Velocidade" + new Vector2(horizontal, vertical).normalized);
+        if (!(horizontal != 0 && vertical != 0))
         {
-            //Debug.Log("Velocidade" + new Vector2(horizontal, vertical).normalized);
-            if(!(horizontal != 0 && vertical != 0))
-            {
-                rb.velocity = new Vector2(_tempX, _tempY);
-            }
-            else
-            {
-                rb.velocity = new Vector2(_tempX * 0.7f, _tempY * 0.7f);
-            }
-            //rb.AddForce(new Vector2(_horizontal, _vertical), ForceMode2D.Impulse);
-            sound.changeColliderRadius(runSpeed);
-            
+            rb.velocity = new Vector2(_tempX, _tempY);
         }
-
         else
-            rb.AddForce(new Vector2(_horizontal, _vertical));
+        {
+            rb.velocity = new Vector2(_tempX * 0.7f, _tempY * 0.7f);
+        }
+        //rb.AddForce(new Vector2(_horizontal, _vertical), ForceMode2D.Impulse);
+        if (player.tomandoDano == false && player.andandoSorrateiramente == false)
+        {
+            sound.changeColliderRadius(runSpeed);
+        }
     }
-
-
-        void abc()
-    {
-        transform.position = new Vector3(transform.position.x + knockBackHorizontal, transform.position.y + knockBackVertical, transform.position.z);
-        rb.AddForce(new Vector2(knockBackHorizontal, knockBackVertical), ForceMode2D.Impulse);
-    }
-
-    void ChageDirection()
-    {
-
-    }
-
- 
 }

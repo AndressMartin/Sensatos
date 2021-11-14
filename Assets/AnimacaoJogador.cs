@@ -7,6 +7,8 @@ public class AnimacaoJogador : MonoBehaviour
 {
     private Animator corpo; //Animator do corpo
     private Animator braco; //Animator dos bracos
+    private SpriteRenderer corpoSprite; //SpriteRenderer do corpo
+    private SpriteRenderer bracoSprite; //SpriteRenderer dos bracos
     private string armaEquipadaVisual; //Guarda a arma equipada
     private string animacaoAtual; //Guarda a animacao atual
 
@@ -15,6 +17,8 @@ public class AnimacaoJogador : MonoBehaviour
     {
         corpo = transform.Find("Corpo").GetComponent<Animator>();
         braco = transform.Find("Bracos").GetComponent<Animator>();
+        corpoSprite = transform.Find("Corpo").GetComponent<SpriteRenderer>();
+        bracoSprite = transform.Find("Bracos").GetComponent<SpriteRenderer>();
         armaEquipadaVisual = "";
         animacaoAtual = "Idle";
     }
@@ -46,5 +50,17 @@ public class AnimacaoJogador : MonoBehaviour
     public string GetAnimacaoAtual()
     {
         return animacaoAtual;
+    }
+
+    public void Piscar()
+    {
+        corpoSprite.enabled = !corpoSprite.enabled;
+        bracoSprite.enabled = !bracoSprite.enabled;
+    }
+
+    public void SetarVisibilidade(bool visivel)
+    {
+        corpoSprite.enabled = visivel;
+        bracoSprite.enabled = visivel;
     }
 }

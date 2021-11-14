@@ -78,6 +78,11 @@ public class State : MonoBehaviour
             colldown = colldowMax;
         }
 
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            player.TomarDano(0, Random.Range(-1f, 1f), Random.Range(-1f, 1f), 2);
+        }
+
         if (Input.GetKeyDown(KeyCode.Space) && colldownUsandoItem <= 0)//Botão de usar item
         {
             colldownUsandoItem = colldowMaxUsandoItem;
