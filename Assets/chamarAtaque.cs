@@ -12,12 +12,13 @@ public class chamarAtaque : MonoBehaviour
         player = transform.parent.GetComponent<Player>();
     }
 
-    // Chama o ataque
+    // Chama a hitBox de ataque
     public void Atacar()
     {
         player.AtaqueHitBox();
     }
 
+    //Finaliza o ataque
     public void FinalizarAtaque()
     {
         player.FinalizarAtaque();

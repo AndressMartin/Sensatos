@@ -18,6 +18,7 @@ public class Player : EntityModel
     private AnimacaoJogador animacao;
 
     public Direcao direcaoMovimento;
+    public Vector3 posAnterior;
 
     private float tempoImunidade;
 
@@ -48,6 +49,8 @@ public class Player : EntityModel
 
         modoMovimento = ModoMovimento.Normal;
         estado = Estado.Normal;
+
+        posAnterior = transform.position;
 
         tempoImunidade = 1f;
         pontaArma = GetComponentInChildren<PontaArma>();
@@ -81,10 +84,15 @@ public class Player : EntityModel
             collisionState = false;
         }
 
-        movement.Mover();
-
+        //Debug.Log("\nPosicao Anter: " + posAnterior + ", Posicao Atual: " + transform.position + ", Posicao diferente: " + PosicaoDiferente(posAnterior, transform.position));
         animacao.AtualizarDirecao(direcao, direcaoMovimento);
         Animar();
+        movement.Mover();
+    }
+
+    private void FixedUpdate()
+    {
+        posAnterior = transform.position;
     }
 
     private void Animar()
@@ -92,11 +100,11 @@ public class Player : EntityModel
         switch(estado)
         {
             case Estado.Normal:
-                if ((rb.velocity.x == 0 && rb.velocity.y == 0) && animacao.GetAnimacaoAtual() != "Idle")
+                if (((rb.velocity.x == 0 && rb.velocity.y == 0) || !(PosicaoDiferente(posAnterior, transform.position))) && animacao.GetAnimacaoAtual() != "Idle")
                 {
                     animacao.TrocarAnimacao("Idle");
                 }
-                else if ((rb.velocity.x != 0 || rb.velocity.y != 0))
+                else if ((rb.velocity.x != 0 || rb.velocity.y != 0) && PosicaoDiferente(posAnterior, transform.position))
                 {
                     if (modoMovimento == ModoMovimento.AndandoSorrateiramente)
                     {
@@ -125,6 +133,11 @@ public class Player : EntityModel
                 }
                 break;
         }
+    }
+
+    private bool PosicaoDiferente(Vector3 posAnterior, Vector3 posAtual)
+    {
+        return Mathf.Abs(posAtual.x - posAnterior.x) > 0.01f || Mathf.Abs(posAtual.y - posAnterior.y) > 0.01f;
     }
 
     public void FinalizarKnockback()

@@ -93,13 +93,13 @@ public class AtaqueFisico : MonoBehaviour
 
     void HitTarget(GameObject alvo)
     {
-        Debug.Log("Entrou no trigger");
+        //Debug.Log("Entrou no trigger");
         EntityModel temp;
 
         temp = alvo.GetComponent<EntityModel>();
-        //temp.TomarDano(dano, horizontal, vertical, knockBack);
+        temp.TomarDano(dano, horizontal, vertical, knockBack);
 
-        /*
+        
         if (temp.GetComponentInChildren<EnemyVision>() != null)
         {
             if (temp.GetComponentInChildren<EnemyVision>().polygonCollider.enabled)
@@ -108,6 +108,5 @@ public class AtaqueFisico : MonoBehaviour
                 tempEnemy.stealthKill();
             }
         }
-        */
     }
 }
