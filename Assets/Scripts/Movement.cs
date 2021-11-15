@@ -47,7 +47,7 @@ public class Movement : SingletonInstance<Movement>
 
         if (canMove)
         {
-            if(!player.strafing)
+            if(player.modoMovimento != Player.ModoMovimento.Strafing)
             {
                 switch (horizontal)
                 {
@@ -92,7 +92,7 @@ public class Movement : SingletonInstance<Movement>
         }
 
         Move();
-        if(player.tomandoDano == true)
+        if(player.estado == Player.Estado.TomandoDano)
         {
             KnockBackContador();
         }
@@ -102,7 +102,7 @@ public class Movement : SingletonInstance<Movement>
         knockBackHorizontal = _horizontal * _knockBack;
         knockBackVertical = _vertical * _knockBack;
 
-        player.tomandoDano = true;
+        player.estado = Player.Estado.TomandoDano; ;
         timeMax = timeMaxOriginal;
         time = 0;
     }
@@ -110,7 +110,7 @@ public class Movement : SingletonInstance<Movement>
 
     void Move()
     {
-        if(player.andandoSorrateiramente == true)
+        if(player.modoMovimento == Player.ModoMovimento.AndandoSorrateiramente)
         {
             velocityMax = velocityMaxAndandoSorrateiramente;
         }
@@ -119,147 +119,154 @@ public class Movement : SingletonInstance<Movement>
             velocityMax = velocityMaxAndando;
         }
 
-        if (player.tomandoDano == false)//movimenta��o padr�o, caso esteja sendo empurado n�o fazer contas para se movimentar
+        switch(player.estado)
         {
-            if (horizontal != 0)//se esta andando na vertical guarda em uma variavel a acelera��o e soma no final com addForce
-            {
-                _tempX = horizontal * velocityMax;
-                /*
-                if(player.andandoSorrateiramente == false && player.strafing == false)
+            case Player.Estado.Normal: //movimentacaoo padrao, caso esteja sendo empurado nao fazer contas para se movimentar
+                if (horizontal != 0)//se esta andando na vertical guarda em uma variavel a acelera��o e soma no final com addForce
                 {
-                    _tempX += horizontal * (acelerationSpeed) * (Time.deltaTime);
+                    _tempX = horizontal * velocityMax;
+                    /*
+                    if(player.andandoSorrateiramente == false && player.strafing == false)
+                    {
+                        _tempX += horizontal * (acelerationSpeed) * (Time.deltaTime);
+                    }
+                    else
+                    {
+                        _tempX += horizontal * (acelerationSpeed);
+                    }
+
+                    if (_tempX >= velocityMax)
+                    {
+                        _tempX = velocityMax;
+                        //rb.velocity = new Vector2(velocityMaxX, rb.velocity.y);
+                    }
+                    else if (_tempX <= -velocityMax)
+                    {
+                        _tempX = -velocityMax;
+                        //rb.velocity = new Vector2(-velocityMaxX, rb.velocity.y);
+                    }
+                    */
                 }
                 else
                 {
-                    _tempX += horizontal * (acelerationSpeed);
-                }
-
-                if (_tempX >= velocityMax)
-                {
-                    _tempX = velocityMax;
-                    //rb.velocity = new Vector2(velocityMaxX, rb.velocity.y);
-                }
-                else if (_tempX <= -velocityMax)
-                {
-                    _tempX = -velocityMax;
-                    //rb.velocity = new Vector2(-velocityMaxX, rb.velocity.y);
-                }
-                */
-            }
-            else
-            {
-                _tempX = 0;
-                /*
-                if (_tempX > 0)
-                {
-                    if (player.andandoSorrateiramente == false && player.strafing == false)
-                    {
-                        _tempX -= (acelerationSpeed) * (Time.deltaTime);
-                    }
-                    else
-                    {
-                        _tempX = 0;
-                    }
-
-                    if (_tempX < 0)
-                    {
-                        _tempX = 0;
-                        //rb.velocity = new Vector2(0, rb.velocity.y);
-                    }
-                }
-                else if (_tempX < 0)
-                {
-                    if (player.andandoSorrateiramente == false && player.strafing == false)
-                    {
-                        _tempX += (acelerationSpeed) * (Time.deltaTime);
-                    }
-                    else
-                    {
-                        _tempX = 0;
-                    }
-
+                    _tempX = 0;
+                    /*
                     if (_tempX > 0)
                     {
-                        _tempX = 0;
-                        //rb.velocity = new Vector2(0, rb.velocity.y);
-                    }
-                }
-                */
-            }
+                        if (player.andandoSorrateiramente == false && player.strafing == false)
+                        {
+                            _tempX -= (acelerationSpeed) * (Time.deltaTime);
+                        }
+                        else
+                        {
+                            _tempX = 0;
+                        }
 
-            if (vertical != 0)
-            {
-                _tempY = vertical * velocityMax;
-                /*
-                if (player.andandoSorrateiramente == false && player.strafing == false)
+                        if (_tempX < 0)
+                        {
+                            _tempX = 0;
+                            //rb.velocity = new Vector2(0, rb.velocity.y);
+                        }
+                    }
+                    else if (_tempX < 0)
+                    {
+                        if (player.andandoSorrateiramente == false && player.strafing == false)
+                        {
+                            _tempX += (acelerationSpeed) * (Time.deltaTime);
+                        }
+                        else
+                        {
+                            _tempX = 0;
+                        }
+
+                        if (_tempX > 0)
+                        {
+                            _tempX = 0;
+                            //rb.velocity = new Vector2(0, rb.velocity.y);
+                        }
+                    }
+                    */
+                }
+
+                if (vertical != 0)
                 {
-                    _tempY += vertical * (acelerationSpeed) * (Time.deltaTime);
+                    _tempY = vertical * velocityMax;
+                    /*
+                    if (player.andandoSorrateiramente == false && player.strafing == false)
+                    {
+                        _tempY += vertical * (acelerationSpeed) * (Time.deltaTime);
+                    }
+                    else
+                    {
+                        _tempY += vertical * (acelerationSpeed);
+                    }
+
+                    if (_tempY >= velocityMax)
+                    {
+                        _tempY = velocityMax;
+                        //rb.velocity = new Vector2(rb.velocity.x, velocityMaxY);
+                    }
+                    else if (_tempY <= -velocityMax)
+                    {
+                        _tempY = -velocityMax;
+                        //rb.velocity = new Vector2(rb.velocity.x, -velocityMaxY);
+                    }
+                    */
                 }
                 else
                 {
-                    _tempY += vertical * (acelerationSpeed);
-                }
-
-                if (_tempY >= velocityMax)
-                {
-                    _tempY = velocityMax;
-                    //rb.velocity = new Vector2(rb.velocity.x, velocityMaxY);
-                }
-                else if (_tempY <= -velocityMax)
-                {
-                    _tempY = -velocityMax;
-                    //rb.velocity = new Vector2(rb.velocity.x, -velocityMaxY);
-                }
-                */
-            }
-            else
-            {
-                _tempY = 0;
-                /*
-                if (_tempY > 0)
-                {
-                    if (player.andandoSorrateiramente == false && player.strafing == false)
-                    {
-                        _tempY -= (acelerationSpeed) * (Time.deltaTime);
-                    }
-                    else
-                    {
-                        _tempY = 0;
-                    }
-
-                    if (_tempY < 0)
-                    {
-                        _tempY = 0;
-                        //rb.velocity = new Vector2(rb.velocity.x, 0);
-                    }
-                }
-                else if (_tempY < 0)
-                {
-                    if (player.andandoSorrateiramente == false && player.strafing == false)
-                    {
-                        _tempY += (acelerationSpeed) * (Time.deltaTime);
-                    }
-                    else
-                    {
-                        _tempY = 0;
-                    }
-
+                    _tempY = 0;
+                    /*
                     if (_tempY > 0)
                     {
-                        _tempY = 0;
-                        //rb.velocity = new Vector2(rb.velocity.x, 0);
+                        if (player.andandoSorrateiramente == false && player.strafing == false)
+                        {
+                            _tempY -= (acelerationSpeed) * (Time.deltaTime);
+                        }
+                        else
+                        {
+                            _tempY = 0;
+                        }
+
+                        if (_tempY < 0)
+                        {
+                            _tempY = 0;
+                            //rb.velocity = new Vector2(rb.velocity.x, 0);
+                        }
                     }
+                    else if (_tempY < 0)
+                    {
+                        if (player.andandoSorrateiramente == false && player.strafing == false)
+                        {
+                            _tempY += (acelerationSpeed) * (Time.deltaTime);
+                        }
+                        else
+                        {
+                            _tempY = 0;
+                        }
+
+                        if (_tempY > 0)
+                        {
+                            _tempY = 0;
+                            //rb.velocity = new Vector2(rb.velocity.x, 0);
+                        }
+                    }
+                    */
                 }
-                */
-            }
-            //rb.AddForce(new Vector2(_tempX, _tempY), ForceMode2D.Impulse);
+                //rb.AddForce(new Vector2(_tempX, _tempY), ForceMode2D.Impulse);
+                break;
 
-        }
+            case Player.Estado.TomandoDano:
+                _tempX = knockBackHorizontal;
+                _tempY = knockBackVertical;
+                break;
 
-        else
-        {
-            _tempX = knockBackHorizontal;
-            _tempY = knockBackVertical;
+            case Player.Estado.Atacando:
+                _tempX = 0;
+                _tempY = 0;
+                break;
+
+
         }
 
         walk(_tempX, _tempY);
@@ -271,7 +278,7 @@ public class Movement : SingletonInstance<Movement>
         time += Time.deltaTime;
         if (time > timeMax)
         {
-            player.tomandoDano = false;
+            player.estado = Player.Estado.Normal;
             timeMax = 0.0F;
             time = 0;
             canMove = true;
@@ -294,7 +301,7 @@ public class Movement : SingletonInstance<Movement>
             rb.velocity = new Vector2(_tempX * 0.7f, _tempY * 0.7f);
         }
         //rb.AddForce(new Vector2(_horizontal, _vertical), ForceMode2D.Impulse);
-        if (player.tomandoDano == false && player.andandoSorrateiramente == false)
+        if (player.estado == Player.Estado.Normal && player.modoMovimento != Player.ModoMovimento.AndandoSorrateiramente)
         {
             sound.changeColliderRadius(runSpeed);
         }

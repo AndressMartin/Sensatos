@@ -5,25 +5,25 @@ using UnityEngine;
 public class EntityModel : MonoBehaviour
 {
     public virtual int vida { get; protected set; }
-    public enum Direcao { Baixo, Esquerda, Cima, Direita};
+    public enum Direcao {Baixo, Esquerda, Cima, Direita};
     public Direcao direcao;
 
-    public  Vector3 FrenteDoPersonagem(Transform _objFather, float _distance)
+    public  Vector3 FrenteDoPersonagem(Transform _objFather, float _distance, float _distanceY)
     {
         switch (direcao)//verifica a direção que o player esta se movimentando, seta a posição do objeto para a posicao do player -/+ uma distancia pre configurada
         {
 
             case Direcao.Esquerda:
-                return transform.position = new Vector3(_objFather.transform.position.x - _distance, _objFather.transform.position.y, 0);
+                return new Vector3(_objFather.position.x - _distance, _objFather.position.y + _distanceY, 0);
                 
             case Direcao.Direita:
-                return transform.position = new Vector3(_objFather.transform.position.x + _distance, _objFather.transform.position.y, 0);
+                return new Vector3(_objFather.position.x + _distance, _objFather.position.y + _distanceY, 0);
 
             case Direcao.Cima:
-                return transform.position = new Vector3(_objFather.transform.position.x, _objFather.transform.position.y + _distance, 0);
+                return new Vector3(_objFather.position.x, _objFather.position.y + _distance + _distanceY, 0);
 
             case Direcao.Baixo:
-                return transform.position = new Vector3(_objFather.transform.position.x, _objFather.transform.position.y - _distance, 0);
+                return new Vector3(_objFather.position.x, _objFather.position.y - _distance + _distanceY, 0);
 
             default:
                 return transform.position;

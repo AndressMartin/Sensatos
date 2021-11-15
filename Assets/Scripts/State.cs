@@ -78,9 +78,14 @@ public class State : MonoBehaviour
             colldown = colldowMax;
         }
 
-        if (Input.GetKeyDown(KeyCode.F))
+        if (Input.GetKeyDown(KeyCode.G))
         {
             player.TomarDano(0, Random.Range(-1f, 1f), Random.Range(-1f, 1f), 2);
+        }
+
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            player.Atacar(); ;
         }
 
         if (Input.GetKeyDown(KeyCode.Space) && colldownUsandoItem <= 0)//Botão de usar item
@@ -98,14 +103,26 @@ public class State : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.X))//Botão para ativar o strafing
         {
-            player.strafing = !player.strafing;
-            player.andandoSorrateiramente = false;
+            if(player.modoMovimento != Player.ModoMovimento.Strafing)
+            {
+                player.modoMovimento = Player.ModoMovimento.Strafing;
+            }
+            else
+            {
+                player.modoMovimento = Player.ModoMovimento.Normal;
+            }
         }
 
         if (Input.GetKeyDown(KeyCode.LeftControl) || Input.GetKeyDown(KeyCode.C))//Botão para agachar //se estiver correndo ou em pé, não agachado
         {
-            player.andandoSorrateiramente = !player.andandoSorrateiramente;
-            player.strafing = false;
+            if (player.modoMovimento != Player.ModoMovimento.AndandoSorrateiramente)
+            {
+                player.modoMovimento = Player.ModoMovimento.AndandoSorrateiramente;
+            }
+            else
+            {
+                player.modoMovimento = Player.ModoMovimento.Normal;
+            }
         }
 
         if(Input.GetKeyDown(KeyCode.Q))

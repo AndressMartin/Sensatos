@@ -14,6 +14,7 @@ public class Player : EntityModel
     public Enemy[] enemies;
 
     private PontaArma pontaArma;
+    private AtaqueFisico ataqueHitBox;
     private AnimacaoJogador animacao;
 
     public Direcao direcaoMovimento;
@@ -21,9 +22,12 @@ public class Player : EntityModel
     private float tempoImunidade;
 
     public int initialLife;
-    public bool andandoSorrateiramente,
-                strafing,
-                tomandoDano;
+
+    public enum ModoMovimento {Normal, AndandoSorrateiramente, Strafing};
+    public enum Estado {Normal, TomandoDano, Atacando};
+
+    public ModoMovimento modoMovimento;
+    public Estado estado;
 
     [SerializeField] private float time = 0.0F;
     [SerializeField] private float timeMax = 0;
@@ -41,11 +45,13 @@ public class Player : EntityModel
         itemDirectionHitbox = GetComponentInChildren<ItemDirectionHitbox>();
         rb = GetComponent<Rigidbody2D>();
         vida = initialLife;
-        andandoSorrateiramente = false;
-        strafing = false;
+
+        modoMovimento = ModoMovimento.Normal;
+        estado = Estado.Normal;
 
         tempoImunidade = 1f;
         pontaArma = GetComponentInChildren<PontaArma>();
+        ataqueHitBox = GetComponentInChildren<AtaqueFisico>();
         animacao = transform.GetComponent<AnimacaoJogador>();
 
         enemies = FindObjectsOfType<Enemy>();//pegando todos os inmigos
@@ -83,39 +89,64 @@ public class Player : EntityModel
 
     private void Animar()
     {
-        if(tomandoDano == false)
+        switch(estado)
         {
-            if ((rb.velocity.x == 0 && rb.velocity.y == 0) && animacao.GetAnimacaoAtual() != "Idle")
-            {
-                animacao.TrocarAnimacao("Idle");
-            }
-            else if ((rb.velocity.x != 0 || rb.velocity.y != 0))
-            {
-                if (andandoSorrateiramente == true)
+            case Estado.Normal:
+                if ((rb.velocity.x == 0 && rb.velocity.y == 0) && animacao.GetAnimacaoAtual() != "Idle")
                 {
-                    if (animacao.GetAnimacaoAtual() != "AndandoSorrateiramente")
+                    animacao.TrocarAnimacao("Idle");
+                }
+                else if ((rb.velocity.x != 0 || rb.velocity.y != 0))
+                {
+                    if (modoMovimento == ModoMovimento.AndandoSorrateiramente)
                     {
-                        animacao.TrocarAnimacao("AndandoSorrateiramente");
+                        if (animacao.GetAnimacaoAtual() != "AndandoSorrateiramente")
+                        {
+                            animacao.TrocarAnimacao("AndandoSorrateiramente");
+                        }
+                    }
+                    else if (animacao.GetAnimacaoAtual() != "Andando")
+                    {
+                        animacao.TrocarAnimacao("Andando");
                     }
                 }
-                else if (animacao.GetAnimacaoAtual() != "Andando")
+                break;
+            case Estado.TomandoDano:
+                if (animacao.GetAnimacaoAtual() != "TomandoDano")
                 {
-                    animacao.TrocarAnimacao("Andando");
+                    animacao.TrocarAnimacao("TomandoDano");
                 }
-            }
-        }
-        else
-        {
-            if(animacao.GetAnimacaoAtual() != "TomandoDano")
-            {
-                animacao.TrocarAnimacao("TomandoDano");
-            }
+                break;
+
+            case Estado.Atacando:
+                if (animacao.GetAnimacaoAtual() != "Atacando")
+                {
+                    animacao.TrocarAnimacao("Atacando");
+                }
+                break;
         }
     }
 
     public void FinalizarKnockback()
     {
         animacao.TrocarAnimacao("Idle");
+    }
+
+    public void Atacar()
+    {
+        estado = Estado.Atacando;
+        movement.canMove = false;
+    }
+
+    public void AtaqueHitBox()
+    {
+        ataqueHitBox.Atacar(direcao, 1, 0.8f, 1.1f, 0.87f);
+    }
+
+    public void FinalizarAtaque()
+    {
+        estado = Estado.Normal;
+        movement.canMove = true;
     }
 
     public void curar(int _cura)

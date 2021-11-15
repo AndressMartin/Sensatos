@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class PontaArma : EntityModel
 {
-    [SerializeField]private float distanceFromChar;
     public void AtualizarPontaArma(Direcao _direcao)    // Atualiza a ponta da arma
     {
         direcao = _direcao;
+        transform.position = FrenteDoPersonagem(transform.parent.transform, 0.5f, 1);
     }
     
 }
