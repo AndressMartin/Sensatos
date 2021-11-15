@@ -149,6 +149,16 @@ public class FisicalAttack : MonoBehaviour
         temp = alvo.GetComponent<EntityModel>();
         temp.TomarDano(dano, horizontal, vertical,knockBack);
 
+
+        if(temp.GetComponentInChildren<EnemyVision>() !=null)
+        {
+           if( temp.GetComponentInChildren<EnemyVision>().polygonCollider.enabled)
+            {
+               Enemy tempEnemy = temp.GetComponent<Enemy>();
+                Debug.Log("Stelf");
+                tempEnemy.stealthKill();
+            }
+        }
         DestroyGameObject();
     }
 

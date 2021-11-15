@@ -29,7 +29,7 @@ public class EnemyAttackRange : MonoBehaviour
     }
     private void OnTriggerStay2D(Collider2D collision)
     {
-        Player temp = collision.gameObject.GetComponent<Player>();
+        /*Player temp = collision.gameObject.GetComponent<Player>();
         if (temp != null)
         {
             //Debug.Log("Ta me colididno");
@@ -41,7 +41,7 @@ public class EnemyAttackRange : MonoBehaviour
                     enemy.stealthKill();
                 }
             }
-        }
+        }*/
     }
 
     private void OnTriggerExit2D(Collider2D collision)

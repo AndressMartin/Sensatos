@@ -20,9 +20,10 @@ public class Projetil : MonoBehaviour
     public int dano;
     public float knockBackValue;
 
-    public enum Direcao { Esquerda, Cima, Direita, Baixo };
-    public Direcao direcao;
-    private Direcao tempDirecao;
+    //EntityModel.Direcao;
+    //public enum Direcao { Esquerda, Cima, Direita, Baixo };
+    //public Direcao direcao;
+    public EntityModel.Direcao direcao;
     // Start is called before the first frame update
     void Start()
     {
@@ -52,17 +53,17 @@ public class Projetil : MonoBehaviour
 
                 switch (direcao)
                 {
-                    case Direcao.Esquerda:
+                    case EntityModel.Direcao.Esquerda:
                         horizontal = -1;
                         break;
-                    case Direcao.Direita:
+                    case EntityModel.Direcao.Direita:
                         horizontal = 1;
                         break;
-                    case Direcao.Cima:
+                    case EntityModel.Direcao.Cima:
 
                         vertical = 1;
                         break;
-                    case Direcao.Baixo:
+                    case EntityModel.Direcao.Baixo:
                         vertical = -1;
                         break;
 
