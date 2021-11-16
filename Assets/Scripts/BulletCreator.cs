@@ -12,6 +12,7 @@ public class BulletCreator : MonoBehaviour
     private float velocity;
     private GameObject FatherFromGun;
     private float knockBackValue;
+    private float distanciaMaxProjetil;
 
     public void BulletReference(ArmaDeFogo _armaDeFogo)
     {
@@ -26,6 +27,7 @@ public class BulletCreator : MonoBehaviour
         velocity = _armaDeFogo.velocityProjetil;
         FatherFromGun = _armaDeFogo.objQueChamou;
         knockBackValue = _armaDeFogo.knockbackValue;
+        distanciaMaxProjetil = _armaDeFogo.distanciaMaxProjetil;
 
         Instantiate(bullet, pontaArma);
         projetil = FindObjectOfType<Projetil>();
@@ -36,7 +38,7 @@ public class BulletCreator : MonoBehaviour
         projetil.transform.parent = transform;
         projetil.velocidadeProjetil = velocity;
         projetil.knockBackValue = knockBackValue;
-
+        projetil.distanciaMaxProjetil = distanciaMaxProjetil;
 
     }
 

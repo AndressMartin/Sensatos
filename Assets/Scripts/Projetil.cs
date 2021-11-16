@@ -108,21 +108,12 @@ public class Projetil : MonoBehaviour
 
     void DistanciaProjetil()
     {
-        
-            float difX = Mathf.Abs(pontaArmaAoDisparar.x) - Mathf.Abs(transform.position.x);
-            if (Mathf.Abs(difX) >= Mathf.Abs(distanciaMaxProjetil))
-            {
-               DestroyGameObject();
-            }
-        
-
-        
-            float difY = Mathf.Abs(pontaArmaAoDisparar.y) - Mathf.Abs(transform.position.y);
-            if (Mathf.Abs(difY) >= Mathf.Abs(distanciaMaxProjetil) || Mathf.Abs(difX) >= Mathf.Abs(distanciaMaxProjetil))
-            {
-                DestroyGameObject();
-            }
-        
+        float difX = Mathf.Abs(pontaArmaAoDisparar.x) - Mathf.Abs(transform.position.x);
+        float difY = Mathf.Abs(pontaArmaAoDisparar.y) - Mathf.Abs(transform.position.y);
+        if (Mathf.Abs(difY) >= Mathf.Abs(distanciaMaxProjetil) || Mathf.Abs(difX) >= Mathf.Abs(distanciaMaxProjetil))
+        {
+            DestroyGameObject();
+        }
     }
 
     public void Shooted(Transform _pontaArma)

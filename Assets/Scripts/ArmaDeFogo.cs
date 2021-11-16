@@ -20,6 +20,7 @@ public class ArmaDeFogo : Item
     public int municaoAtual;
     public int index;
     public string nomeVisual;
+    public float distanciaMaxProjetil;
     private void Start()
     {
         bulletCreator = FindObjectOfType<BulletCreator>();
