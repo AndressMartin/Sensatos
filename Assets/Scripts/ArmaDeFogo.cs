@@ -23,7 +23,7 @@ public class ArmaDeFogo : Item
     public string nomeVisual;
     private void Start()
     {
-        if (FindObjectOfType<Player>() ) sound = FindObjectOfType<Player>().GetComponentInChildren<Sound>();
+        //if (FindObjectOfType<Player>() ) sound = FindObjectOfType<Player>().GetComponentInChildren<Sound>();
         bulletCreator = FindObjectOfType<BulletCreator>();
         nome = tempNome;
         municaoAtual = municaoMax; //TODO: Precisa salvar essa info
@@ -45,8 +45,9 @@ public class ArmaDeFogo : Item
 
     void CreateShoot(GameObject _objQueChamou)
     {
-        sound = _objQueChamou.GetComponentInChildren<Sound>();
-        sound.changeColliderRadius(5);
+        
+        //sound = _objQueChamou.GetComponentInChildren<Sound>();
+        //sound.changeColliderRadius(5);
         pontaArma = _objQueChamou.GetComponentInChildren<PontaArma>().transform;
         objQueChamou = _objQueChamou;
         bulletCreator.BulletReference(this);

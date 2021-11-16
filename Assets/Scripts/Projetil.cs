@@ -81,8 +81,9 @@ public class Projetil : MonoBehaviour
         {
             if (!saberDirecaoDisparo)
             {
-                Vector3 temp = FindObjectOfType<Player>().GetComponent<Transform>().position;
-                playerVector3 = new Vector3(temp.x,temp.y,temp.z);
+                Player player = FindObjectOfType<Player>().GetComponent<Player>();
+                Vector3 temp = player.GetComponent<Transform>().position;
+                playerVector3 = new Vector3(temp.x,(temp.y+player.distanciaTiroY),temp.z);
                
                 directionPlayer = playerVector3 - transform.position;
                 horizontal = directionPlayer.x;
@@ -99,7 +100,8 @@ public class Projetil : MonoBehaviour
     void MOVE(Vector2 _direction)
     {
         DistanciaProjetil();
-        rb.MovePosition((Vector2)transform.position + (_direction * velocidadeProjetil * Time.deltaTime));
+        rb.velocity = new Vector2(_direction.x,_direction.y * velocidadeProjetil);
+       // rb.MovePosition((Vector2)transform.position + (_direction * velocidadeProjetil * Time.deltaTime));
 
     }
 
@@ -108,10 +110,10 @@ public class Projetil : MonoBehaviour
     {
         
             float difX = Mathf.Abs(pontaArmaAoDisparar.x) - Mathf.Abs(transform.position.x);
-            //if (Mathf.Abs(difX) >= Mathf.Abs(distanciaMaxProjetil))
-            //{
-            //   DestroyGameObject();
-            //}
+            if (Mathf.Abs(difX) >= Mathf.Abs(distanciaMaxProjetil))
+            {
+               DestroyGameObject();
+            }
         
 
         

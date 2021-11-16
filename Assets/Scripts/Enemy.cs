@@ -108,7 +108,10 @@ public class Enemy : EntityModel
 
     public void UseItem()
     {
-        inventario.UsarItemAtual();
+        TrocarDirecaoAtaque(FindObjectOfType<Player>().transform.position);
+        inventario.armaSlot1.AtualizarBulletCreator(FindObjectOfType<BulletCreator>());
+        inventario.armaSlot1.Usar(gameObject);
+        animacao.AtualizarArmaBracos(inventario.armaSlot1.nomeVisual);
     }
     public void die()
     {
@@ -141,7 +144,32 @@ public class Enemy : EntityModel
         direcao = _direction;
         pontaArma.AtualizarPontaArma(direcao);
     }
+    public void TrocarDirecaoAtaque(Vector3 alvo)
+    {
+        float DistanciaX,
+              DistanciaY;
 
+        DistanciaX = alvo.x - transform.position.x;
+        DistanciaY = alvo.y - transform.position.y;
+
+        if (DistanciaY < 0)
+        {
+            ChangeDirection(EntityModel.Direcao.Baixo);
+        }
+        else
+        {
+            ChangeDirection(EntityModel.Direcao.Cima);
+        }
+
+        if (DistanciaX > 0.6)
+        {
+            ChangeDirection(EntityModel.Direcao.Direita);
+        }
+        else if (DistanciaX < -0.6)
+        {
+            ChangeDirection(EntityModel.Direcao.Esquerda);
+        }
+    }
     public override void KnockBack(float _horizontal, float _vertical,float _knockBack)
     {
         enemyMove.KnockBack(_horizontal, _vertical,_knockBack);

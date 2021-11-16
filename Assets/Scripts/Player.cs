@@ -20,11 +20,12 @@ public class Player : EntityModel
 
     public Direcao direcaoMovimento;
     public Vector3 posAnterior;
+    private Sound sound;
 
     private float tempoImunidade;
 
     public int initialLife;
-
+    public float distanciaTiroY;
     public enum ModoMovimento {Normal, AndandoSorrateiramente, Strafing};
     public enum Estado {Normal, TomandoDano, Atacando};
 
@@ -40,6 +41,7 @@ public class Player : EntityModel
     // Start is called before the first frame update
     void Start()
     {
+        sound = FindObjectOfType<Sound>();
         boxCollider2D = GetComponent<BoxCollider2D>();
         movement = GetComponent<Movement>();
         spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
@@ -61,6 +63,7 @@ public class Player : EntityModel
         animacao = transform.GetComponent<AnimacaoJogador>();
 
         enemies = FindObjectsOfType<Enemy>();//pegando todos os inmigos
+        distanciaTiroY = 1f;
     }
 
     // Update is called once per frame
@@ -163,6 +166,7 @@ public class Player : EntityModel
     {
         if(estado == Estado.Normal)
         {
+            sound.changeColliderRadius(5);
             inventario.armaSlot1.AtualizarBulletCreator(FindObjectOfType<BulletCreator>());
             inventario.armaSlot1.Usar(gameObject);
             animacao.AtualizarArmaBracos(inventario.armaSlot1.nomeVisual);
