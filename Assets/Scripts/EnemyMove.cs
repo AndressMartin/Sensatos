@@ -133,7 +133,7 @@ public class EnemyMove : MonoBehaviour
                     }
                     else if (enemyVision.seePlayer)
                     {
-                        Vector3 direction = playerGameObject.transform.position - transform.position;
+                        Vector2 direction = playerGameObject.transform.position - transform.position;
                         direction.Normalize();
                         MOVE(direction);
                         //Debug.Log("seguind player");
@@ -143,7 +143,7 @@ public class EnemyMove : MonoBehaviour
                 {
                     if (difLockDawnButton > 0.05)
                     {
-                        Vector3 direction = lockDawn.transform.position - transform.position;
+                        Vector2 direction = lockDawn.transform.position - transform.position;
                         direction.Normalize();
                         MOVE(direction);
                     }
@@ -162,7 +162,7 @@ public class EnemyMove : MonoBehaviour
                 }
                 else if (enemyVision.seePlayer)
                 {
-                    Vector3 direction = playerGameObject.transform.position - transform.position;
+                    Vector2 direction = playerGameObject.transform.position - transform.position;
                     direction.Normalize();
                     MOVE(direction);
                     //Debug.Log("seguind player");
@@ -218,7 +218,7 @@ public class EnemyMove : MonoBehaviour
                     }
                 }
 
-                if (Mathf.Abs(lastPlayerPosition.x - transform.position.x) >= 0.1 && Mathf.Abs(lastPlayerPosition.y - transform.position.y) >= 0.1)//caso o inimigo não tenha chego na ultima posicao do player
+                if (Vector2.Distance(lastPlayerPosition,transform.position) >= 0.1)//caso o inimigo não tenha chego na ultima posicao do player
                 {
 
                     Vector2 direction = lastPlayerPosition - transform.position;
@@ -318,9 +318,9 @@ public class EnemyMove : MonoBehaviour
             if (hearShoot)//caso tenha tiro
             {
                 estado = Estado.alerta;
-                if (Mathf.Abs(enemySoundPosition.x - transform.position.x) >= 0.1 && Mathf.Abs(enemySoundPosition.y - transform.position.y) >= 0.1)//caso o inimigo não tenha chego na ultima posicao do player
+                if (Vector2.Distance(enemySoundPosition,transform.position) >= 0.1)//caso o inimigo não tenha chego na ultima posicao do player
                 {
-                    Vector3 direction = enemySoundPosition - transform.position;
+                    Vector2 direction = enemySoundPosition - transform.position;
                     direction.Normalize();
                     MOVE(direction);
                 }
@@ -329,9 +329,9 @@ public class EnemyMove : MonoBehaviour
             {
                 if (estado == Estado.alerta)
                 {
-                    if (Mathf.Abs(enemySoundPosition.x - transform.position.x) >= 0.1 && Mathf.Abs(enemySoundPosition.y - transform.position.y) >= 0.1)//caso o inimigo não tenha chego na ultima posicao do player
+                    if (Vector2.Distance(enemySoundPosition, transform.position) >= 0.1)//caso o inimigo não tenha chego na ultima posicao do player
                     {
-                        Vector3 direction = enemySoundPosition - transform.position;
+                        Vector2 direction = enemySoundPosition - transform.position;
                         direction.Normalize();
                         MOVE(direction);
                     }
