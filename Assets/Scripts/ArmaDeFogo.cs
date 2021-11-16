@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ArmaDeFogo : Item
 {
@@ -8,18 +9,23 @@ public class ArmaDeFogo : Item
     private Projetil projetil;
     private BulletCreator bulletCreator;
     public Transform pontaArma;
+    public Sprite myImage;
     public override string nome { get; protected set; }
     public int dano;
     public float velocityProjetil;
     public GameObject objQueChamou;
     public string tempNome;
     public float knockbackValue;
+    public int municaoMax;
+    public int municaoAtual;
     private Sound sound;
+    public int index;
     private void Start()
     {
-        sound = FindObjectOfType<Player>().GetComponentInChildren<Sound>();
+        if (FindObjectOfType<Player>() ) sound = FindObjectOfType<Player>().GetComponentInChildren<Sound>();
         bulletCreator = FindObjectOfType<BulletCreator>();
         nome = tempNome;
+        municaoAtual = municaoMax; //TODO: Precisa salvar essa info
         if(knockbackValue <=0)
         {
             knockbackValue = 1;
