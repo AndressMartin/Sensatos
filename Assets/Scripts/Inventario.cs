@@ -19,8 +19,12 @@ public class Inventario : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            TrocarArma();
+        }
     }
+
     private void InitWeaponConfig()
     {
         armaSlot1 = armas[0];
@@ -28,6 +32,7 @@ public class Inventario : MonoBehaviour
         armaSlot2 = armas[1];
         armas[1].index = 1;
     }
+
     public void add(Item item)
     {
         if(item.GetType() != typeof(ArmaDeFogo))
@@ -80,7 +85,9 @@ public class Inventario : MonoBehaviour
         List<ArmaDeFogo> armasTemp = new List<ArmaDeFogo>();
         foreach (var arma in armas)
         {
-            armasTemp.Insert(arma.index, arma);
+            Debug.Log(arma.index);
+            if (armasTemp.Count >= arma.index) armasTemp.Insert(arma.index, arma);
+            else armasTemp.Add(arma);
         }
         armas.Clear();
         foreach (var arma in armasTemp)
