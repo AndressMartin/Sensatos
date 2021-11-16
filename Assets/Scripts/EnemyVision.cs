@@ -206,7 +206,6 @@ public class EnemyVision : EntityModel
 
                     if (hits)
                     {
-                        Debug.Log(hits.transform.gameObject.name);
                         Debug.DrawRay(new Vector2(xp, yp), new Vector2(hits.transform.position.x - xp, hits.transform.position.y - yp), Color.red);
 
                         if (hits.transform.GetComponent<ParedeModel>() != null)
@@ -220,7 +219,8 @@ public class EnemyVision : EntityModel
 
                         if (hits.transform.GetComponent<Player>() != null)
                         {
-                            Debug.Log("player aqui");
+                            SeePlayer(true, collision.gameObject);
+
                             // =new Vector3(hit.transform.position.x, hit.transform.position.y, hit.transform.position.z); 
                         }
                     }

@@ -61,6 +61,10 @@ public class EnemyMove : MonoBehaviour
     private int lastMoveSpot;
     private int randomSpot;
     bool hearShoot;
+    bool viuPlayerUmaVez;
+    lockDawn lockDawn;
+    float difPlayer;
+    float difLockDawnButton;
 
     [SerializeField]private Vector3 ultimaposicaoOrigem;
     private void Start()
@@ -80,7 +84,7 @@ public class EnemyMove : MonoBehaviour
         timeMaxOriginalKnockCont = timeMaxKnockCont;
 
         timeMaxAlert = timeMaxAlertOriginal;
-
+        lockDawn = FindObjectOfType<lockDawn>();
     }
     public void HearEnemy(Player _gameObject, float _tamanhoRaio)
     {
@@ -104,8 +108,10 @@ public class EnemyMove : MonoBehaviour
 
     public void seguirAtacarPlayer()
     {
-        if (!knockBacking) //entrar em modo de alerta por x tempos, caso continue vendo o player executa os ifs abaixo
+        if (!knockBacking) 
         {
+            float difPlayer = Vector2.Distance(playerGameObject.transform.position, transform.position);
+            
 
             if (firstTimeOnLoop)
             {
@@ -116,25 +122,57 @@ public class EnemyMove : MonoBehaviour
 
 
 
-
-            lastPlayerPosition = playerGameObject.transform.position;
-            if (enemyVision.playerOnAttackRange)//caso esteja dentro do range de ataque 
+            if (!lockDawn.ativo) //caso não esteja em lockdawn
             {
-                enemy.UseItem();
+                if (difPlayer < difLockDawnButton)//caso o player estja mais perto que o alarme vai pra cima do player
+                {
+                    lastPlayerPosition = playerGameObject.transform.position;
+                    if (enemyVision.playerOnAttackRange)//caso esteja dentro do range de ataque 
+                    {
+                        enemy.UseItem();
+                    }
+                    else if (enemyVision.seePlayer)
+                    {
+                        Vector3 direction = playerGameObject.transform.position - transform.position;
+                        direction.Normalize();
+                        MOVE(direction);
+                        //Debug.Log("seguind player");
+                    }
+                }
+                else if (difPlayer > difLockDawnButton)//caso alarme estje mais perto ativa o alarme
+                {
+                    if (difLockDawnButton > 0.05)
+                    {
+                        Vector3 direction = lockDawn.transform.position - transform.position;
+                        direction.Normalize();
+                        MOVE(direction);
+                    }
+                    else
+                    {
+                        lockDawn.ativo = true;
+                    }
+                }
             }
-
-            else if (enemyVision.seePlayer)
+            else // vai pra cima do player
             {
-                Vector3 direction = playerGameObject.transform.position - transform.position;
-                direction.Normalize();
-                MOVE(direction);
-                //Debug.Log("seguind player");
+                lastPlayerPosition = playerGameObject.transform.position;
+                if (enemyVision.playerOnAttackRange)//caso esteja dentro do range de ataque 
+                {
+                    enemy.UseItem();
+                }
+                else if (enemyVision.seePlayer)
+                {
+                    Vector3 direction = playerGameObject.transform.position - transform.position;
+                    direction.Normalize();
+                    MOVE(direction);
+                    //Debug.Log("seguind player");
+                }
             }
         }
     }
     public void Main()
     {
-
+        difLockDawnButton = Vector2.Distance(lockDawn.transform.position, transform.position);
         /*if (playerGameObject != null)
         {
             pathFinding.ReceivePlayerGameObject(playerGameObject);
@@ -148,6 +186,7 @@ public class EnemyMove : MonoBehaviour
             switch (estado)
             {
                 case Estado.combate:
+                    viuPlayerUmaVez = true;
                     seguirAtacarPlayer();
                     break;
                 case Estado.alerta:
@@ -161,7 +200,7 @@ public class EnemyMove : MonoBehaviour
             if (gameObjectPlayerReserva == null)
                 gameObjectPlayerReserva = playerGameObject;
         }
-        else if (playerGameObject == null)//caso não veja o player
+        else //caso não veja o player
         {
             if (!lastPlayerPositionChecked)//se o inimigo ja checou a ulitma posicao conehceida
             {
@@ -227,7 +266,20 @@ public class EnemyMove : MonoBehaviour
                 Debug.Log("Não vejo o player, voltando a origem");
             }
         }
-        if (playerGameObject == null && estado == Estado.rotina && stance != Stances.wait)//patrulando
+        if(viuPlayerUmaVez && playerGameObject == null && !lockDawn.ativo)
+        {
+            if (difLockDawnButton > 0.05)
+            {
+                Vector3 direction = lockDawn.transform.position - transform.position;
+                direction.Normalize();
+                MOVE(direction);
+            }
+            else
+            {
+                lockDawn.ativo = true;
+            }
+        }
+        else if (playerGameObject == null && estado == Estado.rotina && stance != Stances.wait)//patrulando
         {
 
             //Vector3 direction = moveSpots[randomSpot].position - transform.position;
@@ -261,7 +313,7 @@ public class EnemyMove : MonoBehaviour
                 stance = Stances.patrolling;
             }
         }
-        if (hearEnemy && estado != Estado.combate)//caso ouça o inimigo
+        else if (hearEnemy && estado != Estado.combate)//caso ouça o inimigo
         {
             if (hearShoot)//caso tenha tiro
             {
