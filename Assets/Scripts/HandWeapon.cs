@@ -13,19 +13,16 @@ public class HandWeapon : Item
 
     public override void Usar(GameObject _objQueChamou)
     {
-        if (_objQueChamou.GetComponent<State>().estadoCombate)
-        {
-            pontaArma = _objQueChamou.GetComponentInChildren<PontaArma>().transform;
+        pontaArma = _objQueChamou.GetComponentInChildren<PontaArma>().transform;
 
-            Instantiate(lancaTransform, pontaArma); //onde cria a lança
-            fisicalAttack = FindObjectOfType<FisicalAttack>();
-            fisicalAttack.direcao = (FisicalAttack.Direcao)pontaArma.GetComponentInChildren<PontaArma>().direcao;
-            fisicalAttack.widthTemp = width;
-            fisicalAttack.heightTemp = height;
-            fisicalAttack.FatherFromWeapon = _objQueChamou;
-            fisicalAttack.dano = dano;
+        Instantiate(lancaTransform, pontaArma); //onde cria a lança
+        fisicalAttack = FindObjectOfType<FisicalAttack>();
+        fisicalAttack.direcao = (FisicalAttack.Direcao)pontaArma.GetComponentInChildren<PontaArma>().direcao;
+        fisicalAttack.widthTemp = width;
+        fisicalAttack.heightTemp = height;
+        fisicalAttack.FatherFromWeapon = _objQueChamou;
+        fisicalAttack.dano = dano;
 
-            fisicalAttack.Usou();
-        }
+        fisicalAttack.Usou();
     }
 }

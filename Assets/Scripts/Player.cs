@@ -16,6 +16,7 @@ public class Player : EntityModel
     private PontaArma pontaArma;
     private AtaqueFisico ataqueHitBox;
     private AnimacaoJogador animacao;
+    private Inventario inventario;
 
     public Direcao direcaoMovimento;
     public Vector3 posAnterior;
@@ -49,6 +50,8 @@ public class Player : EntityModel
 
         modoMovimento = ModoMovimento.Normal;
         estado = Estado.Normal;
+
+        inventario = GetComponent<Inventario>();
 
         posAnterior = transform.position;
 
@@ -148,8 +151,22 @@ public class Player : EntityModel
 
     public void Atacar()
     {
-        estado = Estado.Atacando;
-        movement.canMove = false;
+        if (estado == Estado.Normal)
+        {
+            estado = Estado.Atacando;
+            movement.canMove = false;
+            animacao.AtualizarArmaBracos("");
+        }
+    }
+
+    public void Atirar()
+    {
+        if(estado == Estado.Normal)
+        {
+            inventario.armaSlot1.AtualizarBulletCreator(FindObjectOfType<BulletCreator>());
+            inventario.armaSlot1.Usar(gameObject);
+            animacao.AtualizarArmaBracos(inventario.armaSlot1.nomeVisual);
+        }
     }
 
     public void AtaqueHitBox()
@@ -161,6 +178,11 @@ public class Player : EntityModel
     {
         estado = Estado.Normal;
         movement.canMove = true;
+    }
+
+    public void AtualizarArma()
+    {
+        animacao.AtualizarArmaBracos(inventario.armaSlot1.nomeVisual);
     }
 
     public void curar(int _cura)

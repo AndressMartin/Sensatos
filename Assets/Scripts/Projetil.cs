@@ -139,7 +139,7 @@ public class Projetil : MonoBehaviour
             if(alvo.tag != FatherFromGun.tag)
                 HitTarget();
         }
-        else if(alvo.tag =="porta" || alvo.tag =="cerca")
+        else if(alvo.tag =="porta" || alvo.tag =="cerca" || alvo.tag =="parede")
             DestroyGameObject();
 
     }

@@ -18,19 +18,7 @@ public class Lanca : Item
 
     public override void Usar(GameObject _objQueChamou)
     {
-        if (_objQueChamou.gameObject.tag == "Enemy")
-        {
-            CreateShoot(_objQueChamou);
-        }
-
-        else if (_objQueChamou.GetComponent<State>().estadoCombate)
-        {
-            CreateShoot(_objQueChamou);
-        }
-
-       
-            
-        
+        CreateShoot(_objQueChamou);
     }
     void CreateShoot(GameObject __objQueChamou)
     {

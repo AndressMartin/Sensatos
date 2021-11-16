@@ -20,6 +20,7 @@ public class ArmaDeFogo : Item
     public int municaoAtual;
     private Sound sound;
     public int index;
+    public string nomeVisual;
     private void Start()
     {
         if (FindObjectOfType<Player>() ) sound = FindObjectOfType<Player>().GetComponentInChildren<Sound>();
@@ -33,21 +34,18 @@ public class ArmaDeFogo : Item
         
     }
 
+    public void AtualizarBulletCreator(BulletCreator bulletCreator)
+    {
+        this.bulletCreator = bulletCreator;
+    }
     public override void Usar(GameObject objQueChamou)
     {
-        if (objQueChamou.gameObject.tag == "Enemy")
-        {
-            CreateShoot(objQueChamou);
-        }
-
-        else if(objQueChamou.GetComponent<State>().estadoCombate)
-        {
-            CreateShoot(objQueChamou);
-        }
+        CreateShoot(objQueChamou);
     }
 
     void CreateShoot(GameObject _objQueChamou)
     {
+        sound = _objQueChamou.GetComponentInChildren<Sound>();
         sound.changeColliderRadius(5);
         pontaArma = _objQueChamou.GetComponentInChildren<PontaArma>().transform;
         objQueChamou = _objQueChamou;

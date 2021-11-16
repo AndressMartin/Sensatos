@@ -225,11 +225,11 @@ public class EnemyMove : MonoBehaviour
                     direction.Normalize();
                     MOVE(direction);
 
-                    Debug.Log("indo até a ultima posicao do  player");
+                    //Debug.Log("indo até a ultima posicao do  player");
                 }
                 else
                 {                                         //inimigo começa a contar como se estivesse procurando o player por um tempo na região                  
-                    Debug.Log("contador player");
+                    //Debug.Log("contador player");
 
                     time += Time.deltaTime;
                     if (time > timeMax)
@@ -251,7 +251,7 @@ public class EnemyMove : MonoBehaviour
                 {
                     estado = Estado.rotina;
                     hearShoot=false;
-                    Debug.Log("Cheguei a minha origme");
+                    //Debug.Log("Cheguei a minha origme");
                 }
                 else
                 {
@@ -260,10 +260,10 @@ public class EnemyMove : MonoBehaviour
                     MOVE(direction);
 
                     //MoveTransform(direction);
-                    Debug.Log("voltando origemr");
+                    //Debug.Log("voltando origemr");
                 }
 
-                Debug.Log("Não vejo o player, voltando a origem");
+                //Debug.Log("Não vejo o player, voltando a origem");
             }
         }
         if(viuPlayerUmaVez && playerGameObject == null && !lockDawn.ativo)
@@ -406,7 +406,6 @@ public class EnemyMove : MonoBehaviour
 
     private void MoveTransform(Vector2 _direction)
     {
-        Debug.Log("Inimigo no MoveTransform");
         transform.position = Vector2.MoveTowards(transform.position, _direction, velocity / 3 * Time.deltaTime);
         CollisionDirection();
     }

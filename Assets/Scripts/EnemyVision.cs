@@ -57,7 +57,6 @@ public class EnemyVision : EntityModel
         direcao = enemyModel.direcao;
         if (seePlayer)
         {
-            spriteRenderer.color = Color.black;
             polygonCollider.enabled = false;
             circleCollider2D.enabled = true;
 

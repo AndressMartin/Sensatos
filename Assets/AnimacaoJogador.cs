@@ -44,7 +44,7 @@ public class AnimacaoJogador : MonoBehaviour
     public void AtualizarArmaBracos(string armaEquipada)
     {
         armaEquipadaVisual = armaEquipada;
-        braco.Play(armaEquipadaVisual + animacaoAtual, 1, corpo.GetCurrentAnimatorStateInfo(0).normalizedTime);
+        braco.Play(armaEquipadaVisual + animacaoAtual, 0, corpo.GetCurrentAnimatorStateInfo(0).normalizedTime);
     }
 
     public string GetAnimacaoAtual()

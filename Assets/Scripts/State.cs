@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class State : MonoBehaviour
 {
-    public bool estadoCombate = false;
     public bool interagindo;
     public bool usandoItem;
     public int movimento = 2;
@@ -37,18 +36,6 @@ public class State : MonoBehaviour
         Colldowns();
 
     }
-
-    
-
-    void EstadoCombateOnOff()
-    {
-        estadoCombate = !estadoCombate;
-        if(estadoCombate)
-            spriteRenderer.color = (Color.red);
-        else
-            spriteRenderer.color = (Color.white);
-
-    }
     void Colldowns()
     {
         if (colldown > 0)
@@ -73,6 +60,17 @@ public class State : MonoBehaviour
 
     void BotoesPressionados()
     {
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            inventario.TrocarArma();
+            player.AtualizarArma();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            player.Atirar();
+        }
+
         if (Input.GetKeyDown(KeyCode.E) && colldown <= 0)//Botão de interação
         {
             colldown = colldowMax;
@@ -85,7 +83,7 @@ public class State : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.F))
         {
-            player.Atacar(); ;
+            player.Atacar();
         }
 
         if (Input.GetKeyDown(KeyCode.Space) && colldownUsandoItem <= 0)//Botão de usar item
@@ -94,11 +92,6 @@ public class State : MonoBehaviour
             usandoItem = true;
             inventario.UsarItemAtual();
             
-        }
-
-        if (Input.GetKeyDown(KeyCode.G))//Botão para entar no modo combate (vermelho == combate)
-        {
-            EstadoCombateOnOff();
         }
 
         if (Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.X))//Botão para ativar o strafing

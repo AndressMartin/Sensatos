@@ -16,15 +16,6 @@ public class Inventario : MonoBehaviour
         InitWeaponConfig();
     }
 
-    // Update is called once per frame
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Tab))
-        {
-            TrocarArma();
-        }
-    }
-
     private void InitWeaponConfig()
     {
         armaSlot1 = armas[0];

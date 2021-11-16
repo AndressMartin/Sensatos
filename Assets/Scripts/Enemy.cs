@@ -61,7 +61,7 @@ public class Enemy : EntityModel
     {
         if (!dead)
         {
-            Debug.Log("Inimigo Vel X: " + enemyMove.velX + ", Vel Y: " + enemyMove.velY);
+            //Debug.Log("Inimigo Vel X: " + enemyMove.velX + ", Vel Y: " + enemyMove.velY);
             animacao.AtualizarDirecao(direcao, direcao);
             Animar();
             enemyMove.Main();

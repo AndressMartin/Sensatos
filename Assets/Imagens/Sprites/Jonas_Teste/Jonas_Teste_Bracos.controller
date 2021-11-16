@@ -148,7 +148,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Arma2_Andando
+  m_Name: Arma2Andando
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -221,7 +221,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Arma1_TomandoDano
+  m_Name: Arma1TomandoDano
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -320,7 +320,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Arma1_Andando
+  m_Name: Arma1Andando
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -737,7 +737,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Arma1_Idle
+  m_Name: Arma1Idle
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -864,13 +864,13 @@ AnimatorController:
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: DirecaoMovimento
     m_Type: 1
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   m_AnimatorLayers:
   - serializedVersion: 5
     m_Name: Base Layer
@@ -950,7 +950,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Arma2_Idle
+  m_Name: Arma2Idle
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -976,7 +976,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Arma2_AndandoSorrateiramente
+  m_Name: Arma2AndandoSorrateiramente
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -1075,7 +1075,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Arma2_TomandoDano
+  m_Name: Arma2TomandoDano
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -1148,7 +1148,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Arma1_AndandoSorrateiramente
+  m_Name: Arma1AndandoSorrateiramente
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []

@@ -54,7 +54,6 @@ public class Sound : MonoBehaviour {
                 if (circleCollider2D.IsTouching(item))
                 {
                     OnTriggerStay2D(item);
-                    Debug.Log(item.gameObject.name);
                 }
             }
 
