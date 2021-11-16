@@ -133,7 +133,7 @@ public class EnemyVision : EntityModel
     {
         foreach (ParedeModel item in paredeModels)
         {
-            wallsDistance.Add(Vector2.Distance(item.transform.position,transform.position));        
+            //wallsDistance.Add(Vector2.Distance(item.transform.position,transform.position));        
             
         }
     }
