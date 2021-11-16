@@ -1773,6 +1773,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 8886423969324109059, guid: 0861576f6c045b74b9f9b572e24d2a9d, type: 3}
+      propertyPath: itens.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8886423969324109059, guid: 0861576f6c045b74b9f9b572e24d2a9d, type: 3}
+      propertyPath: itens.Array.data[0]
+      value: 
+      objectReference: {fileID: 101828990}
     - target: {fileID: 8886423969324109064, guid: 0861576f6c045b74b9f9b572e24d2a9d, type: 3}
       propertyPath: itemAtual
       value: 
@@ -1783,7 +1791,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8886423969324109064, guid: 0861576f6c045b74b9f9b572e24d2a9d, type: 3}
       propertyPath: itens.Array.size
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8886423969324109064, guid: 0861576f6c045b74b9f9b572e24d2a9d, type: 3}
       propertyPath: armas.Array.data[0]
