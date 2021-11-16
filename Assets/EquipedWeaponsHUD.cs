@@ -21,7 +21,6 @@ public class EquipedWeaponsHUD : UIScreen
 
     public void SortWeapons()
     {
-        Debug.Log("WEAPON");
         equipedWeaponFrames[0].Init(inventario.armaSlot1);
         equipedWeaponFrames[1].Init(inventario.armaSlot2);
     }

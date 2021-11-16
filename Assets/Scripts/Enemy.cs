@@ -19,8 +19,9 @@ public class Enemy : EntityModel
     [SerializeField] private int pontosVida;
     public bool dead = false;
 
-
-
+    bool tiroColldown=false;
+    float timeCooldwon;
+    float timeCooldownTiro;
     // Start is called before the first frame update
     void Start()
     {
@@ -33,28 +34,14 @@ public class Enemy : EntityModel
         animacao = transform.GetComponent<AnimacaoJogador>();
 
         estado = Estado.Normal;
+
+         timeCooldwon = 0;
+         timeCooldownTiro = 0.5f;
     }
 
     // Update is called once per frame
     void Update()
-    {
-        /* if (Input.GetKeyDown(KeyCode.W))
-         {
-             direction = Direction.Cima;
-         }
-         if (Input.GetKeyDown(KeyCode.S))
-         {
-             direction = Direction.Baixo;
-         }
-         if (Input.GetKeyDown(KeyCode.A))
-         {
-             direction = Direction.Esquerda;
-         }
-         if (Input.GetKeyDown(KeyCode.D))
-         {
-             direction = Direction.Direita;
-         }*/
-
+    { 
         AllEnemySubClass();
     }
     void AllEnemySubClass()
@@ -66,6 +53,7 @@ public class Enemy : EntityModel
             Animar();
             enemyMove.Main();
             enemyVision.Main();
+            TiroColldown();
         } 
     }
 
@@ -109,9 +97,14 @@ public class Enemy : EntityModel
     public void UseItem()
     {
         TrocarDirecaoAtaque(FindObjectOfType<Player>().transform.position);
-        inventario.armaSlot1.AtualizarBulletCreator(FindObjectOfType<BulletCreator>());
-        inventario.armaSlot1.Usar(gameObject);
-        animacao.AtualizarArmaBracos(inventario.armaSlot1.nomeVisual);
+        if (!tiroColldown)
+        {
+            inventario.armaSlot1.AtualizarBulletCreator(FindObjectOfType<BulletCreator>());
+            inventario.armaSlot1.Usar(gameObject);
+            animacao.AtualizarArmaBracos(inventario.armaSlot1.nomeVisual);
+            tiroColldown = true;
+        }
+        
     }
     public void die()
     {
@@ -178,5 +171,17 @@ public class Enemy : EntityModel
     private void OnCollisionStay2D(Collision2D collision)
     {
        
+    }
+    private void TiroColldown()
+    {
+        if (tiroColldown)
+        {
+            timeCooldwon += Time.deltaTime;
+            if (timeCooldwon > timeCooldownTiro)
+            {
+                tiroColldown = false;
+                timeCooldwon = 0;
+            }
+        }
     }
 }

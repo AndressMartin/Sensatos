@@ -51,7 +51,6 @@ public class Porta : MonoBehaviour
             {
                 //if (player.GetComponent<State>().interagindo == false)
                 //{
-                    Debug.Log("fechou porta");
                     aberto = false;
                     spriteRenderer.color = (Color.yellow);
                     Door(aberto);

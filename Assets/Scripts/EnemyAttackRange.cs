@@ -14,7 +14,7 @@ public class EnemyAttackRange : MonoBehaviour
         enemyVision = transform.parent.Find("EnemyVision").gameObject.GetComponent<EnemyVision>();
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerStay2D(Collider2D collision)
     {
         Player temp = collision.gameObject.GetComponent<Player>();
 
@@ -26,22 +26,6 @@ public class EnemyAttackRange : MonoBehaviour
                 enemyVision.OnAttackRange(true, collision.gameObject);
             }
         }
-    }
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        /*Player temp = collision.gameObject.GetComponent<Player>();
-        if (temp != null)
-        {
-            //Debug.Log("Ta me colididno");
-
-            if (enemyVision.polygonCollider.enabled == true)
-            {
-                if (Input.GetKeyDown(KeyCode.Q))//Botão de interação
-                {
-                    enemy.stealthKill();
-                }
-            }
-        }*/
     }
 
     private void OnTriggerExit2D(Collider2D collision)

@@ -82,8 +82,8 @@ public class Projetil : MonoBehaviour
             if (!saberDirecaoDisparo)
             {
                 Player player = FindObjectOfType<Player>().GetComponent<Player>();
-                Vector3 temp = player.GetComponent<Transform>().position;
-                playerVector3 = new Vector3(temp.x,(temp.y+player.distanciaTiroY),temp.z);
+                Vector2 temp = player.GetComponent<Transform>().position;
+                playerVector3 = new Vector2(temp.x,(temp.y+player.distanciaTiroY));
                
                 directionPlayer = playerVector3 - transform.position;
                 horizontal = directionPlayer.x;
@@ -100,7 +100,7 @@ public class Projetil : MonoBehaviour
     void MOVE(Vector2 _direction)
     {
         DistanciaProjetil();
-        rb.velocity = new Vector2(_direction.x,_direction.y * velocidadeProjetil);
+        rb.velocity = new Vector2(_direction.x * velocidadeProjetil,_direction.y * velocidadeProjetil);
        // rb.MovePosition((Vector2)transform.position + (_direction * velocidadeProjetil * Time.deltaTime));
 
     }
@@ -135,11 +135,13 @@ public class Projetil : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         alvo = collision.gameObject;
-
-        if (alvo.tag == "Enemy" || alvo.tag == "Player")
+        if (alvo.tag == "HitboxDano")
         {
-            if(alvo.tag != FatherFromGun.tag)
+
+            if (alvo.transform.parent.gameObject != FatherFromGun)
+            {     
                 HitTarget();
+            }
         }
         else if(alvo.tag =="porta" || alvo.tag =="cerca" || alvo.tag =="parede")
             DestroyGameObject();
@@ -151,7 +153,7 @@ public class Projetil : MonoBehaviour
     {
 
         EntityModel temp;
-        temp = alvo.GetComponent<EntityModel>();
+        temp = alvo.transform.parent.GetComponent<EntityModel>();
         temp.TomarDano(dano, horizontal, vertical,knockBackValue);
         DestroyGameObject();
         
