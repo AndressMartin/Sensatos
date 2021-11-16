@@ -12,12 +12,13 @@ public class EnemyMove : MonoBehaviour
     private Enemy enemy;
     [SerializeField] private float horizontal = 0, vertical = 0;
 
-
-
     [SerializeField] private bool lastPlayerPositionChecked;
     [SerializeField] private Vector3 lastPlayerPosition;
     [SerializeField] private float time = 0.0F;
     [SerializeField] private float timeMax = 0;
+
+    public float velX;
+    public float velY;
 
     private enum state { followPlayer, attackingPlayer, searchingPlayer, BackingOriginalPosition, OriginalPosition }
     private state enemyState;
@@ -353,9 +354,9 @@ public class EnemyMove : MonoBehaviour
 
     private void MoveTransform(Vector2 _direction)
     {
+        Debug.Log("Inimigo no MoveTransform");
         transform.position = Vector2.MoveTowards(transform.position, _direction, velocity / 3 * Time.deltaTime);
         CollisionDirection();
-
     }
     private void MOVE(Vector2 _direction)
     {
@@ -364,27 +365,27 @@ public class EnemyMove : MonoBehaviour
     }
     private void CollisionDirection()
     {
-        float xdif = transformtemp.x - transform.position.x;
-        float ydif = transformtemp.y - transform.position.y;
+        velX = transformtemp.x - transform.position.x;
+        velY = transformtemp.y - transform.position.y;
 
 
-        if (Mathf.Abs(ydif) >= Mathf.Abs(xdif))
+        if (Mathf.Abs(velY) >= Mathf.Abs(velX))
         {
-            if (ydif < 0)
+            if (velY < 0)
             {
                 enemy.ChangeDirection(Enemy.Direcao.Cima);
             }
-            else if (ydif > 0)
+            else if (velY > 0)
             {
                 enemy.ChangeDirection(Enemy.Direcao.Baixo);
             }
         }
 
-        else if (xdif > 0)
+        else if (velX > 0)
         {
             enemy.ChangeDirection(Enemy.Direcao.Esquerda);
         }
-        else if (xdif < 0)
+        else if (velX < 0)
         {
             enemy.ChangeDirection(Enemy.Direcao.Direita);
         }

@@ -64,7 +64,6 @@ public class EnemyVision : EntityModel
         }
         else
         {
-            spriteRenderer.color = Color.white;
             circleCollider2D.enabled = false;
             polygonCollider.enabled = true;
 

@@ -5,18 +5,18 @@ using UnityEngine;
 public class Enemy : EntityModel
 {
     public override int vida { get; protected set; }
-    public enum ModoPatrulha { ronda,parado };
-    public ModoPatrulha modoPatrulha;
 
-    private SpriteRenderer spriteRenderer;
+    public enum Estado {Normal, TomandoDano};
+    public Estado estado;
+
+    private PontaArma pontaArma;
+    private AnimacaoJogador animacao;
+
     private Inventario inventario;
     private EnemyMove enemyMove;
     private EnemyVision enemyVision;
     
     [SerializeField] private int pontosVida;
-    float horizontal;
-    float vertical;
-    float enemyDirection;
     public bool dead = false;
 
 
@@ -26,23 +26,18 @@ public class Enemy : EntityModel
     {
         enemyVision = GetComponentInChildren<EnemyVision>();
         enemyMove = GetComponent<EnemyMove>();
-        spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
         inventario = GetComponent<Inventario>();
         vida = pontosVida;
 
+        pontaArma = GetComponentInChildren<PontaArma>();
+        animacao = transform.GetComponent<AnimacaoJogador>();
+
+        estado = Estado.Normal;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(direcao==Direcao.Esquerda && !spriteRenderer.flipX)
-        {
-            spriteRenderer.flipX = true;
-        }
-        if (direcao == Direcao.Direita && spriteRenderer.flipX)
-        {
-            spriteRenderer.flipX = false;
-        }
         /* if (Input.GetKeyDown(KeyCode.W))
          {
              direction = Direction.Cima;
@@ -66,9 +61,49 @@ public class Enemy : EntityModel
     {
         if (!dead)
         {
+            Debug.Log("Inimigo Vel X: " + enemyMove.velX + ", Vel Y: " + enemyMove.velY);
+            animacao.AtualizarDirecao(direcao, direcao);
+            Animar();
             enemyMove.Main();
             enemyVision.Main();
         } 
+    }
+
+    private void Animar()
+    {
+        switch (estado)
+        {
+            case Estado.Normal:
+                if ((enemyMove.velX == 0 && enemyMove.velY == 0) && animacao.GetAnimacaoAtual() != "Idle")
+                {
+                    animacao.TrocarAnimacao("Idle");
+                }
+                else if ((enemyMove.velX != 0 || enemyMove.velY != 0))
+                {
+                    /*
+                    if (modoMovimento == ModoMovimento.AndandoSorrateiramente)
+                    {
+                        if (animacao.GetAnimacaoAtual() != "AndandoSorrateiramente")
+                        {
+                            animacao.TrocarAnimacao("AndandoSorrateiramente");
+                        }
+                    }
+                    else if (animacao.GetAnimacaoAtual() != "Andando")
+                    {
+                        animacao.TrocarAnimacao("Andando");
+                    }
+                    */
+                    animacao.TrocarAnimacao("Andando");
+                }
+                break;
+
+            case Estado.TomandoDano:
+                if (animacao.GetAnimacaoAtual() != "TomandoDano")
+                {
+                    animacao.TrocarAnimacao("TomandoDano");
+                }
+                break;
+        }
     }
 
     public void UseItem()
@@ -95,7 +130,6 @@ public class Enemy : EntityModel
         }
         else
         {
-            StartCoroutine(Piscar());
             KnockBack(_horizontal, _vertical , _knockBack);
             vida -= _dano;
         }
@@ -105,23 +139,9 @@ public class Enemy : EntityModel
     public void ChangeDirection(Direcao _direction)
     {
         direcao = _direction;
-
-    }
-    public void ChangeHorizontal(float _direction)
-    {
-        horizontal = _direction;
-    }
-    public void ChangeVertical(float _direction)
-    {
-        vertical = _direction;
+        pontaArma.AtualizarPontaArma(direcao);
     }
 
-    public override IEnumerator Piscar()
-    {
-        spriteRenderer.color = Color.red;
-        yield return new WaitForSeconds(0.1f);
-        spriteRenderer.color = Color.white;
-    }
     public override void KnockBack(float _horizontal, float _vertical,float _knockBack)
     {
         enemyMove.KnockBack(_horizontal, _vertical,_knockBack);

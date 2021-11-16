@@ -36,9 +36,6 @@ public class EntityModel : MonoBehaviour
     public virtual void KnockBack(float _horizontal,float _vertical, float _knockBack)
     { }
 
-    public virtual IEnumerator Piscar()
-    { yield return new WaitForSeconds(0.1f); }
-
     private void Destroy()
     {
         Destroy(gameObject);

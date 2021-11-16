@@ -119,6 +119,7 @@ public class Player : EntityModel
                     }
                 }
                 break;
+
             case Estado.TomandoDano:
                 if (animacao.GetAnimacaoAtual() != "TomandoDano")
                 {
@@ -223,7 +224,6 @@ public class Player : EntityModel
 
             else
             {
-                StartCoroutine(Piscar());
                 vida -= _dano;
 
                 imune = true;
@@ -238,13 +238,6 @@ public class Player : EntityModel
     {
 
         movement.KnockBack(_horizontal, _vertical, _knockBack);
-    }
-
-    public override IEnumerator Piscar()
-    {
-        spriteRenderer.color = Color.red;
-        yield return new WaitForSeconds(0.1f);
-        spriteRenderer.color = Color.white;
     }
 
     private void changeCollision(Collision2D collision, bool _onOff)
