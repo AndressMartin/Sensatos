@@ -117,11 +117,6 @@ public class State : MonoBehaviour
                 player.modoMovimento = Player.ModoMovimento.Normal;
             }
         }
-
-        if(Input.GetKeyDown(KeyCode.Q))
-        {
-            inventario.TrocarArma();
-        }
         
     }
 }
