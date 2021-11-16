@@ -42,6 +42,7 @@ public class InventoryHudController : UIScreen, IInventory
     public override void CloseScreen()
     {
         base.CloseScreen();
+        transform.GetChild(0).GetComponent<Selection>().beganSelection = false;
         invClose.Invoke();
     }
 

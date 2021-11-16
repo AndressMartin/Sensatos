@@ -9,6 +9,8 @@ public class WeaponFrame : MonoBehaviour
     public TextMeshProUGUI nameTxt;
     public TextMeshProUGUI municaoTxt;
     public Image weaponImage;
+    public Color equipedColor;
+    public Color normalColor;
 
     // Start is called before the first frame update
     void Start()
@@ -27,5 +29,16 @@ public class WeaponFrame : MonoBehaviour
         nameTxt.text = armaRef.nome;
         municaoTxt.text = $"{armaRef.municaoAtual}/{armaRef.municaoMax}";
         weaponImage.sprite = armaRef.myImage;
+        ResetColor();
+    }
+
+    public void EquipedColor()
+    {
+        weaponImage.color = equipedColor;
+    }
+
+    public void ResetColor()
+    {
+        weaponImage.color = normalColor;
     }
 }

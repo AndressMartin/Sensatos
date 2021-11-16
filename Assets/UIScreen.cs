@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class UIScreen : MonoBehaviour
 {
     public Button FirstSelection;
-
+    public GameObject objectThatCalled;
     // Start is called before the first frame update
     void Start()
     {

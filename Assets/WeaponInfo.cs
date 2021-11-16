@@ -40,6 +40,10 @@ public class WeaponInfo : UIScreen
             {
                 armasButtons[i].GetComponent<WeaponFrame>().Init(inventario.armas[i]);
                 armasButtons[i].transform.SetSiblingIndex(inventario.armas[i].index);
+                if (objectThatCalled.transform.GetSiblingIndex() == inventario.armas[i].index)
+                {
+                    armasButtons[i].GetComponent<WeaponFrame>().EquipedColor();
+                }
             }
         }
     }

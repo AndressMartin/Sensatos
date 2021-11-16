@@ -11,7 +11,7 @@ public class Selection : MonoBehaviour
     public Button FirstSelection;
     public List<ScreenOpeningHandle> ScreensToOpen = new List<ScreenOpeningHandle>();
     public UIScreen openedScreen;
-    private bool beganSelection;
+    public bool beganSelection;
     public bool onSubScreen;
     void Start()
     {
@@ -19,7 +19,7 @@ public class Selection : MonoBehaviour
         {
             foreach (var button in screen.buttonsThatOpenIt)
             {
-                button.onClick.AddListener(delegate { OpenNextScreen(screen.ScreenToOpen); });
+                button.onClick.AddListener(delegate { OpenNextScreen(screen.ScreenToOpen, button); });
             }
         }
     }
@@ -35,19 +35,20 @@ public class Selection : MonoBehaviour
         CloseNextScreen();
     }
 
-    private void SetEventSysFirstButton(GameObject obj)
+    public void SetEventSysFirstButton(GameObject obj)
     {
         eventSys.firstSelectedGameObject = obj;
         eventSys.firstSelectedGameObject.GetComponent<Button>().Select();
     }
 
-    void OpenNextScreen(UIScreen screenToOpen)
+    void OpenNextScreen(UIScreen screenToOpen, Button button)
     {
         foreach (var screen in ScreensToOpen)
         {
             if (screen.ScreenToOpen != null) screen.ScreenToOpen.CloseScreen();
         }
         openedScreen = screenToOpen;
+        screenToOpen.objectThatCalled = button.gameObject;
         screenToOpen.OpenScreen();
         onSubScreen = true;
         SetEventSysFirstButton(openedScreen.FirstSelection.gameObject);
@@ -59,10 +60,14 @@ public class Selection : MonoBehaviour
         {
             if (openedScreen && onSubScreen)
             {
-                openedScreen.transform.GetChild(0).gameObject.SetActive(false);
                 SetEventSysFirstButton(FirstSelection.gameObject);
+                openedScreen.transform.GetChild(0).gameObject.SetActive(false);
             }
-            else if (!onSubScreen) FindObjectOfType<InventoryHudController>().CloseScreen();
+            else if (!onSubScreen)
+            {
+                FindObjectOfType<InventoryHudController>().CloseScreen();
+                beganSelection = false;
+            }
         }
     }
 }
