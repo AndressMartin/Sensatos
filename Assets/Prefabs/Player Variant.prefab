@@ -448,6 +448,63 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff96a92f661bfa04b9a6e3f67507d5d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1552952208
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1552952209}
+  - component: {fileID: 1552952210}
+  m_Layer: 0
+  m_Name: HitboxDano
+  m_TagString: HitboxDano
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1552952209
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1552952208}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 8886423969324109068}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!61 &1552952210
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1552952208}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0.95465493}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.22}
+    oldSize: {x: 2.5, y: 4}
+    newSize: {x: 0.96, y: 1.59}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 2.237434}
+  m_EdgeRadius: 0
 --- !u!1 &1585192292
 GameObject:
   m_ObjectHideFlags: 0
@@ -974,11 +1031,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6437815350493637747, guid: 83506c14bf685914bad042623edb7cd3, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.63
+      value: -4.26
       objectReference: {fileID: 0}
     - target: {fileID: 6437815350493637747, guid: 83506c14bf685914bad042623edb7cd3, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -4.34
+      value: -7.26
       objectReference: {fileID: 0}
     - target: {fileID: 6437815350493637747, guid: 83506c14bf685914bad042623edb7cd3, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1015,6 +1072,10 @@ PrefabInstance:
     - target: {fileID: 6437815350493637748, guid: 83506c14bf685914bad042623edb7cd3, type: 3}
       propertyPath: m_Name
       value: Player Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 6437815350493637748, guid: 83506c14bf685914bad042623edb7cd3, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 6437815350493637748, guid: 83506c14bf685914bad042623edb7cd3, type: 3}
       propertyPath: m_IsActive
@@ -1076,8 +1137,24 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6437815350493637751, guid: 83506c14bf685914bad042623edb7cd3, type: 3}
+      propertyPath: armas.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6437815350493637751, guid: 83506c14bf685914bad042623edb7cd3, type: 3}
+      propertyPath: armas.Array.data[0]
+      value: 
+      objectReference: {fileID: 7703806124257995746, guid: 74b17ffc4bfc3144d8c2041820ad2f94, type: 3}
+    - target: {fileID: 6437815350493637751, guid: 83506c14bf685914bad042623edb7cd3, type: 3}
+      propertyPath: armas.Array.data[1]
+      value: 
+      objectReference: {fileID: 81589876889633317, guid: b35e4543861f8ab49bb9b2505f0e2867, type: 3}
     - target: {fileID: 6437815350493637756, guid: 83506c14bf685914bad042623edb7cd3, type: 3}
       propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6437815350493637756, guid: 83506c14bf685914bad042623edb7cd3, type: 3}
+      propertyPath: itens.Array.size
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6437815350493637757, guid: 83506c14bf685914bad042623edb7cd3, type: 3}

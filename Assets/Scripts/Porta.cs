@@ -6,13 +6,15 @@ public class Porta : MonoBehaviour
 {
     public Chave obj;
     private GameObject player;
-    private SpriteRenderer spriteRenderer;
+    private AnimacaoPorta animacao;
+    //private SpriteRenderer spriteRenderer;
     bool aberto;
     public bool trancado;
     // Start is called before the first frame update
     void Start()
     {
-        spriteRenderer = GetComponent<SpriteRenderer>();
+        animacao = GetComponent<AnimacaoPorta>();
+        //spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
 
@@ -28,14 +30,18 @@ public class Porta : MonoBehaviour
                 {
                     //Debug.Log("destrancou porta");
                     trancado = false;
-                    spriteRenderer.color = (Color.blue);
+                    //spriteRenderer.color = (Color.blue);
                 }
 
                 else if(!trancado)
                 {
                     //Debug.Log("abriur porta");
                     aberto = true;
-                    spriteRenderer.color = (Color.red);
+                    if(animacao.GetAnimacaoAtual() != "Aberta")
+                    {
+                        animacao.TrocarAnimacao("Aberta");
+                    }
+                    //spriteRenderer.color = (Color.red);
                     Door(aberto);
                 }
             }
@@ -52,8 +58,12 @@ public class Porta : MonoBehaviour
                 //if (player.GetComponent<State>().interagindo == false)
                 //{
                     aberto = false;
-                    spriteRenderer.color = (Color.yellow);
-                    Door(aberto);
+                if (animacao.GetAnimacaoAtual() != "Fechada")
+                {
+                    animacao.TrocarAnimacao("Fechada");
+                }
+                //spriteRenderer.color = (Color.yellow);
+                Door(aberto);
                 //}
             }
         }
