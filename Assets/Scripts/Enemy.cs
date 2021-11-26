@@ -35,8 +35,11 @@ public class Enemy : EntityModel
 
         estado = Estado.Normal;
 
-         timeCooldwon = 0;
-         timeCooldownTiro = 0.5f;
+        timeCooldwon = 0;
+        timeCooldownTiro = 0.5f;
+
+        //Se adicionar a lista de inimigos do ObjectManager
+        FindObjectOfType<ObjectManagerScript>().adicionarAosInimigos(this);
     }
 
     // Update is called once per frame

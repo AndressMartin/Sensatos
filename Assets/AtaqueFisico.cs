@@ -21,6 +21,8 @@ public class AtaqueFisico : MonoBehaviour
 
     public float horizontal, vertical;
     float knockBack;
+
+    private ObjectManagerScript objectManager;
     void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -32,6 +34,8 @@ public class AtaqueFisico : MonoBehaviour
 
         atacando = false;
         tempo = 0;
+
+        objectManager = FindObjectOfType<ObjectManagerScript>();
     }
 
     private void FixedUpdate()
@@ -77,9 +81,26 @@ public class AtaqueFisico : MonoBehaviour
 
         tempo = 0;
         boxCollider2D.enabled = true;
+        AtacarInimigos();
+        boxCollider2D.enabled = false;
+
         atacando = true;
     }
 
+    //Passa pela lista de inimigos, confere se ha colisao com alguns deles e causa dano se houver
+    private void AtacarInimigos()
+    {
+        foreach (Enemy inimigo in objectManager.listaInimigos)
+        {
+            if (ObjectManagerScript.hitTest(boxCollider2D, inimigo.transform.Find("HitboxDano").GetComponent<BoxCollider2D>()))
+            {
+                HitTarget(inimigo.gameObject);
+                Debug.Log("Acertou o inimigo");
+            }
+        }
+    }
+
+    /*
     private void OnTriggerEnter2D(Collider2D collision)
     {
         GameObject alvo = collision.gameObject;
@@ -90,6 +111,7 @@ public class AtaqueFisico : MonoBehaviour
                 HitTarget(alvo);
         }
     }
+    */
 
     void HitTarget(GameObject alvo)
     {
