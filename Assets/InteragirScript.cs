@@ -68,7 +68,7 @@ public class InteragirScript : MonoBehaviour
     {
         foreach (ObjetoInteragivel objetoInteragivel in objectManager.listaObjetosInteragiveis)
         {
-            if (ObjectManagerScript.hitTest(boxCollider2D, objetoInteragivel.transform.GetComponent<BoxCollider2D>()))
+            if (Colisao.HitTest(boxCollider2D, objetoInteragivel.transform.GetComponent<BoxCollider2D>()))
             {
                 objetoInteragivel.Interagir(player);
                 break;

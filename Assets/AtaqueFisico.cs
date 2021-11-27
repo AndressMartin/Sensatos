@@ -91,7 +91,7 @@ public class AtaqueFisico : MonoBehaviour
     {
         foreach (Enemy inimigo in objectManager.listaInimigos)
         {
-            if (ObjectManagerScript.hitTest(boxCollider2D, inimigo.transform.Find("HitboxDano").GetComponent<BoxCollider2D>()))
+            if (Colisao.HitTest(boxCollider2D, inimigo.transform.Find("HitboxDano").GetComponent<BoxCollider2D>()))
             {
                 HitTarget(inimigo.gameObject);
                 //Debug.Log("Acertou o inimigo");
