@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Lanca : Item
 {
-    public override string nome { get; protected set; }
+    //public override string nome { get; protected set; }
     public int dano;
 
     //definir um sentido para as colisões 

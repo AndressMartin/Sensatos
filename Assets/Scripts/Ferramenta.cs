@@ -6,7 +6,6 @@ public class Ferramenta : Item
 {
     public virtual int quantidadeUsos { get; protected set; }
 
-    
     public virtual void Destroy() { }
 
     public override void ConsumirRecurso()

@@ -18,6 +18,7 @@ public class Player : EntityModel
     private AtaqueFisico ataqueHitBox;
     private AnimacaoJogador animacao;
     private Inventario inventario;
+    private InventarioMissao inventarioMissao;
 
     public Direcao direcaoMovimento;
     public Vector3 posAnterior;
@@ -55,6 +56,7 @@ public class Player : EntityModel
         estado = Estado.Normal;
 
         inventario = GetComponent<Inventario>();
+        inventarioMissao = GetComponent<InventarioMissao>();
 
         posAnterior = transform.position;
 
@@ -197,6 +199,16 @@ public class Player : EntityModel
     public void AtualizarArma()
     {
         animacao.AtualizarArmaBracos(inventario.armaSlot1.nomeVisual);
+    }
+
+    public void AdicionarAoInventario(Item item)
+    {
+        inventario.add(item);
+    }
+
+    public void AdicionarAoInventarioMissao(Item item)
+    {
+        inventarioMissao.add(item);
     }
 
     public void curar(int _cura)

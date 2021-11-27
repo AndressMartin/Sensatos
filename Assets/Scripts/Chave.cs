@@ -4,15 +4,17 @@ using UnityEngine;
 
 public class Chave : Item
 {
+    [SerializeField] private int id;
+
     // Start is called before the first frame update
-    void Start()
+    public void Iniciar()
     {
-        
+        tipo = Tipo.ItemChave;
+        id = 2;
     }
 
-    // Update is called once per frame
-    void Update()
+    public int GetId()
     {
-        
+        return id;
     }
 }

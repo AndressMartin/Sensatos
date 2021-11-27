@@ -10,7 +10,7 @@ public class ArmaDeFogo : Item
     private BulletCreator bulletCreator;
     public Transform pontaArma;
     public Sprite myImage;
-    public override string nome { get; protected set; }
+    //public override string nome { get; protected set; }
     public int dano;
     public float velocityProjetil;
     public GameObject objQueChamou;

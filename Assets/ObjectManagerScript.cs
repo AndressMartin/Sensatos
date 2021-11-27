@@ -13,8 +13,18 @@ public class ObjectManagerScript : MonoBehaviour
         listaObjetosInteragiveis.Add(objetoInteragivel);
     }
 
+    public void removerDosObjetosInteragiveis(ObjetoInteragivel objetoInteragivel)
+    {
+        listaObjetosInteragiveis.Remove(objetoInteragivel);
+    }
+
     public void adicionarAosInimigos(Enemy inimigo)
     {
         listaInimigos.Add(inimigo);
+    }
+
+    public void removerDosInimigos(Enemy inimigo)
+    {
+        listaInimigos.Remove(inimigo);
     }
 }
