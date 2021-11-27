@@ -68,11 +68,11 @@ public class Enemy : EntityModel
         switch (estado)
         {
             case Estado.Normal:
-                if ((enemyMove.velX == 0 && enemyMove.velY == 0) && animacao.GetAnimacaoAtual() != "Idle")
+                if ((enemyMove.rb.velocity.x == 0 && enemyMove.rb.velocity.y == 0) && animacao.GetAnimacaoAtual() != "Idle")
                 {
                     animacao.TrocarAnimacao("Idle");
                 }
-                else if ((enemyMove.velX != 0 || enemyMove.velY != 0) && animacao.GetAnimacaoAtual() != "Andando")
+                else if ((enemyMove.rb.velocity.x != 0 || enemyMove.rb.velocity.y != 0) && animacao.GetAnimacaoAtual() != "Andando")
                 {
                     animacao.TrocarAnimacao("Andando");
                 }

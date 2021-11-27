@@ -8,7 +8,7 @@ public class EnemyMove : MonoBehaviour
     public Vector3 initialPosition;
     private EnemyVision enemyVision;
     [SerializeField] private GameObject playerGameObject;
-    private Rigidbody2D rb;
+    public Rigidbody2D rb;
     private Enemy enemy;
     [SerializeField] private float horizontal = 0, vertical = 0;
 
@@ -55,6 +55,9 @@ public class EnemyMove : MonoBehaviour
 
     public enum Stances { idle, patrolling, wait };
     public Stances stance = Stances.idle;
+    public enum FazesMovimentoAlerta {AndandoAte_UltimaPosicaoPlayer,chechandoUltimaPosicaoPlayer,VoltandoA_RotinaPadrao,NA }
+    public FazesMovimentoAlerta fazesMovimentoAlerta = FazesMovimentoAlerta.NA;
+
     public float waitTime;
     public float startWaitTime;
     public List<Transform> moveSpots = new List<Transform>();
@@ -65,6 +68,7 @@ public class EnemyMove : MonoBehaviour
     lockDawn lockDawn;
     float difPlayer;
     float difLockDawnButton;
+    [SerializeField]bool vendoPlayer;
 
     [SerializeField]private Vector3 ultimaposicaoOrigem;
     private void Start()
@@ -127,6 +131,7 @@ public class EnemyMove : MonoBehaviour
                 if (difPlayer < difLockDawnButton)//caso o player estja mais perto que o alarme vai pra cima do player
                 {
                     lastPlayerPosition = playerGameObject.transform.position;
+                    fazesMovimentoAlerta = FazesMovimentoAlerta.AndandoAte_UltimaPosicaoPlayer;
                     if (enemyVision.playerOnAttackRange)//caso esteja dentro do range de ataque 
                     {
                         enemy.UseItem();
@@ -172,16 +177,11 @@ public class EnemyMove : MonoBehaviour
     }
     public void Main()
     {
+        vendoPlayer = playerGameObject;
         difLockDawnButton = Vector2.Distance(lockDawn.transform.position, transform.position);
-        /*if (playerGameObject != null)
-        {
-            pathFinding.ReceivePlayerGameObject(playerGameObject);
-        }
-        else
-            pathFinding.ReceivePlayerGameObject(null);*/
-        //Debug.Log(estado);
 
-        if (playerGameObject != null)//caso esteja vendo o player
+
+        if (vendoPlayer)//caso esteja vendo o player
         {
             switch (estado)
             {
@@ -202,6 +202,236 @@ public class EnemyMove : MonoBehaviour
         }
         else //caso não veja o player
         {
+            switch (estado)
+            {
+
+                case Estado.alerta://ver player
+                    switch (fazesMovimentoAlerta)
+                    {
+                        case FazesMovimentoAlerta.NA:
+                            break;
+                        case FazesMovimentoAlerta.AndandoAte_UltimaPosicaoPlayer:
+                            MovimentarUltimaPosicaoPlayer(lastPlayerPosition);
+                            break;
+                        case FazesMovimentoAlerta.chechandoUltimaPosicaoPlayer:
+                            VerificarRegiao();
+                            break;
+                        case FazesMovimentoAlerta.VoltandoA_RotinaPadrao:
+                            MovimentarVoltarRotinaPadrao(new Vector2(0, 0));
+                            break;
+                        
+                    }
+                    break;
+
+
+                case Estado.rotina: //fazendo rotina
+                    if (hearEnemy)
+                    {
+                        OuvindoInimigo();
+                    }
+                    else
+                    {
+                        switch (stance)
+                        {
+                            case Stances.patrolling://patrulhando
+                                Patrulhar();
+                                break;
+                        }
+                    }
+                    break;
+                
+            }
+        }
+        ResetKnockBackCont();
+        KnockBackContador();
+
+    }
+
+    private void VerificarRegiao()
+    {
+        rb.velocity = Vector2.zero;
+    }
+    private void OuvindoInimigo()
+    {
+
+    }
+    private void Movimentar(Vector2 posicao)
+    {
+        rb.velocity = posicao;//andando ate a o posica passada
+        CollisionDirection();
+    }
+    private void MovimentarUltimaPosicaoPlayer(Vector2 _posicao)
+    {
+        if (Vector2.Distance(transform.position,_posicao) > 0.5f)
+        {
+            Vector2 PlayerPosition = transform.position;
+            Vector2 directionTemp = _posicao - PlayerPosition;
+            Vector2 direction = directionTemp.normalized * velocity;
+
+            Debug.Log("to indo pra la");
+            Movimentar(direction);
+        }
+        else
+        {
+            Debug.Log("chegued");
+            fazesMovimentoAlerta = FazesMovimentoAlerta.chechandoUltimaPosicaoPlayer;
+        }
+    }
+    private void MovimentarVoltarRotinaPadrao(Vector2 _posicao)
+    {
+        Movimentar(_posicao);
+    }
+ 
+    private void Patrulhar()
+    {
+        Vector2 directionTemp = moveSpots[randomSpot].position - transform.position;
+        Vector2 direction = directionTemp.normalized * velocity;
+        Movimentar(direction);
+
+        if (Vector2.Distance(transform.position, moveSpots[randomSpot].position) < 0.2f)
+        {
+            //gera um novo lugar de waypoint
+            if (randomSpot >= moveSpots.Count - 1)
+                randomSpot = 0;
+            else
+                randomSpot++;
+
+            if (randomSpot != lastMoveSpot)
+            {
+                lastMoveSpot = randomSpot;
+                ultimaposicaoOrigem = moveSpots[lastMoveSpot].position;
+            }
+            else
+            {
+                while (randomSpot == lastMoveSpot)
+                {
+                    randomSpot = Random.Range(0, moveSpots.Count);
+                }
+            }
+        }
+        else
+        {
+            stance = Stances.patrolling;
+        }
+                
+         
+    }
+    private void MoveTransform(Vector2 _direction)
+    {
+        transform.position = Vector2.MoveTowards(transform.position, _direction, velocity / 3 * Time.deltaTime);
+        CollisionDirection();
+    }
+    private void MOVE(Vector2 _direction)
+    {
+        //rb.MovePosition((Vector2)transform.position + (_direction * velocity * Time.deltaTime));
+        _direction.Normalize();
+        rb.velocity = new Vector2((_direction.x) * velocity * Time.deltaTime, (_direction.y) * velocity * Time.deltaTime);
+        CollisionDirection();
+    }
+    private void CollisionDirection()
+    {
+        velX = rb.velocity.x;
+        velY = rb.velocity.y;
+
+
+        if (Mathf.Abs(velY) >= Mathf.Abs(velX))
+        {
+            if (velY < 0)
+            {
+                enemy.ChangeDirection(Enemy.Direcao.Baixo);
+            }
+            else if (velY > 0)
+            {
+                enemy.ChangeDirection(Enemy.Direcao.Cima);
+            }
+        }
+
+        else if (velX > 0)
+        {
+            enemy.ChangeDirection(Enemy.Direcao.Direita);
+        }
+        else if (velX < 0)
+        {
+            enemy.ChangeDirection(Enemy.Direcao.Esquerda);
+        }
+    }
+    public void KnockBack(float _horizontal, float _vertical, float _knockBack)
+    {
+        knockBackCont++;
+        timeKnockCont = 0;
+        if (knockBackCont == contQuantosTirosParaTomarKnockBack)
+            KnockBackComplex(_horizontal, _vertical, _knockBack);
+        else
+            KnockBackSimple(_horizontal, _vertical, _knockBack);
+    }
+    void ResetKnockBackCont()
+    {
+        if (knockBackCont != 0)
+        {
+            //inicia contador de tempo para levar o knockback forte
+            timeKnockCont += Time.deltaTime;
+            if (timeKnockCont > timeMaxKnockCont)
+            {
+                knockBackCont = 0;
+                timeMaxKnockCont = timeMaxOriginalKnockCont;
+                timeKnockCont = 0;
+            }
+        }
+    }
+    void KnockBackSimple(float _horizontal, float _vertical, float _knockBack)
+    {
+        transform.position = new Vector3(transform.position.x + _horizontal * _knockBack, transform.position.y + _vertical * _knockBack, transform.position.z);
+    }
+    void KnockBackComplex(float _horizontal, float _vertical, float _knockBack)
+    {
+        transform.position = new Vector3(transform.position.x + _horizontal * _knockBack, transform.position.y + _vertical * _knockBack, transform.position.z);
+        knockBacking = true;
+        Knock = true;
+        knockBackCont = 0;
+    }
+
+    public void EnemyVissionReference(EnemyVision _enemyVision)
+    {
+        enemyVision = _enemyVision;
+    }
+
+    public void SawEnemy(GameObject _whoEnemySaw)
+    {
+        lastPlayerPositionChecked = false;
+        playerGameObject = _whoEnemySaw;
+        timeMax = 3;
+        time = 0;
+        timePlayerResrvaMax = 1.5F;
+        timePlayerResrva = 0;
+    }
+
+  
+
+
+
+    void KnockBackContador()
+    {
+        if (Knock)
+        {
+            timeKnock += Time.deltaTime;
+            if (timeKnock > timeMaxKnock)
+            {
+                Knock = false;
+                timeMaxKnock = 0.0F;
+                timeKnock = 0;
+            }
+        }
+        else
+        {
+            timeMaxKnock = timeMaxOriginalKnock;
+            knockBacking = false;
+        }
+    }
+
+
+}
+/*Moviment~ção old
+ * 
             if (!lastPlayerPositionChecked)//se o inimigo ja checou a ulitma posicao conehceida
             {
                 if (gameObjectPlayerReserva != null)
@@ -266,7 +496,7 @@ public class EnemyMove : MonoBehaviour
                 //Debug.Log("Não vejo o player, voltando a origem");
             }
         }
-        if(viuPlayerUmaVez && playerGameObject == null && !lockDawn.ativo)
+        if(viuPlayerUmaVez && !vendoPlayer  && !lockDawn.ativo)
         {
             if (difLockDawnButton > 0.05)
             {
@@ -277,40 +507,6 @@ public class EnemyMove : MonoBehaviour
             else
             {
                 lockDawn.ativo = true;
-            }
-        }
-        else if (playerGameObject == null && estado == Estado.rotina && stance != Stances.wait)//patrulando
-        {
-
-            //Vector3 direction = moveSpots[randomSpot].position - transform.position;
-            //direction.Normalize();
-            //MOVE(direction);
-            MoveTransform(moveSpots[randomSpot].position);
-
-            if (Vector2.Distance(transform.position, moveSpots[randomSpot].position) < 0.2f)
-            {
-                //gera um novo lugar de waypoint
-                if (randomSpot >= moveSpots.Count - 1)
-                    randomSpot = 0;
-                else
-                    randomSpot++;
-
-                if (randomSpot != lastMoveSpot)
-                {
-                    lastMoveSpot = randomSpot;
-                    ultimaposicaoOrigem = moveSpots[lastMoveSpot].position;
-                }
-                else
-                {
-                    while (randomSpot == lastMoveSpot)
-                    {
-                        randomSpot = Random.Range(0, moveSpots.Count);
-                    }
-                }
-            }
-            else
-            {
-                stance = Stances.patrolling;
             }
         }
         else if (hearEnemy && estado != Estado.combate)//caso ouça o inimigo
@@ -346,124 +542,7 @@ public class EnemyMove : MonoBehaviour
                 }
             }
         }
-        ResetKnockBackCont();
-        KnockBackContador();
-        float x, y, z;
-        x = transform.position.x;
-        y = transform.position.y;
-        z = transform.position.z;
-        transformtemp = new Vector3(x, y, z);
-    }
-    public void KnockBack(float _horizontal, float _vertical, float _knockBack)
-    {
-        knockBackCont++;
-        timeKnockCont = 0;
-        if (knockBackCont == contQuantosTirosParaTomarKnockBack)
-            KnockBackComplex(_horizontal, _vertical, _knockBack);
-        else
-            KnockBackSimple(_horizontal, _vertical, _knockBack);
-    }
-    void ResetKnockBackCont()
-    {
-        if (knockBackCont != 0)
-        {
-            //inicia contador de tempo para levar o knockback forte
-            timeKnockCont += Time.deltaTime;
-            if (timeKnockCont > timeMaxKnockCont)
-            {
-                knockBackCont = 0;
-                timeMaxKnockCont = timeMaxOriginalKnockCont;
-                timeKnockCont = 0;
-            }
-        }
-    }
-    void KnockBackSimple(float _horizontal, float _vertical, float _knockBack)
-    {
-        transform.position = new Vector3(transform.position.x + _horizontal * _knockBack, transform.position.y + _vertical * _knockBack, transform.position.z);
-    }
-    void KnockBackComplex(float _horizontal, float _vertical, float _knockBack)
-    {
-        transform.position = new Vector3(transform.position.x + _horizontal * _knockBack, transform.position.y + _vertical * _knockBack, transform.position.z);
-        knockBacking = true;
-        Knock = true;
-        knockBackCont = 0;
-    }
+ */
 
-    public void EnemyVissionReference(EnemyVision _enemyVision)
-    {
-        enemyVision = _enemyVision;
-    }
-
-    public void SawEnemy(GameObject _whoEnemySaw)
-    {
-        lastPlayerPositionChecked = false;
-        playerGameObject = _whoEnemySaw;
-        timeMax = 3;
-        time = 0;
-        timePlayerResrvaMax = 1.5F;
-        timePlayerResrva = 0;
-    }
-
-    private void MoveTransform(Vector2 _direction)
-    {
-        transform.position = Vector2.MoveTowards(transform.position, _direction, velocity / 3 * Time.deltaTime);
-        CollisionDirection();
-    }
-    private void MOVE(Vector2 _direction)
-    {
-        rb.MovePosition((Vector2)transform.position + (_direction * velocity * Time.deltaTime));
-        CollisionDirection();
-    }
-    private void CollisionDirection()
-    {
-        velX = transformtemp.x - transform.position.x;
-        velY = transformtemp.y - transform.position.y;
-
-
-        if (Mathf.Abs(velY) >= Mathf.Abs(velX))
-        {
-            if (velY < 0)
-            {
-                enemy.ChangeDirection(Enemy.Direcao.Cima);
-            }
-            else if (velY > 0)
-            {
-                enemy.ChangeDirection(Enemy.Direcao.Baixo);
-            }
-        }
-
-        else if (velX > 0)
-        {
-            enemy.ChangeDirection(Enemy.Direcao.Esquerda);
-        }
-        else if (velX < 0)
-        {
-            enemy.ChangeDirection(Enemy.Direcao.Direita);
-        }
-    }
-
-
-
-    void KnockBackContador()
-    {
-        if (Knock)
-        {
-            timeKnock += Time.deltaTime;
-            if (timeKnock > timeMaxKnock)
-            {
-                Knock = false;
-                timeMaxKnock = 0.0F;
-                timeKnock = 0;
-            }
-        }
-        else
-        {
-            timeMaxKnock = timeMaxOriginalKnock;
-            knockBacking = false;
-        }
-    }
-
-
-}
 
 
