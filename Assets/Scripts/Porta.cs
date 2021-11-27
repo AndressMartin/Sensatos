@@ -2,77 +2,68 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Porta : MonoBehaviour
+public class Porta : ObjetoInteragivel
 {
     public Chave obj;
     private GameObject player;
     private AnimacaoPorta animacao;
-    //private SpriteRenderer spriteRenderer;
+
+    private BoxCollider2D colisao;
+
+    private ObjectManagerScript objectManager;
+
     bool aberto;
     public bool trancado;
     // Start is called before the first frame update
     void Start()
     {
         animacao = GetComponent<AnimacaoPorta>();
-        //spriteRenderer = GetComponent<SpriteRenderer>();
+
+        colisao = GetComponent<BoxCollider2D>();
+
+        //Se adicionar a lista de objetos interagiveis do ObjectManager
+        objectManager = FindObjectOfType<ObjectManagerScript>();
+        objectManager.adicionarAosObjetosInteragiveis(this);
     }
 
 
-    private void OnCollisionStay2D(Collision2D collision)
+    public override void Interagir(Player player)
     {
-        if (collision.gameObject.tag == "Player")
+        if (player.GetComponent<InventarioMissao>().itens.Contains(obj) && trancado)
         {
-            player = collision.gameObject;
-            //Debug.Log("player encostando na porta");
-            if (player.GetComponent<State>().interagindo)
+            //Debug.Log("destrancou porta");
+            trancado = false;
+            //spriteRenderer.color = (Color.blue);
+        }
+
+        if (!trancado)
+        {
+            //Debug.Log("abriur porta");
+            aberto = true;
+            if (animacao.GetAnimacaoAtual() != "Aberta")
             {
-                if (player.GetComponent<InventarioMissao>().itens.Contains(obj) && trancado)
-                {
-                    //Debug.Log("destrancou porta");
-                    trancado = false;
-                    //spriteRenderer.color = (Color.blue);
-                }
-
-                else if(!trancado)
-                {
-                    //Debug.Log("abriur porta");
-                    aberto = true;
-                    if(animacao.GetAnimacaoAtual() != "Aberta")
-                    {
-                        animacao.TrocarAnimacao("Aberta");
-                    }
-                    //spriteRenderer.color = (Color.red);
-                    Door(aberto);
-                }
+                animacao.TrocarAnimacao("Aberta");
             }
-
+            //spriteRenderer.color = (Color.red);
+            Door(aberto);
         }
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
+    public void FecharPorta()
     {
-        if (collision.gameObject.tag == "Player")
+        if (!trancado && aberto)
         {
-            if (!trancado && aberto)
+            aberto = false;
+            if (animacao.GetAnimacaoAtual() != "Fechada")
             {
-                //if (player.GetComponent<State>().interagindo == false)
-                //{
-                    aberto = false;
-                if (animacao.GetAnimacaoAtual() != "Fechada")
-                {
-                    animacao.TrocarAnimacao("Fechada");
-                }
-                //spriteRenderer.color = (Color.yellow);
-                Door(aberto);
-                //}
+                animacao.TrocarAnimacao("Fechada");
             }
+            Door(aberto);
         }
     }
-
- 
 
     void Door(bool portaAberta)
     {
-        gameObject.GetComponent<BoxCollider2D>().isTrigger = portaAberta;
+        colisao.isTrigger = portaAberta;
     }
 }

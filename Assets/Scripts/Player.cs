@@ -14,6 +14,7 @@ public class Player : EntityModel
     public Enemy[] enemies;
 
     private PontaArma pontaArma;
+    private InteragirScript interacaoHitBox;
     private AtaqueFisico ataqueHitBox;
     private AnimacaoJogador animacao;
     private Inventario inventario;
@@ -59,6 +60,7 @@ public class Player : EntityModel
 
         tempoImunidade = 1f;
         pontaArma = GetComponentInChildren<PontaArma>();
+        interacaoHitBox = GetComponentInChildren<InteragirScript>();
         ataqueHitBox = GetComponentInChildren<AtaqueFisico>();
         animacao = transform.GetComponent<AnimacaoJogador>();
 
@@ -150,6 +152,14 @@ public class Player : EntityModel
     public void FinalizarKnockback()
     {
         animacao.TrocarAnimacao("Idle");
+    }
+
+    public void Interagir()
+    {
+        if (estado == Estado.Normal)
+        {
+            interacaoHitBox.Interagir(direcao);
+        }
     }
 
     public void Atacar()

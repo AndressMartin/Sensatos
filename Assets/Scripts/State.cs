@@ -73,7 +73,10 @@ public class State : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.E) && colldown <= 0)//Botão de interação
         {
+            player.Interagir();
+            /*
             colldown = colldowMax;
+            */
         }
 
         if (Input.GetKeyDown(KeyCode.G))

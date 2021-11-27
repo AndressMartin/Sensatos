@@ -4,7 +4,14 @@ using UnityEngine;
 
 public class ObjectManagerScript : MonoBehaviour
 {
+    [SerializeField] public List<ObjetoInteragivel> listaObjetosInteragiveis;
     [SerializeField] public List<Enemy> listaInimigos;
+    //[SerializeField] public List<ItemColetavel> listaItensColetaveis;
+
+    public void adicionarAosObjetosInteragiveis(ObjetoInteragivel objetoInteragivel)
+    {
+        listaObjetosInteragiveis.Add(objetoInteragivel);
+    }
 
     public void adicionarAosInimigos(Enemy inimigo)
     {
@@ -39,8 +46,8 @@ public class ObjectManagerScript : MonoBehaviour
     /// <returns>Uma booleana</returns>
     static public bool hitTest(BoxCollider2D colisao, BoxCollider2D colisao2)
     {
-        if (((colisao.bounds.center.x + colisao.bounds.extents.x >= colisao2.bounds.center.x - colisao2.bounds.extents.x) && (colisao.bounds.center.x - colisao.bounds.extents.x <= colisao2.bounds.center.x + colisao2.bounds.extents.x)) &&
-            ((colisao.bounds.center.y + colisao.bounds.extents.y >= colisao2.bounds.center.y - colisao2.bounds.extents.y) && (colisao.bounds.center.y - colisao.bounds.extents.y <= colisao2.bounds.center.y + colisao2.bounds.extents.y)))
+        if (((colisao.bounds.center.x - colisao.bounds.extents.x <= colisao2.bounds.center.x + colisao2.bounds.extents.x) && (colisao.bounds.center.x + colisao.bounds.extents.x >= colisao2.bounds.center.x - colisao2.bounds.extents.x)) &&
+            ((colisao.bounds.center.y - colisao.bounds.extents.y <= colisao2.bounds.center.y + colisao2.bounds.extents.y) && (colisao.bounds.center.y + colisao.bounds.extents.y >= colisao2.bounds.center.y - colisao2.bounds.extents.y)))
         {
             return true;
         }

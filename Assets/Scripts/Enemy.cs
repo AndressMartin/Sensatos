@@ -15,7 +15,9 @@ public class Enemy : EntityModel
     private Inventario inventario;
     private EnemyMove enemyMove;
     private EnemyVision enemyVision;
-    
+
+    private ObjectManagerScript objectManager;
+
     [SerializeField] private int pontosVida;
     public bool dead = false;
 
@@ -39,7 +41,8 @@ public class Enemy : EntityModel
         timeCooldownTiro = 0.5f;
 
         //Se adicionar a lista de inimigos do ObjectManager
-        FindObjectOfType<ObjectManagerScript>().adicionarAosInimigos(this);
+        objectManager = FindObjectOfType<ObjectManagerScript>();
+        objectManager.adicionarAosInimigos(this);
     }
 
     // Update is called once per frame
@@ -69,21 +72,8 @@ public class Enemy : EntityModel
                 {
                     animacao.TrocarAnimacao("Idle");
                 }
-                else if ((enemyMove.velX != 0 || enemyMove.velY != 0))
+                else if ((enemyMove.velX != 0 || enemyMove.velY != 0) && animacao.GetAnimacaoAtual() != "Andando")
                 {
-                    /*
-                    if (modoMovimento == ModoMovimento.AndandoSorrateiramente)
-                    {
-                        if (animacao.GetAnimacaoAtual() != "AndandoSorrateiramente")
-                        {
-                            animacao.TrocarAnimacao("AndandoSorrateiramente");
-                        }
-                    }
-                    else if (animacao.GetAnimacaoAtual() != "Andando")
-                    {
-                        animacao.TrocarAnimacao("Andando");
-                    }
-                    */
                     animacao.TrocarAnimacao("Andando");
                 }
                 break;

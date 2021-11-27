@@ -4,15 +4,12 @@ using UnityEngine;
 
 public class AtaqueFisico : MonoBehaviour
 {
-    public float widthTemp;
-    public float heightTemp;
     public int dano;
 
     private bool atacando;
     private float tempo;
 
 
-    private Rigidbody2D rb;
     private BoxCollider2D boxCollider2D;
     private SpriteRenderer spriteRenderer;
 
@@ -23,12 +20,12 @@ public class AtaqueFisico : MonoBehaviour
     float knockBack;
 
     private ObjectManagerScript objectManager;
+
     void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         boxCollider2D = GetComponent<BoxCollider2D>();
         boxCollider2D.enabled = false;
-        rb = GetComponent<Rigidbody2D>();
         width = 2.15f;
         height = 0.75f;
 
@@ -38,6 +35,7 @@ public class AtaqueFisico : MonoBehaviour
         objectManager = FindObjectOfType<ObjectManagerScript>();
     }
 
+    /*
     private void FixedUpdate()
     {
         if(atacando == true)
@@ -50,6 +48,7 @@ public class AtaqueFisico : MonoBehaviour
             tempo += Time.deltaTime;
         }
     }
+    */
 
     public void Atacar(EntityModel.Direcao _direcao, float knockBack, float _distanceH, float _distanceV, float _distanceY)
     {
@@ -76,10 +75,10 @@ public class AtaqueFisico : MonoBehaviour
                 spriteRenderer.size = new Vector2(width, height);
                 transform.position = new Vector2(transform.parent.transform.position.x, transform.parent.transform.position.y - _distanceV + _distanceY);
                 break;
-
         }
 
         tempo = 0;
+
         boxCollider2D.enabled = true;
         AtacarInimigos();
         boxCollider2D.enabled = false;
@@ -95,7 +94,7 @@ public class AtaqueFisico : MonoBehaviour
             if (ObjectManagerScript.hitTest(boxCollider2D, inimigo.transform.Find("HitboxDano").GetComponent<BoxCollider2D>()))
             {
                 HitTarget(inimigo.gameObject);
-                Debug.Log("Acertou o inimigo");
+                //Debug.Log("Acertou o inimigo");
             }
         }
     }
