@@ -14,8 +14,15 @@ public class EnemyMove : MonoBehaviour
 
     [SerializeField] private bool lastPlayerPositionChecked;
     [SerializeField] private Vector3 lastPlayerPosition;
-    [SerializeField] private float time = 0.0F;
-    [SerializeField] private float timeMax = 0;
+
+    private float time = 0.0F;
+    private float timePlayerResrva = 0.0F;
+    private float timeAlert = 0.0F;
+
+    [SerializeField] private float timeMaxAlert;
+    [SerializeField] private float timeMax;
+    [SerializeField] private float timePlayerResrvaMax;
+    [SerializeField] private float timeMaxAlertOriginal;
 
     public float velX;
     public float velY;
@@ -23,8 +30,7 @@ public class EnemyMove : MonoBehaviour
     private enum state { followPlayer, attackingPlayer, searchingPlayer, BackingOriginalPosition, OriginalPosition }
     private state enemyState;
 
-    [SerializeField] private float timePlayerResrva = 0.0F;
-    [SerializeField] private float timePlayerResrvaMax = 0;
+    
     public GameObject gameObjectPlayerReserva;
     bool firstTimeOnLoop = true;
 
@@ -48,10 +54,7 @@ public class EnemyMove : MonoBehaviour
     public enum Estado { rotina, alerta, combate };
 
     public Estado estado;
-    private float timeAlert;
-    private float timeMaxAlert;
-    [SerializeField] private float timeMaxAlertOriginal;
-    private Vector3 transformtemp;
+    
 
     public enum Stances { idle, patrolling, wait };
     public Stances stance = Stances.idle;
@@ -71,6 +74,7 @@ public class EnemyMove : MonoBehaviour
     [SerializeField]bool vendoPlayer;
 
     [SerializeField]private Vector3 ultimaposicaoOrigem;
+    [SerializeField]private GameObject gameObjectTemp;
     private void Start()
     {
         ultimaposicaoOrigem = new Vector3(transform.position.x, transform.position.y, transform.position.z);
@@ -100,6 +104,7 @@ public class EnemyMove : MonoBehaviour
     }
     void counterAlert()
     {
+        rb.velocity = Vector2.zero;
         if (estado == Estado.alerta)
         {
             timeAlert += Time.deltaTime;
@@ -112,11 +117,16 @@ public class EnemyMove : MonoBehaviour
 
     public void seguirAtacarPlayer()
     {
-        if (!knockBacking) 
-        {
-            float difPlayer = Vector2.Distance(playerGameObject.transform.position, transform.position);
-            
+        if (gameObjectTemp == null)
+            gameObjectTemp = playerGameObject;
 
+        fazesMovimentoAlerta = FazesMovimentoAlerta.AndandoAte_UltimaPosicaoPlayer;
+        lastPlayerPosition = gameObjectTemp.transform.position;
+        float difPlayer = Vector2.Distance(playerGameObject.transform.position, transform.position);
+
+
+        if (!knockBacking) 
+        { 
             if (firstTimeOnLoop)
             {
                 firstTimeOnLoop = false;
@@ -125,52 +135,64 @@ public class EnemyMove : MonoBehaviour
                 ultimaposicaoOrigem = new Vector3(transform.position.x, transform.position.y, transform.position.z);
 
 
-
             if (!lockDawn.ativo) //caso não esteja em lockdawn
             {
+                Debug.Log("1");
+
                 if (difPlayer < difLockDawnButton)//caso o player estja mais perto que o alarme vai pra cima do player
                 {
-                    lastPlayerPosition = playerGameObject.transform.position;
-                    fazesMovimentoAlerta = FazesMovimentoAlerta.AndandoAte_UltimaPosicaoPlayer;
                     if (enemyVision.playerOnAttackRange)//caso esteja dentro do range de ataque 
                     {
                         enemy.UseItem();
                     }
                     else if (enemyVision.seePlayer)
                     {
-                        Vector2 direction = playerGameObject.transform.position - transform.position;
-                        direction.Normalize();
-                        MOVE(direction);
-                        //Debug.Log("seguind player");
+                        if (Vector2.Distance(transform.position, playerGameObject.transform.position) > 0.2f)
+                        {
+                            MoveGeneric(playerGameObject.transform.position);
+                        }
+                            //Debug.Log("seguind player");
                     }
                 }
                 else if (difPlayer > difLockDawnButton)//caso alarme estje mais perto ativa o alarme
                 {
+                    Debug.Log("2");
+
                     if (difLockDawnButton > 0.05)
                     {
-                        Vector2 direction = lockDawn.transform.position - transform.position;
-                        direction.Normalize();
-                        MOVE(direction);
+                        if (Vector2.Distance(transform.position, lockDawn.transform.position) > 0.2f)
+                        {
+                            MoveGeneric(lockDawn.transform.position);
+                        }
                     }
                     else
                     {
-                        lockDawn.ativo = true;
+                        lockDawn.ativo = true;  //ativa o lockdawn
                     }
                 }
             }
             else // vai pra cima do player
             {
-                lastPlayerPosition = playerGameObject.transform.position;
+                Debug.Log("3");
+
                 if (enemyVision.playerOnAttackRange)//caso esteja dentro do range de ataque 
                 {
-                    enemy.UseItem();
+                    enemy.UseItem();//usar item/atacar
                 }
                 else if (enemyVision.seePlayer)
                 {
-                    Vector2 direction = playerGameObject.transform.position - transform.position;
-                    direction.Normalize();
-                    MOVE(direction);
+                    if (Vector2.Distance(transform.position, playerGameObject.transform.position) > 0.2f)
+                    {
+                        MoveGeneric(playerGameObject.transform.position);
+                    }
                     //Debug.Log("seguind player");
+                }
+            }
+            Debug.Log(Vector2.Distance(transform.position, playerGameObject.transform.position));
+            if (playerGameObject != null) {
+                if (Vector2.Distance(transform.position, playerGameObject.transform.position) < 2.0)
+                {
+                    rb.velocity = Vector2.zero;
                 }
             }
         }
@@ -179,7 +201,6 @@ public class EnemyMove : MonoBehaviour
     {
         vendoPlayer = playerGameObject;
         difLockDawnButton = Vector2.Distance(lockDawn.transform.position, transform.position);
-
 
         if (vendoPlayer)//caso esteja vendo o player
         {
@@ -204,6 +225,9 @@ public class EnemyMove : MonoBehaviour
         {
             switch (estado)
             {
+                case Estado.combate:
+                    estado = Estado.alerta;
+                    break;
 
                 case Estado.alerta://ver player
                     switch (fazesMovimentoAlerta)
@@ -217,7 +241,7 @@ public class EnemyMove : MonoBehaviour
                             VerificarRegiao();
                             break;
                         case FazesMovimentoAlerta.VoltandoA_RotinaPadrao:
-                            MovimentarVoltarRotinaPadrao(new Vector2(0, 0));
+                            MovimentarVoltarRotinaPadrao(ultimaposicaoOrigem);
                             break;
                         
                     }
@@ -250,6 +274,17 @@ public class EnemyMove : MonoBehaviour
     private void VerificarRegiao()
     {
         rb.velocity = Vector2.zero;
+
+        //Debug.Log("contador player");
+
+        time += Time.deltaTime;
+        if (time > timeMax)
+        {
+            fazesMovimentoAlerta = FazesMovimentoAlerta.VoltandoA_RotinaPadrao;
+            lastPlayerPositionChecked = true;
+            time = timeMax;
+        }
+
     }
     private void OuvindoInimigo()
     {
@@ -260,26 +295,67 @@ public class EnemyMove : MonoBehaviour
         rb.velocity = posicao;//andando ate a o posica passada
         CollisionDirection();
     }
+
+    private void MoveGeneric(Vector2 _posicao)
+    {
+        rb.velocity = Vector2.zero;
+        Movimentar(calcMovimemto(_posicao));
+        
+    }
+
+    bool AttPlayerPos()
+    {
+        if (gameObjectPlayerReserva != null)
+        {
+            timePlayerResrva += Time.deltaTime;
+            if (timePlayerResrva > timePlayerResrvaMax)//pega a ultima posicao do player conhecida e passa a pra variavel, zera as outras coisas
+            {
+                timePlayerResrva = 0;
+                gameObjectPlayerReserva = null;//depois daquele tempo em que segue o jogador voltar pro alerta
+                gameObjectTemp = null;
+                return true;
+            }
+            else
+            {
+                lastPlayerPosition = gameObjectTemp.transform.position;
+                return false;
+            }
+        }
+        return true;
+    }
     private void MovimentarUltimaPosicaoPlayer(Vector2 _posicao)
     {
-        if (Vector2.Distance(transform.position,_posicao) > 0.5f)
+        if (AttPlayerPos())
         {
-            Vector2 PlayerPosition = transform.position;
-            Vector2 directionTemp = _posicao - PlayerPosition;
-            Vector2 direction = directionTemp.normalized * velocity;
+            Debug.Log("else");
 
-            Debug.Log("to indo pra la");
-            Movimentar(direction);
+            if (Vector2.Distance(transform.position, _posicao) > 0.5f)
+            {
+                Debug.Log("to indo pra ultima posicao do player");
+                Movimentar(calcMovimemto(_posicao));
+            }
+            else
+            {
+                Debug.Log("chegued no last player");
+                fazesMovimentoAlerta = FazesMovimentoAlerta.chechandoUltimaPosicaoPlayer;
+            }
         }
-        else
-        {
-            Debug.Log("chegued");
-            fazesMovimentoAlerta = FazesMovimentoAlerta.chechandoUltimaPosicaoPlayer;
-        }
+        
+        
     }
     private void MovimentarVoltarRotinaPadrao(Vector2 _posicao)
     {
-        Movimentar(_posicao);
+        if (Vector2.Distance(transform.position, _posicao) > 0.5f)
+        {
+            Debug.Log("to indo pra origem");
+            Movimentar(calcMovimemto(_posicao));
+        }
+        else
+        {
+            Debug.Log("chegued na origem");
+            fazesMovimentoAlerta = FazesMovimentoAlerta.NA;
+            estado = Estado.rotina;
+        }
     }
  
     private void Patrulhar()
@@ -316,18 +392,8 @@ public class EnemyMove : MonoBehaviour
                 
          
     }
-    private void MoveTransform(Vector2 _direction)
-    {
-        transform.position = Vector2.MoveTowards(transform.position, _direction, velocity / 3 * Time.deltaTime);
-        CollisionDirection();
-    }
-    private void MOVE(Vector2 _direction)
-    {
-        //rb.MovePosition((Vector2)transform.position + (_direction * velocity * Time.deltaTime));
-        _direction.Normalize();
-        rb.velocity = new Vector2((_direction.x) * velocity * Time.deltaTime, (_direction.y) * velocity * Time.deltaTime);
-        CollisionDirection();
-    }
+
+  
     private void CollisionDirection()
     {
         velX = rb.velocity.x;
@@ -395,13 +461,20 @@ public class EnemyMove : MonoBehaviour
         enemyVision = _enemyVision;
     }
 
+    Vector2 calcMovimemto(Vector2 __posicao)
+    {
+        Vector2 PlayerPosition = transform.position;
+        Vector2 directionTemp = __posicao - PlayerPosition;
+        Vector2 direction = directionTemp.normalized * velocity;
+
+        return direction;
+    }
+
     public void SawEnemy(GameObject _whoEnemySaw)
     {
         lastPlayerPositionChecked = false;
         playerGameObject = _whoEnemySaw;
-        timeMax = 3;
         time = 0;
-        timePlayerResrvaMax = 1.5F;
         timePlayerResrva = 0;
     }
 
