@@ -29,11 +29,11 @@ public class TakeItem : MonoBehaviour
     {
         if (itemDirectionHitbox.objetectCollision.gameObject.tag == "Item")
         {
-            inventario.add(_obj);            
+            inventario.Add(_obj);            
         }
         else if (itemDirectionHitbox.objetectCollision.gameObject.tag == "ItemChave")
         {   
-            inventarioMissao.add(_obj);
+            inventarioMissao.Add(_obj);
              
         }
         itemDirectionHitbox.objetectCollision.gameObject.SetActive(false);//item sumuir

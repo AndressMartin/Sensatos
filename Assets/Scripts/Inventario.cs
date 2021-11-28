@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Inventario : MonoBehaviour
 {
+    private Player player;
     public List<Item> itens = new List<Item>();
     public List<ArmaDeFogo> armas = new List<ArmaDeFogo>();
     public ArmaDeFogo armaSlot1;
@@ -13,6 +14,7 @@ public class Inventario : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        player = GetComponentInParent<Player>();
         InitWeaponConfig();
     }
 
@@ -24,17 +26,20 @@ public class Inventario : MonoBehaviour
         armas[1].index = 1;
     }
 
-    public void add(Item item)
+    public void Add(Item item)
     {
-        if(item.GetType() != typeof(ArmaDeFogo))
-        {
-            itens.Add(item);
-        }
-        else
-        {
-            armas.Add((ArmaDeFogo)item);
-            item.GetComponent<ArmaDeFogo>().index = armas.Count-1;
-        }
+        itens.Add(item);
+    }
+
+    public void Remove(Item item)
+    {
+        itens.Remove(item);
+    }
+
+    public void AddArma(ArmaDeFogo arma)
+    {
+        armas.Add(arma);
+        arma.GetComponent<ArmaDeFogo>().index = armas.Count - 1;
     }
 
     public void EquiparItem(Item item)
@@ -51,7 +56,7 @@ public class Inventario : MonoBehaviour
     {
         if (itemAtual != null)
         {
-            itemAtual.Usar(gameObject);
+            itemAtual.Usar(player);
         }
     }
     public void TrocarArma()

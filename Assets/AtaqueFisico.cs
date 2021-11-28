@@ -35,21 +35,6 @@ public class AtaqueFisico : MonoBehaviour
         objectManager = FindObjectOfType<ObjectManagerScript>();
     }
 
-    /*
-    private void FixedUpdate()
-    {
-        if(atacando == true)
-        {
-            if(tempo > 0)
-            {
-                atacando = false;
-                boxCollider2D.enabled = false;
-            }
-            tempo += Time.deltaTime;
-        }
-    }
-    */
-
     public void Atacar(EntityModel.Direcao _direcao, float knockBack, float _distanceH, float _distanceV, float _distanceY)
     {
         this.knockBack = knockBack;
@@ -79,9 +64,7 @@ public class AtaqueFisico : MonoBehaviour
 
         tempo = 0;
 
-        boxCollider2D.enabled = true;
         AtacarInimigos();
-        boxCollider2D.enabled = false;
 
         atacando = true;
     }
@@ -89,6 +72,7 @@ public class AtaqueFisico : MonoBehaviour
     //Passa pela lista de inimigos, confere se ha colisao com alguns deles e causa dano se houver
     private void AtacarInimigos()
     {
+        boxCollider2D.enabled = true;
         foreach (Enemy inimigo in objectManager.listaInimigos)
         {
             if (Colisao.HitTest(boxCollider2D, inimigo.transform.Find("HitboxDano").GetComponent<BoxCollider2D>()))
@@ -97,20 +81,8 @@ public class AtaqueFisico : MonoBehaviour
                 //Debug.Log("Acertou o inimigo");
             }
         }
+        boxCollider2D.enabled = false;
     }
-
-    /*
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        GameObject alvo = collision.gameObject;
-
-        if (alvo.GetComponent<Player>() != null || alvo.GetComponent<Enemy>() != null)
-        {
-            if (alvo.transform.parent != transform.parent)
-                HitTarget(alvo);
-        }
-    }
-    */
 
     void HitTarget(GameObject alvo)
     {

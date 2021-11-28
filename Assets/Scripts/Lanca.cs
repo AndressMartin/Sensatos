@@ -16,20 +16,20 @@ public class Lanca : Item
     private FisicalAttack FisicalAttack;
  
 
-    public override void Usar(GameObject _objQueChamou)
+    public override void Usar(Player player)
     {
-        CreateShoot(_objQueChamou);
+        CreateShoot(player);
     }
-    void CreateShoot(GameObject __objQueChamou)
+    void CreateShoot(Player player)
     {
-        pontaArma = __objQueChamou.GetComponentInChildren<PontaArma>().transform;
+        pontaArma = player.GetComponentInChildren<PontaArma>().transform;
 
         Instantiate(lancaTransform, pontaArma); //onde cria a lança
         FisicalAttack = FindObjectOfType<FisicalAttack>();
         FisicalAttack.direcao = (FisicalAttack.Direcao)pontaArma.GetComponentInChildren<PontaArma>().direcao;
         FisicalAttack.widthTemp = width;
         FisicalAttack.heightTemp = height;
-        FisicalAttack.FatherFromWeapon = __objQueChamou;
+        FisicalAttack.FatherFromWeapon = player;
         FisicalAttack.dano = dano;
 
         FisicalAttack.Usou();

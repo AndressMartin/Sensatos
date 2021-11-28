@@ -18,6 +18,7 @@ public class State : MonoBehaviour
     private Inventario inventario;
     private SpriteRenderer spriteRenderer;
     private DirectionHitbox directionHitbox;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -31,10 +32,8 @@ public class State : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       
         BotoesPressionados();
         Colldowns();
-
     }
     void Colldowns()
     {
@@ -60,44 +59,65 @@ public class State : MonoBehaviour
 
     void BotoesPressionados()
     {
+        //Trocar arma
         if (Input.GetKeyDown(KeyCode.Q))
         {
             inventario.TrocarArma();
             player.AtualizarArma();
         }
 
+        //Atirar
         if (Input.GetKeyDown(KeyCode.Space))
         {
             player.Atirar();
         }
 
-        if (Input.GetKeyDown(KeyCode.E) && colldown <= 0)//Botão de interação
+        //Botão de interação
+        if (Input.GetKeyDown(KeyCode.E) && colldown <= 0)
         {
             player.Interagir();
-            /*
-            colldown = colldowMax;
-            */
         }
 
+        //Debug - Tomar dano
+        /*
         if (Input.GetKeyDown(KeyCode.G))
         {
             player.TomarDano(0, Random.Range(-1f, 1f), Random.Range(-1f, 1f), 2);
         }
+        */
 
+        //Atacar
         if (Input.GetKeyDown(KeyCode.F))
         {
             player.Atacar();
         }
 
-        if (Input.GetKeyDown(KeyCode.Space) && colldownUsandoItem <= 0)//Botão de usar item
+        //Usar o item no atalho 1
+        if (Input.GetKeyDown(KeyCode.Keypad1) || Input.GetKeyDown(KeyCode.Alpha1))
         {
-            colldownUsandoItem = colldowMaxUsandoItem;
-            usandoItem = true;
-            inventario.UsarItemAtual();
-            
+            player.UsarItemAtalho(0);
         }
 
-        if (Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.X))//Botão para ativar o strafing
+        //Usar o item no atalho 2
+        if (Input.GetKeyDown(KeyCode.Keypad2) || Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            player.UsarItemAtalho(1);
+        }
+
+        //Usar o item no atalho 3
+        if (Input.GetKeyDown(KeyCode.Keypad3) || Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            player.UsarItemAtalho(2);
+        }
+
+        //Usar o item no atalho 4
+        if (Input.GetKeyDown(KeyCode.Keypad4) || Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            player.UsarItemAtalho(3);
+        }
+
+        //Ativar o strafing
+        if (Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.X))
         {
             if(player.modoMovimento != Player.ModoMovimento.Strafing)
             {
@@ -109,7 +129,8 @@ public class State : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.LeftControl) || Input.GetKeyDown(KeyCode.C))//Botão para agachar //se estiver correndo ou em pé, não agachado
+        //Andar sorrateiramente
+        if (Input.GetKeyDown(KeyCode.LeftControl) || Input.GetKeyDown(KeyCode.C))
         {
             if (player.modoMovimento != Player.ModoMovimento.AndandoSorrateiramente)
             {

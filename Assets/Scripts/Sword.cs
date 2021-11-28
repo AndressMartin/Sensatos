@@ -16,21 +16,21 @@ public class Sword : Item
     private FisicalAttack fisicalAttack;
 
 
-    public override void Usar(GameObject _objQueChamou)
+    public override void Usar(Player player)
     {
-        CreateShoot(_objQueChamou);
+        CreateShoot(player);
     }
 
-    void CreateShoot(GameObject __objQueChamou)
+    void CreateShoot(Player player)
     {
-        pontaArma = __objQueChamou.GetComponentInChildren<PontaArma>().transform;
+        pontaArma = player.GetComponentInChildren<PontaArma>().transform;
 
         Instantiate(lancaTransform, pontaArma); //onde cria a lança
         fisicalAttack = FindObjectOfType<FisicalAttack>();
         fisicalAttack.direcao = (FisicalAttack.Direcao)pontaArma.GetComponentInChildren<PontaArma>().direcao;
         fisicalAttack.widthTemp = width;
         fisicalAttack.heightTemp = height;
-        fisicalAttack.FatherFromWeapon = __objQueChamou;
+        fisicalAttack.FatherFromWeapon = player;
         fisicalAttack.dano = dano;
 
         fisicalAttack.Usou();

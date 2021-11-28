@@ -4,26 +4,44 @@ using UnityEngine;
 
 public class Cerca : ParedeModel
 {
-    [SerializeField]private int PontosVida;
-    public override int vida { get; protected set; }
+    private ObjectManagerScript objectManager;
+    private SpriteRenderer spriteRenderer;
+    private BoxCollider2D boxCollider2D;
+
     // Start is called before the first frame update
     void Start()
     {
-        vida = PontosVida;
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        boxCollider2D = GetComponent<BoxCollider2D>();
+
+        ativo = true;
+
+        //Se adicionar a lista de objetos interagiveis do ObjectManager
+        objectManager = FindObjectOfType<ObjectManagerScript>();
+        objectManager.adicionarAosObjetosInteragiveis(this);
+        objectManager.adicionarAsParedesQuebraveis(this);
+    }
+
+    public override void Interagir(Player player)
+    {
+        //Fazer algo
+        throw new System.NotImplementedException();
     }
 
     public override void LevarDano(int _dano)
     {
         vida -= _dano;
-        Debug.Log("vida atual: " + vida + " dano: " + _dano + " vida após dano: " + (vida - _dano));
-
 
         if (vida <= 0)
         {
-            gameObject.GetComponent<BoxCollider2D>().isTrigger = true;
-            Destroy(gameObject.GetComponent<BoxCollider2D>());
-            Destroy(this);
+            SeDestruir();
         }
     }
 
+    private void SeDestruir()
+    {
+        spriteRenderer.enabled = false;
+        boxCollider2D.isTrigger = true;
+        ativo = false;
+    }
 }

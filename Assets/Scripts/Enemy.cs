@@ -93,7 +93,7 @@ public class Enemy : EntityModel
         if (!tiroColldown)
         {
             inventario.armaSlot1.AtualizarBulletCreator(FindObjectOfType<BulletCreator>());
-            inventario.armaSlot1.Usar(gameObject);
+            inventario.armaSlot1.Atirar(gameObject);
             animacao.AtualizarArmaBracos(inventario.armaSlot1.nomeVisual);
             tiroColldown = true;
         }

@@ -9,7 +9,7 @@ public class Item : MonoBehaviour
     [SerializeField] public Tipo tipo;
     [SerializeField] public string nome;
 
-    virtual public void Usar(GameObject objQueChamou)
+    virtual public void Usar(Player player)
     {
         //Nada.
     }

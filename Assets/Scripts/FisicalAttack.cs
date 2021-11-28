@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class FisicalAttack : MonoBehaviour
 {
-    public GameObject FatherFromWeapon;
+    public Player FatherFromWeapon;
     public enum Direcao { Esquerda, Cima, Direita, Baixo };
     public Direcao direcao;
 

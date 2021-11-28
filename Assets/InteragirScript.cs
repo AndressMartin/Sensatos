@@ -33,7 +33,7 @@ public class InteragirScript : MonoBehaviour
         objectManager = FindObjectOfType<ObjectManagerScript>();
     }
 
-    public void Interagir(EntityModel.Direcao _direcao)
+    public void AtualizarHitBox(EntityModel.Direcao _direcao)
     {
         switch (_direcao)
         {
@@ -58,14 +58,17 @@ public class InteragirScript : MonoBehaviour
                 transform.position = new Vector2(transform.parent.transform.position.x, transform.parent.transform.position.y - distance);
                 break;
         }
+    }
 
-        boxCollider2D.enabled = true;
+    public void Interagir(EntityModel.Direcao _direcao)
+    {
+        AtualizarHitBox(_direcao);
         ProcurarInteragivel();
-        boxCollider2D.enabled = false;
     }
 
     private void ProcurarInteragivel()
     {
+        boxCollider2D.enabled = true;
         foreach (ObjetoInteragivel objetoInteragivel in objectManager.listaObjetosInteragiveis)
         {
             if (Colisao.HitTest(boxCollider2D, objetoInteragivel.transform.GetComponent<BoxCollider2D>()))
@@ -74,5 +77,11 @@ public class InteragirScript : MonoBehaviour
                 break;
             }
         }
+        boxCollider2D.enabled = false;
+    }
+
+    public BoxCollider2D GetBoxCollider2D()
+    {
+        return boxCollider2D;
     }
 }

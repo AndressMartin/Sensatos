@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Player : EntityModel
 {
+    private ObjectManagerScript objectManager;
+
     public override int vida { get; protected set; }
     private DirectionHitbox directionHitbox;
     private Rigidbody2D rb;
@@ -68,6 +70,8 @@ public class Player : EntityModel
 
         enemies = FindObjectsOfType<Enemy>();//pegando todos os inmigos
         distanciaTiroY = 1f;
+
+        objectManager = FindObjectOfType<ObjectManagerScript>();
     }
 
     // Update is called once per frame
@@ -164,6 +168,17 @@ public class Player : EntityModel
         }
     }
 
+    public BoxCollider2D GetHitBoxInteracao()
+    {
+        interacaoHitBox.AtualizarHitBox(direcao);
+        return interacaoHitBox.GetBoxCollider2D();
+    }
+
+    public ObjectManagerScript GetObjectManager()
+    {
+        return objectManager;
+    }
+
     public void Atacar()
     {
         if (estado == Estado.Normal)
@@ -180,7 +195,7 @@ public class Player : EntityModel
         {
             sound.changeColliderRadius(5);
             inventario.armaSlot1.AtualizarBulletCreator(FindObjectOfType<BulletCreator>());
-            inventario.armaSlot1.Usar(gameObject);
+            inventario.armaSlot1.Atirar(gameObject);
             animacao.AtualizarArmaBracos(inventario.armaSlot1.nomeVisual);
         }
     }
@@ -203,12 +218,33 @@ public class Player : EntityModel
 
     public void AdicionarAoInventario(Item item)
     {
-        inventario.add(item);
+        inventario.Add(item);
+    }
+
+    public void RemoverDoInventario(Item item)
+    {
+        inventario.Remove(item);
     }
 
     public void AdicionarAoInventarioMissao(Item item)
     {
-        inventarioMissao.add(item);
+        inventarioMissao.Add(item);
+    }
+
+    public void RemoverDoInventarioMissao(Item item)
+    {
+        inventarioMissao.Remove(item);
+    }
+
+    public void UsarItem(Item item)
+    {
+        inventario.UsarItemAtual();
+    }
+
+    public void UsarItemAtalho(int atalho)
+    {
+        //UsarItem(atalho[atalho])
+        inventario.UsarItemAtual();
     }
 
     public void curar(int _cura)

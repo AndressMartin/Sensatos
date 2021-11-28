@@ -14,9 +14,9 @@ public class PotionHp : consumivel
     }
 
 
-    public override void Usar(GameObject objQueChamou)
+    public override void Usar(Player player)
     {
-        player.curar(quantidadeCura);
+        this.player.curar(quantidadeCura);
         quantidade--;
     }
 }

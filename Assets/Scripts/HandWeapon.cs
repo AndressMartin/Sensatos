@@ -11,16 +11,16 @@ public class HandWeapon : Item
     public virtual FisicalAttack fisicalAttack { get; protected set; }
     public virtual int dano { get; protected set; }
 
-    public override void Usar(GameObject _objQueChamou)
+    public override void Usar(Player player)
     {
-        pontaArma = _objQueChamou.GetComponentInChildren<PontaArma>().transform;
+        pontaArma = player.GetComponentInChildren<PontaArma>().transform;
 
         Instantiate(lancaTransform, pontaArma); //onde cria a lança
         fisicalAttack = FindObjectOfType<FisicalAttack>();
         fisicalAttack.direcao = (FisicalAttack.Direcao)pontaArma.GetComponentInChildren<PontaArma>().direcao;
         fisicalAttack.widthTemp = width;
         fisicalAttack.heightTemp = height;
-        fisicalAttack.FatherFromWeapon = _objQueChamou;
+        fisicalAttack.FatherFromWeapon = player;
         fisicalAttack.dano = dano;
 
         fisicalAttack.Usou();
