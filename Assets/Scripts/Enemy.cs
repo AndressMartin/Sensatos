@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class Enemy : EntityModel
 {
+    //Managers
+    private ObjectManagerScript objectManager;
+    private PauseManagerScript pauseManager;
+
     public override int vida { get; protected set; }
 
     public enum Estado {Normal, TomandoDano};
@@ -16,8 +20,6 @@ public class Enemy : EntityModel
     private EnemyMove enemyMove;
     private EnemyVision enemyVision;
 
-    private ObjectManagerScript objectManager;
-
     [SerializeField] private int pontosVida;
     public bool dead = false;
 
@@ -27,6 +29,13 @@ public class Enemy : EntityModel
     // Start is called before the first frame update
     void Start()
     {
+        //Managers
+        objectManager = FindObjectOfType<ObjectManagerScript>();
+        pauseManager = FindObjectOfType<PauseManagerScript>();
+
+        //Se adicionar a lista de inimigos do ObjectManager
+        objectManager.adicionarAosInimigos(this);
+
         enemyVision = GetComponentInChildren<EnemyVision>();
         enemyMove = GetComponent<EnemyMove>();
         inventario = GetComponent<Inventario>();
@@ -39,16 +48,15 @@ public class Enemy : EntityModel
 
         timeCooldwon = 0;
         timeCooldownTiro = 0.5f;
-
-        //Se adicionar a lista de inimigos do ObjectManager
-        objectManager = FindObjectOfType<ObjectManagerScript>();
-        objectManager.adicionarAosInimigos(this);
     }
 
     // Update is called once per frame
     void Update()
     { 
-        AllEnemySubClass();
+        if(pauseManager.GetJogoPausado() == false)
+        {
+            AllEnemySubClass();
+        }
     }
     void AllEnemySubClass()
     {

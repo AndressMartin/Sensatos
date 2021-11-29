@@ -4,15 +4,13 @@ using UnityEngine;
 
 public class Player : EntityModel
 {
+    //Managers
     private ObjectManagerScript objectManager;
+    private PauseManagerScript pauseManager;
 
     public override int vida { get; protected set; }
-    private DirectionHitbox directionHitbox;
     private Rigidbody2D rb;
-    private ItemDirectionHitbox itemDirectionHitbox;
-    private SpriteRenderer spriteRenderer;
     private Movement movement;
-    private BoxCollider2D boxCollider2D;
     public Enemy[] enemies;
 
     private PontaArma pontaArma;
@@ -45,12 +43,12 @@ public class Player : EntityModel
     // Start is called before the first frame update
     void Start()
     {
+        //Managers
+        objectManager = FindObjectOfType<ObjectManagerScript>();
+        pauseManager = FindObjectOfType<PauseManagerScript>();
+
         sound = FindObjectOfType<Sound>();
-        boxCollider2D = GetComponent<BoxCollider2D>();
         movement = GetComponent<Movement>();
-        spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
-        directionHitbox = GetComponentInChildren<DirectionHitbox>();
-        itemDirectionHitbox = GetComponentInChildren<ItemDirectionHitbox>();
         rb = GetComponent<Rigidbody2D>();
         vida = initialLife;
 
@@ -70,38 +68,39 @@ public class Player : EntityModel
 
         enemies = FindObjectsOfType<Enemy>();//pegando todos os inmigos
         distanciaTiroY = 1f;
-
-        objectManager = FindObjectOfType<ObjectManagerScript>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (imune)
+        if(pauseManager.GetJogoPausado() == false)
         {
-            animacao.Piscar();
-            time += Time.deltaTime;
-            if (time > timeMax)
+            if (imune)
             {
-                animacao.SetarVisibilidade(true);
-                imune = false;
-                timeMax = 0.0F;
-                time = 0;
+                animacao.Piscar();
+                time += Time.deltaTime;
+                if (time > timeMax)
+                {
+                    animacao.SetarVisibilidade(true);
+                    imune = false;
+                    timeMax = 0.0F;
+                    time = 0;
+                }
             }
-        }
-        else if(collisionState)
-        {
-            foreach (Enemy enemy in enemies)
+            else if (collisionState)
             {
-                Physics2D.IgnoreCollision(enemy.gameObject.GetComponent<Collider2D>(), GetComponent<Collider2D>(), false);
+                foreach (Enemy enemy in enemies)
+                {
+                    Physics2D.IgnoreCollision(enemy.gameObject.GetComponent<Collider2D>(), GetComponent<Collider2D>(), false);
+                }
+                collisionState = false;
             }
-            collisionState = false;
-        }
 
-        //Debug.Log("\nPosicao Anter: " + posAnterior + ", Posicao Atual: " + transform.position + ", Posicao diferente: " + PosicaoDiferente(posAnterior, transform.position));
-        animacao.AtualizarDirecao(direcao, direcaoMovimento);
-        Animar();
-        movement.Mover();
+            //Debug.Log("\nPosicao Anter: " + posAnterior + ", Posicao Atual: " + transform.position + ", Posicao diferente: " + PosicaoDiferente(posAnterior, transform.position));
+            animacao.AtualizarDirecao(direcao, direcaoMovimento);
+            Animar();
+            movement.Mover();
+        }
     }
 
     private void FixedUpdate()
@@ -273,8 +272,6 @@ public class Player : EntityModel
                 break;
         }
         pontaArma.AtualizarPontaArma(direcao);
-        directionHitbox.ChangeDirection(direcao);
-        itemDirectionHitbox.ChangeDirection(direcao);
     }
 
     public void ChangeDirectionMovement(string lado)

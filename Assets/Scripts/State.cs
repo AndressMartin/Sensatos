@@ -4,26 +4,19 @@ using UnityEngine;
 
 public class State : MonoBehaviour
 {
-    public bool interagindo;
-    public bool usandoItem;
-    public int movimento = 2;
-
-    [SerializeField] private float colldown;
-    [SerializeField] private float colldowMax;
-    [SerializeField] private float colldownUsandoItem;
-    [SerializeField] private float colldowMaxUsandoItem;
+    //Managers
+    private PauseManagerScript pauseManager;
 
     private Player player;
     private Movement movement;
     private Inventario inventario;
-    private SpriteRenderer spriteRenderer;
-    private DirectionHitbox directionHitbox;
 
     // Start is called before the first frame update
     void Start()
     {
-        directionHitbox = GetComponentInChildren<DirectionHitbox>();
-        spriteRenderer = GetComponent<SpriteRenderer>();
+        //Managers
+        pauseManager = FindObjectOfType<PauseManagerScript>();
+
         inventario = GetComponent<Inventario>();
         movement = GetComponent<Movement>();
         player = GetComponent<Player>();
@@ -32,32 +25,25 @@ public class State : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        BotoesPressionados();
-        Colldowns();
+        ComandosMenu();
+        if(pauseManager.GetJogoPausado() == false && pauseManager.GetPermitirInput() == true)
+        {
+            ComandosGameplay();
+        }
     }
-    void Colldowns()
+
+    //Comandos de menus, como pausar o jogo
+    void ComandosMenu()
     {
-        if (colldown > 0)
-            colldown = colldown - 1 * (Time.deltaTime);
-
-        if (colldown > 0 && colldown < colldowMax)
-            interagindo = true;
-
-        else
-            interagindo = false;
-
-
-        if (colldownUsandoItem > 0)
-            colldownUsandoItem = colldownUsandoItem - 1 * (Time.deltaTime);
-
-        if (colldownUsandoItem > 0 && colldownUsandoItem < colldowMaxUsandoItem)
-            usandoItem = true;
-
-        else
-            usandoItem = false;
+        //Pausar o jogo
+        if (Input.GetKeyDown(KeyCode.Backspace))
+        {
+            pauseManager.Pausar();
+        }
     }
 
-    void BotoesPressionados()
+    //Comandos da gameplay principal
+    void ComandosGameplay()
     {
         //Trocar arma
         if (Input.GetKeyDown(KeyCode.Q))
@@ -73,18 +59,18 @@ public class State : MonoBehaviour
         }
 
         //Botão de interação
-        if (Input.GetKeyDown(KeyCode.E) && colldown <= 0)
+        if (Input.GetKeyDown(KeyCode.E))
         {
             player.Interagir();
         }
 
         //Debug - Tomar dano
-        /*
+
         if (Input.GetKeyDown(KeyCode.G))
         {
             player.TomarDano(0, Random.Range(-1f, 1f), Random.Range(-1f, 1f), 2);
         }
-        */
+
 
         //Atacar
         if (Input.GetKeyDown(KeyCode.F))
@@ -142,5 +128,16 @@ public class State : MonoBehaviour
             }
         }
         
+        //Se movimentar
+        if(movement.canMove == true)
+        {
+            movement.horizontal = Input.GetAxisRaw("Horizontal"); // -1 is left
+            movement.vertical = Input.GetAxisRaw("Vertical"); // -1 is down
+        }
+        else
+        {
+            movement.horizontal = 0;
+            movement.vertical = 0;
+        }
     }
 }

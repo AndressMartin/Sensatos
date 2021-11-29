@@ -5,10 +5,9 @@ using UnityEngine;
 public class Movement : SingletonInstance<Movement>
 {
     private Player player;
-    private State state;
     private Rigidbody2D rb;
-    float horizontal;
-    float vertical;
+    public float horizontal;
+    public float vertical;
     public float runSpeed;
     public bool canMove = true;
     private float velocityMax,
@@ -23,12 +22,12 @@ public class Movement : SingletonInstance<Movement>
     float time, timeMax;
     [SerializeField]private float timeMaxOriginal;
     Sound sound;
+
     // Start is called before the first frame update
     void Start()
     {
         sound = GetComponentInChildren<Sound>();
         player = GetComponent<Player>();
-        state = GetComponent<State>();
         rb = GetComponent<Rigidbody2D>();
 
         velocityMaxAndando = 5;
@@ -42,9 +41,6 @@ public class Movement : SingletonInstance<Movement>
     //Pega os inputs e move o personagem
     public void Mover()
     {
-        horizontal = Input.GetAxisRaw("Horizontal"); // -1 is left
-        vertical = Input.GetAxisRaw("Vertical"); // -1 is down
-
         if (canMove)
         {
             if(player.modoMovimento != Player.ModoMovimento.Strafing)
@@ -97,6 +93,7 @@ public class Movement : SingletonInstance<Movement>
             KnockBackContador();
         }
     }
+
     public void KnockBack(float _horizontal, float _vertical, float _knockBack)
     {
         knockBackHorizontal = _horizontal * _knockBack;
@@ -106,7 +103,6 @@ public class Movement : SingletonInstance<Movement>
         timeMax = timeMaxOriginal;
         time = 0;
     }
-
 
     void Move()
     {
@@ -121,7 +117,7 @@ public class Movement : SingletonInstance<Movement>
 
         switch(player.estado)
         {
-            case Player.Estado.Normal: //movimentacaoo padrao, caso esteja sendo empurado nao fazer contas para se movimentar
+            case Player.Estado.Normal: //movimentacao padrao, caso esteja sendo empurrado nao fazer contas para se movimentar
                 if (horizontal != 0)//se esta andando na vertical guarda em uma variavel a acelera��o e soma no final com addForce
                 {
                     _tempX = horizontal * velocityMax;
@@ -253,7 +249,6 @@ public class Movement : SingletonInstance<Movement>
                     }
                     */
                 }
-                //rb.AddForce(new Vector2(_tempX, _tempY), ForceMode2D.Impulse);
                 break;
 
             case Player.Estado.TomandoDano:
@@ -265,13 +260,11 @@ public class Movement : SingletonInstance<Movement>
                 _tempX = 0;
                 _tempY = 0;
                 break;
-
-
         }
 
         walk(_tempX, _tempY);
-        //rb.velocity = new Vector2(_tempX, _tempY).normalized;
     }
+
     void KnockBackContador()
     {
         canMove = false;
@@ -288,7 +281,6 @@ public class Movement : SingletonInstance<Movement>
         }
     }
 
-
     void walk(float _horizontal, float _vertical)
     {
         //Debug.Log("Velocidade" + new Vector2(horizontal, vertical).normalized);
@@ -300,7 +292,6 @@ public class Movement : SingletonInstance<Movement>
         {
             rb.velocity = new Vector2(_tempX * 0.7f, _tempY * 0.7f);
         }
-        //rb.AddForce(new Vector2(_horizontal, _vertical), ForceMode2D.Impulse);
         if (player.estado == Player.Estado.Normal && player.modoMovimento != Player.ModoMovimento.AndandoSorrateiramente)
         {
             sound.changeColliderRadius(runSpeed);

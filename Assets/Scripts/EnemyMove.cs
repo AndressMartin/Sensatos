@@ -68,9 +68,9 @@ public class EnemyMove : MonoBehaviour
     private int randomSpot;
     bool hearShoot;
     bool viuPlayerUmaVez;
-    lockDawn lockDawn;
+    lockDown lockDown;
     float difPlayer;
-    float difLockDawnButton;
+    float difLockDownButton;
     [SerializeField]bool vendoPlayer;
 
     [SerializeField]private Vector3 ultimaposicaoOrigem;
@@ -92,7 +92,7 @@ public class EnemyMove : MonoBehaviour
         timeMaxOriginalKnockCont = timeMaxKnockCont;
 
         timeMaxAlert = timeMaxAlertOriginal;
-        lockDawn = FindObjectOfType<lockDawn>();
+        lockDown = FindObjectOfType<lockDown>();
     }
     public void HearEnemy(Player _gameObject, float _tamanhoRaio)
     {
@@ -135,11 +135,11 @@ public class EnemyMove : MonoBehaviour
                 ultimaposicaoOrigem = new Vector3(transform.position.x, transform.position.y, transform.position.z);
 
 
-            if (!lockDawn.ativo) //caso não esteja em lockdawn
+            if (!lockDown.ativo) //caso não esteja em lockdawn
             {
                 Debug.Log("1");
 
-                if (difPlayer < difLockDawnButton)//caso o player estja mais perto que o alarme vai pra cima do player
+                if (difPlayer < difLockDownButton)//caso o player estja mais perto que o alarme vai pra cima do player
                 {
                     if (enemyVision.playerOnAttackRange)//caso esteja dentro do range de ataque 
                     {
@@ -154,20 +154,20 @@ public class EnemyMove : MonoBehaviour
                             //Debug.Log("seguind player");
                     }
                 }
-                else if (difPlayer > difLockDawnButton)//caso alarme estje mais perto ativa o alarme
+                else if (difPlayer > difLockDownButton)//caso alarme estje mais perto ativa o alarme
                 {
                     Debug.Log("2");
 
-                    if (difLockDawnButton > 0.05)
+                    if (difLockDownButton > 0.05)
                     {
-                        if (Vector2.Distance(transform.position, lockDawn.transform.position) > 0.2f)
+                        if (Vector2.Distance(transform.position, lockDown.transform.position) > 0.2f)
                         {
-                            MoveGeneric(lockDawn.transform.position);
+                            MoveGeneric(lockDown.transform.position);
                         }
                     }
                     else
                     {
-                        lockDawn.ativo = true;  //ativa o lockdawn
+                        lockDown.ativo = true;  //ativa o lockdawn
                     }
                 }
             }
@@ -200,7 +200,7 @@ public class EnemyMove : MonoBehaviour
     public void Main()
     {
         vendoPlayer = playerGameObject;
-        difLockDawnButton = Vector2.Distance(lockDawn.transform.position, transform.position);
+        difLockDownButton = Vector2.Distance(lockDown.transform.position, transform.position);
 
         if (vendoPlayer)//caso esteja vendo o player
         {

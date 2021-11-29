@@ -12,6 +12,7 @@ public class AnimacaoJogador : MonoBehaviour
     private string armaEquipadaVisual; //Guarda a arma equipada
     private string animacaoAtual; //Guarda a animacao atual
 
+    // Start is called before the first frame update
     void Start()
     {
         corpo = transform.Find("Corpo").GetComponent<Animator>();
