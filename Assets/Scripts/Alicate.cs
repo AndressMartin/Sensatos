@@ -6,19 +6,17 @@ public class Alicate : Item
 {
     [SerializeField] private int dano;
     [SerializeField] private int quantidadeDeUsos;
+    [SerializeField] private string nomeAnimacao;
+
+    private ParedeModel paredeQuebravel;
 
     public override void Usar(Player player)
     {
-        if(player.estado == Player.Estado.Normal)
+        if(player.estado == Player.Estado.Normal && quantidadeDeUsos > 0)
         {
             BoxCollider2D boxCollider2D = player.GetHitBoxInteracao();
             ObjectManagerScript objectManager = player.GetObjectManager();
             ProcurarCerca(player, boxCollider2D, objectManager);
-
-            if(quantidadeDeUsos <= 0)
-            {
-                SeDestruir(player);
-            }
         }
     }
 
@@ -31,7 +29,8 @@ public class Alicate : Item
             {
                 if(paredeQuebravel.ativo == true)
                 {
-                    UsarAlicate(paredeQuebravel);
+                    this.paredeQuebravel = paredeQuebravel;
+                    ChamarAnimacao(player);
                     break;
                 }
             }
@@ -39,15 +38,29 @@ public class Alicate : Item
         boxCollider2D.enabled = false;
     }
 
-    private void UsarAlicate(ParedeModel paredeQuebravel)
+    private void ChamarAnimacao(Player player)
+    {
+        player.AnimacaoItem(this);
+    }
+
+    public override void UsarNaGameplay(Player player)
     {
         paredeQuebravel.LevarDano(dano);
         quantidadeDeUsos--;
+        if (quantidadeDeUsos <= 0)
+        {
+            SeDestruir(player);
+        }
     }
 
     private void SeDestruir(Player player)
     {
         player.RemoverDoInventario(this);
         Destroy(this.gameObject);
+    }
+
+    public override string GetNomeAnimacao()
+    {
+        return nomeAnimacao;
     }
 }

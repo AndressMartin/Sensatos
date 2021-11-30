@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class chamarAtaque : MonoBehaviour
+public class EventosAnimacaoJogador : MonoBehaviour
 {
     private Player player;
 
@@ -18,9 +18,15 @@ public class chamarAtaque : MonoBehaviour
         player.AtaqueHitBox();
     }
 
-    //Finaliza o ataque
-    public void FinalizarAtaque()
+    //Finaliza a animacao e volta ao estado normal
+    public void FinalizarAnimacao()
     {
-        player.FinalizarAtaque();
+        player.FinalizarAnimacao();
+    }
+
+    //Chama a funcao UsarItemGameplay do item atual
+    public void UsarItemGameplay()
+    {
+        player.UsarItemGameplay();
     }
 }

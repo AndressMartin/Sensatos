@@ -42,7 +42,7 @@ public class Inventario : MonoBehaviour
         arma.GetComponent<ArmaDeFogo>().index = armas.Count - 1;
     }
 
-    public void EquiparItem(Item item)
+    public void SetarItemAtual(Item item)
     {
         itemAtual = item;
     }

@@ -14,8 +14,13 @@ public class Item : MonoBehaviour
         //Nada.
     }
 
-    virtual public void ConsumirRecurso()
+    virtual public void UsarNaGameplay(Player player)
     {
         //Nada.
+    }
+
+    virtual public string GetNomeAnimacao()
+    {
+        return "";
     }
 }

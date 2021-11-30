@@ -9,6 +9,7 @@ public class Player : EntityModel
     private PauseManagerScript pauseManager;
 
     public override int vida { get; protected set; }
+
     private Rigidbody2D rb;
     private Movement movement;
     public Enemy[] enemies;
@@ -29,7 +30,7 @@ public class Player : EntityModel
     public int initialLife;
     public float distanciaTiroY;
     public enum ModoMovimento {Normal, AndandoSorrateiramente, Strafing};
-    public enum Estado {Normal, TomandoDano, Atacando, UsandoItem};
+    public enum Estado {Normal, TomandoDano, Atacando, UsandoItem, Morto};
 
     public ModoMovimento modoMovimento;
     public Estado estado;
@@ -50,6 +51,7 @@ public class Player : EntityModel
         sound = FindObjectOfType<Sound>();
         movement = GetComponent<Movement>();
         rb = GetComponent<Rigidbody2D>();
+
         vida = initialLife;
 
         modoMovimento = ModoMovimento.Normal;
@@ -73,7 +75,7 @@ public class Player : EntityModel
     // Update is called once per frame
     void Update()
     {
-        if(pauseManager.GetJogoPausado() == false)
+        if(pauseManager.GetJogoPausado() == false && estado != Estado.Morto)
         {
             if (imune)
             {
@@ -146,6 +148,14 @@ public class Player : EntityModel
                     animacao.TrocarAnimacao("Atacando");
                 }
                 break;
+
+            case Estado.UsandoItem:
+                if (animacao.GetAnimacaoAtual() != inventario.itemAtual.GetNomeAnimacao() + "Usando")
+                {
+                    animacao.AtualizarArmaBracos("");
+                    animacao.TrocarAnimacao(inventario.itemAtual.GetNomeAnimacao() + "Usando");
+                }
+                break;
         }
     }
 
@@ -188,26 +198,26 @@ public class Player : EntityModel
         }
     }
 
+    public void AtaqueHitBox()
+    {
+        ataqueHitBox.Atacar(direcao, 1, 0.8f, 1.1f, 0.87f);
+    }
+
+    public void FinalizarAnimacao()
+    {
+        estado = Estado.Normal;
+        movement.canMove = true;
+    }
+
     public void Atirar()
     {
-        if(estado == Estado.Normal)
+        if (estado == Estado.Normal)
         {
             sound.changeColliderRadius(5);
             inventario.armaSlot1.AtualizarBulletCreator(FindObjectOfType<BulletCreator>());
             inventario.armaSlot1.Atirar(gameObject);
             animacao.AtualizarArmaBracos(inventario.armaSlot1.nomeVisual);
         }
-    }
-
-    public void AtaqueHitBox()
-    {
-        ataqueHitBox.Atacar(direcao, 1, 0.8f, 1.1f, 0.87f);
-    }
-
-    public void FinalizarAtaque()
-    {
-        estado = Estado.Normal;
-        movement.canMove = true;
     }
 
     public void AtualizarArma()
@@ -246,13 +256,52 @@ public class Player : EntityModel
         inventario.UsarItemAtual();
     }
 
-    public void curar(int _cura)
+    public void AnimacaoItem(Item item)
     {
-        Debug.Log(vida);
-        vida = +_cura;
-        Debug.Log(vida);
+        estado = Estado.UsandoItem;
+        movement.canMove = false;
+        inventario.SetarItemAtual(item);
     }
 
+    public void UsarItemGameplay()
+    {
+        inventario.itemAtual.UsarNaGameplay(this);
+    }
+
+    public override void TomarDano(int _dano, float _horizontal, float _vertical, float _knockBack)
+    {
+        if (!imune && estado != Estado.Morto)
+        {
+            if (vida <= 0)
+            {
+                Morrer();
+            }
+
+            else
+            {
+                vida -= _dano;
+
+                imune = true;
+                timeMax = tempoImunidade;
+                time = 0;
+                KnockBack(_horizontal,_vertical,_knockBack);
+            }
+        }
+    }
+
+    public override void KnockBack(float _horizontal, float _vertical,float _knockBack)
+    {
+        movement.KnockBack(_horizontal, _vertical, _knockBack);
+    }
+
+    private void Morrer()
+    {
+        estado = Estado.Morto;
+        movement.canMove = false;
+        movement.ZerarVelocidade();
+        animacao.AtualizarArmaBracos("");
+        animacao.TrocarAnimacao("Morto");
+    }
 
     public void ChangeDirection(string lado)
     {
@@ -293,34 +342,6 @@ public class Player : EntityModel
         }
     }
 
-    public override void TomarDano(int _dano, float _horizontal, float _vertical, float _knockBack)
-    {
-        if (!imune)
-        {
-            if (vida <= 0)
-            {
-                //Destroy(gameObject);
-                Debug.Log("to morto!");
-            }
-
-            else
-            {
-                vida -= _dano;
-
-                imune = true;
-                timeMax = tempoImunidade;
-                time = 0;
-                KnockBack(_horizontal,_vertical,_knockBack);
-            }
-        }
-    }
-
-    public override void KnockBack(float _horizontal, float _vertical,float _knockBack)
-    {
-
-        movement.KnockBack(_horizontal, _vertical, _knockBack);
-    }
-
     private void changeCollision(Collision2D collision, bool _onOff)
     {
         Physics2D.IgnoreCollision(collision.gameObject.GetComponent<Collider2D>(), GetComponent<Collider2D>(), _onOff);
@@ -334,7 +355,6 @@ public class Player : EntityModel
             if (collision.gameObject.GetComponent<Enemy>())
             {
                 changeCollision(collision, true);
-                
             }
         }
 

@@ -27,17 +27,17 @@ public class ItemColetavel : ObjetoInteragivel
             switch(item.tipo)
             {
                 case Item.Tipo.Consumivel:
-                    player.AdicionarAoInventario(item);
+                    AdicionarAoInventario(player);
                     SeExcluir();
                     break;
 
                 case Item.Tipo.Ferramenta:
-                    player.AdicionarAoInventario(item);
+                    AdicionarAoInventario(player);
                     SeExcluir();
                     break;
 
                 case Item.Tipo.ItemChave:
-                    player.AdicionarAoInventarioMissao(item);
+                    AdicionarAoInventarioMissao(player);
                     SeExcluir();
                     break;
             }
@@ -46,6 +46,20 @@ public class ItemColetavel : ObjetoInteragivel
         {
             Debug.LogWarning("Nao ha um item para adicionar, alguem tem que ver isso ai, ne.");
         }
+    }
+
+    private void AdicionarAoInventario(Player player)
+    {
+        Item novoItem;
+        novoItem = Instantiate(item, new Vector3(0, 0, 0), Quaternion.identity);
+        player.AdicionarAoInventario(novoItem);
+    }
+
+    private void AdicionarAoInventarioMissao(Player player)
+    {
+        Item novoItem;
+        novoItem = Instantiate(item, new Vector3(0, 0, 0), Quaternion.identity);
+        player.AdicionarAoInventarioMissao(novoItem);
     }
 
     private void SeExcluir()

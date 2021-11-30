@@ -267,7 +267,7 @@ public class Movement : SingletonInstance<Movement>
                 break;
         }
 
-        walk(_tempX, _tempY);
+        Walk(_tempX, _tempY);
     }
 
     void KnockBackContador()
@@ -286,7 +286,7 @@ public class Movement : SingletonInstance<Movement>
         }
     }
 
-    void walk(float _horizontal, float _vertical)
+    void Walk(float _horizontal, float _vertical)
     {
         //Debug.Log("Velocidade" + new Vector2(horizontal, vertical).normalized);
         if (!(horizontal != 0 && vertical != 0))
@@ -301,5 +301,10 @@ public class Movement : SingletonInstance<Movement>
         {
             sound.changeColliderRadius(runSpeed);
         }
+    }
+
+    public void ZerarVelocidade()
+    {
+        rb.velocity = new Vector2(0, 0);
     }
 }
