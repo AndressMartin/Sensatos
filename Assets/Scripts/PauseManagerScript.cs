@@ -18,14 +18,12 @@ public class PauseManagerScript : MonoBehaviour
         if(jogoPausado == false)
         {
             jogoPausado = true;
-            PermitirInput(false);
             Time.timeScale = 0; //Pausa todas as operacoes calculadas com tempo
             AudioListener.pause = true; //Pausa os sons do jogo
         }
         else
         {
             jogoPausado = false;
-            PermitirInput(true);
             Time.timeScale = 1; //Resume todas as operacoes calculadas com tempo
             AudioListener.pause = false; //Resume os sons do jogo
         }

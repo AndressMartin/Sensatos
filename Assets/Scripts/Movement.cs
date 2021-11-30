@@ -260,6 +260,11 @@ public class Movement : SingletonInstance<Movement>
                 _tempX = 0;
                 _tempY = 0;
                 break;
+
+            case Player.Estado.UsandoItem:
+                _tempX = 0;
+                _tempY = 0;
+                break;
         }
 
         walk(_tempX, _tempY);

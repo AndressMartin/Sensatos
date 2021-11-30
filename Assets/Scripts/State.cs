@@ -25,10 +25,13 @@ public class State : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        ComandosMenu();
-        if(pauseManager.GetJogoPausado() == false && pauseManager.GetPermitirInput() == true)
+        if(pauseManager.GetPermitirInput() == true)
         {
-            ComandosGameplay();
+            ComandosMenu();
+            if (pauseManager.GetJogoPausado() == false)
+            {
+                ComandosGameplay();
+            }
         }
     }
 

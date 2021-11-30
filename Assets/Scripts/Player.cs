@@ -29,7 +29,7 @@ public class Player : EntityModel
     public int initialLife;
     public float distanciaTiroY;
     public enum ModoMovimento {Normal, AndandoSorrateiramente, Strafing};
-    public enum Estado {Normal, TomandoDano, Atacando};
+    public enum Estado {Normal, TomandoDano, Atacando, UsandoItem};
 
     public ModoMovimento modoMovimento;
     public Estado estado;
