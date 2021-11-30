@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class Enemy : EntityModel
 {
+    //Managers
+    private ObjectManagerScript objectManager;
+    private PauseManagerScript pauseManager;
+
     public override int vida { get; protected set; }
 
     public enum Estado {Normal, TomandoDano};
@@ -15,7 +19,7 @@ public class Enemy : EntityModel
     private Inventario inventario;
     private EnemyMove enemyMove;
     private EnemyVision enemyVision;
-    
+
     [SerializeField] private int pontosVida;
     public bool dead = false;
 
@@ -25,6 +29,13 @@ public class Enemy : EntityModel
     // Start is called before the first frame update
     void Start()
     {
+        //Managers
+        objectManager = FindObjectOfType<ObjectManagerScript>();
+        pauseManager = FindObjectOfType<PauseManagerScript>();
+
+        //Se adicionar a lista de inimigos do ObjectManager
+        objectManager.adicionarAosInimigos(this);
+
         enemyVision = GetComponentInChildren<EnemyVision>();
         enemyMove = GetComponent<EnemyMove>();
         inventario = GetComponent<Inventario>();
@@ -35,14 +46,17 @@ public class Enemy : EntityModel
 
         estado = Estado.Normal;
 
-         timeCooldwon = 0;
-         timeCooldownTiro = 0.5f;
+        timeCooldwon = 0;
+        timeCooldownTiro = 0.5f;
     }
 
     // Update is called once per frame
     void Update()
     { 
-        AllEnemySubClass();
+        if(pauseManager.GetJogoPausado() == false)
+        {
+            AllEnemySubClass();
+        }
     }
     void AllEnemySubClass()
     {
@@ -62,25 +76,12 @@ public class Enemy : EntityModel
         switch (estado)
         {
             case Estado.Normal:
-                if ((enemyMove.velX == 0 && enemyMove.velY == 0) && animacao.GetAnimacaoAtual() != "Idle")
+                if ((enemyMove.rb.velocity.x == 0 && enemyMove.rb.velocity.y == 0) && animacao.GetAnimacaoAtual() != "Idle")
                 {
                     animacao.TrocarAnimacao("Idle");
                 }
-                else if ((enemyMove.velX != 0 || enemyMove.velY != 0))
+                else if ((enemyMove.rb.velocity.x != 0 || enemyMove.rb.velocity.y != 0) && animacao.GetAnimacaoAtual() != "Andando")
                 {
-                    /*
-                    if (modoMovimento == ModoMovimento.AndandoSorrateiramente)
-                    {
-                        if (animacao.GetAnimacaoAtual() != "AndandoSorrateiramente")
-                        {
-                            animacao.TrocarAnimacao("AndandoSorrateiramente");
-                        }
-                    }
-                    else if (animacao.GetAnimacaoAtual() != "Andando")
-                    {
-                        animacao.TrocarAnimacao("Andando");
-                    }
-                    */
                     animacao.TrocarAnimacao("Andando");
                 }
                 break;
@@ -100,7 +101,7 @@ public class Enemy : EntityModel
         if (!tiroColldown)
         {
             inventario.armaSlot1.AtualizarBulletCreator(FindObjectOfType<BulletCreator>());
-            inventario.armaSlot1.Usar(gameObject);
+            inventario.armaSlot1.Atirar(gameObject);
             animacao.AtualizarArmaBracos(inventario.armaSlot1.nomeVisual);
             tiroColldown = true;
         }

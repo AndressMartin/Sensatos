@@ -4,18 +4,23 @@ using UnityEngine;
 
 public class Item : MonoBehaviour
 {
+    public enum Tipo { Consumivel, Ferramenta, ItemChave };
 
-    public virtual string nome { get; protected set; }
+    [SerializeField] public Tipo tipo;
+    [SerializeField] public string nome;
 
-
-    public virtual void Usar(GameObject objQueChamou)
+    virtual public void Usar(Player player)
     {
-
+        //Nada.
     }
 
-    public virtual void ConsumirRecurso()
+    virtual public void UsarNaGameplay(Player player)
     {
-
+        //Nada.
     }
 
+    virtual public string GetNomeAnimacao()
+    {
+        return "";
+    }
 }

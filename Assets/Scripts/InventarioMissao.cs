@@ -6,21 +6,13 @@ public class InventarioMissao : MonoBehaviour
 {
     public List<Item> itens = new List<Item>();
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    public void add(Item item)
+    public void Add(Item item)
     {
         itens.Add(item);
+    }
 
+    public void Remove(Item item)
+    {
+        itens.Remove(item);
     }
 }

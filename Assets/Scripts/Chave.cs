@@ -4,15 +4,10 @@ using UnityEngine;
 
 public class Chave : Item
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField] private int id;
 
-    // Update is called once per frame
-    void Update()
+    public int GetId()
     {
-        
+        return id;
     }
 }

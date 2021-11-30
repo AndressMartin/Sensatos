@@ -23,7 +23,6 @@ public class EnemyVision : EntityModel
     public List<GameObject> walls;
     public List<float> wallsDistance;
     public EntityModel entityModelTemp;
-    public HitboxTile tempPlayer;
     public float difDistance;
     private Vector3 lastPlayerPosition;
     public List<ParedeModel> paredeModels;
@@ -42,9 +41,6 @@ public class EnemyVision : EntityModel
         enemyMove.EnemyVissionReference(this);
         wallDistance = transform.position;
         v1 = new Vector2(xPointOrigin, yPointOrigin);
-        tempPlayer = FindObjectOfType<HitboxTile>();
-       
-
     }
 
     public void Main()

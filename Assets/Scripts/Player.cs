@@ -4,19 +4,22 @@ using UnityEngine;
 
 public class Player : EntityModel
 {
+    //Managers
+    private ObjectManagerScript objectManager;
+    private PauseManagerScript pauseManager;
+
     public override int vida { get; protected set; }
-    private DirectionHitbox directionHitbox;
+
     private Rigidbody2D rb;
-    private ItemDirectionHitbox itemDirectionHitbox;
-    private SpriteRenderer spriteRenderer;
     private Movement movement;
-    private BoxCollider2D boxCollider2D;
     public Enemy[] enemies;
 
     private PontaArma pontaArma;
+    private InteragirScript interacaoHitBox;
     private AtaqueFisico ataqueHitBox;
     private AnimacaoJogador animacao;
     private Inventario inventario;
+    private InventarioMissao inventarioMissao;
 
     public Direcao direcaoMovimento;
     public Vector3 posAnterior;
@@ -27,7 +30,7 @@ public class Player : EntityModel
     public int initialLife;
     public float distanciaTiroY;
     public enum ModoMovimento {Normal, AndandoSorrateiramente, Strafing};
-    public enum Estado {Normal, TomandoDano, Atacando};
+    public enum Estado {Normal, TomandoDano, Atacando, UsandoItem, Morto};
 
     public ModoMovimento modoMovimento;
     public Estado estado;
@@ -41,24 +44,27 @@ public class Player : EntityModel
     // Start is called before the first frame update
     void Start()
     {
+        //Managers
+        objectManager = FindObjectOfType<ObjectManagerScript>();
+        pauseManager = FindObjectOfType<PauseManagerScript>();
+
         sound = FindObjectOfType<Sound>();
-        boxCollider2D = GetComponent<BoxCollider2D>();
         movement = GetComponent<Movement>();
-        spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
-        directionHitbox = GetComponentInChildren<DirectionHitbox>();
-        itemDirectionHitbox = GetComponentInChildren<ItemDirectionHitbox>();
         rb = GetComponent<Rigidbody2D>();
+
         vida = initialLife;
 
         modoMovimento = ModoMovimento.Normal;
         estado = Estado.Normal;
 
         inventario = GetComponent<Inventario>();
+        inventarioMissao = GetComponent<InventarioMissao>();
 
         posAnterior = transform.position;
 
         tempoImunidade = 1f;
         pontaArma = GetComponentInChildren<PontaArma>();
+        interacaoHitBox = GetComponentInChildren<InteragirScript>();
         ataqueHitBox = GetComponentInChildren<AtaqueFisico>();
         animacao = transform.GetComponent<AnimacaoJogador>();
 
@@ -69,31 +75,34 @@ public class Player : EntityModel
     // Update is called once per frame
     void Update()
     {
-        if (imune)
+        if(pauseManager.GetJogoPausado() == false && estado != Estado.Morto)
         {
-            animacao.Piscar();
-            time += Time.deltaTime;
-            if (time > timeMax)
+            if (imune)
             {
-                animacao.SetarVisibilidade(true);
-                imune = false;
-                timeMax = 0.0F;
-                time = 0;
+                animacao.Piscar();
+                time += Time.deltaTime;
+                if (time > timeMax)
+                {
+                    animacao.SetarVisibilidade(true);
+                    imune = false;
+                    timeMax = 0.0F;
+                    time = 0;
+                }
             }
-        }
-        else if(collisionState)
-        {
-            foreach (Enemy enemy in enemies)
+            else if (collisionState)
             {
-                Physics2D.IgnoreCollision(enemy.gameObject.GetComponent<Collider2D>(), GetComponent<Collider2D>(), false);
+                foreach (Enemy enemy in enemies)
+                {
+                    Physics2D.IgnoreCollision(enemy.gameObject.GetComponent<Collider2D>(), GetComponent<Collider2D>(), false);
+                }
+                collisionState = false;
             }
-            collisionState = false;
-        }
 
-        //Debug.Log("\nPosicao Anter: " + posAnterior + ", Posicao Atual: " + transform.position + ", Posicao diferente: " + PosicaoDiferente(posAnterior, transform.position));
-        animacao.AtualizarDirecao(direcao, direcaoMovimento);
-        Animar();
-        movement.Mover();
+            //Debug.Log("\nPosicao Anter: " + posAnterior + ", Posicao Atual: " + transform.position + ", Posicao diferente: " + PosicaoDiferente(posAnterior, transform.position));
+            animacao.AtualizarDirecao(direcao, direcaoMovimento);
+            Animar();
+            movement.Mover();
+        }
     }
 
     private void FixedUpdate()
@@ -139,6 +148,14 @@ public class Player : EntityModel
                     animacao.TrocarAnimacao("Atacando");
                 }
                 break;
+
+            case Estado.UsandoItem:
+                if (animacao.GetAnimacaoAtual() != inventario.itemAtual.GetNomeAnimacao() + "Usando")
+                {
+                    animacao.AtualizarArmaBracos("");
+                    animacao.TrocarAnimacao(inventario.itemAtual.GetNomeAnimacao() + "Usando");
+                }
+                break;
         }
     }
 
@@ -152,6 +169,25 @@ public class Player : EntityModel
         animacao.TrocarAnimacao("Idle");
     }
 
+    public void Interagir()
+    {
+        if (estado == Estado.Normal)
+        {
+            interacaoHitBox.Interagir(direcao);
+        }
+    }
+
+    public BoxCollider2D GetHitBoxInteracao()
+    {
+        interacaoHitBox.AtualizarHitBox(direcao);
+        return interacaoHitBox.GetBoxCollider2D();
+    }
+
+    public ObjectManagerScript GetObjectManager()
+    {
+        return objectManager;
+    }
+
     public void Atacar()
     {
         if (estado == Estado.Normal)
@@ -162,26 +198,26 @@ public class Player : EntityModel
         }
     }
 
-    public void Atirar()
-    {
-        if(estado == Estado.Normal)
-        {
-            sound.changeColliderRadius(5);
-            inventario.armaSlot1.AtualizarBulletCreator(FindObjectOfType<BulletCreator>());
-            inventario.armaSlot1.Usar(gameObject);
-            animacao.AtualizarArmaBracos(inventario.armaSlot1.nomeVisual);
-        }
-    }
-
     public void AtaqueHitBox()
     {
         ataqueHitBox.Atacar(direcao, 1, 0.8f, 1.1f, 0.87f);
     }
 
-    public void FinalizarAtaque()
+    public void FinalizarAnimacao()
     {
         estado = Estado.Normal;
         movement.canMove = true;
+    }
+
+    public void Atirar()
+    {
+        if (estado == Estado.Normal)
+        {
+            sound.changeColliderRadius(5);
+            inventario.armaSlot1.AtualizarBulletCreator(FindObjectOfType<BulletCreator>());
+            inventario.armaSlot1.Atirar(gameObject);
+            animacao.AtualizarArmaBracos(inventario.armaSlot1.nomeVisual);
+        }
     }
 
     public void AtualizarArma()
@@ -189,13 +225,83 @@ public class Player : EntityModel
         animacao.AtualizarArmaBracos(inventario.armaSlot1.nomeVisual);
     }
 
-    public void curar(int _cura)
+    public void AdicionarAoInventario(Item item)
     {
-        Debug.Log(vida);
-        vida = +_cura;
-        Debug.Log(vida);
+        inventario.Add(item);
     }
 
+    public void RemoverDoInventario(Item item)
+    {
+        inventario.Remove(item);
+    }
+
+    public void AdicionarAoInventarioMissao(Item item)
+    {
+        inventarioMissao.Add(item);
+    }
+
+    public void RemoverDoInventarioMissao(Item item)
+    {
+        inventarioMissao.Remove(item);
+    }
+
+    public void UsarItem(Item item)
+    {
+        inventario.UsarItemAtual();
+    }
+
+    public void UsarItemAtalho(int atalho)
+    {
+        //UsarItem(atalho[atalho])
+        inventario.UsarItemAtual();
+    }
+
+    public void AnimacaoItem(Item item)
+    {
+        estado = Estado.UsandoItem;
+        movement.canMove = false;
+        inventario.SetarItemAtual(item);
+    }
+
+    public void UsarItemGameplay()
+    {
+        inventario.itemAtual.UsarNaGameplay(this);
+    }
+
+    public override void TomarDano(int _dano, float _horizontal, float _vertical, float _knockBack)
+    {
+        if (!imune && estado != Estado.Morto)
+        {
+            if (vida <= 0)
+            {
+                Morrer();
+            }
+
+            else
+            {
+                vida -= _dano;
+
+                imune = true;
+                timeMax = tempoImunidade;
+                time = 0;
+                KnockBack(_horizontal,_vertical,_knockBack);
+            }
+        }
+    }
+
+    public override void KnockBack(float _horizontal, float _vertical,float _knockBack)
+    {
+        movement.KnockBack(_horizontal, _vertical, _knockBack);
+    }
+
+    private void Morrer()
+    {
+        estado = Estado.Morto;
+        movement.canMove = false;
+        movement.ZerarVelocidade();
+        animacao.AtualizarArmaBracos("");
+        animacao.TrocarAnimacao("Morto");
+    }
 
     public void ChangeDirection(string lado)
     {
@@ -215,8 +321,6 @@ public class Player : EntityModel
                 break;
         }
         pontaArma.AtualizarPontaArma(direcao);
-        directionHitbox.ChangeDirection(direcao);
-        itemDirectionHitbox.ChangeDirection(direcao);
     }
 
     public void ChangeDirectionMovement(string lado)
@@ -238,34 +342,6 @@ public class Player : EntityModel
         }
     }
 
-    public override void TomarDano(int _dano, float _horizontal, float _vertical, float _knockBack)
-    {
-        if (!imune)
-        {
-            if (vida <= 0)
-            {
-                //Destroy(gameObject);
-                Debug.Log("to morto!");
-            }
-
-            else
-            {
-                vida -= _dano;
-
-                imune = true;
-                timeMax = tempoImunidade;
-                time = 0;
-                KnockBack(_horizontal,_vertical,_knockBack);
-            }
-        }
-    }
-
-    public override void KnockBack(float _horizontal, float _vertical,float _knockBack)
-    {
-
-        movement.KnockBack(_horizontal, _vertical, _knockBack);
-    }
-
     private void changeCollision(Collision2D collision, bool _onOff)
     {
         Physics2D.IgnoreCollision(collision.gameObject.GetComponent<Collider2D>(), GetComponent<Collider2D>(), _onOff);
@@ -279,7 +355,6 @@ public class Player : EntityModel
             if (collision.gameObject.GetComponent<Enemy>())
             {
                 changeCollision(collision, true);
-                
             }
         }
 

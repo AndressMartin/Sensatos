@@ -3,28 +3,26 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ArmaDeFogo : Item
+public class ArmaDeFogo : MonoBehaviour
 {
     [SerializeField] public  Transform bullet;
     private Projetil projetil;
     private BulletCreator bulletCreator;
     public Transform pontaArma;
     public Sprite myImage;
-    public override string nome { get; protected set; }
     public int dano;
     public float velocityProjetil;
     public GameObject objQueChamou;
-    public string tempNome;
     public float knockbackValue;
     public int municaoMax;
     public int municaoAtual;
     public int index;
+    public string nome;
     public string nomeVisual;
     public float distanciaMaxProjetil;
     private void Start()
     {
         bulletCreator = FindObjectOfType<BulletCreator>();
-        nome = tempNome;
         municaoAtual = municaoMax; //TODO: Precisa salvar essa info
         if(knockbackValue <=0)
         {
@@ -37,7 +35,7 @@ public class ArmaDeFogo : Item
     {
         this.bulletCreator = bulletCreator;
     }
-    public override void Usar(GameObject objQueChamou)
+    public void Atirar(GameObject objQueChamou)
     {
         CreateShoot(objQueChamou);
     }

@@ -4,25 +4,19 @@ using UnityEngine;
 
 public class State : MonoBehaviour
 {
-    public bool interagindo;
-    public bool usandoItem;
-    public int movimento = 2;
-
-    [SerializeField] private float colldown;
-    [SerializeField] private float colldowMax;
-    [SerializeField] private float colldownUsandoItem;
-    [SerializeField] private float colldowMaxUsandoItem;
+    //Managers
+    private PauseManagerScript pauseManager;
 
     private Player player;
     private Movement movement;
     private Inventario inventario;
-    private SpriteRenderer spriteRenderer;
-    private DirectionHitbox directionHitbox;
+
     // Start is called before the first frame update
     void Start()
     {
-        directionHitbox = GetComponentInChildren<DirectionHitbox>();
-        spriteRenderer = GetComponent<SpriteRenderer>();
+        //Managers
+        pauseManager = FindObjectOfType<PauseManagerScript>();
+
         inventario = GetComponent<Inventario>();
         movement = GetComponent<Movement>();
         player = GetComponent<Player>();
@@ -31,92 +25,125 @@ public class State : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       
-        BotoesPressionados();
-        Colldowns();
-
-    }
-    void Colldowns()
-    {
-        if (colldown > 0)
-            colldown = colldown - 1 * (Time.deltaTime);
-
-        if (colldown > 0 && colldown < colldowMax)
-            interagindo = true;
-
-        else
-            interagindo = false;
-
-
-        if (colldownUsandoItem > 0)
-            colldownUsandoItem = colldownUsandoItem - 1 * (Time.deltaTime);
-
-        if (colldownUsandoItem > 0 && colldownUsandoItem < colldowMaxUsandoItem)
-            usandoItem = true;
-
-        else
-            usandoItem = false;
+        if(pauseManager.GetPermitirInput() == true)
+        {
+            ComandosMenu();
+            if (pauseManager.GetJogoPausado() == false)
+            {
+                ComandosGameplay();
+            }
+        }
     }
 
-    void BotoesPressionados()
+    //Comandos de menus, como pausar o jogo
+    void ComandosMenu()
     {
-        if (Input.GetKeyDown(KeyCode.Q))
+        //Pausar o jogo
+        if (Input.GetKeyDown(KeyCode.Backspace))
         {
-            inventario.TrocarArma();
-            player.AtualizarArma();
+            pauseManager.Pausar();
         }
+    }
 
-        if (Input.GetKeyDown(KeyCode.Space))
+    //Comandos da gameplay principal
+    void ComandosGameplay()
+    {
+        if(true)
         {
-            player.Atirar();
-        }
-
-        if (Input.GetKeyDown(KeyCode.E) && colldown <= 0)//Botão de interação
-        {
-            colldown = colldowMax;
-        }
-
-        if (Input.GetKeyDown(KeyCode.G))
-        {
-            player.TomarDano(0, Random.Range(-1f, 1f), Random.Range(-1f, 1f), 2);
-        }
-
-        if (Input.GetKeyDown(KeyCode.F))
-        {
-            player.Atacar();
-        }
-
-        if (Input.GetKeyDown(KeyCode.Space) && colldownUsandoItem <= 0)//Botão de usar item
-        {
-            colldownUsandoItem = colldowMaxUsandoItem;
-            usandoItem = true;
-            inventario.UsarItemAtual();
-            
-        }
-
-        if (Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.X))//Botão para ativar o strafing
-        {
-            if(player.modoMovimento != Player.ModoMovimento.Strafing)
+            //Trocar arma
+            if (Input.GetKeyDown(KeyCode.Q))
             {
-                player.modoMovimento = Player.ModoMovimento.Strafing;
+                inventario.TrocarArma();
+                player.AtualizarArma();
             }
-            else
-            {
-                player.modoMovimento = Player.ModoMovimento.Normal;
-            }
-        }
 
-        if (Input.GetKeyDown(KeyCode.LeftControl) || Input.GetKeyDown(KeyCode.C))//Botão para agachar //se estiver correndo ou em pé, não agachado
-        {
-            if (player.modoMovimento != Player.ModoMovimento.AndandoSorrateiramente)
+            //Atirar
+            if (Input.GetKeyDown(KeyCode.Space))
             {
-                player.modoMovimento = Player.ModoMovimento.AndandoSorrateiramente;
+                player.Atirar();
             }
-            else
+
+            //Botão de interação
+            if (Input.GetKeyDown(KeyCode.E))
             {
-                player.modoMovimento = Player.ModoMovimento.Normal;
+                player.Interagir();
+            }
+
+            //Debug - Tomar dano
+
+            if (Input.GetKeyDown(KeyCode.G))
+            {
+                player.TomarDano(0, Random.Range(-1f, 1f), Random.Range(-1f, 1f), 2);
+            }
+
+
+            //Atacar
+            if (Input.GetKeyDown(KeyCode.F))
+            {
+                player.Atacar();
+            }
+
+            //Usar o item no atalho 1
+            if (Input.GetKeyDown(KeyCode.Keypad1) || Input.GetKeyDown(KeyCode.Alpha1))
+            {
+                player.UsarItemAtalho(0);
+            }
+
+            //Usar o item no atalho 2
+            if (Input.GetKeyDown(KeyCode.Keypad2) || Input.GetKeyDown(KeyCode.Alpha2))
+            {
+                player.UsarItemAtalho(1);
+            }
+
+            //Usar o item no atalho 3
+            if (Input.GetKeyDown(KeyCode.Keypad3) || Input.GetKeyDown(KeyCode.Alpha3))
+            {
+                player.UsarItemAtalho(2);
+            }
+
+            //Usar o item no atalho 4
+            if (Input.GetKeyDown(KeyCode.Keypad4) || Input.GetKeyDown(KeyCode.Alpha4))
+            {
+                player.UsarItemAtalho(3);
+            }
+
+            //Ativar o strafing
+            if (Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.X))
+            {
+                if (player.modoMovimento != Player.ModoMovimento.Strafing)
+                {
+                    player.modoMovimento = Player.ModoMovimento.Strafing;
+                }
+                else
+                {
+                    player.modoMovimento = Player.ModoMovimento.Normal;
+                }
+            }
+
+            //Andar sorrateiramente
+            if (Input.GetKeyDown(KeyCode.LeftControl) || Input.GetKeyDown(KeyCode.C))
+            {
+                if (player.modoMovimento != Player.ModoMovimento.AndandoSorrateiramente)
+                {
+                    player.modoMovimento = Player.ModoMovimento.AndandoSorrateiramente;
+                }
+                else
+                {
+                    player.modoMovimento = Player.ModoMovimento.Normal;
+                }
             }
         }
         
+        //Se movimentar
+        if(movement.canMove == true)
+        {
+            movement.horizontal = Input.GetAxisRaw("Horizontal"); // -1 is left
+            movement.vertical = Input.GetAxisRaw("Vertical"); // -1 is down
+        }
+        else
+        {
+            movement.horizontal = 0;
+            movement.vertical = 0;
+        }
     }
 }

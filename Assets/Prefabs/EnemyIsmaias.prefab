@@ -31,7 +31,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6297625325533714494}
-  m_RootOrder: 3
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &180495879
 SpriteRenderer:
@@ -144,7 +144,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6297625325533714494}
-  m_RootOrder: 4
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &380813997
 SpriteRenderer:
@@ -249,14 +249,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6297625325533714485}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 7.37, y: -0.33, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 6297625326220625050}
-  - {fileID: 6297625326670532827}
-  - {fileID: 6297625327472927379}
   - {fileID: 180495875}
   - {fileID: 380813995}
+  - {fileID: 6297625327472927379}
+  - {fileID: 6297625326220625050}
+  - {fileID: 6297625326670532827}
   - {fileID: 3722818306293565604}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -313,16 +313,17 @@ MonoBehaviour:
   velocity: 10
   initialPosition: {x: 0, y: 0, z: 0}
   playerGameObject: {fileID: 0}
+  rb: {fileID: 0}
   horizontal: 0
   vertical: 0
   lastPlayerPositionChecked: 0
   lastPlayerPosition: {x: 0, y: 0, z: 0}
-  time: 0
+  timeMaxAlert: 0
   timeMax: 3
+  timePlayerResrvaMax: 1.5
+  timeMaxAlertOriginal: 3
   velX: 0
   velY: 0
-  timePlayerResrva: 0
-  timePlayerResrvaMax: 1.5
   gameObjectPlayerReserva: {fileID: 0}
   knockBackHorizontal: 0
   knockBackVertical: 0
@@ -334,8 +335,8 @@ MonoBehaviour:
   contQuantosTirosParaTomarKnockBack: 2
   hearEnemy: 0
   estado: 0
-  timeMaxAlertOriginal: 3
   stance: 1
+  fazesMovimentoAlerta: 3
   waitTime: 0
   startWaitTime: 3
   moveSpots:
@@ -343,7 +344,9 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  vendoPlayer: 0
   ultimaposicaoOrigem: {x: 0, y: 0, z: 0}
+  gameObjectTemp: {fileID: 0}
 --- !u!114 &6297625325533714482
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -471,7 +474,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6297625325533714494}
-  m_RootOrder: 0
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6297625326220625051
 MonoBehaviour:
@@ -502,7 +505,6 @@ MonoBehaviour:
   - {fileID: 0}
   wallsDistance: []
   entityModelTemp: {fileID: 0}
-  tempPlayer: {fileID: 0}
   difDistance: 0
   paredeModels:
   - {fileID: 0}
@@ -585,7 +587,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6297625325533714494}
-  m_RootOrder: 1
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6297625326670532825
 MonoBehaviour:
@@ -685,7 +687,7 @@ GameObject:
   - component: {fileID: 2414356659861401233}
   - component: {fileID: 4879218329491730882}
   m_Layer: 0
-  m_Name: Ponta_da_arma
+  m_Name: PontaDaArma
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -699,7 +701,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7730406947702887739}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.90999985, y: 2.4299998, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.15256, y: 0.15256, z: 0.15256}
   m_Children: []
   m_Father: {fileID: 6297625325533714494}
