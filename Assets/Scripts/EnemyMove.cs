@@ -31,7 +31,6 @@ public class EnemyMove : MonoBehaviour
     private state enemyState;
 
     
-    public GameObject gameObjectPlayerReserva;
     bool firstTimeOnLoop = true;
 
     private PathFinding pathFinding;
@@ -74,7 +73,9 @@ public class EnemyMove : MonoBehaviour
     [SerializeField]bool vendoPlayer;
 
     [SerializeField]private Vector3 ultimaposicaoOrigem;
-    [SerializeField]private GameObject gameObjectTemp;
+    [SerializeField]private GameObject gameObjectPlayerReservaAlt;
+    bool enemyPlayerReserva = false;
+
     private void Start()
     {
         ultimaposicaoOrigem = new Vector3(transform.position.x, transform.position.y, transform.position.z);
@@ -117,11 +118,11 @@ public class EnemyMove : MonoBehaviour
 
     public void seguirAtacarPlayer()
     {
-        if (gameObjectTemp == null)
-            gameObjectTemp = playerGameObject;
+        if (gameObjectPlayerReservaAlt == null)
+            gameObjectPlayerReservaAlt = playerGameObject;
 
         fazesMovimentoAlerta = FazesMovimentoAlerta.AndandoAte_UltimaPosicaoPlayer;
-        lastPlayerPosition = gameObjectTemp.transform.position;
+        lastPlayerPosition = gameObjectPlayerReservaAlt.transform.position;
         float difPlayer = Vector2.Distance(playerGameObject.transform.position, transform.position);
 
 
@@ -137,8 +138,6 @@ public class EnemyMove : MonoBehaviour
 
             if (!lockDown.ativo) //caso não esteja em lockdawn
             {
-                Debug.Log("1");
-
                 if (difPlayer < difLockDownButton)//caso o player estja mais perto que o alarme vai pra cima do player
                 {
                     if (enemyVision.playerOnAttackRange)//caso esteja dentro do range de ataque 
@@ -188,7 +187,6 @@ public class EnemyMove : MonoBehaviour
                     //Debug.Log("seguind player");
                 }
             }
-            Debug.Log(Vector2.Distance(transform.position, playerGameObject.transform.position));
             if (playerGameObject != null) {
                 if (Vector2.Distance(transform.position, playerGameObject.transform.position) < 2.0)
                 {
@@ -211,15 +209,14 @@ public class EnemyMove : MonoBehaviour
                     seguirAtacarPlayer();
                     break;
                 case Estado.alerta:
-                    counterAlert();
+                    counterAlert();//inicia o contador pra ir entrar em estado combate 
                     break;
                 case Estado.rotina:
                     estado = Estado.alerta;
                     break;
 
             }
-            if (gameObjectPlayerReserva == null)
-                gameObjectPlayerReserva = playerGameObject;
+
         }
         else //caso não veja o player
         {
@@ -268,9 +265,29 @@ public class EnemyMove : MonoBehaviour
         }
         ResetKnockBackCont();
         KnockBackContador();
-
     }
-
+    private Vector2 InimigoSeguindoAposPerderVisaoDoPlayerContador(Vector2 vector2)
+    {     
+        if (gameObjectPlayerReservaAlt != null)
+        {
+            timePlayerResrva += Time.deltaTime;
+            if (timePlayerResrva > timePlayerResrvaMax)//pega a ultima posicao do player conhecida e passa a pra variavel, zera as outras coisas
+            {
+                timePlayerResrva = 0;//depois daquele tempo em que segue o jogador voltar pro alerta
+                gameObjectPlayerReservaAlt = null;
+                enemyPlayerReserva = true;
+            }
+            else        //enquanto o contador não chegar no numero fique atualizando a posicao do player e retornando pra onde o inimigo deve andar
+            {
+                Debug.Log("SendoAtualizado");
+                lastPlayerPosition = gameObjectPlayerReservaAlt.transform.position;
+                return lastPlayerPosition;
+            }
+            return vector2;
+        }
+        return vector2;
+        
+    }
     private void VerificarRegiao()
     {
         rb.velocity = Vector2.zero;
@@ -302,45 +319,22 @@ public class EnemyMove : MonoBehaviour
         Movimentar(calcMovimemto(_posicao));
         
     }
-
-    bool AttPlayerPos()
-    {
-        if (gameObjectPlayerReserva != null)
-        {
-            timePlayerResrva += Time.deltaTime;
-            if (timePlayerResrva > timePlayerResrvaMax)//pega a ultima posicao do player conhecida e passa a pra variavel, zera as outras coisas
-            {
-                timePlayerResrva = 0;
-                gameObjectPlayerReserva = null;//depois daquele tempo em que segue o jogador voltar pro alerta
-                gameObjectTemp = null;
-                return true;
-            }
-            else
-            {
-                lastPlayerPosition = gameObjectTemp.transform.position;
-                return false;
-            }
-        }
-        return true;
-    }
     private void MovimentarUltimaPosicaoPlayer(Vector2 _posicao)
     {
-        if (AttPlayerPos())
-        {
-            Debug.Log("else");
-
-            if (Vector2.Distance(transform.position, _posicao) > 0.5f)
-            {
-                Debug.Log("to indo pra ultima posicao do player");
-                Movimentar(calcMovimemto(_posicao));
-            }
-            else
-            {
-                Debug.Log("chegued no last player");
-                fazesMovimentoAlerta = FazesMovimentoAlerta.chechandoUltimaPosicaoPlayer;
-            }
-        }
         
+        if(!enemyPlayerReserva)//so atualiza a posicao do jogador se o contador não deu o tempo
+            _posicao = InimigoSeguindoAposPerderVisaoDoPlayerContador(_posicao);
+
+        if (Vector2.Distance(transform.position, _posicao) > 0.5f)
+        {
+            Debug.Log("to indo pra ultima posicao do player");
+            Movimentar(calcMovimemto(lastPlayerPosition));
+        }
+        else
+        {
+            Debug.Log("chegued no last player");
+            fazesMovimentoAlerta = FazesMovimentoAlerta.chechandoUltimaPosicaoPlayer;
+        }
         
     }
     private void MovimentarVoltarRotinaPadrao(Vector2 _posicao)
@@ -472,13 +466,24 @@ public class EnemyMove : MonoBehaviour
 
     public void SawEnemy(GameObject _whoEnemySaw)
     {
-        lastPlayerPositionChecked = false;
-        playerGameObject = _whoEnemySaw;
-        time = 0;
-        timePlayerResrva = 0;
+        if (_whoEnemySaw == null)
+        {
+            lastPlayerPositionChecked = false;
+            time = 0;
+            enemyPlayerReserva = false;
+            timePlayerResrva = 0;
+            playerGameObject = null;
+        }
+        else
+        {
+            playerGameObject = _whoEnemySaw;
+            time = 0;
+            timePlayerResrva = 0;
+        }
+
     }
 
-  
+
 
 
 
