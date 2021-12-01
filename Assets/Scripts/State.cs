@@ -48,7 +48,7 @@ public class State : MonoBehaviour
     //Comandos da gameplay principal
     void ComandosGameplay()
     {
-        if(true)
+        if(player.estado == Player.Estado.Normal)
         {
             //Trocar arma
             if (Input.GetKeyDown(KeyCode.Q))
