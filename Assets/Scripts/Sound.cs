@@ -29,7 +29,7 @@ public class Sound : MonoBehaviour {
         if (shoot)
         {
             circleCollider2D.radius = 5;
-            shootCont();
+            ShootCont();
         }
 
         else if (agachado)
@@ -44,7 +44,7 @@ public class Sound : MonoBehaviour {
         }
 
     }
-    void shootCont()
+    void ShootCont()
     {
         time += Time.deltaTime;
         foreach (BoxCollider2D item in enemy)
@@ -66,7 +66,7 @@ public class Sound : MonoBehaviour {
         }
     }
 
-    public void changeColliderRadius(float _raio)
+    public void ChangeColliderRadius(float _raio)
     {
         raiotemp = _raio;
         if(_raio ==5)

@@ -299,7 +299,7 @@ public class Movement : SingletonInstance<Movement>
         }
         if (player.estado == Player.Estado.Normal && player.modoMovimento != Player.ModoMovimento.AndandoSorrateiramente)
         {
-            sound.changeColliderRadius(runSpeed);
+            sound.ChangeColliderRadius(runSpeed);
         }
     }
 

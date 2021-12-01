@@ -6,10 +6,6 @@ public class AtaqueFisico : MonoBehaviour
 {
     public int dano;
 
-    private bool atacando;
-    private float tempo;
-
-
     private BoxCollider2D boxCollider2D;
     private SpriteRenderer spriteRenderer;
 
@@ -28,9 +24,6 @@ public class AtaqueFisico : MonoBehaviour
         boxCollider2D.enabled = false;
         width = 2.15f;
         height = 0.75f;
-
-        atacando = false;
-        tempo = 0;
 
         objectManager = FindObjectOfType<ObjectManagerScript>();
     }
@@ -62,11 +55,7 @@ public class AtaqueFisico : MonoBehaviour
                 break;
         }
 
-        tempo = 0;
-
         AtacarInimigos();
-
-        atacando = true;
     }
 
     //Passa pela lista de inimigos, confere se ha colisao com alguns deles e causa dano se houver

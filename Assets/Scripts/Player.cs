@@ -213,7 +213,7 @@ public class Player : EntityModel
     {
         if (estado == Estado.Normal)
         {
-            sound.changeColliderRadius(5);
+            sound.ChangeColliderRadius(5);
             inventario.armaSlot1.AtualizarBulletCreator(FindObjectOfType<BulletCreator>());
             inventario.armaSlot1.Atirar(gameObject);
             animacao.AtualizarArmaBracos(inventario.armaSlot1.nomeVisual);
