@@ -5,8 +5,7 @@ using UnityEngine;
 public class BulletCreator : MonoBehaviour
 {
     // Start is called before the first frame update
-    private Transform bullet;
-    [SerializeField] private Projetil projetil;
+    private Projetil bullet;
     private int dano;
     private Transform pontaArma;
     private float velocity;
@@ -16,45 +15,29 @@ public class BulletCreator : MonoBehaviour
 
     public void BulletReference(ArmaDeFogo _armaDeFogo)
     {
-        //CreateBullet(_objQueChamou,_bullet,_pontaArma);
         CreateShot(_armaDeFogo);
     }
     void CreateShot (ArmaDeFogo _armaDeFogo)
     {
         pontaArma = _armaDeFogo.pontaArma;
-        bullet = _armaDeFogo.bullet;
+        bullet = _armaDeFogo.projetil;
         dano = _armaDeFogo.dano;
         velocity = _armaDeFogo.velocityProjetil;
         FatherFromGun = _armaDeFogo.objQueChamou;
         knockBackValue = _armaDeFogo.knockbackValue;
         distanciaMaxProjetil = _armaDeFogo.distanciaMaxProjetil;
 
-        Instantiate(bullet, pontaArma);
-        projetil = FindObjectOfType<Projetil>();
-        projetil.direcao = (EntityModel.Direcao)pontaArma.GetComponentInChildren<PontaArma>().direcao;
-        projetil.dano = dano;
-        projetil.FatherFromGun = FatherFromGun;
-        projetil.Shooted(pontaArma);
-        projetil.transform.parent = transform;
-        projetil.velocidadeProjetil = velocity;
-        projetil.knockBackValue = knockBackValue;
-        projetil.distanciaMaxProjetil = distanciaMaxProjetil;
+        Projetil novoProjetil;
+
+        novoProjetil = Instantiate(bullet, pontaArma.position, Quaternion.identity);
+        novoProjetil.direcao = (EntityModel.Direcao)pontaArma.GetComponentInChildren<PontaArma>().direcao;
+        novoProjetil.dano = dano;
+        novoProjetil.FatherFromGun = FatherFromGun;
+        novoProjetil.Shooted(pontaArma);
+        novoProjetil.transform.parent = transform;
+        novoProjetil.velocidadeProjetil = velocity;
+        novoProjetil.knockBackValue = knockBackValue;
+        novoProjetil.distanciaMaxProjetil = distanciaMaxProjetil;
 
     }
-
-    private void CreateBullet(GameObject _objQueChamou, Transform _bullet, Transform _pontaArma)
-    {
-        pontaArma = _pontaArma;
-        bullet = _bullet;
-
-        Instantiate(bullet, pontaArma); //onde cria o projetil
-        projetil = FindObjectOfType<Projetil>();
-        projetil.direcao = (EntityModel.Direcao)pontaArma.GetComponentInChildren<PontaArma>().direcao;
-        projetil.dano = dano;
-        projetil.FatherFromGun = _objQueChamou;
-        projetil.Shooted(pontaArma);
-        projetil.transform.parent = transform;
-        projetil.velocidadeProjetil = 30;
-    }
-
 }

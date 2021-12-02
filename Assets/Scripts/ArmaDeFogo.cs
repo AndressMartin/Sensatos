@@ -5,9 +5,8 @@ using UnityEngine.UI;
 
 public class ArmaDeFogo : MonoBehaviour
 {
-    [SerializeField] public  Transform bullet;
-    private Projetil projetil;
     private BulletCreator bulletCreator;
+    [SerializeField] public Projetil projetil;   
     public Transform pontaArma;
     public Sprite myImage;
     public int dano;

@@ -93,9 +93,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87dc09563ceff534f841683ee5ca485c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tipo: 0
-  nome: 12
-  bullet: {fileID: 8583994499093954941, guid: f4376ad71d743964f8fad577b404e7d2, type: 3}
+  projetil: {fileID: 8583994499093954915, guid: f4376ad71d743964f8fad577b404e7d2, type: 3}
   pontaArma: {fileID: 0}
   myImage: {fileID: 21300000, guid: 2abff2a3b0df83a45982946068bb6d78, type: 3}
   dano: 15
@@ -104,7 +102,8 @@ MonoBehaviour:
   knockbackValue: 0
   municaoMax: 0
   municaoAtual: 0
-  index: 0
+  index: 1
+  nome: 12
   nomeVisual: Arma2
   distanciaMaxProjetil: 4
 --- !u!212 &81589876889633318
