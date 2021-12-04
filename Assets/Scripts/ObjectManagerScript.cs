@@ -7,6 +7,9 @@ public class ObjectManagerScript : MonoBehaviour
     [SerializeField] public List<ObjetoInteragivel> listaObjetosInteragiveis;
     [SerializeField] public List<ParedeModel> listaParedesQuebraveis;
     [SerializeField] public List<Enemy> listaInimigos;
+    [SerializeField] public List<lockDown> listaAlarme;
+    [SerializeField] public List<Porta> listaPortas;
+
     //[SerializeField] public List<ItemColetavel> listaItensColetaveis;
 
     public void adicionarAosObjetosInteragiveis(ObjetoInteragivel objetoInteragivel)
@@ -37,5 +40,25 @@ public class ObjectManagerScript : MonoBehaviour
     public void removerDosInimigos(Enemy inimigo)
     {
         listaInimigos.Remove(inimigo);
+    }
+
+    public void adicionarAosAlarmes(lockDown alarme)
+    {
+        listaAlarme.Add(alarme);
+    }
+
+    public void removerDosAlarmes(lockDown alarme)
+    {
+        listaAlarme.Remove(alarme);
+    }
+
+    public void adicionarAsPortas(Porta porta)
+    {
+        listaPortas.Add(porta);
+    }
+
+    public void removerDasPortas(Porta porta)
+    {
+        listaPortas.Remove(porta);
     }
 }
