@@ -10,12 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 71dc2b686cd518144986ef63d2ca13a3, type: 3}
-  m_Name: Yes
+  m_Name: Terminei2
   m_EditorClassIdentifier: 
   dialogue:
-  - "Voc\xEA disse sim.\nMultiplas fun\xE7\xF5es podem ser disparadas com um mesmo
-    evento!"
-  - "Aqui pode ser colocada uma sequ\xEAncia de dialogos inteira com novas respostas."
-  responses:
-  - responseText: "\xC9 memo?"
-    dialogueObject: {fileID: 11400000, guid: 04d25d8b6a0028b45a2fa5a9d15b187d, type: 2}
+  - "Eu j\xE1 falei o que tinha que falar :D ."
+  responses: []
