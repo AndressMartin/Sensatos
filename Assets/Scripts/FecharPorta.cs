@@ -16,7 +16,10 @@ public class FecharPorta : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player")
         {
-            porta.FecharPorta();
+            if (porta.tipoPorta != Porta.TipoPorta.Contencao)
+            {
+                porta.FecharPorta();
+            }
         }
     }
 }

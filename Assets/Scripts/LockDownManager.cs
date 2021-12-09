@@ -24,12 +24,37 @@ public class LockDownManager : MonoBehaviour
             enemy.GetComponent<EnemyMove>().LockDownAtivo(posicaoDoPlayer);
         }
         TrancarPortas();
+       
+
+    }
+    private void FixedUpdate()
+    {
+        mets();
+    }
+    void mets()
+    {
+        if (Input.GetKeyDown(KeyCode.J))
+        {
+            TrancarPortas();
+        }
+
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            DestrancarPortas();
+        }
     }
     private void TrancarPortas()
     {
         foreach (Porta porta in objectManagerScript.listaPortas)
         {
             porta.AtivarLockDown();
-        }
+        }     
+    }
+    private void DestrancarPortas()
+    {
+        foreach (Porta porta in objectManagerScript.listaPortas)
+        {
+            porta.DesativarLockDown();
+        }  
     }
 }
