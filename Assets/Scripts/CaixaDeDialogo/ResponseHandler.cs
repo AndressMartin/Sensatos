@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
@@ -15,9 +16,16 @@ public class ResponseHandler : MonoBehaviour
 
     private List<GameObject> tempResponseButtons = new List<GameObject>();
 
+    public Coroutine waitingForResponse;
+
     private void Start()
     {
         dialogueUI = GetComponent<DialogueUI>();
+    }
+
+    public void Stop()
+    {
+        StopCoroutine(waitingForResponse);
     }
 
     public void AddResponseEvents(ResponseEvent[] responseEvents)
@@ -37,7 +45,7 @@ public class ResponseHandler : MonoBehaviour
             GameObject responseButton = Instantiate(responseButtonTemplate.gameObject, responseContainer);
             responseButton.gameObject.SetActive(true);
             responseButton.GetComponent<TMP_Text>().text = response.ResponseText;
-            responseButton.GetComponent<Button>().onClick.AddListener(() => OnPickResponse(response, responseIndex)); //Adiciona um metodo ao botao, a mesma coisa que se faz atraves do editor do Unity, mas por codigo
+            //responseButton.GetComponent<Button>().onClick.AddListener(() => OnPickResponse(response, responseIndex)); //Adiciona um metodo ao botao, a mesma coisa que se faz atraves do editor do Unity, mas por codigo
 
             tempResponseButtons.Add(responseButton);
 
@@ -46,6 +54,42 @@ public class ResponseHandler : MonoBehaviour
 
         responseBox.sizeDelta = new Vector2(responseBox.sizeDelta.x, responseBoxHeight); //Seta o tamanho do objeto
         responseBox.gameObject.SetActive(true);
+
+        waitingForResponse = StartCoroutine(ChooseResponse(responses));
+    }
+
+    private IEnumerator ChooseResponse(Response[] responses)
+    {
+        bool responsePicked = false;
+        int selection = 0;
+        UpdateButtonSelectionEffect(selection);
+        while (responsePicked == false)
+        {
+            yield return null;
+
+            if(Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
+            {
+                if(selection > 0)
+                {
+                    selection--;
+                    UpdateButtonSelectionEffect(selection);
+                }
+            }
+            else if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
+            {
+                if(selection < responses.Length - 1)
+                {
+                    selection++;
+                    UpdateButtonSelectionEffect(selection);
+                }
+            }
+            else if (Input.GetKeyDown(KeyCode.Space))
+            {
+                responsePicked = true;
+            }
+        }
+
+        OnPickResponse(responses[selection], selection);
     }
 
     private void OnPickResponse(Response response, int responseIndex)
@@ -73,6 +117,21 @@ public class ResponseHandler : MonoBehaviour
         else
         {
             dialogueUI.CloseDialogueBox();
+        }
+    }
+
+    private void UpdateButtonSelectionEffect(int selection)
+    {
+        for (int i = 0; i < tempResponseButtons.Count; i++)
+        {
+            if(i == selection)
+            {
+                tempResponseButtons[i].GetComponent<TMP_Text>().color = new Color(255, 255, 255, 1);
+            }
+            else
+            {
+                tempResponseButtons[i].GetComponent<TMP_Text>().color = new Color(0, 0, 0, 1);
+            }
         }
     }
 }
