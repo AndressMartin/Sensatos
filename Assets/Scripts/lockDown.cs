@@ -23,7 +23,7 @@ public class lockDown : ObjetoInteragivel
     }
     void Update()
     {
-        if(pauseManager.GetJogoPausado() == false)
+        if(pauseManager.JogoPausado == false)
         {
             if (ativo)
             {

@@ -9,6 +9,7 @@ public class DialogueUI : MonoBehaviour
     [SerializeField] private TMP_Text textLabel; //Guarda a caixa de texto
     private DialogueActivator dialogueActivator;
 
+    private ResponseEvent dialogueEndEvents;
     private Player player;
 
     public bool IsOpen { get; private set; }
@@ -49,12 +50,17 @@ public class DialogueUI : MonoBehaviour
         responseHandler.AddResponseEvents(responseEvents);
     }
 
+    public void AddDialogueEndEvents(ResponseEvent responseEvents)
+    {
+        this.dialogueEndEvents = responseEvents;
+    }
+
     //Passa por cada um dos arrays de texto do dialogueObject e os mostra na tela
     private IEnumerator StepThroughDialogue(DialogueObject dialogueObject)
     {
         for(int i = 0; i < dialogueObject.Dialogue.Length; i++)
         {
-            string dialogue = dialogueObject.Dialogue[i];
+            string dialogue = dialogueObject.Dialogue[i].text;
 
             yield return RunTypingEffect(dialogue);
 
@@ -68,10 +74,13 @@ public class DialogueUI : MonoBehaviour
 
         if(dialogueObject.HasResponses)
         {
+            dialogueEndEvents = null;
             responseHandler.ShowResponses(dialogueObject.Responses);
         }
         else
         {
+            dialogueEndEvents?.OnPickedResponse?.Invoke();
+            dialogueEndEvents = null;
             CloseDialogueBox();
         }
     }

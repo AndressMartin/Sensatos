@@ -29,5 +29,14 @@ public class DialogueActivator : MonoBehaviour
                 break;
             }
         }
+
+        foreach (DialogueEndEvents dialogueEndEvents in GetComponents<DialogueEndEvents>())
+        {
+            if (dialogueEndEvents.DialogueObject == dialogueObject)
+            {
+                player.DialogueUI.AddDialogueEndEvents(dialogueEndEvents.Events);
+                break;
+            }
+        }
     }
 }

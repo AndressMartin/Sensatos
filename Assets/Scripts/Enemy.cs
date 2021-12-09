@@ -53,7 +53,7 @@ public class Enemy : EntityModel
     // Update is called once per frame
     void Update()
     { 
-        if(pauseManager.GetJogoPausado() == false)
+        if(pauseManager.JogoPausado == false)
         {
             AllEnemySubClass();
         }

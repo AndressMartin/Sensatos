@@ -13,8 +13,10 @@ MonoBehaviour:
   m_Name: No
   m_EditorClassIdentifier: 
   dialogue:
-  - "Voce disse n\xE3o."
-  - "Aqui pode ser colocada uma sequ\xEAncia de dialogos inteira com novas respostas."
+  - portrait: {fileID: 0}
+    text: "Voc\xEA respondeu n\xE3o."
+  - portrait: {fileID: 0}
+    text: "Novas sequ\xEAncias de dialogos podem ser colocadas aqui."
   responses:
   - responseText: "Eu confio em voc\xEA"
     dialogueObject: {fileID: 0}

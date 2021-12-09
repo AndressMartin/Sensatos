@@ -6,7 +6,10 @@ public class PauseManagerScript : MonoBehaviour
 {
     private static bool jogoPausado, permitirInput;
 
-    // Start is called before the first frame update
+    //Getters
+    public bool JogoPausado => jogoPausado;
+    public bool PermitirInput => permitirInput;
+
     void Start()
     {
         jogoPausado = false;
@@ -29,18 +32,8 @@ public class PauseManagerScript : MonoBehaviour
         }
     }
 
-    public void PermitirInput(bool permitir)
+    public void SetPermitirInput(bool permitir)
     {
         permitirInput = permitir;
-    }
-
-    public bool GetJogoPausado()
-    {
-        return jogoPausado;
-    }
-
-    public bool GetPermitirInput()
-    {
-        return permitirInput;
     }
 }

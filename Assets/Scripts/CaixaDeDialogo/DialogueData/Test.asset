@@ -13,10 +13,11 @@ MonoBehaviour:
   m_Name: Test
   m_EditorClassIdentifier: 
   dialogue:
-  - "Esse \xE9 o primeiro dialogo, como voc\xEA poderia imaginar.\nOl\xE1.... Isso
-    \xE9 um teste!!!!!"
-  - "Esse \xE9 o segundo dialogo.\nEmotes e acentos t\xEAm que funcionar!\n(\u273F\u2579\u25E1\u2579)
-    Aaaaaaa! (\u25D5\u203F\u25D5\u273F)"
+  - portrait: {fileID: 0}
+    text: "Essa \xE9 uma caixa de dialogo!\nAcentos e emotes devem funcionar!\n(\u273F\u2579\u25E1\u2579)
+      Aaaaaaa! (\u25D5\u203F\u25D5\u273F) ...\nEmotes n\xE3o funcionam..."
+  - portrait: {fileID: 0}
+    text: "Onde voc\xEA mora?"
   responses:
   - responseText: Sim
     dialogueObject: {fileID: 11400000, guid: 531b0db74058b8e48bfc6879d9201c4b, type: 2}

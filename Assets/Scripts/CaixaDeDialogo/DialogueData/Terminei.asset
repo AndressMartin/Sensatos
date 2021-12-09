@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: Terminei
   m_EditorClassIdentifier: 
   dialogue:
-  - "Eu j\xE1 falei o que tinha que falar :) ."
+  - portrait: {fileID: 0}
+    text: "Eu j\xE1 falei tudo o que tinha para falar!"
   responses:
   - responseText: Beleza, Creuza.
     dialogueObject: {fileID: 0}

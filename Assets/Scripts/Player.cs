@@ -80,7 +80,7 @@ public class Player : EntityModel
     // Update is called once per frame
     void Update()
     {
-        if(pauseManager.GetJogoPausado() == false && estado != Estado.Morto)
+        if(pauseManager.JogoPausado == false && estado != Estado.Morto)
         {
             if (imune)
             {
