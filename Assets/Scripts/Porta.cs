@@ -4,20 +4,21 @@ using UnityEngine;
 
 public class Porta : ObjetoInteragivel
 {
+    //Managers
+    private ObjectManagerScript objectManager;
+
     public Chave obj;
     private GameObject player;
     private AnimacaoPorta animacao;
     private BoxCollider2D colisao;
-    private ObjectManagerScript objectManager;
     private enum Estado {normal,lockdown }
     [SerializeField]private Estado estado = Estado.normal;
     bool aberto;
     public bool trancado;
-    // Start is called before the first frame update
+
     void Start()
     {
         animacao = GetComponent<AnimacaoPorta>();
-
         colisao = GetComponent<BoxCollider2D>();
 
         //Se adicionar a lista de objetos interagiveis do ObjectManager

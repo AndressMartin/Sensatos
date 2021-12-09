@@ -7,6 +7,7 @@ public class Player : EntityModel
     //Managers
     private ObjectManagerScript objectManager;
     private PauseManagerScript pauseManager;
+    private DialogueUI dialogueUI;
 
     public override int vida { get; protected set; }
 
@@ -41,12 +42,16 @@ public class Player : EntityModel
 
     bool collisionState;
 
+    //Getter
+    public DialogueUI DialogueUI => dialogueUI;
+
     // Start is called before the first frame update
     void Start()
     {
         //Managers
         objectManager = FindObjectOfType<ObjectManagerScript>();
         pauseManager = FindObjectOfType<PauseManagerScript>();
+        dialogueUI = FindObjectOfType<DialogueUI>();
 
         sound = FindObjectOfType<Sound>();
         movement = GetComponent<Movement>();

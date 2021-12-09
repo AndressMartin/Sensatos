@@ -60,6 +60,7 @@ public class ResponseHandler : MonoBehaviour
 
         if(responseEvents != null && responseIndex <= responseEvents.Length)
         {
+            Debug.Log("Entrou no Response Event");
             responseEvents[responseIndex].OnPickedResponse?.Invoke();
         }
 
@@ -67,6 +68,7 @@ public class ResponseHandler : MonoBehaviour
 
         if(response.DialogueObject)
         {
+            dialogueUI.CallUpdateResponseEvents(response.DialogueObject);
             dialogueUI.ShowDialogue(response.DialogueObject);
         }
         else

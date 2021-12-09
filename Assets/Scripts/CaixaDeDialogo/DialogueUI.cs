@@ -7,6 +7,9 @@ public class DialogueUI : MonoBehaviour
     //Componentes
     [SerializeField] private GameObject dialogueBox; //Guarda toda a caixa de dialogo
     [SerializeField] private TMP_Text textLabel; //Guarda a caixa de texto
+    private DialogueActivator dialogueActivator;
+
+    private Player player;
 
     public bool IsOpen { get; private set; }
 
@@ -19,7 +22,19 @@ public class DialogueUI : MonoBehaviour
         typewriterEffect = GetComponent<TypewriterEffect>();
         responseHandler = GetComponent<ResponseHandler>();
 
+        player = FindObjectOfType<Player>();
+
         CloseDialogueBox();
+    }
+
+    public void UpdateDialogueActivator(DialogueActivator dialogueActivator)
+    {
+        this.dialogueActivator = dialogueActivator;
+    }
+
+    public void CallUpdateResponseEvents(DialogueObject dialogueObject)
+    {
+        dialogueActivator.UpdateResponseEvents(player, dialogueObject);
     }
 
     public void ShowDialogue(DialogueObject dialogueObject)

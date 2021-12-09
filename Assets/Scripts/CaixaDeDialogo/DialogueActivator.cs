@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class DialogueActivator : MonoBehaviour, IInteractable
+public class DialogueActivator : MonoBehaviour
 {
     [SerializeField] private DialogueObject dialogueObject;
 
@@ -9,36 +9,25 @@ public class DialogueActivator : MonoBehaviour, IInteractable
         this.dialogueObject = dialogueObject;
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    public void ShowDialogue(Player player)
     {
-        if(collision.CompareTag("Player") && collision.TryGetComponent(out PlayerTest player))
+        if(player.DialogueUI.IsOpen == false)
         {
-            player.Interactable = this;
+            UpdateResponseEvents(player, this.dialogueObject);
+            player.DialogueUI.UpdateDialogueActivator(this);
+            player.DialogueUI.ShowDialogue(dialogueObject);
         }
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Player") && collision.TryGetComponent(out PlayerTest player))
-        {
-            if(player.Interactable is DialogueActivator dialogueActivator && dialogueActivator == this)
-            {
-                player.Interactable = null;
-            }
-        }
-    }
-
-    public void Interact(PlayerTest player)
+    public void UpdateResponseEvents(Player player, DialogueObject dialogueObject)
     {
         foreach (DialogueResponseEvents responseEvents in GetComponents<DialogueResponseEvents>())
         {
-            if(responseEvents.DialogueObject == dialogueObject)
+            if (responseEvents.DialogueObject == dialogueObject)
             {
                 player.DialogueUI.AddResponseEvents(responseEvents.Events);
                 break;
             }
         }
-
-        player.DialogueUI.ShowDialogue(dialogueObject);
     }
 }
