@@ -2383,6 +2383,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2682835398219571397, guid: 993152c3fb1a02a43a65ff0ce924dd81, type: 3}
+      propertyPath: dialogueObject
+      value: 
+      objectReference: {fileID: 11400000, guid: 6a4e093915a95054d8774d9a16856dea, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 993152c3fb1a02a43a65ff0ce924dd81, type: 3}
 --- !u!4 &1246370503 stripped
@@ -9063,6 +9067,17 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!114 &1391696205 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3102097820658300228, guid: 7cee5a55ddfbd5944b6a3b667189d59e, type: 3}
+  m_PrefabInstance: {fileID: 485213002}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1394680758
 GameObject:
   m_ObjectHideFlags: 0
@@ -9401,6 +9416,10 @@ PrefabInstance:
     - target: {fileID: 700864800803910919, guid: 6d63f8b028557034bbfc590405d0f4e6, type: 3}
       propertyPath: m_PixelPerfect
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 700864801232866546, guid: 6d63f8b028557034bbfc590405d0f4e6, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -31.228516
       objectReference: {fileID: 0}
     - target: {fileID: 700864801232866546, guid: 6d63f8b028557034bbfc590405d0f4e6, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -9972,6 +9991,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialogueBox: {fileID: 485213004}
   textLabel: {fileID: 485213005}
+  portrait: {fileID: 1391696205}
 --- !u!1 &1776967940
 GameObject:
   m_ObjectHideFlags: 0
