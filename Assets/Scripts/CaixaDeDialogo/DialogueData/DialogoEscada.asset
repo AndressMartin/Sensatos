@@ -19,8 +19,8 @@ MonoBehaviour:
     text: Oi?
   - portrait: {fileID: 21300000, guid: 672dc64c45a241a43a215ec6454271da, type: 3}
     text: O seu tio sabe que na sua casa tem escada?
-  - portrait: {fileID: 21300000, guid: 9d2f0609c0fb3ce4d8f3cb30c9a22a24, type: 3}
-    text: ...
-  - portrait: {fileID: 21300000, guid: f8163c2337b8dc749ab7b795ca907da1, type: 3}
-    text: Hihihihih!...
-  responses: []
+  responses:
+  - responseText: Sim
+    dialogueObject: {fileID: 11400000, guid: 6c434badc0d243946bd9170c19c00d34, type: 2}
+  - responseText: "N\xE3o"
+    dialogueObject: {fileID: 11400000, guid: 6c434badc0d243946bd9170c19c00d34, type: 2}

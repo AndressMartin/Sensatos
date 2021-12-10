@@ -26,7 +26,10 @@ public class Cerca : ParedeModel
 
     public override void Interagir(Player player)
     {
-        dialogueActivator.ShowDialogue(player);
+        if(ativo == true)
+        {
+            dialogueActivator.ShowDialogue(player);
+        }
     }
 
     public override void LevarDano(int _dano)
