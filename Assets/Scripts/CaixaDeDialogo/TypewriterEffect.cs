@@ -25,7 +25,10 @@ public class TypewriterEffect : MonoBehaviour
 
     public void Stop()
     {
-        StopCoroutine(typingCoroutine);
+        if(typingCoroutine != null)
+        {
+            StopCoroutine(typingCoroutine);
+        }
         IsRunning = false;
     }
 

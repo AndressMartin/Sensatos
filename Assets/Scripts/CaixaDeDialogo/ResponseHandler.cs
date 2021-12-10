@@ -16,7 +16,7 @@ public class ResponseHandler : MonoBehaviour
 
     private List<GameObject> tempResponseButtons = new List<GameObject>();
 
-    public Coroutine waitingForResponse;
+    private Coroutine waitingForResponse;
 
     private void Start()
     {
@@ -25,7 +25,13 @@ public class ResponseHandler : MonoBehaviour
 
     public void Stop()
     {
-        StopCoroutine(waitingForResponse);
+        responseBox.gameObject.SetActive(false);
+        ClearResponseButtons();
+        responseEvents = null;
+        if(waitingForResponse != null)
+        {
+            StopCoroutine(waitingForResponse);
+        }
     }
 
     public void AddResponseEvents(ResponseEvent[] responseEvents)
@@ -96,11 +102,7 @@ public class ResponseHandler : MonoBehaviour
     {
         responseBox.gameObject.SetActive(false);
 
-        foreach(GameObject button in tempResponseButtons)
-        {
-            Destroy(button);
-        }
-        tempResponseButtons.Clear();
+        ClearResponseButtons();
 
         if(responseEvents != null && responseIndex <= responseEvents.Length)
         {
@@ -133,5 +135,14 @@ public class ResponseHandler : MonoBehaviour
                 tempResponseButtons[i].GetComponent<TMP_Text>().color = new Color(0, 0, 0, 1);
             }
         }
+    }
+
+    private void ClearResponseButtons()
+    {
+        foreach (GameObject button in tempResponseButtons)
+        {
+            Destroy(button);
+        }
+        tempResponseButtons.Clear();
     }
 }

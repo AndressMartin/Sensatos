@@ -277,11 +277,15 @@ public class Player : EntityModel
     {
         if (!imune && estado != Estado.Morto)
         {
+            if(dialogueUI.IsOpen == true)
+            {
+                dialogueUI.ForcedCloseDialogueBox();
+            }
+
             if (vida <= 0)
             {
                 Morrer();
             }
-
             else
             {
                 vida -= _dano;

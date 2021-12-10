@@ -57,6 +57,16 @@ public class DialogueUI : MonoBehaviour
         textLabel.text = string.Empty;
     }
 
+    public void ForcedCloseDialogueBox()
+    {
+        dialogueEndEvents = null;
+
+        StopAllCoroutines();
+        typewriterEffect.Stop();
+        responseHandler.Stop();
+        CloseDialogueBox();
+    }
+
     public void AddResponseEvents(ResponseEvent[] responseEvents)
     {
         responseHandler.AddResponseEvents(responseEvents);
