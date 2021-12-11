@@ -10,8 +10,6 @@ public class ObjectManagerScript : MonoBehaviour
     [SerializeField] public List<lockDown> listaAlarme;
     [SerializeField] public List<Porta> listaPortas;
 
-    //[SerializeField] public List<ItemColetavel> listaItensColetaveis;
-
     public void adicionarAosObjetosInteragiveis(ObjetoInteragivel objetoInteragivel)
     {
         listaObjetosInteragiveis.Add(objetoInteragivel);

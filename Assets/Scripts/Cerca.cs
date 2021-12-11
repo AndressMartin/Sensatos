@@ -20,7 +20,7 @@ public class Cerca : ParedeModel
 
     //Variaveis
     [SerializeField] public Tipo tipo;
-    [SerializeField] public Posicao posicao;
+    private Posicao posicao;
 
     // Start is called before the first frame update
     void Start()
@@ -42,17 +42,6 @@ public class Cerca : ParedeModel
         //Se adicionar a lista de objetos interagiveis do ObjectManager
         objectManager.adicionarAosObjetosInteragiveis(this);
         objectManager.adicionarAsParedesQuebraveis(this);
-
-        switch(tipo)
-        {
-            case Tipo.Quebravel:
-                TrocarAnimacao("Quebravel");
-                break;
-
-            case Tipo.Indestrutivel:
-                TrocarAnimacao("Indestrutivel");
-                break;
-        }
     }
 
     public override void Interagir(Player player)
@@ -100,8 +89,58 @@ public class Cerca : ParedeModel
         ativo = false;
     }
 
-    public void TrocarAnimacao(string animacao)
+    private void TrocarAnimacao(string animacao)
     {
         animator.Play(animacao + posicao.ToString());
+    }
+
+    public void ArrumarPosicao(Cerca[] cercas)
+    {
+        bool colisaoEsquerda, colisaoDireita;
+        colisaoEsquerda = false;
+        colisaoDireita = false;
+
+        foreach (Cerca cerca in cercas)
+        {
+            if(cerca != this)
+            {
+                if (Colisao.HitTest((boxCollider2D.bounds.center.x - (boxCollider2D.bounds.extents.x * 2)), boxCollider2D.bounds.center.y, cerca.transform.GetComponent<BoxCollider2D>()))
+                {
+                    colisaoEsquerda = true;
+                }
+                else if (Colisao.HitTest((boxCollider2D.bounds.center.x + (boxCollider2D.bounds.extents.x * 2)), boxCollider2D.bounds.center.y, cerca.transform.GetComponent<BoxCollider2D>()))
+                {
+                    colisaoDireita = true;
+                }
+            }
+        }
+
+        if(colisaoEsquerda == true && colisaoDireita == true)
+        {
+            posicao = Posicao.Meio;
+        }
+        else if (colisaoEsquerda == true)
+        {
+            posicao = Posicao.Direita;
+        }
+        else if (colisaoDireita == true)
+        {
+            posicao = Posicao.Esquerda;
+        }
+        else
+        {
+            posicao = Posicao.Meio;
+        }
+
+        switch (tipo)
+        {
+            case Tipo.Quebravel:
+                TrocarAnimacao("Quebravel");
+                break;
+
+            case Tipo.Indestrutivel:
+                TrocarAnimacao("Indestrutivel");
+                break;
+        }
     }
 }
