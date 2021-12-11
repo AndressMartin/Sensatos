@@ -99,7 +99,6 @@ public class Movement : SingletonInstance<Movement>
         knockBackHorizontal = _horizontal * _knockBack;
         knockBackVertical = _vertical * _knockBack;
 
-        player.estado = Player.Estado.TomandoDano; ;
         timeMax = timeMaxOriginal;
         time = 0;
     }

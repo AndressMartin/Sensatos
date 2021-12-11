@@ -27,7 +27,7 @@ public class Alicate : Item
         {
             if (Colisao.HitTest(boxCollider2D, paredeQuebravel.transform.GetComponent<BoxCollider2D>()))
             {
-                if(paredeQuebravel.ativo == true)
+                if(paredeQuebravel.Ativo == true)
                 {
                     this.paredeQuebravel = paredeQuebravel;
                     ChamarAnimacao(player);

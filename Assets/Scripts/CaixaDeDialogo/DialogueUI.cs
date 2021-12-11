@@ -92,7 +92,7 @@ public class DialogueUI : MonoBehaviour
     {
         if (dialogue.portrait != null)
         {
-            textLabel.margin = new Vector4(dialogue.portrait.rect.width, 0, 0, 0);
+            textLabel.margin = new Vector4(dialogue.portrait.rect.width + 5, 0, 0, 0);
             portrait.gameObject.SetActive(true);
             portrait.sprite = dialogue.portrait;
         }

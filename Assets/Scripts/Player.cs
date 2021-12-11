@@ -9,38 +9,41 @@ public class Player : EntityModel
     private PauseManagerScript pauseManager;
     private DialogueUI dialogueUI;
 
-    public override int vida { get; protected set; }
-
+    //Componentes
     private Rigidbody2D rb;
     private Movement movement;
-    public Enemy[] enemies;
-
-    private PontaArma pontaArma;
+    private AnimacaoJogador animacao;
     private InteragirScript interacaoHitBox;
     private AtaqueFisico ataqueHitBox;
-    private AnimacaoJogador animacao;
+    private Sound sound;
+    private PontaArma pontaArma;
     private Inventario inventario;
     private InventarioMissao inventarioMissao;
 
+    //Enums
+    public enum ModoMovimento { Normal, AndandoSorrateiramente, Strafing };
+    public enum Estado { Normal, TomandoDano, Atacando, UsandoItem, Morto };
+
+    //Variaveis
+    public override int vida { get; protected set; }
+    public int vidaInicial;
+
     public Direcao direcaoMovimento;
     public Vector3 posAnterior;
-    private Sound sound;
-
-    private float tempoImunidade;
-
-    public int initialLife;
-    public float distanciaTiroY;
-    public enum ModoMovimento {Normal, AndandoSorrateiramente, Strafing};
-    public enum Estado {Normal, TomandoDano, Atacando, UsandoItem, Morto};
 
     public ModoMovimento modoMovimento;
     public Estado estado;
 
-    [SerializeField] private float time = 0.0F;
-    [SerializeField] private float timeMax = 0;
-    [SerializeField] private bool imune = false;
+    private float tempoImune;
+    private float tempoImuneMax;
+    private bool imune = false;
+    private bool collisionState;
 
-    bool collisionState;
+    private float tempoSoftlock,
+                  tempoSoftlockMax;
+
+    //Retirar
+    public float distanciaTiroY;
 
     //Getter
     public DialogueUI DialogueUI => dialogueUI;
@@ -53,27 +56,30 @@ public class Player : EntityModel
         pauseManager = FindObjectOfType<PauseManagerScript>();
         dialogueUI = FindObjectOfType<DialogueUI>();
 
-        sound = FindObjectOfType<Sound>();
-        movement = GetComponent<Movement>();
+        //Componentes
         rb = GetComponent<Rigidbody2D>();
+        movement = GetComponent<Movement>();
+        animacao = transform.GetComponent<AnimacaoJogador>();
+        interacaoHitBox = GetComponentInChildren<InteragirScript>();
+        ataqueHitBox = GetComponentInChildren<AtaqueFisico>();
+        sound = FindObjectOfType<Sound>();
+        pontaArma = GetComponentInChildren<PontaArma>();
+        inventario = GetComponent<Inventario>();
+        inventarioMissao = GetComponent<InventarioMissao>();
 
-        vida = initialLife;
+        vida = vidaInicial;
+        posAnterior = transform.position;
 
         modoMovimento = ModoMovimento.Normal;
         estado = Estado.Normal;
 
-        inventario = GetComponent<Inventario>();
-        inventarioMissao = GetComponent<InventarioMissao>();
+        tempoImune = 0;
+        tempoImuneMax = 1.5f;
+        collisionState = false;
 
-        posAnterior = transform.position;
+        tempoSoftlock = 0;
+        tempoSoftlockMax = 10f;
 
-        tempoImunidade = 1f;
-        pontaArma = GetComponentInChildren<PontaArma>();
-        interacaoHitBox = GetComponentInChildren<InteragirScript>();
-        ataqueHitBox = GetComponentInChildren<AtaqueFisico>();
-        animacao = transform.GetComponent<AnimacaoJogador>();
-
-        enemies = FindObjectsOfType<Enemy>();//pegando todos os inmigos
         distanciaTiroY = 1f;
     }
 
@@ -85,20 +91,19 @@ public class Player : EntityModel
             if (imune)
             {
                 animacao.Piscar();
-                time += Time.deltaTime;
-                if (time > timeMax)
+                tempoImune += Time.deltaTime;
+                if (tempoImune > tempoImuneMax)
                 {
                     animacao.SetarVisibilidade(true);
                     imune = false;
-                    timeMax = 0.0F;
-                    time = 0;
+                    tempoImune = 0;
                 }
             }
             else if (collisionState)
             {
-                foreach (Enemy enemy in enemies)
+                foreach (Enemy inimigo in objectManager.listaInimigos)
                 {
-                    Physics2D.IgnoreCollision(enemy.gameObject.GetComponent<Collider2D>(), GetComponent<Collider2D>(), false);
+                    Physics2D.IgnoreCollision(inimigo.gameObject.GetComponent<Collider2D>(), GetComponent<Collider2D>(), false);
                 }
                 collisionState = false;
             }
@@ -107,6 +112,8 @@ public class Player : EntityModel
             animacao.AtualizarDirecao(direcao, direcaoMovimento);
             Animar();
             movement.Mover();
+
+            ImpedirSoftlock();
         }
     }
 
@@ -291,8 +298,8 @@ public class Player : EntityModel
                 vida -= _dano;
 
                 imune = true;
-                timeMax = tempoImunidade;
-                time = 0;
+                tempoImune = 0;
+                estado = Estado.TomandoDano;
                 KnockBack(_horizontal,_vertical,_knockBack);
             }
         }
@@ -351,10 +358,27 @@ public class Player : EntityModel
         }
     }
 
-    private void changeCollision(Collision2D collision, bool _onOff)
+    private void ImpedirSoftlock()
     {
-        Physics2D.IgnoreCollision(collision.gameObject.GetComponent<Collider2D>(), GetComponent<Collider2D>(), _onOff);
-        collisionState = _onOff;
+        if (estado == Estado.TomandoDano || estado == Estado.Atacando || estado == Estado.UsandoItem)
+        {
+            tempoSoftlock += Time.deltaTime;
+
+            if(tempoSoftlock >= tempoSoftlockMax)
+            {
+                FinalizarAnimacao();
+            }
+        }
+        else
+        {
+            tempoSoftlock = 0;
+        }
+    }
+
+    private void changeCollision(Collision2D collision, bool ignorarColisao)
+    {
+        Physics2D.IgnoreCollision(collision.gameObject.GetComponent<Collider2D>(), GetComponent<Collider2D>(), ignorarColisao);
+        collisionState = ignorarColisao;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -366,6 +390,5 @@ public class Player : EntityModel
                 changeCollision(collision, true);
             }
         }
-
     }
 }

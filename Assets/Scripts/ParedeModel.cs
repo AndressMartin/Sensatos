@@ -4,8 +4,11 @@ using UnityEngine;
 
 public class ParedeModel : ObjetoInteragivel
 {
-    public int vida;
-    public bool ativo;
+    protected int vida;
+    [SerializeField] protected int vidaMax;
+    protected bool ativo;
+
+    public bool Ativo => ativo;
 
     public override void Interagir(Player player)
     {

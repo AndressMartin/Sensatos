@@ -7,31 +7,38 @@ public class Porta : ObjetoInteragivel
     //Managers
     private ObjectManagerScript objectManager;
 
-    public Chave obj;
+    //Componentes
     private AnimacaoPorta animacao;
     private BoxCollider2D colisao;
 
-    public enum TipoPorta { simples,normal,Contencao}
-    [SerializeField] public TipoPorta tipoPorta;
-    private enum Estado {naoLockdown,lockdown }
-    [SerializeField]private Estado estado = Estado.naoLockdown;
+    //Enums
+    public enum TipoPorta { Simples, Normal, Contencao }
+    private enum Estado { NaoLockdown, Lockdown }
 
-    bool aberto;
+    //Variaveis
+    public Chave obj;
+    private bool aberto;
     public bool trancado;
+
+    [SerializeField] public TipoPorta tipoPorta;
+    [SerializeField]private Estado estado = Estado.NaoLockdown;
 
     void Start()
     {
+        //Managers
+        objectManager = FindObjectOfType<ObjectManagerScript>();
+
+        //Componentes
         animacao = GetComponent<AnimacaoPorta>();
         colisao = GetComponent<BoxCollider2D>();
 
         //Se adicionar a lista de objetos interagiveis do ObjectManager
-        objectManager = FindObjectOfType<ObjectManagerScript>();
         objectManager.adicionarAosObjetosInteragiveis(this);
         objectManager.adicionarAsPortas(this);
 
         if(tipoPorta == TipoPorta.Contencao)
         {
-            ForceAbrirPorta();
+            AbrirPorta();
         }
     }
     public override void Interagir(Player player)
@@ -45,31 +52,31 @@ public class Porta : ObjetoInteragivel
         if (!trancado)
         {
             //Debug.Log("abriur porta");
-            ForceAbrirPorta();
+            AbrirPorta();
         }
     }
     void VerificarPortaTrancadaSwitch()
     {
         switch (tipoPorta)
         {
-            case TipoPorta.simples:
+            case TipoPorta.Simples:
                 switch (estado)
                 {
-                    case Estado.naoLockdown:
+                    case Estado.NaoLockdown:
                         trancado = false;
                         break;
-                    case Estado.lockdown:
+                    case Estado.Lockdown:
                         break;
                 }
                 break;
 
-            case TipoPorta.normal:
+            case TipoPorta.Normal:
                 switch (estado)
                 {
-                    case Estado.naoLockdown:
+                    case Estado.NaoLockdown:
                         trancado = false;
                         break;
-                    case Estado.lockdown:
+                    case Estado.Lockdown:
                         break;
                 }
                 break;
@@ -77,9 +84,9 @@ public class Porta : ObjetoInteragivel
             case TipoPorta.Contencao:
                 switch (estado)
                 {
-                    case Estado.naoLockdown:
+                    case Estado.NaoLockdown:
                         break;
-                    case Estado.lockdown:
+                    case Estado.Lockdown:
                         break;
                 }
                 break;
@@ -94,7 +101,7 @@ public class Porta : ObjetoInteragivel
             ForceFecharPorta();
         }
     }
-    void ForceAbrirPorta()
+    void AbrirPorta()
     {
         aberto = true;
         if (animacao.GetAnimacaoAtual() != "Aberta")
@@ -102,7 +109,6 @@ public class Porta : ObjetoInteragivel
             animacao.TrocarAnimacao("Aberta");
         }
         Door(aberto);
-
     }
 
     void ForceFecharPorta()
@@ -122,10 +128,10 @@ public class Porta : ObjetoInteragivel
 
     public void AtivarLockDown()
     {
-        if (tipoPorta != TipoPorta.simples)
+        if (tipoPorta != TipoPorta.Simples)
         {
             Debug.Log("Estado de lockDown,... Trancando");
-            estado = Estado.lockdown;
+            estado = Estado.Lockdown;
             trancado = true;
             ForceFecharPorta();
 
@@ -134,18 +140,18 @@ public class Porta : ObjetoInteragivel
     }
     public void DesativarLockDown()
     {
-        if (tipoPorta != TipoPorta.simples)
+        if (tipoPorta != TipoPorta.Simples)
         {
             Debug.Log("Estado de lockDown,... Desativando");
-            estado = Estado.naoLockdown;
+            estado = Estado.NaoLockdown;
             trancado = false;
 
             switch (tipoPorta)
             {
-                case TipoPorta.normal:
+                case TipoPorta.Normal:
                     break;
                 case TipoPorta.Contencao:
-                    ForceAbrirPorta();
+                    AbrirPorta();
                     break;
                 default:
                     break;
