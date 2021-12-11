@@ -14,7 +14,7 @@ public class LockDownManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        mets();
     }
 
     public void VerPlayer(Vector2 posicaoDoPlayer)
@@ -27,15 +27,11 @@ public class LockDownManager : MonoBehaviour
        
 
     }
-    private void FixedUpdate()
-    {
-        mets();
-    }
     void mets()
     {
         if (Input.GetKeyDown(KeyCode.J))
         {
-            TrancarPortas();
+            VerPlayer(FindObjectOfType<Player>().gameObject.transform.position);
         }
 
         if (Input.GetKeyDown(KeyCode.K))

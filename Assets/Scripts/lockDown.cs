@@ -10,6 +10,7 @@ public class lockDown : ObjetoInteragivel
     SpriteRenderer spriteRenderer;
     ObjectManagerScript objectManagerScript;
     LockDownManager lockDownManager;
+
     private void Start()
     {
         //Managers
