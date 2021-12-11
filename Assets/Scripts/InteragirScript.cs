@@ -4,33 +4,34 @@ using UnityEngine;
 
 public class InteragirScript : MonoBehaviour
 {
+    //Managers
+    private ObjectManagerScript objectManager;
+
+    //Variaveis
     private BoxCollider2D boxCollider2D;
     private SpriteRenderer spriteRenderer;
 
+    //Variaveis
     private float width;
     private float height;
     private float distance;
-
     private float horizontal, vertical;
-
-    private Player player;
-
-    private ObjectManagerScript objectManager;
 
     // Start is called before the first frame update
     void Start()
     {
+        //Managers
+        objectManager = FindObjectOfType<ObjectManagerScript>();
+
+        //Componentes
         spriteRenderer = GetComponent<SpriteRenderer>();
         boxCollider2D = GetComponent<BoxCollider2D>();
         boxCollider2D.enabled = false;
 
+        //Variaveis
         width = 0.7f;
         height = 1f;
         distance = height / 2;
-
-        player = GetComponentInParent<Player>();
-
-        objectManager = FindObjectOfType<ObjectManagerScript>();
     }
 
     public void AtualizarHitBox(EntityModel.Direcao _direcao)
@@ -60,13 +61,13 @@ public class InteragirScript : MonoBehaviour
         }
     }
 
-    public void Interagir(EntityModel.Direcao _direcao)
+    public void Interagir(Player player, EntityModel.Direcao _direcao)
     {
         AtualizarHitBox(_direcao);
-        ProcurarInteragivel();
+        ProcurarInteragivel(player);
     }
 
-    private void ProcurarInteragivel()
+    private void ProcurarInteragivel(Player player)
     {
         boxCollider2D.enabled = true;
         foreach (ObjetoInteragivel objetoInteragivel in objectManager.listaObjetosInteragiveis)

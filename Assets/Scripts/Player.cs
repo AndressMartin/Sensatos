@@ -191,7 +191,7 @@ public class Player : EntityModel
     {
         if (estado == Estado.Normal)
         {
-            interacaoHitBox.Interagir(direcao);
+            interacaoHitBox.Interagir(this, direcao);
         }
     }
 

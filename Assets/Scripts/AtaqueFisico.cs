@@ -4,27 +4,33 @@ using UnityEngine;
 
 public class AtaqueFisico : MonoBehaviour
 {
+    //Managers
+    private ObjectManagerScript objectManager;
+
+    //Componentes
     private BoxCollider2D boxCollider2D;
     private SpriteRenderer spriteRenderer;
 
+    //Variaveis
     public int dano;
     private float width;
     private float height;
-
     public float horizontal, vertical;
     float knockBack;
 
-    private ObjectManagerScript objectManager;
-
     void Start()
     {
+        //Managers
+        objectManager = FindObjectOfType<ObjectManagerScript>();
+
+        //Componentes
         spriteRenderer = GetComponent<SpriteRenderer>();
         boxCollider2D = GetComponent<BoxCollider2D>();
         boxCollider2D.enabled = false;
+
+        //Variaveis
         width = 2.15f;
         height = 0.75f;
-
-        objectManager = FindObjectOfType<ObjectManagerScript>();
     }
 
     public void Atacar(EntityModel.Direcao _direcao, float knockBack, float _distanceH, float _distanceV, float _distanceY)

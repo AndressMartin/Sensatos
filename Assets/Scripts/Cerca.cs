@@ -10,14 +10,17 @@ public class Cerca : ParedeModel
     //Componentes
     private SpriteRenderer spriteRenderer;
     private BoxCollider2D boxCollider2D;
-    private DialogueActivator dialogueActivator;
+    private DialogueActivator dialogoQuebravel;
+    private DialogueActivator dialogoIndestrutivel;
     private Animator animator;
 
     //Enums
     public enum Tipo { Quebravel, Indestrutivel }
+    public enum Posicao { Meio, Esquerda, Direita }
 
     //Variaveis
     [SerializeField] public Tipo tipo;
+    [SerializeField] public Posicao posicao;
 
     // Start is called before the first frame update
     void Start()
@@ -28,7 +31,8 @@ public class Cerca : ParedeModel
         //Componentes
         spriteRenderer = GetComponent<SpriteRenderer>();
         boxCollider2D = GetComponent<BoxCollider2D>();
-        dialogueActivator = GetComponent<DialogueActivator>();
+        dialogoQuebravel = transform.Find("DialogoQuebravel").GetComponent<DialogueActivator>();
+        dialogoIndestrutivel = transform.Find("DialogoIndestrutivel").GetComponent<DialogueActivator>();
         animator = GetComponent<Animator>();
 
         //Variaveis
@@ -42,7 +46,7 @@ public class Cerca : ParedeModel
         switch(tipo)
         {
             case Tipo.Quebravel:
-                TrocarAnimacao("NormalQuebravel");
+                TrocarAnimacao("Quebravel");
                 break;
 
             case Tipo.Indestrutivel:
@@ -55,7 +59,15 @@ public class Cerca : ParedeModel
     {
         if(ativo == true)
         {
-            dialogueActivator.ShowDialogue(player);
+            switch(tipo)
+            {
+                case Tipo.Quebravel:
+                    dialogoQuebravel.ShowDialogue(player);
+                    break;
+                case Tipo.Indestrutivel:
+                    dialogoIndestrutivel.ShowDialogue(player);
+                    break;
+            }
         }
     }
 
@@ -90,6 +102,6 @@ public class Cerca : ParedeModel
 
     public void TrocarAnimacao(string animacao)
     {
-        animator.Play(animacao);
+        animator.Play(animacao + posicao.ToString());
     }
 }
