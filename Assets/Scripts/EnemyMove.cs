@@ -4,9 +4,12 @@ using UnityEngine;
 
 public class EnemyMove : MonoBehaviour
 {
+    //Componentes
+    private EnemyVision enemyVision;
+    private PathFinding pathFinding;
+
     public int velocity;
     public Vector3 initialPosition;
-    private EnemyVision enemyVision;
     [SerializeField] private GameObject playerGameObject;
     public Rigidbody2D rb;
     private Enemy enemy;
@@ -30,8 +33,6 @@ public class EnemyMove : MonoBehaviour
 
     bool firstTimeOnLoop = true;
 
-    private PathFinding pathFinding;
-
     public float knockBackHorizontal, knockBackVertical;
     public bool Knock;
     [SerializeField] private float timeKnock, timeMaxKnock;
@@ -43,9 +44,8 @@ public class EnemyMove : MonoBehaviour
     int knockBackCont = 0;
     [SerializeField] private int contQuantosTirosParaTomarKnockBack;
 
-    private Vector3 enemySoundPosition;
-    [SerializeField] private bool hearEnemy;
-    private GameObject enemySound;
+    private Vector3 playerSoundPosition;
+    [SerializeField] private bool hearPlayer;
 
     private enum state { followPlayer, attackingPlayer, searchingPlayer, BackingOriginalPosition, OriginalPosition }
     private state enemyState;
@@ -106,14 +106,16 @@ public class EnemyMove : MonoBehaviour
         timeMaxAlert = timeMaxAlertOriginal;
         contadorAlertaTempo = contadorAlertaTempoMax;
     }
-    public void HearEnemy(Player _gameObject, float _tamanhoRaio)
+    public void EscutarSom(Player player, bool somTiro)
     {
-        enemySound = _gameObject.gameObject;
-        enemySoundPosition = enemySound.transform.position;
-        hearEnemy = true;
-        if (_tamanhoRaio > 2)
+        playerSoundPosition = player.transform.position;
+        hearPlayer = true;
+        if (somTiro == true)
+        {
             hearShoot = true;
+        }
     }
+
     void counterAlert()
     {
         rb.velocity = Vector2.zero;
@@ -128,6 +130,7 @@ public class EnemyMove : MonoBehaviour
             }
         }
     }
+
     void CounterAlertTimer()
     {
         if (noContadorAlert && !vendoPlayer)
@@ -292,7 +295,7 @@ public class EnemyMove : MonoBehaviour
 
 
                 case Estado.rotina: //fazendo rotina
-                    if (false)//hearEnemy
+                    if (false)//hearPlayer
                     {
                         OuvindoInimigo();
                     }

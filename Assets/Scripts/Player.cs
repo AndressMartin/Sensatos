@@ -7,6 +7,7 @@ public class Player : EntityModel
     //Managers
     private ObjectManagerScript objectManager;
     private PauseManagerScript pauseManager;
+    private BulletCreator bulletCreator;
     private DialogueUI dialogueUI;
 
     //Componentes
@@ -42,6 +43,8 @@ public class Player : EntityModel
     private float tempoSoftlock,
                   tempoSoftlockMax;
 
+    private float raioPassos;
+
     //Retirar
     public float distanciaTiroY;
 
@@ -54,6 +57,7 @@ public class Player : EntityModel
         //Managers
         objectManager = FindObjectOfType<ObjectManagerScript>();
         pauseManager = FindObjectOfType<PauseManagerScript>();
+        bulletCreator = FindObjectOfType<BulletCreator>();
         dialogueUI = FindObjectOfType<DialogueUI>();
 
         //Componentes
@@ -79,6 +83,8 @@ public class Player : EntityModel
 
         tempoSoftlock = 0;
         tempoSoftlockMax = 10f;
+
+        raioPassos = 1.5f;
 
         distanciaTiroY = 1f;
     }
@@ -225,9 +231,8 @@ public class Player : EntityModel
     {
         if (estado == Estado.Normal)
         {
-            sound.ChangeColliderRadius(5);
-            inventario.armaSlot1.AtualizarBulletCreator(FindObjectOfType<BulletCreator>());
-            inventario.armaSlot1.Atirar(gameObject);
+            GerarSom(inventario.armaSlot1.RaioTiro, true);
+            inventario.armaSlot1.Atirar(gameObject, bulletCreator);
             animacao.AtualizarArmaBracos(inventario.armaSlot1.nomeVisual);
         }
     }
@@ -317,6 +322,15 @@ public class Player : EntityModel
         movement.ZerarVelocidade();
         animacao.AtualizarArmaBracos("");
         animacao.TrocarAnimacao("Morto");
+    }
+
+    public void GerarSom(float raio, bool somTiro)
+    {
+        if(somTiro == false)
+        {
+            raio = raioPassos;
+        }
+        sound.GerarSom(this, raio, somTiro);
     }
 
     public void ChangeDirection(string lado)

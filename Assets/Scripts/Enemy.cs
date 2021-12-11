@@ -7,6 +7,7 @@ public class Enemy : EntityModel
     //Managers
     private ObjectManagerScript objectManager;
     private PauseManagerScript pauseManager;
+    private BulletCreator bulletCreator;
 
     public override int vida { get; protected set; }
 
@@ -32,6 +33,7 @@ public class Enemy : EntityModel
         //Managers
         objectManager = FindObjectOfType<ObjectManagerScript>();
         pauseManager = FindObjectOfType<PauseManagerScript>();
+        bulletCreator = FindObjectOfType<BulletCreator>();
 
         //Se adicionar a lista de inimigos do ObjectManager
         objectManager.adicionarAosInimigos(this);
@@ -100,8 +102,7 @@ public class Enemy : EntityModel
         TrocarDirecaoAtaque(FindObjectOfType<Player>().transform.position);
         if (!tiroColldown)
         {
-            inventario.armaSlot1.AtualizarBulletCreator(FindObjectOfType<BulletCreator>());
-            inventario.armaSlot1.Atirar(gameObject);
+            inventario.armaSlot1.Atirar(gameObject, bulletCreator);
             animacao.AtualizarArmaBracos(inventario.armaSlot1.nomeVisual);
             tiroColldown = true;
         }
@@ -184,5 +185,10 @@ public class Enemy : EntityModel
                 timeCooldwon = 0;
             }
         }
+    }
+
+    public void EscutarSom(Player player, bool somTiro)
+    {
+        enemyMove.EscutarSom(player, somTiro);
     }
 }

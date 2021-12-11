@@ -11,7 +11,7 @@ public class InteragirScript : MonoBehaviour
     private float height;
     private float distance;
 
-    public float horizontal, vertical;
+    private float horizontal, vertical;
 
     private Player player;
 

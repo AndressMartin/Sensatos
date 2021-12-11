@@ -4,36 +4,42 @@ using UnityEngine;
 
 public class Movement : SingletonInstance<Movement>
 {
+    //Componentes
     private Player player;
     private Rigidbody2D rb;
+
+    //Variaveis
     public float horizontal;
     public float vertical;
     public float runSpeed;
-    public bool canMove = true;
     private float velocityMax,
                   velocityMaxAndando,
                   velocityMaxAndandoSorrateiramente;
 
+    public bool canMove = true;
     private float acelerationSpeed;
+
+    public float knockBackHorizontal,
+                 knockBackVertical;
+    private float timeKnockBack;
+    private float timeKnockBackMax;
 
     public float _tempX = 0;
     public float _tempY = 0;
-    public float knockBackHorizontal, knockBackVertical;
-    float time, timeMax;
-    [SerializeField]private float timeMaxOriginal;
-    Sound sound;
 
     // Start is called before the first frame update
     void Start()
     {
-        sound = GetComponentInChildren<Sound>();
-        player = GetComponent<Player>();
+        //Componentes
         rb = GetComponent<Rigidbody2D>();
+        player = GetComponent<Player>();
 
+        //Variaveis
         velocityMaxAndando = 5;
         velocityMaxAndandoSorrateiramente = 2.5f;
         velocityMax = velocityMaxAndando;
-        timeMaxOriginal = 0.5f;
+
+        timeKnockBackMax = 0.5f;
 
         acelerationSpeed = velocityMaxAndando * 3;
     }
@@ -99,8 +105,7 @@ public class Movement : SingletonInstance<Movement>
         knockBackHorizontal = _horizontal * _knockBack;
         knockBackVertical = _vertical * _knockBack;
 
-        timeMax = timeMaxOriginal;
-        time = 0;
+        timeKnockBack = 0;
     }
 
     void Move()
@@ -272,12 +277,11 @@ public class Movement : SingletonInstance<Movement>
     void KnockBackContador()
     {
         canMove = false;
-        time += Time.deltaTime;
-        if (time > timeMax)
+        timeKnockBack += Time.deltaTime;
+        if (timeKnockBack > timeKnockBackMax)
         {
             player.estado = Player.Estado.Normal;
-            timeMax = 0.0F;
-            time = 0;
+            timeKnockBack = 0;
             canMove = true;
             knockBackHorizontal = 0;
             knockBackVertical = 0;
@@ -296,9 +300,13 @@ public class Movement : SingletonInstance<Movement>
         {
             rb.velocity = new Vector2(_tempX * 0.7f, _tempY * 0.7f);
         }
-        if (player.estado == Player.Estado.Normal && player.modoMovimento != Player.ModoMovimento.AndandoSorrateiramente)
+
+        if(!(_tempX == 0 && _tempY == 0))
         {
-            sound.ChangeColliderRadius(runSpeed);
+            if (player.estado == Player.Estado.Normal && player.modoMovimento != Player.ModoMovimento.AndandoSorrateiramente)
+            {
+                player.GerarSom(0f, false);
+            }
         }
     }
 

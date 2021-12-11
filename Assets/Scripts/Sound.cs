@@ -2,96 +2,52 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Sound : MonoBehaviour {
+public class Sound : MonoBehaviour
+{
+    //Managers
+    private ObjectManagerScript objectManager;
+
+    //Componentes
+    CircleCollider2D circleCollider2D;
 
     // Start is called before the first frame update
-    CircleCollider2D circleCollider2D;
-    int circleRadiusDefault = 2;
-    BoxCollider2D[] enemy;
-    float raiotemp;
-    float raioOriginal;
-    [SerializeField] bool shoot = false;
-    [SerializeField] bool agachado = false;
-     private float time, timeMax;
-    [SerializeField] private float timeMaxOriginal;
     void Start()
     {
+        //Managers
+        objectManager = FindObjectOfType<ObjectManagerScript>();
+
+        //Componentes
         circleCollider2D = GetComponent<CircleCollider2D>();
-        enemy = FindObjectsOfType<BoxCollider2D>();
-        timeMax= timeMaxOriginal;
-        raioOriginal = circleCollider2D.radius;
 
+        circleCollider2D.enabled = false;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void AtualizarHitBox(float raio)
     {
-        if (shoot)
-        {
-            circleCollider2D.radius = 5;
-            ShootCont();
-        }
-
-        else if (agachado)
-        {
-             circleCollider2D.radius = 0.1f;
-
-        }
-        else 
-        {
-            circleCollider2D.radius = 0.5f;
-
-        }
-
+        circleCollider2D.radius = raio;
     }
-    void ShootCont()
+
+    public void GerarSom(Player player, float raio, bool somTiro)
     {
-        time += Time.deltaTime;
-        foreach (BoxCollider2D item in enemy)
+        AtualizarHitBox(raio);
+        ProcurarInimigos(player, somTiro);
+    }
+
+    private void ProcurarInimigos(Player player, bool somTiro)
+    {
+        circleCollider2D.enabled = true;
+        foreach (Enemy inimigo in objectManager.listaInimigos)
         {
-            if (item.GetComponent<EnemyMove>() != null)
+            if (Colisao.HitTest(inimigo.transform.position.x, inimigo.transform.position.y, circleCollider2D))
             {
-                if (circleCollider2D.IsTouching(item))
-                {
-                    OnTriggerStay2D(item);
-                }
+                InimigoEscutarSom(player, inimigo, somTiro);
             }
-
         }
-        if (time > timeMax)
-        {
-            time = 0;
-            timeMax = timeMaxOriginal;
-            shoot = false;
-        }
+        circleCollider2D.enabled = false;
     }
 
-    public void ChangeColliderRadius(float _raio)
+    private void InimigoEscutarSom(Player player, Enemy inimigo, bool somTiro)
     {
-        raiotemp = _raio;
-        if(_raio ==5)
-        {
-            shoot = true;
-        }
-        if(_raio ==1)
-        {
-            agachado = true;
-        }
-        if(_raio ==8)
-        {
-            agachado = false;
-        }
-        
-
+        inimigo.EscutarSom(player, somTiro);
     }
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        EnemyMove enemyMoveTemp= collision.GetComponent<EnemyMove>();
-        if(enemyMoveTemp != null)
-        {
-            enemyMoveTemp.HearEnemy(gameObject.GetComponentInParent<Player>(),circleCollider2D.radius);
-        }
-    }
-
-
 }

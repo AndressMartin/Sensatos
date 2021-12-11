@@ -19,6 +19,12 @@ public class ArmaDeFogo : MonoBehaviour
     public string nome;
     public string nomeVisual;
     public float distanciaMaxProjetil;
+
+    [SerializeField] private float raioTiro;
+
+    //Getters
+    public float RaioTiro => raioTiro;
+
     private void Start()
     {
         bulletCreator = FindObjectOfType<BulletCreator>();
@@ -27,15 +33,11 @@ public class ArmaDeFogo : MonoBehaviour
         {
             knockbackValue = 1;
         }
-        
     }
 
-    public void AtualizarBulletCreator(BulletCreator bulletCreator)
+    public void Atirar(GameObject objQueChamou, BulletCreator bulletCreator)
     {
         this.bulletCreator = bulletCreator;
-    }
-    public void Atirar(GameObject objQueChamou)
-    {
         CreateShoot(objQueChamou);
     }
 

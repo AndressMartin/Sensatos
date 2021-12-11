@@ -4,11 +4,10 @@ using UnityEngine;
 
 public class AtaqueFisico : MonoBehaviour
 {
-    public int dano;
-
     private BoxCollider2D boxCollider2D;
     private SpriteRenderer spriteRenderer;
 
+    public int dano;
     private float width;
     private float height;
 

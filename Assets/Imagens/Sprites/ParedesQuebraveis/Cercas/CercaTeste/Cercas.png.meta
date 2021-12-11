@@ -1,7 +1,31 @@
 fileFormatVersion: 2
 guid: b9ece9c80ccda0d468bf7d0e19368a90
 TextureImporter:
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      213: 836885659265310217
+    second: Cercas_0
+  - first:
+      213: 6801449601793657455
+    second: Cercas_1
+  - first:
+      213: 4464558673949198691
+    second: Cercas_2
+  - first:
+      213: -4316061982679757854
+    second: Cercas_3
+  - first:
+      213: 9082111447875906694
+    second: Cercas_4
+  - first:
+      213: 7249706162291905139
+    second: Cercas_5
+  - first:
+      213: 6846894322318000639
+    second: Cercas_6
+  - first:
+      213: 3829542535048910574
+    second: Cercas_7
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -91,13 +115,97 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Base_Pedra_Porta_0
+      name: Cercas_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 128
+        width: 32
+        height: 128
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 90e9026b2173d9b00800000000000000
+      internalID: 836885659265310217
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cercas_1
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 128
+        width: 32
+        height: 128
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f6a02a0906a936e50800000000000000
+      internalID: 6801449601793657455
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cercas_2
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 128
+        width: 32
+        height: 128
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 36981afa57c45fd30800000000000000
+      internalID: 4464558673949198691
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cercas_3
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 128
+        width: 32
+        height: 128
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2eb0ec58e744a14c0800000000000000
+      internalID: -4316061982679757854
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cercas_4
       rect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 32
-        height: 96
+        height: 128
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -105,20 +213,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0a0b56e556ea56b70800000000000000
-      internalID: 8891704789711564960
+      spriteID: 68ce6252e342a0e70800000000000000
+      internalID: 9082111447875906694
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Base_Pedra_Porta_1
+      name: Cercas_5
       rect:
         serializedVersion: 2
         x: 32
         y: 0
         width: 32
-        height: 96
+        height: 128
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -126,20 +234,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e4a4f8dc8877bb290800000000000000
-      internalID: -7873568094079202738
+      spriteID: 3729e5118512c9460800000000000000
+      internalID: 7249706162291905139
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Base_Pedra_Porta_2
+      name: Cercas_6
       rect:
         serializedVersion: 2
         x: 64
         y: 0
         width: 32
-        height: 96
+        height: 128
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -147,20 +255,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 413315b3848a7a3f0800000000000000
-      internalID: -889557373196094700
+      spriteID: ff147681c1e050f50800000000000000
+      internalID: 6846894322318000639
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Base_Pedra_Porta_3
+      name: Cercas_7
       rect:
         serializedVersion: 2
         x: 96
         y: 0
         width: 32
-        height: 96
+        height: 128
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -168,8 +276,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 86012eea7f02fc650800000000000000
-      internalID: 6255254655603970152
+      spriteID: ee6d6d555a4452530800000000000000
+      internalID: 3829542535048910574
       vertices: []
       indices: 
       edges: []
