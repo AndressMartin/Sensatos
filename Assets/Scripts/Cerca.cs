@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,11 +17,19 @@ public class Cerca : ParedeModel
 
     //Enums
     public enum Tipo { Quebravel, Indestrutivel }
-    public enum Posicao { Meio, Esquerda, Direita }
+    public enum Direcao { Horizontal, Vertical }
+    public enum Posicao { Meio, Esquerda, Direita, Vertical}
+
+    public enum SpriteName { Quebravel, Indestrutivel, Dano1, Dano2, Destruido }
 
     //Variaveis
-    [SerializeField] public Tipo tipo;
+    [SerializeField] private string nome;
+    [SerializeField] private Tipo tipo;
+    [SerializeField] private Direcao direcao;
     private Posicao posicao;
+    private SpriteName sprite;
+
+    [SerializeField] private Sprite[] sprites;
 
     // Start is called before the first frame update
     void Start()
@@ -42,6 +51,8 @@ public class Cerca : ParedeModel
         //Se adicionar a lista de objetos interagiveis do ObjectManager
         objectManager.adicionarAosObjetosInteragiveis(this);
         objectManager.adicionarAsParedesQuebraveis(this);
+
+        AtualizarHitBox();
     }
 
     public override void Interagir(Player player)
@@ -69,11 +80,11 @@ public class Cerca : ParedeModel
 
             if(vida < vidaMax)
             {
-                TrocarAnimacao("Dano1");
+                TrocarSprite("Dano1");
             }
             if(vida <= vidaMax / 2)
             {
-                TrocarAnimacao("Dano2");
+                TrocarSprite("Dano2");
             }
             if (vida <= 0)
             {
@@ -84,14 +95,32 @@ public class Cerca : ParedeModel
 
     private void SeDestruir()
     {
-        TrocarAnimacao("Destruida");
+        TrocarSprite("Destruida");
         boxCollider2D.isTrigger = true;
         ativo = false;
     }
 
-    private void TrocarAnimacao(string animacao)
+    private void TrocarSprite(string spriteName)
     {
-        animator.Play(animacao + posicao.ToString());
+        int indice = Array.FindIndex(sprites, sprite => sprite.name == (nome + "_" + spriteName + posicao.ToString())); //Da o indice do sprite no array que tiver o nome igual ao que for passado
+        spriteRenderer.sprite = sprites[indice];
+    }
+
+    private void AtualizarHitBox()
+    {
+        switch(direcao)
+        {
+            case Direcao.Horizontal:
+                boxCollider2D.size = new Vector2(1, 0.2f);
+                boxCollider2D.offset = new Vector2(0, 0.1f);
+                transform.Find("HitBoxTiro").GetComponent<BoxCollider2D>().size = new Vector2(1, 1);
+                break;
+            case Direcao.Vertical:
+                boxCollider2D.size = new Vector2(0.2f, 1);
+                boxCollider2D.offset = new Vector2(0, 0.5f);
+                transform.Find("HitBoxTiro").GetComponent<BoxCollider2D>().size = new Vector2(0.2f, 1);
+                break;
+        }
     }
 
     public void ArrumarPosicao(Cerca[] cercas)
@@ -100,46 +129,53 @@ public class Cerca : ParedeModel
         colisaoEsquerda = false;
         colisaoDireita = false;
 
-        foreach (Cerca cerca in cercas)
+        if(direcao == Direcao.Horizontal)
         {
-            if(cerca != this)
+            foreach (Cerca cerca in cercas)
             {
-                if (Colisao.HitTest((boxCollider2D.bounds.center.x - (boxCollider2D.bounds.extents.x * 2)), boxCollider2D.bounds.center.y, cerca.transform.GetComponent<BoxCollider2D>()))
+                if (cerca != this)
                 {
-                    colisaoEsquerda = true;
-                }
-                else if (Colisao.HitTest((boxCollider2D.bounds.center.x + (boxCollider2D.bounds.extents.x * 2)), boxCollider2D.bounds.center.y, cerca.transform.GetComponent<BoxCollider2D>()))
-                {
-                    colisaoDireita = true;
+                    if (Colisao.HitTest((boxCollider2D.bounds.center.x - (boxCollider2D.bounds.extents.x * 2)), boxCollider2D.bounds.center.y, cerca.transform.GetComponent<BoxCollider2D>()))
+                    {
+                        colisaoEsquerda = true;
+                    }
+                    else if (Colisao.HitTest((boxCollider2D.bounds.center.x + (boxCollider2D.bounds.extents.x * 2)), boxCollider2D.bounds.center.y, cerca.transform.GetComponent<BoxCollider2D>()))
+                    {
+                        colisaoDireita = true;
+                    }
                 }
             }
-        }
 
-        if(colisaoEsquerda == true && colisaoDireita == true)
-        {
-            posicao = Posicao.Meio;
-        }
-        else if (colisaoEsquerda == true)
-        {
-            posicao = Posicao.Direita;
-        }
-        else if (colisaoDireita == true)
-        {
-            posicao = Posicao.Esquerda;
+            if (colisaoEsquerda == true && colisaoDireita == true)
+            {
+                posicao = Posicao.Meio;
+            }
+            else if (colisaoEsquerda == true)
+            {
+                posicao = Posicao.Direita;
+            }
+            else if (colisaoDireita == true)
+            {
+                posicao = Posicao.Esquerda;
+            }
+            else
+            {
+                posicao = Posicao.Meio;
+            }
         }
         else
         {
-            posicao = Posicao.Meio;
+            posicao = Posicao.Vertical;
         }
 
         switch (tipo)
         {
             case Tipo.Quebravel:
-                TrocarAnimacao("Quebravel");
+                TrocarSprite("Quebravel");
                 break;
 
             case Tipo.Indestrutivel:
-                TrocarAnimacao("Indestrutivel");
+                TrocarSprite("Indestrutivel");
                 break;
         }
     }

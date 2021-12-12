@@ -33,6 +33,11 @@ public class State : MonoBehaviour
                 ComandosGameplay();
             }
         }
+        else
+        {
+            movement.horizontal = 0;
+            movement.vertical = 0;
+        }
     }
 
     //Comandos de menus, como pausar o jogo
