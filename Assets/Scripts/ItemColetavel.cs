@@ -28,14 +28,14 @@ public class ItemColetavel : ObjetoInteragivel
 
     public override void SetRespawn()
     {
-        ativoRespawn = ativo;
+        ativoRespawn = lockDownAtivo;
     }
 
     public override void Respawn()
     {
-        ativo = ativoRespawn;
+        lockDownAtivo = ativoRespawn;
 
-        if(ativo == true)
+        if(lockDownAtivo == true)
         {
             spriteRenderer.enabled = true;
             boxCollider2D.enabled = true;
@@ -86,7 +86,7 @@ public class ItemColetavel : ObjetoInteragivel
 
     private void Desativar()
     {
-        ativo = false;
+        lockDownAtivo = false;
         spriteRenderer.enabled = false;
         boxCollider2D.enabled = false;
     }

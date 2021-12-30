@@ -94,9 +94,7 @@ public class Enemy : EntityModel
 
             enemyMove.estado = EnemyMove.Estado.Rotina;
             enemyMove.stance = EnemyMove.Stances.Idle;
-            enemyMove.fazerMovimentoAlerta = EnemyMove.FazesMovimentoAlerta.NA;
-            enemyMove.hearPlayer = false;
-            enemyMove.hearShoot = false;
+            enemyMove.fazerMovimentoAlerta = EnemyMove.FazerMovimentoAlerta.NA;
             enemyMove.ZerarVelocidade();
 
             ResetarVariaveisDeControle();
@@ -108,7 +106,7 @@ public class Enemy : EntityModel
         estado = Estado.Normal;
         tiroColldown = false;
         timeCooldwon = 0;
-        enemyMove.stance = EnemyMove.Stances.Patrolling;
+        enemyMove.ResetarVariaveisDeControle();
     }
 
     void AllEnemySubClass()

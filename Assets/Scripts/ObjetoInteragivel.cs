@@ -4,8 +4,8 @@ using UnityEngine;
 
 public abstract class ObjetoInteragivel : MonoBehaviour
 {
-    protected bool ativo = true;
-    public bool Ativo => ativo;
+    protected bool lockDownAtivo = true;
+    public bool Ativo => lockDownAtivo;
     abstract public void Interagir(Player player);
     public virtual void SetRespawn()
     {
