@@ -1666,6 +1666,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: EnemyIsmaias
       objectReference: {fileID: 0}
+    - target: {fileID: 6297625325533714485, guid: 6712e26531f27d54d88d74c08c419556, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6297625325533714492, guid: 6712e26531f27d54d88d74c08c419556, type: 3}
       propertyPath: velocity
       value: 2
@@ -19769,7 +19773,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8003618298857930454, guid: 83506c14bf685914bad042623edb7cd3, type: 3}
       propertyPath: vidaInicial
-      value: 50
+      value: 500
       objectReference: {fileID: 0}
     - target: {fileID: 8916929928718140114, guid: 83506c14bf685914bad042623edb7cd3, type: 3}
       propertyPath: m_RootOrder
