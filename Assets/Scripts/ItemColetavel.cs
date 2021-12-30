@@ -6,18 +6,40 @@ public class ItemColetavel : ObjetoInteragivel
 {
     [SerializeField] private Item item;
 
+    //Componentes
     private SpriteRenderer spriteRenderer;
+    private BoxCollider2D boxCollider2D;
 
     private ObjectManagerScript objectManager;
 
-    // Start is called before the first frame update
+    //Variaveis de respawn
+    private bool ativoRespawn;
+
     void Start()
     {
+        //Componentes
         spriteRenderer = GetComponent<SpriteRenderer>();
+        boxCollider2D = GetComponent<BoxCollider2D>();
 
         //Se adicionar a lista de objetos interagiveis do ObjectManager
         objectManager = FindObjectOfType<ObjectManagerScript>();
         objectManager.adicionarAosObjetosInteragiveis(this);
+    }
+
+    public override void SetRespawn()
+    {
+        ativoRespawn = ativo;
+    }
+
+    public override void Respawn()
+    {
+        ativo = ativoRespawn;
+
+        if(ativo == true)
+        {
+            spriteRenderer.enabled = true;
+            boxCollider2D.enabled = true;
+        }
     }
 
     public override void Interagir(Player player)
@@ -28,17 +50,17 @@ public class ItemColetavel : ObjetoInteragivel
             {
                 case Item.Tipo.Consumivel:
                     AdicionarAoInventario(player);
-                    SeExcluir();
+                    Desativar();
                     break;
 
                 case Item.Tipo.Ferramenta:
                     AdicionarAoInventario(player);
-                    SeExcluir();
+                    Desativar();
                     break;
 
                 case Item.Tipo.ItemChave:
                     AdicionarAoInventarioMissao(player);
-                    SeExcluir();
+                    Desativar();
                     break;
             }
         }
@@ -62,9 +84,10 @@ public class ItemColetavel : ObjetoInteragivel
         player.AdicionarAoInventarioMissao(novoItem);
     }
 
-    private void SeExcluir()
+    private void Desativar()
     {
-        objectManager.removerDosObjetosInteragiveis(this);
-        Destroy(this.gameObject);
+        ativo = false;
+        spriteRenderer.enabled = false;
+        boxCollider2D.enabled = false;
     }
 }

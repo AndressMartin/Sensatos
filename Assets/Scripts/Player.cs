@@ -30,6 +30,10 @@ public class Player : EntityModel
     public int vidaInicial;
 
     public Direcao direcaoMovimento;
+
+    private float raioPassos;
+
+    //Variaveis de controle
     public Vector3 posAnterior;
 
     public ModoMovimento modoMovimento;
@@ -37,13 +41,14 @@ public class Player : EntityModel
 
     private float tempoImune;
     private float tempoImuneMax;
-    private bool imune = false;
+    private bool imune;
     private bool collisionState;
-
     private float tempoSoftlock,
                   tempoSoftlockMax;
 
-    private float raioPassos;
+    //Variaveis de respawn
+    private Vector2 posicaoRespawn;
+    private Direcao direcaoRespawn;
 
     //Retirar
     public float distanciaTiroY;
@@ -51,7 +56,6 @@ public class Player : EntityModel
     //Getter
     public DialogueUI DialogueUI => dialogueUI;
 
-    // Start is called before the first frame update
     void Start()
     {
         //Managers
@@ -71,7 +75,12 @@ public class Player : EntityModel
         inventario = GetComponent<Inventario>();
         inventarioMissao = GetComponent<InventarioMissao>();
 
+
+        //Variaveis
         vida = vidaInicial;
+        raioPassos = 1.5f;
+
+        //Variaveis de controle
         posAnterior = transform.position;
 
         modoMovimento = ModoMovimento.Normal;
@@ -79,13 +88,13 @@ public class Player : EntityModel
 
         tempoImune = 0;
         tempoImuneMax = 1.5f;
+        imune = false;
         collisionState = false;
 
         tempoSoftlock = 0;
         tempoSoftlockMax = 10f;
 
-        raioPassos = 1.5f;
-
+        //Retirar
         distanciaTiroY = 1f;
     }
 
@@ -126,6 +135,39 @@ public class Player : EntityModel
     private void FixedUpdate()
     {
         posAnterior = transform.position;
+    }
+
+    private void SetRespawn()
+    {
+        posicaoRespawn = transform.position;
+        direcaoRespawn = direcao;
+    }
+
+    public void SetRespawn(Vector2 posicao, Direcao direcao)
+    {
+        posicaoRespawn = posicao;
+        direcaoRespawn = direcao;
+    }
+
+    public void Respawn()
+    {
+        vida = vidaInicial;
+        transform.position = posicaoRespawn;
+        direcao = direcaoRespawn;
+        movement.ZerarVelocidade();
+
+        ResetarVariaveisDeControle();
+    }
+
+    private void ResetarVariaveisDeControle()
+    {
+        posAnterior = transform.position;
+        modoMovimento = ModoMovimento.Normal;
+        estado = Estado.Normal;
+        tempoImune = 0;
+        imune = false;
+        collisionState = false;
+        tempoSoftlock = 0;
     }
 
     private void Animar()

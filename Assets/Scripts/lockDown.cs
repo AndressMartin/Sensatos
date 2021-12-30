@@ -2,31 +2,42 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class lockDown : ObjetoInteragivel
+public class LockDown : ObjetoInteragivel
 {
     //Managers
+    private ObjectManagerScript objectManagerScript;
     private PauseManagerScript pauseManager;
-    public bool ativo;
+    private LockDownManager lockDownManager;
+
+    //Componentes
     SpriteRenderer spriteRenderer;
-    ObjectManagerScript objectManagerScript;
-    LockDownManager lockDownManager;
+
+    //Variaveis
+    public bool lockDownAtivo;
 
     private void Start()
     {
         //Managers
         lockDownManager = FindObjectOfType<LockDownManager>();
-        objectManagerScript = FindObjectOfType<ObjectManagerScript>();
         pauseManager = FindObjectOfType<PauseManagerScript>();
+        objectManagerScript = FindObjectOfType<ObjectManagerScript>();
+
+        //Componentes
         spriteRenderer = GetComponent<SpriteRenderer>();
 
+        //Se adicionar a lista de objetos interagiveis do ObjectManager
         objectManagerScript.adicionarAosObjetosInteragiveis(this);
         objectManagerScript.adicionarAosAlarmes(this);
+
+        //Variaveis
+        lockDownAtivo = false;
     }
+
     void Update()
     {
         if(pauseManager.JogoPausado == false)
         {
-            if (ativo)
+            if (lockDownAtivo)
             {
                 spriteRenderer.color = Color.green;
             }

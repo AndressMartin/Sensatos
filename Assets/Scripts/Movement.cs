@@ -122,7 +122,7 @@ public class Movement : SingletonInstance<Movement>
         switch(player.estado)
         {
             case Player.Estado.Normal: //movimentacao padrao, caso esteja sendo empurrado nao fazer contas para se movimentar
-                if (horizontal != 0)//se esta andando na vertical guarda em uma variavel a acelera��o e soma no final com addForce
+                if (horizontal != 0)//se esta andando na vertical guarda em uma variavel a aceleracao e soma no final com addForce
                 {
                     _tempX = horizontal * velocityMax;
                     /*

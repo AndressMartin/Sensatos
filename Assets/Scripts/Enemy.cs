@@ -9,24 +9,32 @@ public class Enemy : EntityModel
     private PauseManagerScript pauseManager;
     private BulletCreator bulletCreator;
 
-    public override int vida { get; protected set; }
-
-    public enum Estado {Normal, TomandoDano};
-    public Estado estado;
-
+    //Componentes
     private PontaArma pontaArma;
     private AnimacaoJogador animacao;
-
     private Inventario inventario;
     private EnemyMove enemyMove;
     private EnemyVision enemyVision;
 
-    [SerializeField] private int pontosVida;
-    public bool dead = false;
+    //Variaveis
+    public override int vida { get; protected set; }
 
-    bool tiroColldown=false;
+    public enum Estado { Normal, TomandoDano };
+    public Estado estado;
+
+    [SerializeField] private int vidaInicial;
+    public bool morto;
+
+    bool tiroColldown;
     float timeCooldwon;
     float timeCooldownTiro;
+
+    //Variaveis de respawn
+    private bool mortoRespawn;
+    private Vector2 posicaoRespawn;
+    private Direcao direcaoRespawn;
+    private EnemyMove.ModoPatrulha modoPatrulhaRespawn;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -38,16 +46,21 @@ public class Enemy : EntityModel
         //Se adicionar a lista de inimigos do ObjectManager
         objectManager.adicionarAosInimigos(this);
 
+        //Componentes
         enemyVision = GetComponentInChildren<EnemyVision>();
         enemyMove = GetComponent<EnemyMove>();
         inventario = GetComponent<Inventario>();
-        vida = pontosVida;
-
         pontaArma = GetComponentInChildren<PontaArma>();
         animacao = transform.GetComponent<AnimacaoJogador>();
 
+        //Variaveis
+        vida = vidaInicial;
+
         estado = Estado.Normal;
 
+        morto = false;
+
+        tiroColldown = false;
         timeCooldwon = 0;
         timeCooldownTiro = 0.5f;
     }
@@ -60,9 +73,47 @@ public class Enemy : EntityModel
             AllEnemySubClass();
         }
     }
+
+    public void SetRespawn()
+    {
+        posicaoRespawn = transform.position;
+        direcaoRespawn = direcao;
+        modoPatrulhaRespawn = enemyMove.modoPatrulha;
+    }
+
+    public void Respawn()
+    {
+        morto = mortoRespawn;
+
+        if(morto == false)
+        {
+            vida = vidaInicial;
+            transform.position = posicaoRespawn;
+            direcao = direcaoRespawn;
+            enemyMove.modoPatrulha = modoPatrulhaRespawn;
+
+            enemyMove.estado = EnemyMove.Estado.Rotina;
+            enemyMove.stance = EnemyMove.Stances.Idle;
+            enemyMove.fazerMovimentoAlerta = EnemyMove.FazesMovimentoAlerta.NA;
+            enemyMove.hearPlayer = false;
+            enemyMove.hearShoot = false;
+            enemyMove.ZerarVelocidade();
+
+            ResetarVariaveisDeControle();
+        }
+    }
+
+    private void ResetarVariaveisDeControle()
+    {
+        estado = Estado.Normal;
+        tiroColldown = false;
+        timeCooldwon = 0;
+        enemyMove.stance = EnemyMove.Stances.Patrolling;
+    }
+
     void AllEnemySubClass()
     {
-        if (!dead)
+        if (!morto)
         {
             //Debug.Log("Inimigo Vel X: " + enemyMove.velX + ", Vel Y: " + enemyMove.velY);
             animacao.AtualizarDirecao(direcao, direcao);
@@ -110,12 +161,12 @@ public class Enemy : EntityModel
     }
     public void die()
     {
-        dead = true;
+        morto = true;
         Debug.Log("to morto");
     }
     public void stealthKill()
     {
-        dead = true;
+        morto = true;
         gameObject.SetActive(false);
     }
 

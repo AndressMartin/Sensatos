@@ -45,16 +45,16 @@ public class EnemyMove : MonoBehaviour
     [SerializeField] private int contQuantosTirosParaTomarKnockBack;
 
     private Vector3 playerSoundPosition;
-    [SerializeField] private bool hearPlayer;
+    [SerializeField] public bool hearPlayer;
 
-    private enum state { followPlayer, attackingPlayer, searchingPlayer, BackingOriginalPosition, OriginalPosition }
+    private enum state { FollowPlayer, AttackingPlayer, SearchingPlayer, BackingOriginalPosition, OriginalPosition }
     private state enemyState;
-    public enum Estado { rotina, alerta, combate , lockdown };
+    public enum Estado { Rotina, Alerta, Combate , Lockdown };
     public Estado estado;
-    public enum Stances { idle, patrolling, wait , correrAteUltimaPosicaoPlayer, VarrerFase };
-    public Stances stance = Stances.idle;
-    public enum FazesMovimentoAlerta {AndandoAte_UltimaPosicaoPlayer,chechandoUltimaPosicaoPlayer,VoltandoA_RotinaPadrao,NA }
-    public FazesMovimentoAlerta fazesMovimentoAlerta = FazesMovimentoAlerta.NA;
+    public enum Stances { Idle, Patrolling, Wait , CorrerAteUltimaPosicaoPlayer, VarrerFase };
+    public Stances stance = Stances.Idle;
+    public enum FazesMovimentoAlerta { NA, AndandoAte_UltimaPosicaoPlayer, chechandoUltimaPosicaoPlayer,VoltandoA_RotinaPadrao }
+    public FazesMovimentoAlerta fazerMovimentoAlerta = FazesMovimentoAlerta.NA;
     public enum ModoPatrulha {destraido, atento };
     public ModoPatrulha modoPatrulha;
 
@@ -64,16 +64,16 @@ public class EnemyMove : MonoBehaviour
     public List<Transform> moveSpots = new List<Transform>();
     private int lastMoveSpot;
     private int randomSpot;
-    bool hearShoot;
+    public bool hearShoot;
     bool viuPlayerUmaVez;
-    lockDown lockDown;
+    LockDown lockDown;
     float difPlayer;
     float difLockDownButton;
 
     
 
     [SerializeField]bool vendoPlayer;
-    [SerializeField]private Vector3 ultimaposicaoOrigem;
+    [SerializeField]private Vector3 ultimaPosicaoOrigem;
     [SerializeField]private GameObject gameObjectPlayerReservaAlt;
     bool enemyPlayerReserva = false;
 
@@ -89,11 +89,11 @@ public class EnemyMove : MonoBehaviour
         pathFinding = GetComponent<PathFinding>();
         rb = GetComponent<Rigidbody2D>();
         enemy = GetComponent<Enemy>();
-        lockDown = FindObjectOfType<lockDown>();
+        lockDown = FindObjectOfType<LockDown>();
 
-        ultimaposicaoOrigem = new Vector3(transform.position.x, transform.position.y, transform.position.z);
+        ultimaPosicaoOrigem = new Vector3(transform.position.x, transform.position.y, transform.position.z);
         
-        stance = Stances.patrolling;
+        stance = Stances.Patrolling;
         randomSpot = 0;
 
         initialPosition.x = transform.position.x;
@@ -119,13 +119,13 @@ public class EnemyMove : MonoBehaviour
     void counterAlert()
     {
         rb.velocity = Vector2.zero;
-        if (estado == Estado.alerta)
+        if (estado == Estado.Alerta)
         {
             noContadorAlert = true;
             timeAlert += Time.deltaTime;
             if (timeAlert > timeMaxAlert)
             {
-                estado = Estado.combate;
+                estado = Estado.Combate;
                 noContadorAlert = false;
             }
         }
@@ -158,7 +158,7 @@ public class EnemyMove : MonoBehaviour
         if (gameObjectPlayerReservaAlt == null)
             gameObjectPlayerReservaAlt = playerGameObject;
 
-        fazesMovimentoAlerta = FazesMovimentoAlerta.AndandoAte_UltimaPosicaoPlayer;
+        fazerMovimentoAlerta = FazesMovimentoAlerta.AndandoAte_UltimaPosicaoPlayer;
         lastPlayerPosition = gameObjectPlayerReservaAlt.transform.position;
         difPlayer = Vector2.Distance(playerGameObject.transform.position, transform.position);
 
@@ -171,10 +171,10 @@ public class EnemyMove : MonoBehaviour
                 EntrarModoPatrulha();
             }
             else
-                ultimaposicaoOrigem = new Vector3(transform.position.x, transform.position.y, transform.position.z);
+                ultimaPosicaoOrigem = new Vector3(transform.position.x, transform.position.y, transform.position.z);
 
 
-            if (!lockDown.ativo) //caso não esteja em lockdawn
+            if (!lockDown.lockDownAtivo) //caso não esteja em lockdawn
             {
                 if (difPlayer < difLockDownButton)//caso o player estja mais perto que o alarme vai pra cima do player
                 {
@@ -193,7 +193,7 @@ public class EnemyMove : MonoBehaviour
                     }
                     else
                     {
-                        lockDown.ativo = true;  //ativa o lockdown
+                        lockDown.lockDownAtivo = true;  //ativa o lockdown
                         lockDown.AtivarLockDown(playerGameObject.transform.position);
 
                     }
@@ -237,15 +237,15 @@ public class EnemyMove : MonoBehaviour
         {
             switch (estado)
             {
-                case Estado.combate:
+                case Estado.Combate:
                     viuPlayerUmaVez = true;
                     seguirAtacarPlayer();
                     break;
-                case Estado.alerta:
+                case Estado.Alerta:
                     counterAlert();//inicia o contador pra ir entrar em estado combate 
                     break;
-                case Estado.rotina:
-                    estado = Estado.alerta;
+                case Estado.Rotina:
+                    estado = Estado.Alerta;
                     break;
 
             }
@@ -255,14 +255,14 @@ public class EnemyMove : MonoBehaviour
         {
             switch (estado)
             {
-                case Estado.combate:
-                    estado = Estado.alerta;
+                case Estado.Combate:
+                    estado = Estado.Alerta;
                     break;
 
-                case Estado.lockdown:
+                case Estado.Lockdown:
                     switch (stance)
                     {
-                        case Stances.correrAteUltimaPosicaoPlayer:
+                        case Stances.CorrerAteUltimaPosicaoPlayer:
                             MoveLockDown(lastPlayerPosition);
                             break;
                         case Stances.VarrerFase:
@@ -275,8 +275,8 @@ public class EnemyMove : MonoBehaviour
                     }
                     break;
 
-                case Estado.alerta://ver player
-                    switch (fazesMovimentoAlerta)
+                case Estado.Alerta://ver player
+                    switch (fazerMovimentoAlerta)
                     {
                         case FazesMovimentoAlerta.AndandoAte_UltimaPosicaoPlayer:
                             MovimentarUltimaPosicaoPlayer(lastPlayerPosition);
@@ -285,16 +285,16 @@ public class EnemyMove : MonoBehaviour
                             VerificarRegiao();
                             break;
                         case FazesMovimentoAlerta.VoltandoA_RotinaPadrao:
-                            MovimentarVoltarRotinaPadrao(ultimaposicaoOrigem);
+                            MovimentarVoltarRotinaPadrao(ultimaPosicaoOrigem);
                             break;
                         case FazesMovimentoAlerta.NA:
-                            estado = Estado.rotina;
+                            estado = Estado.Rotina;
                             break;
                     }
                     break;
 
 
-                case Estado.rotina: //fazendo rotina
+                case Estado.Rotina: //fazendo rotina
                     if (false)//hearPlayer
                     {
                         OuvindoInimigo();
@@ -303,7 +303,7 @@ public class EnemyMove : MonoBehaviour
                     {
                         switch (stance)
                         {
-                            case Stances.patrolling://patrulhando
+                            case Stances.Patrolling://patrulhando
                                 Patrulhar();
                                 break;
                         }
@@ -319,8 +319,8 @@ public class EnemyMove : MonoBehaviour
     {
         if (!vendoPlayer)
         {
-            estado = Estado.lockdown;
-            stance = Stances.correrAteUltimaPosicaoPlayer;
+            estado = Estado.Lockdown;
+            stance = Stances.CorrerAteUltimaPosicaoPlayer;
             lastPlayerPosition = posicaoPlayer;
 
         }
@@ -353,7 +353,7 @@ public class EnemyMove : MonoBehaviour
         time += Time.deltaTime;
         if (time > timeMax)
         {
-            fazesMovimentoAlerta = FazesMovimentoAlerta.VoltandoA_RotinaPadrao;
+            fazerMovimentoAlerta = FazesMovimentoAlerta.VoltandoA_RotinaPadrao;
             lastPlayerPositionChecked = true;
             time = 0;
         }
@@ -390,8 +390,8 @@ public class EnemyMove : MonoBehaviour
     }
     private void VarrerFase()
     {
-        fazesMovimentoAlerta = FazesMovimentoAlerta.AndandoAte_UltimaPosicaoPlayer;
-        estado = Estado.alerta;
+        fazerMovimentoAlerta = FazesMovimentoAlerta.AndandoAte_UltimaPosicaoPlayer;
+        estado = Estado.Alerta;
 
         //coisas
         //fim da funcao
@@ -412,7 +412,7 @@ public class EnemyMove : MonoBehaviour
         else
         {
             Debug.Log("chegued no last player");
-            fazesMovimentoAlerta = FazesMovimentoAlerta.chechandoUltimaPosicaoPlayer;
+            fazerMovimentoAlerta = FazesMovimentoAlerta.chechandoUltimaPosicaoPlayer;
         }
         
     }
@@ -426,9 +426,9 @@ public class EnemyMove : MonoBehaviour
         else
         {
             Debug.Log("chegued na origem");
-            fazesMovimentoAlerta = FazesMovimentoAlerta.NA;
-            estado = Estado.rotina;
-            stance = Stances.patrolling;
+            fazerMovimentoAlerta = FazesMovimentoAlerta.NA;
+            estado = Estado.Rotina;
+            stance = Stances.Patrolling;
         }
     }
  
@@ -449,7 +449,7 @@ public class EnemyMove : MonoBehaviour
             if (randomSpot != lastMoveSpot)
             {
                 lastMoveSpot = randomSpot;
-                ultimaposicaoOrigem = moveSpots[lastMoveSpot].position;
+                ultimaPosicaoOrigem = moveSpots[lastMoveSpot].position;
             }
             else
             {
@@ -461,7 +461,7 @@ public class EnemyMove : MonoBehaviour
         }
         else
         {
-            stance = Stances.patrolling;
+            stance = Stances.Patrolling;
         }
     }
     private void CollisionDirection()
@@ -575,6 +575,11 @@ public class EnemyMove : MonoBehaviour
             timeMaxKnock = timeMaxOriginalKnock;
             knockBacking = false;
         }
+    }
+
+    public void ZerarVelocidade()
+    {
+        rb.velocity = new Vector2(0, 0);
     }
 
 

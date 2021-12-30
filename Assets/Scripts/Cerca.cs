@@ -11,8 +11,9 @@ public class Cerca : ParedeModel
     //Componentes
     private SpriteRenderer spriteRenderer;
     private BoxCollider2D boxCollider2D;
-    private DialogueActivator dialogoQuebravel;
-    private DialogueActivator dialogoIndestrutivel;
+    private BoxCollider2D hitBoxTiro;
+    private DialogueActivator dialogo;
+    private DialogueList listaDeDialogos;
     private Animator animator;
 
     //Enums
@@ -20,16 +21,19 @@ public class Cerca : ParedeModel
     public enum Direcao { Horizontal, Vertical }
     public enum Posicao { Meio, Esquerda, Direita, Vertical}
 
-    public enum SpriteName { Quebravel, Indestrutivel, Dano1, Dano2, Destruido }
-
     //Variaveis
     [SerializeField] private string nome;
     [SerializeField] private Tipo tipo;
     [SerializeField] private Direcao direcao;
     private Posicao posicao;
-    private SpriteName sprite;
+    private string spriteAtual;
 
     [SerializeField] private Sprite[] sprites;
+
+    //Variaveis de respawn
+    private int vidaRespawn;
+    private bool ativoRespawn;
+    private string spriteAtualRespawn;
 
     // Start is called before the first frame update
     void Start()
@@ -40,34 +44,68 @@ public class Cerca : ParedeModel
         //Componentes
         spriteRenderer = GetComponent<SpriteRenderer>();
         boxCollider2D = GetComponent<BoxCollider2D>();
-        dialogoQuebravel = transform.Find("DialogoQuebravel").GetComponent<DialogueActivator>();
-        dialogoIndestrutivel = transform.Find("DialogoIndestrutivel").GetComponent<DialogueActivator>();
+        hitBoxTiro = transform.Find("HitBoxTiro").GetComponent<BoxCollider2D>();
+        dialogo = GetComponent<DialogueActivator>();
+        listaDeDialogos = GetComponent<DialogueList>();
         animator = GetComponent<Animator>();
 
         //Variaveis
         vida = vidaMax;
         ativo = true;
+        spriteAtual = "Quebravel";
 
         //Se adicionar a lista de objetos interagiveis do ObjectManager
         objectManager.adicionarAosObjetosInteragiveis(this);
         objectManager.adicionarAsParedesQuebraveis(this);
 
         AtualizarHitBox();
+
+        switch (tipo)
+        {
+            case Tipo.Quebravel:
+                spriteAtual = "Quebravel";
+                break;
+
+            case Tipo.Indestrutivel:
+                spriteAtual = "Indestrutivel";
+                break;
+        }
+
+        SetRespawn();
+    }
+
+    public override void SetRespawn()
+    {
+        vidaRespawn = vida;
+        ativoRespawn = ativo;
+        spriteAtualRespawn = spriteAtual;
+
+        if(ativo == true)
+        {
+            boxCollider2D.enabled = true;
+            hitBoxTiro.enabled = true;
+        }
+    }
+
+    public override void Respawn()
+    {
+        vida = vidaRespawn;
+        ativo = ativoRespawn;
+        TrocarSprite(spriteAtualRespawn);
     }
 
     public override void Interagir(Player player)
     {
-        if(ativo == true)
+        switch(tipo)
         {
-            switch(tipo)
-            {
-                case Tipo.Quebravel:
-                    dialogoQuebravel.ShowDialogue(player);
-                    break;
-                case Tipo.Indestrutivel:
-                    dialogoIndestrutivel.ShowDialogue(player);
-                    break;
-            }
+            case Tipo.Quebravel:
+                dialogo.UpdateDialogueObject(listaDeDialogos.GetDialogueObject("CercaQuebravel"));
+                dialogo.ShowDialogue(player);
+                break;
+            case Tipo.Indestrutivel:
+                dialogo.UpdateDialogueObject(listaDeDialogos.GetDialogueObject("CercaIndestrutivel"));
+                dialogo.ShowDialogue(player);
+                break;
         }
     }
 
@@ -80,11 +118,13 @@ public class Cerca : ParedeModel
 
             if(vida < vidaMax)
             {
-                TrocarSprite("Dano1");
+                spriteAtual = "Dano1";
+                TrocarSprite(spriteAtual);
             }
             if(vida <= vidaMax / 2)
             {
-                TrocarSprite("Dano2");
+                spriteAtual = "Dano2";
+                TrocarSprite(spriteAtual);
             }
             if (vida <= 0)
             {
@@ -95,8 +135,10 @@ public class Cerca : ParedeModel
 
     private void SeDestruir()
     {
-        TrocarSprite("Destruida");
-        boxCollider2D.isTrigger = true;
+        spriteAtual = "Destruida";
+        TrocarSprite(spriteAtual);
+        boxCollider2D.enabled = false;
+        hitBoxTiro.enabled = false;
         ativo = false;
     }
 
@@ -113,12 +155,12 @@ public class Cerca : ParedeModel
             case Direcao.Horizontal:
                 boxCollider2D.size = new Vector2(1, 0.2f);
                 boxCollider2D.offset = new Vector2(0, 0.1f);
-                transform.Find("HitBoxTiro").GetComponent<BoxCollider2D>().size = new Vector2(1, 1);
+                hitBoxTiro.size = new Vector2(1, 1);
                 break;
             case Direcao.Vertical:
                 boxCollider2D.size = new Vector2(0.2f, 1);
                 boxCollider2D.offset = new Vector2(0, 0.5f);
-                transform.Find("HitBoxTiro").GetComponent<BoxCollider2D>().size = new Vector2(0.2f, 1);
+                hitBoxTiro.size = new Vector2(0.2f, 1);
                 break;
         }
     }
@@ -168,15 +210,6 @@ public class Cerca : ParedeModel
             posicao = Posicao.Vertical;
         }
 
-        switch (tipo)
-        {
-            case Tipo.Quebravel:
-                TrocarSprite("Quebravel");
-                break;
-
-            case Tipo.Indestrutivel:
-                TrocarSprite("Indestrutivel");
-                break;
-        }
+        TrocarSprite(spriteAtual);
     }
 }

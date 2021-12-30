@@ -16,9 +16,12 @@ public class Porta : ObjetoInteragivel
     private enum Estado { NaoLockdown, Lockdown }
 
     //Variaveis
-    public Chave obj;
+    public Chave chave;
     private bool aberto;
     public bool trancado;
+
+    //Variaveis de respawn
+    private bool trancadoRespawn;
 
     [SerializeField] public TipoPorta tipoPorta;
     [SerializeField]private Estado estado = Estado.NaoLockdown;
@@ -36,26 +39,66 @@ public class Porta : ObjetoInteragivel
         objectManager.adicionarAosObjetosInteragiveis(this);
         objectManager.adicionarAsPortas(this);
 
-        if(tipoPorta == TipoPorta.Contencao)
+        //Verificar se tem chave para estar trancada
+        if (chave != null)
+        {
+            trancado = true;
+        }
+        else
+        {
+            trancado = false;
+        }
+
+        SetRespawn();
+        Respawn();
+    }
+
+    public override void SetRespawn()
+    {
+        trancadoRespawn = trancado;
+    }
+
+    public override void Respawn()
+    {
+        aberto = false;
+        trancado = trancadoRespawn;
+        ForceFecharPorta();
+
+        if (tipoPorta == TipoPorta.Contencao)
         {
             AbrirPorta();
         }
     }
+
     public override void Interagir(Player player)
     {
-        if (player.GetComponent<InventarioMissao>().itens.Contains(obj) && trancado)
+        if(trancado)
         {
-            //Debug.Log("destrancou porta");
-            VerificarPortaTrancadaSwitch();
+            //Verifica se ha uma chave nos itens do jogador e se alguma delas tem o id igual ao da chave que destranca a porta
+            List<Item> listaItens = player.GetComponent<InventarioMissao>().itens;
+            if (listaItens.Contains(chave))
+            {
+                foreach(Item item in listaItens)
+                {
+                    if(item is Chave)
+                    {
+                        Chave chave = (Chave)item;
+                        if(chave.ID == this.chave.ID)
+                        {
+                            Destrancar();
+                        }
+                    }
+                }
+            }
         }
-
-        if (!trancado)
+        else
         {
             //Debug.Log("abriur porta");
             AbrirPorta();
         }
     }
-    void VerificarPortaTrancadaSwitch()
+
+    void Destrancar()
     {
         switch (tipoPorta)
         {

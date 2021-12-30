@@ -1,49 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &1194853150289679393
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2971166913183578923}
-  - component: {fileID: 6054906311102830129}
-  m_Layer: 0
-  m_Name: DialogoIndestrutivel
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2971166913183578923
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1194853150289679393}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1281963047238720326}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6054906311102830129
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1194853150289679393}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6cc40cf137bf5914c9377fd20562949a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dialogueObject: {fileID: 11400000, guid: 0346573dd107c2d41b21028e1625a4f6, type: 2}
 --- !u!1 &1281963047238720330
 GameObject:
   m_ObjectHideFlags: 0
@@ -56,6 +12,8 @@ GameObject:
   - component: {fileID: 1281963047238720329}
   - component: {fileID: 1281963047238720328}
   - component: {fileID: 1281963047238720327}
+  - component: {fileID: 8097722600990207972}
+  - component: {fileID: 7514182952710180897}
   m_Layer: 0
   m_Name: CercaTeste
   m_TagString: cerca
@@ -74,8 +32,6 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 6964884223109695026}
-  - {fileID: 2971166913183578923}
   - {fileID: 2559842918886750596}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -194,50 +150,34 @@ MonoBehaviour:
   - {fileID: -5205028863927825785, guid: f03f6807a0c6ab8499c116a5d7c41cb7, type: 3}
   - {fileID: 6409128466280540393, guid: f03f6807a0c6ab8499c116a5d7c41cb7, type: 3}
   - {fileID: -491288748106857170, guid: f03f6807a0c6ab8499c116a5d7c41cb7, type: 3}
---- !u!1 &2280920101829598802
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 6964884223109695026}
-  - component: {fileID: 7458347008760340353}
-  m_Layer: 0
-  m_Name: DialogoQuebravel
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &6964884223109695026
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2280920101829598802}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1281963047238720326}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7458347008760340353
+--- !u!114 &8097722600990207972
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2280920101829598802}
+  m_GameObject: {fileID: 1281963047238720330}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6cc40cf137bf5914c9377fd20562949a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   dialogueObject: {fileID: 11400000, guid: 34e8dacdec6ff3b499e1ac00a7f1b7c3, type: 2}
+--- !u!114 &7514182952710180897
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1281963047238720330}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f407ce48a656e044b7d39160467b389, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogueList:
+  - {fileID: 11400000, guid: 0346573dd107c2d41b21028e1625a4f6, type: 2}
+  - {fileID: 11400000, guid: 34e8dacdec6ff3b499e1ac00a7f1b7c3, type: 2}
 --- !u!1 &5770008766677553767
 GameObject:
   m_ObjectHideFlags: 0
@@ -267,7 +207,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1281963047238720326}
-  m_RootOrder: 2
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &8739809349661893018
 BoxCollider2D:

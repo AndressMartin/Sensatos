@@ -6,8 +6,5 @@ public class Chave : Item
 {
     [SerializeField] private int id;
 
-    public int GetId()
-    {
-        return id;
-    }
+    public int ID => id;
 }

@@ -96,7 +96,7 @@ public class EnemyVision : EntityModel
 
     void ChangeCollision(bool _poligon)
     {
-        if (!enemyModel.dead)
+        if (!enemyModel.morto)
         {
             polygonCollider.enabled = _poligon;
             circleCollider2D.enabled = !_poligon;
@@ -108,7 +108,7 @@ public class EnemyVision : EntityModel
     private void OnTriggerStay2D(Collider2D collision)
     {//Debug.DrawRay(new Vector3(xp, yp, 0), new Vector3(cerca.transform.localPosition.x - xp, cerca.transform.localPosition.y - yp, cerca.transform.localPosition.z), Color.red);
 
-        if (!enemyModel.dead)
+        if (!enemyModel.morto)
         {
             if (polygonCollider.enabled && !seePlayer)
             {
@@ -125,7 +125,7 @@ public class EnemyVision : EntityModel
         Enemy entityTemp = collision.gameObject.GetComponent<Enemy>();
         if (entityTemp != null)
         {
-            if(entityTemp.dead)
+            if(entityTemp.morto)
             {
                 //Debug.Log("To vendo um corpo");
                 //deteceta um corpo de inimigo no chao
@@ -191,7 +191,7 @@ public class EnemyVision : EntityModel
     
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (!enemyModel.dead)
+        if (!enemyModel.morto)
         {
             if (collision.gameObject.tag == "Player" && polygonCollider.enabled == true)
             {
@@ -210,7 +210,7 @@ public class EnemyVision : EntityModel
 
     public void OnAttackRange(bool _playerVisible,GameObject _playerGameObject)
     {
-        if (!enemyModel.dead)
+        if (!enemyModel.morto)
         {
             playerOnAttackRange = _playerVisible;
 

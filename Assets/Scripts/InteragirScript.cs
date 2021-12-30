@@ -15,7 +15,6 @@ public class InteragirScript : MonoBehaviour
     private float width;
     private float height;
     private float distance;
-    private float horizontal, vertical;
 
     // Start is called before the first frame update
     void Start()
@@ -74,8 +73,11 @@ public class InteragirScript : MonoBehaviour
         {
             if (Colisao.HitTest(boxCollider2D, objetoInteragivel.transform.GetComponent<BoxCollider2D>()))
             {
-                objetoInteragivel.Interagir(player);
-                break;
+                if(objetoInteragivel.Ativo == true)
+                {
+                    objetoInteragivel.Interagir(player);
+                    break;
+                }
             }
         }
         boxCollider2D.enabled = false;
