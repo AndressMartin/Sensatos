@@ -171,6 +171,8 @@ public class Player : EntityModel
         imune = false;
         collisionState = false;
         tempoSoftlock = 0;
+
+        animacao.SetarVisibilidade(true);
     }
 
     private void Animar()
