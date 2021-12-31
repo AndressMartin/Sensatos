@@ -296,8 +296,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   direcao: 0
   estado: 0
-  pontosVida: 50
-  dead: 0
+  vidaInicial: 0
+  morto: 0
 --- !u!114 &6297625325533714492
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -310,43 +310,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 165274e93f6205a458fc560af0e1f5ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  velocity: 10
-  initialPosition: {x: 0, y: 0, z: 0}
-  playerGameObject: {fileID: 0}
   rb: {fileID: 0}
-  horizontal: 0
-  vertical: 0
-  lastPlayerPositionChecked: 0
-  lastPlayerPosition: {x: 0, y: 0, z: 0}
-  timeMaxAlert: 0
-  timeMax: 3
-  timePlayerResrvaMax: 1.5
-  timeMaxAlertOriginal: 3
-  velX: 0
-  velY: 0
-  gameObjectPlayerReserva: {fileID: 0}
-  knockBackHorizontal: 0
-  knockBackVertical: 0
-  Knock: 0
-  timeKnock: 0
-  timeMaxKnock: 1
-  timeKnockCont: 0
-  timeMaxKnockCont: 3
-  contQuantosTirosParaTomarKnockBack: 2
-  hearEnemy: 0
-  estado: 0
-  stance: 1
-  fazesMovimentoAlerta: 3
-  waitTime: 0
-  startWaitTime: 3
+  velocity: 10
   moveSpots:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  lastPlayerPosition: {x: 0, y: 0, z: 0}
+  contQuantosTirosParaTomarKnockBack: 2
   vendoPlayer: 0
-  ultimaposicaoOrigem: {x: 0, y: 0, z: 0}
-  gameObjectTemp: {fileID: 0}
+  hearPlayer: 0
+  hearShoot: 0
+  playerOnAttackRange: 0
+  timePlayerReservaMax: 3
+  timeMaxAlert: 3
+  timeMax: 3
+  contadorAlertaTempoMax: 3
+  timeMaxKnock: 1
+  timeMaxKnockCont: 3
+  estado: 0
+  stance: 1
+  fazerMovimentoAlerta: 0
+  modoPatrulha: 0
 --- !u!114 &6297625325533714482
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -498,17 +484,11 @@ MonoBehaviour:
   seePlayer: 0
   xp: 0
   yp: 0
-  wallDistance: {x: 0, y: 0, z: 0}
-  playerDistance: {x: 0, y: 0, z: 0}
   walls:
   - {fileID: 0}
   - {fileID: 0}
-  wallsDistance: []
   entityModelTemp: {fileID: 0}
   difDistance: 0
-  paredeModels:
-  - {fileID: 0}
-  - {fileID: 0}
   listaDeParedes: []
   mask:
     serializedVersion: 2

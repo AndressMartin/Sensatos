@@ -63,6 +63,8 @@ public class Enemy : EntityModel
         tiroColldown = false;
         timeCooldwon = 0;
         timeCooldownTiro = 0.5f;
+
+        SetRespawnInicial();
     }
 
     // Update is called once per frame
@@ -74,10 +76,15 @@ public class Enemy : EntityModel
         }
     }
 
-    public void SetRespawn()
+    private void SetRespawnInicial()
     {
         posicaoRespawn = transform.position;
         direcaoRespawn = direcao;
+        modoPatrulhaRespawn = enemyMove.modoPatrulha;
+    }
+
+    public void SetRespawn()
+    {
         modoPatrulhaRespawn = enemyMove.modoPatrulha;
     }
 

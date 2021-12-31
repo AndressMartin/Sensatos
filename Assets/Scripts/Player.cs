@@ -96,6 +96,8 @@ public class Player : EntityModel
 
         //Retirar
         distanciaTiroY = 1f;
+
+        SetRespawn();
     }
 
     // Update is called once per frame
@@ -164,6 +166,7 @@ public class Player : EntityModel
         posAnterior = transform.position;
         modoMovimento = ModoMovimento.Normal;
         estado = Estado.Normal;
+        movement.canMove = true;
         tempoImune = 0;
         imune = false;
         collisionState = false;

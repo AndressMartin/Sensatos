@@ -17,6 +17,19 @@ public class RespawnManagerScript : MonoBehaviour
         player = FindObjectOfType<Player>();
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.H))
+        {
+            SetCheckpoint(player.transform.position, player.direcao);
+        }
+
+        if (Input.GetKeyDown(KeyCode.J))
+        {
+            Respawn();
+        }
+    }
+
     public void SetCheckpoint(Vector2 posicao, Player.Direcao direcao)
     {
         player.SetRespawn(posicao, direcao);
