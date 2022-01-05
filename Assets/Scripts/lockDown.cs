@@ -32,6 +32,10 @@ public class LockDown : ObjetoInteragivel
         //Variaveis
         lockDownAtivo = false;
     }
+    public override void Respawn()
+    {
+        DesativarLockDown();
+    }
 
     void Update()
     {
@@ -41,11 +45,20 @@ public class LockDown : ObjetoInteragivel
             {
                 spriteRenderer.color = Color.green;
             }
+            else
+            {
+                spriteRenderer.color = Color.blue;
+            }
         }
     }
     public void AtivarLockDown(Vector2 posicaoDoPlayer)
     {
         lockDownManager.VerPlayer(posicaoDoPlayer);
+    }
+    public void DesativarLockDown()
+    {
+        lockDownAtivo = false;
+        lockDownManager.DesativaLockDown();
     }
     public override void Interagir(Player player)
     {

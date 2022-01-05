@@ -85,6 +85,7 @@ public class Enemy : EntityModel
 
     public void SetRespawn()
     {
+        mortoRespawn = morto;
         modoPatrulhaRespawn = enemyMove.modoPatrulha;
     }
 
@@ -100,9 +101,10 @@ public class Enemy : EntityModel
             enemyMove.modoPatrulha = modoPatrulhaRespawn;
 
             enemyMove.estado = EnemyMove.Estado.Rotina;
-            enemyMove.stance = EnemyMove.Stances.Idle;
+            enemyMove.stance = EnemyMove.Stances.Patrolling;
             enemyMove.fazerMovimentoAlerta = EnemyMove.FazerMovimentoAlerta.NA;
             enemyMove.ZerarVelocidade();
+
 
             ResetarVariaveisDeControle();
         }
@@ -114,6 +116,7 @@ public class Enemy : EntityModel
         tiroColldown = false;
         timeCooldwon = 0;
         enemyMove.ResetarVariaveisDeControle();
+        enemyVision.ResetarVariaveisDeControle();
     }
 
     void AllEnemySubClass()
@@ -167,12 +170,12 @@ public class Enemy : EntityModel
     public void die()
     {
         morto = true;
+        enemyMove.ZerarVelocidade();
         Debug.Log("to morto");
     }
     public void stealthKill()
     {
-        morto = true;
-        gameObject.SetActive(false);
+        die();
     }
 
     public override void TomarDano(int _dano, float _horizontal, float _vertical,float _knockBack)

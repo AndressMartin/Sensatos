@@ -5,37 +5,56 @@ using UnityEngine;
 
 public class EnemyVision : EntityModel
 {
-    public bool playerOnAttackRange;
 
+    //variaveis
+    [SerializeField] LayerMask mask;
+    [SerializeField] private float xPointOrigin, yPointOrigin;
+    [SerializeField] private float xPointMax, yPointMax;
+    float xpontoMaxOrigin, ypontoMaxOrigin;
+
+    [SerializeField]private float xp, yp;
+    Vector2 v1, v2 = new Vector2(0, 0), v3 = new Vector2(0, 0);
+
+    List<GameObject> walls = new List<GameObject>();
+
+    //variaveis controle
+    public bool playerOnAttackRange;
+    public bool seePlayer;
+
+    //componente
     private EnemyMove enemyMove;
     public PolygonCollider2D polygonCollider;
     private CircleCollider2D circleCollider2D;
-    [SerializeField] private float xPointOrigin, yPointOrigin;
-    [SerializeField] private float xPointMax, yPointMax;
     GameObject playerGameObject;
     Transform transformFather;
     Enemy enemyModel;
-    public bool seePlayer;
-    [SerializeField]private float xp, yp;
-    Vector2 v1, v2 = new Vector2(0, 0), v3 = new Vector2(0, 0);
-    private SpriteRenderer spriteRenderer;
-    public List<GameObject> walls;
-    public EntityModel entityModelTemp;
-    public float difDistance;
-    public List<GameObject> listaDeParedes;
-    [SerializeField] LayerMask mask;
 
     // Start is called before the first frame update
     void Start()
     {
+        xpontoMaxOrigin = xPointMax;
+        ypontoMaxOrigin = yPointMax;
+
         circleCollider2D = GetComponent<CircleCollider2D>();
         transformFather = GetComponentInParent<Transform>();
         enemyMove = GetComponentInParent<EnemyMove>();
         polygonCollider = GetComponent<PolygonCollider2D>();
         enemyModel = GetComponentInParent<Enemy>();
-        spriteRenderer = GetComponentInParent<SpriteRenderer>();
         enemyMove.EnemyVissionReference(this);
         v1 = new Vector2(xPointOrigin, yPointOrigin);
+    }
+    public void ResetarVariaveisDeControle()
+    {
+        xPointMax = xpontoMaxOrigin;
+        yPointMax = ypontoMaxOrigin;
+        Debug.Log("aqui dentro");
+        seePlayer = false;
+        playerOnAttackRange = false;
+
+        circleCollider2D.enabled = false;
+        polygonCollider.enabled = true;
+        Debug.Log("aqui fora");
+
     }
 
     public void Main()
@@ -131,15 +150,9 @@ public class EnemyVision : EntityModel
                 //deteceta um corpo de inimigo no chao
             }
         }
-        if (collision.gameObject.tag == "Wall")
-        {
-            if (!listaDeParedes.Contains(collision.gameObject))
-            {
-                listaDeParedes.Add(collision.gameObject);
-            }
-        }
 
-        entityModelTemp = collision.gameObject.GetComponent<Player>();
+
+        EntityModel entityModelTemp = collision.gameObject.GetComponent<Player>();
         if (entityModelTemp != null)
         {
             //Debug.Log(entityModelTemp.transform.name);
@@ -225,8 +238,6 @@ public class EnemyVision : EntityModel
         playerOnAttackRange = false;
         playerGameObject = null;
         seePlayer = false;
-        entityModelTemp = null;
-        difDistance = 0;
         enemyMove.SawEnemy(null);
 
     }

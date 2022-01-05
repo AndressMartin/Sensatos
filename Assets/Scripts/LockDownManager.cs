@@ -14,7 +14,7 @@ public class LockDownManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        mets();
+        //mets();
     }
 
     public void VerPlayer(Vector2 posicaoDoPlayer)
@@ -26,6 +26,10 @@ public class LockDownManager : MonoBehaviour
         TrancarPortas();
        
 
+    }
+    public void DesativaLockDown()
+    {
+        DestrancarPortas();
     }
     void mets()
     {

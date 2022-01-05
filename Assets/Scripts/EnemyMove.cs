@@ -12,6 +12,7 @@ public class EnemyMove : MonoBehaviour
     private EnemyVision enemyVision;
     private PathFinding pathFinding;
     public Rigidbody2D rb;
+    private ModoLockDown modoLockDown;
 
     //Variaveis
     public int velocity;
@@ -48,22 +49,22 @@ public class EnemyMove : MonoBehaviour
 
 
     //Contadores
-    private float timePlayerReserva = 0.0F;
-    private float timeAlert = 0.0F;
-    private float time = 0.0F;
-    private float contadorAlertaTempo = 0.0F;
+    private float timerSeguirPlayerAposPerderEleDeVista = 0.0F;
+    private float timerPraEntarEmModoCombate = 0.0F;
+    private float timerEmQueVaiVerificarRegiao = 0.0F;
+    private float timerPraPresetarModoAlerta = 0.0F;
 
-    private float timeKnock = 0.0F;
-    private float timeKnockCont = 0.0F;
+    private float timerKnockback = 0.0F;
+    private float timerResetKnockBack = 0.0F;
     private int knockBackCont = 0;
 
     //Tempos
-    [SerializeField] private float timePlayerReservaMax;
-    [SerializeField] private float timeMaxAlert;
-    [SerializeField] private float timeMax;
-    [SerializeField] float contadorAlertaTempoMax;
-    [SerializeField] private float timeMaxKnock;
-    [SerializeField] private float timeMaxKnockCont;
+    [SerializeField] private float timerSeguirPlayerAposPerderEleDeVistaMax;
+    [SerializeField] private float timerPraEntarEmModoCombateMax;
+    [SerializeField] private float timerEmQueVaiVerificarRegiaoMax;
+    [SerializeField] private float timerResetarModoEmAlertaMax;
+    [SerializeField] private float timerKnockbackMax;
+    [SerializeField] private float timerResetKnockBackMax;
 
     //Enuns
     public enum Estado { Rotina, Alerta, Combate, Lockdown };
@@ -81,6 +82,9 @@ public class EnemyMove : MonoBehaviour
 
     void getComponent()
     {
+        modoLockDown= FindObjectOfType<ModoLockDown>();
+        modoLockDown.AddtoLista(this, timerPraEntarEmModoCombateMax, timerResetarModoEmAlertaMax);
+
         pathFinding = GetComponent<PathFinding>();
         rb = GetComponent<Rigidbody2D>();
         enemy = GetComponent<Enemy>();
@@ -103,13 +107,14 @@ public class EnemyMove : MonoBehaviour
         knockBacking = false;
         noContadorAlert = false;
         enemyPlayerReserva = false;
-        timePlayerReserva = 0.0F;
-        timeAlert = 0.0F;
-        time = 0.0F;
-        contadorAlertaTempo = 0.0F;
-        timeKnock = 0.0F;
-        timeKnockCont = 0.0F;
+        timerSeguirPlayerAposPerderEleDeVista = 0.0F;
+        timerPraEntarEmModoCombate = 0.0F;
+        timerEmQueVaiVerificarRegiao = 0.0F;
+        timerPraPresetarModoAlerta = 0.0F;
+        timerKnockback = 0.0F;
+        timerResetKnockBack = 0.0F;
         knockBackCont = 0;
+        velocity = 2;
     }
 
     private void Start()
@@ -143,8 +148,8 @@ public class EnemyMove : MonoBehaviour
         if (estado == Estado.Alerta)
         {
             noContadorAlert = true;
-            timeAlert += Time.deltaTime;
-            if (timeAlert > timeMaxAlert)
+            timerPraEntarEmModoCombate += Time.deltaTime;
+            if (timerPraEntarEmModoCombate > timerPraEntarEmModoCombateMax)
             {
                 estado = Estado.Combate;
                 noContadorAlert = false;
@@ -152,15 +157,15 @@ public class EnemyMove : MonoBehaviour
         }
     }
 
-    void CounterAlertTimer()
+    void CounterAlertTimer()//contador pra perder a barra de alerta
     {
         if (noContadorAlert && !vendoPlayer)
         {
-            contadorAlertaTempo += Time.deltaTime;
-            if (contadorAlertaTempo > contadorAlertaTempoMax)
+            timerPraPresetarModoAlerta += Time.deltaTime;
+            if (timerPraPresetarModoAlerta > timerResetarModoEmAlertaMax)
             {
-                timeAlert = 0;
-                contadorAlertaTempo = 0;
+                timerPraEntarEmModoCombate = 0;
+                timerPraPresetarModoAlerta = 0;
                 noContadorAlert = false;
             }
         }
@@ -256,8 +261,9 @@ public class EnemyMove : MonoBehaviour
     }
     public void Main()
     {
+
         CounterAlertTimer();
-        vendoPlayer = playerGameObject;
+        vendoPlayer = enemyVision.seePlayer;
         difLockDownButton = Vector2.Distance(lockDown.transform.position, transform.position);
 
         if (vendoPlayer)//caso esteja vendo o player
@@ -365,10 +371,10 @@ public class EnemyMove : MonoBehaviour
     {     
         if (gameObjectPlayerReservaAlt != null)
         {
-            timePlayerReserva += Time.deltaTime;
-            if (timePlayerReserva > timePlayerReservaMax)//pega a ultima posicao do player conhecida e passa a pra variavel, zera as outras coisas
+            timerSeguirPlayerAposPerderEleDeVista += Time.deltaTime;
+            if (timerSeguirPlayerAposPerderEleDeVista > timerSeguirPlayerAposPerderEleDeVistaMax)//pega a ultima posicao do player conhecida e passa a pra variavel, zera as outras coisas
             {
-                timePlayerReserva = 0;//depois daquele tempo em que segue o jogador voltar pro alerta
+                timerSeguirPlayerAposPerderEleDeVista = 0;//depois daquele tempo em que segue o jogador voltar pro alerta
                 gameObjectPlayerReservaAlt = null;
                 enemyPlayerReserva = true;
             }
@@ -386,11 +392,11 @@ public class EnemyMove : MonoBehaviour
     private void VerificarRegiao()
     {
         rb.velocity = Vector2.zero;
-        time += Time.deltaTime;
-        if (time > timeMax)
+        timerEmQueVaiVerificarRegiao += Time.deltaTime;
+        if (timerEmQueVaiVerificarRegiao > timerEmQueVaiVerificarRegiaoMax)
         {
             fazerMovimentoAlerta = FazerMovimentoAlerta.VoltandoA_RotinaPadrao;
-            time = 0;
+            timerEmQueVaiVerificarRegiao = 0;
         }
 
     }
@@ -596,7 +602,7 @@ public class EnemyMove : MonoBehaviour
     public void KnockBack(float _horizontal, float _vertical, float _knockBack)
     {
         knockBackCont++;
-        timeKnockCont = 0;
+        timerResetKnockBack = 0;
         if (knockBackCont == contQuantosTirosParaTomarKnockBack)
             KnockBackComplex(_horizontal, _vertical, _knockBack);
         else
@@ -607,11 +613,11 @@ public class EnemyMove : MonoBehaviour
         if (knockBackCont != 0)
         {
             //inicia contador de tempo para levar o knockback forte
-            timeKnockCont += Time.deltaTime;
-            if (timeKnockCont > timeMaxKnockCont)
+            timerResetKnockBack += Time.deltaTime;
+            if (timerResetKnockBack > timerResetKnockBackMax)
             {
                 knockBackCont = 0;
-                timeKnockCont = 0;
+                timerResetKnockBack = 0;
             }
         }
     }
@@ -645,16 +651,16 @@ public class EnemyMove : MonoBehaviour
     {
         if (_whoEnemySaw == null)
         {
-            time = 0;
+            timerEmQueVaiVerificarRegiao = 0;
             enemyPlayerReserva = false;
-            timePlayerReserva = 0;
+            timerSeguirPlayerAposPerderEleDeVista = 0;
             playerGameObject = null;
         }
         else
         {
             playerGameObject = _whoEnemySaw;
-            time = 0;
-            timePlayerReserva = 0;
+            timerEmQueVaiVerificarRegiao = 0;
+            timerSeguirPlayerAposPerderEleDeVista = 0;
         }
 
     }
@@ -662,11 +668,11 @@ public class EnemyMove : MonoBehaviour
     {
         if (Knock)
         {
-            timeKnock += Time.deltaTime;
-            if (timeKnock > timeMaxKnock)
+            timerKnockback += Time.deltaTime;
+            if (timerKnockback > timerKnockbackMax)
             {
                 Knock = false;
-                timeKnock = 0;
+                timerKnockback = 0;
             }
         }
         else
@@ -679,6 +685,20 @@ public class EnemyMove : MonoBehaviour
     {
         rb.velocity = new Vector2(0, 0);
     }
+    public float RetornarTimerDeAlerta()
+    {
+        return timerPraEntarEmModoCombate;
+    }
+    public bool RetornarVendoPlayer()
+    {
+        return vendoPlayer;
+    }
+    public float RetornarTimeResetandoAlerta()
+    {
+        return timerPraPresetarModoAlerta;
+    }
+
+
 }
 /*Movimentacao old
  * 
