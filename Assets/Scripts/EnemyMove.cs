@@ -82,9 +82,7 @@ public class EnemyMove : MonoBehaviour
 
     void getComponent()
     {
-        modoLockDown= FindObjectOfType<ModoLockDown>();
-        modoLockDown.AddtoLista(this, timerPraEntarEmModoCombateMax, timerResetarModoEmAlertaMax);
-
+        modoLockDown = FindObjectOfType<ModoLockDown>();
         pathFinding = GetComponent<PathFinding>();
         rb = GetComponent<Rigidbody2D>();
         enemy = GetComponent<Enemy>();
@@ -184,7 +182,10 @@ public class EnemyMove : MonoBehaviour
         if (gameObjectPlayerReservaAlt == null)
             gameObjectPlayerReservaAlt = playerGameObject;
 
-        if(hearPlayer || hearPlayer)
+        /*if(timerPraEntarEmModoCombate != timerPraEntarEmModoCombateMax)//ficar contando que a detecção é instantanea
+        timerPraEntarEmModoCombate = timerPraEntarEmModoCombateMax;*/
+
+        if (hearPlayer || hearPlayer)
         {
             hearPlayer = false;
             hearShoot = false;  
@@ -261,7 +262,7 @@ public class EnemyMove : MonoBehaviour
     }
     public void Main()
     {
-
+        modoLockDown.AddtoLista(this, timerPraEntarEmModoCombateMax, timerResetarModoEmAlertaMax);
         CounterAlertTimer();
         vendoPlayer = enemyVision.seePlayer;
         difLockDownButton = Vector2.Distance(lockDown.transform.position, transform.position);
@@ -278,6 +279,9 @@ public class EnemyMove : MonoBehaviour
                     break;
                 case Estado.Rotina:
                     estado = Estado.Alerta;
+                    break;
+                case Estado.Lockdown:
+                     seguirAtacarPlayer();
                     break;
 
             }
@@ -403,25 +407,25 @@ public class EnemyMove : MonoBehaviour
 
     private void OuviuTiro()
     {
-        Debug.Log("To no tiro");
+        //Debug.Log("To no tiro");
         if (Vector2.Distance(playerSoundPosition, transform.position) >= 0.1)//caso o inimigo não tenha chego na ultima posicao do player
         {
             MoveGeneric(playerSoundPosition);
-            Debug.Log("To andando ate tiro");
+            //Debug.Log("To andando ate tiro");
         }
         else
         {
             fazerMovimentoAlerta = FazerMovimentoAlerta.AndandoAte_UltimaPosicaoSomPlayer;
             hearShoot = false;
             hearPlayer = hearShoot;
-            Debug.Log("é ture"+ fazerMovimentoAlerta);
+            //Debug.Log("é ture"+ fazerMovimentoAlerta);
         }
         
     }
     private void OuvindoInimigo()
     {
         
-        Debug.Log("to ouvindo algo Shoot: "+hearShoot+" Player: "+hearPlayer);
+        //Debug.Log("to ouvindo algo Shoot: "+hearShoot+" Player: "+hearPlayer);
         if (hearShoot)
         {
             estado = Estado.Alerta;
@@ -696,6 +700,11 @@ public class EnemyMove : MonoBehaviour
     public float RetornarTimeResetandoAlerta()
     {
         return timerPraPresetarModoAlerta;
+    }
+    public bool RetornarMorto()
+    {
+        return gameObject.GetComponent<Enemy>().morto;
+
     }
 
 
