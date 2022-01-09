@@ -8,9 +8,14 @@ public class InventoryHudController : UIScreen, IInventory
     bool inventoryOpen = false;
     public static UnityEvent invOpen;
     public static UnityEvent invClose;
+    private EquipedWeaponsHUD equipedWeaponsHUD;
+    private Selection selection;
+
     // Start is called before the first frame update
     void Start()
     {
+        equipedWeaponsHUD = transform.GetChild(0).GetComponent<EquipedWeaponsHUD>();
+        selection = transform.GetChild(0).GetComponent<Selection>();
         if (invOpen == null)
             invOpen = new UnityEvent(); 
         if (invClose == null)
@@ -36,13 +41,14 @@ public class InventoryHudController : UIScreen, IInventory
     {
         base.OpenScreen();
         invOpen.Invoke();
-        transform.GetChild(0).GetComponent<EquipedWeaponsHUD>().Init();
+        equipedWeaponsHUD.Init();
     }
 
     public override void CloseScreen()
     {
         base.CloseScreen();
-        transform.GetChild(0).GetComponent<Selection>().beganSelection = false;
+        selection.beganSelection = false;
+        selection.onSubScreen = false;
         invClose.Invoke();
     }
 

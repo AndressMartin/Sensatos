@@ -11,7 +11,7 @@ public class WeaponFrame : MonoBehaviour
     public Image weaponImage;
     public Color equipedColor;
     public Color normalColor;
-
+    private ArmaDeFogo savedWeaponRef;
     // Start is called before the first frame update
     void Start()
     {
@@ -26,10 +26,16 @@ public class WeaponFrame : MonoBehaviour
 
     public void Init(ArmaDeFogo armaRef)
     {
+        savedWeaponRef = armaRef;
         nameTxt.text = armaRef.nome;
         municaoTxt.text = $"{armaRef.municaoAtual}/{armaRef.municaoMax}";
         weaponImage.sprite = armaRef.myImage;
         ResetColor();
+    }
+
+    public ArmaDeFogo GetSavedWeapon()
+    {
+        return savedWeaponRef;
     }
 
     public void EquipedColor()

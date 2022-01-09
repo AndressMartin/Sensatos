@@ -37,5 +37,6 @@ public class UIScreen : MonoBehaviour
     {
         Debug.LogWarning($"CLOSE {name} + {gameObject.name}");
         transform.GetChild(0).gameObject.SetActive(false);
+        if (objectThatCalled) Selection.GetInstance().SetEventSysFirstButton(objectThatCalled);
     }
 }

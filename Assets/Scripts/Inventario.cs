@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Inventario : MonoBehaviour
 {
@@ -11,9 +12,13 @@ public class Inventario : MonoBehaviour
     public ArmaDeFogo armaSlot2;
     public Item itemAtual;
     public List<Item> itemsEmAtalhos = new List<Item>();
+
+    public UnityEvent sortedWeapons;
     // Start is called before the first frame update
     void Start()
     {
+        if (sortedWeapons == null)
+            sortedWeapons = new UnityEvent();
         player = GetComponentInParent<Player>();
         InitWeaponConfig();
     }
@@ -40,6 +45,7 @@ public class Inventario : MonoBehaviour
     {
         armas.Add(arma);
         arma.GetComponent<ArmaDeFogo>().index = armas.Count - 1;
+        //Needs resorting indexes?
     }
 
     public void SetarItemAtual(Item item)
@@ -50,6 +56,7 @@ public class Inventario : MonoBehaviour
     public void EquiparArma(ArmaDeFogo arma)
     {
         armaSlot1 = arma;
+        //Needs resorting indexes?
     }
 
     public void UsarItemAtual()
@@ -76,6 +83,18 @@ public class Inventario : MonoBehaviour
         }
         ReSort();
     }
+
+    public void TrocarArmaDoInventario(ArmaDeFogo arma, GameObject objectThatCalled)
+    {
+        ArmaDeFogo weaponToBeBenched = objectThatCalled.GetComponent<WeaponFrame>().GetSavedWeapon();
+        int temporaryIndex = arma.index; //E.g. temp = 7
+        arma.index = weaponToBeBenched.index; //E.g. arma7 = 1
+        weaponToBeBenched.index = temporaryIndex; //E.g. arma1 = 7
+        if (arma.index == 0) armaSlot1 = arma;
+        else if (arma.index == 1) armaSlot2 = arma;
+        else Debug.LogError("WARNING: SWITCHING WEAPONS IN INVENTORY WENT WRONG.");
+        ReSort();
+    }
     public void ReSort()
     {
         List<ArmaDeFogo> armasTemp = new List<ArmaDeFogo>();
@@ -90,9 +109,6 @@ public class Inventario : MonoBehaviour
         {
             armas.Add(arma);
         }
-    }
-    public void EquiparArmaDaSelecaoInventario()
-    {
-
+        sortedWeapons.Invoke();
     }
 }

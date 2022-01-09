@@ -5,7 +5,7 @@ using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class Selection : MonoBehaviour
+public class Selection : SingletonInstance<Selection>
 {
     public EventSystem eventSys;
     public Button FirstSelection;
@@ -27,7 +27,7 @@ public class Selection : MonoBehaviour
     void Update()
     {
         if ((Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0) && !beganSelection)
-        {
+        { 
             beganSelection = true;
             Debug.Log(beganSelection);
             SetEventSysFirstButton(FirstSelection.gameObject);
@@ -52,6 +52,8 @@ public class Selection : MonoBehaviour
         screenToOpen.OpenScreen();
         onSubScreen = true;
         SetEventSysFirstButton(openedScreen.FirstSelection.gameObject);
+        Debug.LogWarning($"ScreenToOpen: {screenToOpen}, ObjectThatCalled: {screenToOpen.objectThatCalled}, Button: {button}");
+
     }
 
     void CloseNextScreen()
@@ -61,6 +63,7 @@ public class Selection : MonoBehaviour
             if (openedScreen && onSubScreen)
             {
                 SetEventSysFirstButton(FirstSelection.gameObject);
+                onSubScreen = false;
                 openedScreen.transform.GetChild(0).gameObject.SetActive(false);
             }
             else if (!onSubScreen)

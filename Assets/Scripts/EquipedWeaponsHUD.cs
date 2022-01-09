@@ -12,11 +12,15 @@ public class EquipedWeaponsHUD : UIScreen
         if (inventario == null) inventario = FindObjectOfType<Inventario>();
         InventoryHudController.invOpen.AddListener(SortWeapons);
         SortWeapons();
+        inventario.sortedWeapons.AddListener(SortWeapons);
     }
     // Update is called once per frame
     void Update()
     {
-
+        //if (Input.GetKeyDown(KeyCode.Q))
+        //{
+        //    SortWeapons();
+        //}
     }
 
     public void SortWeapons()
