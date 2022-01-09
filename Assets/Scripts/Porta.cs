@@ -10,6 +10,7 @@ public class Porta : ObjetoInteragivel
     //Componentes
     private AnimacaoPorta animacao;
     private BoxCollider2D colisao;
+    private BoxCollider2D hitBoxTiro;
 
     //Enums
     public enum TipoPorta { Simples, Normal, Contencao }
@@ -34,6 +35,7 @@ public class Porta : ObjetoInteragivel
         //Componentes
         animacao = GetComponent<AnimacaoPorta>();
         colisao = GetComponent<BoxCollider2D>();
+        hitBoxTiro = transform.Find("HitBoxTiro").GetComponent<BoxCollider2D>();
 
         //Se adicionar a lista de objetos interagiveis do ObjectManager
         objectManager.adicionarAosObjetosInteragiveis(this);
@@ -167,6 +169,7 @@ public class Porta : ObjetoInteragivel
     void Door(bool portaAberta)
     {
         colisao.isTrigger = portaAberta;
+        hitBoxTiro.enabled = !portaAberta;
     }
 
     public void AtivarLockDown()
@@ -177,7 +180,6 @@ public class Porta : ObjetoInteragivel
             estado = Estado.Lockdown;
             trancado = true;
             ForceFecharPorta();
-
         }
 
     }
@@ -199,7 +201,6 @@ public class Porta : ObjetoInteragivel
                 default:
                     break;
             }
-
         }
     }
 }

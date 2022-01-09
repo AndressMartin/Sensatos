@@ -134,7 +134,7 @@ public class Projetil : MonoBehaviour
                 HitTarget();
             }
         }
-        else if(alvo.tag =="porta" || alvo.tag =="cerca" || alvo.tag =="paredeTiro")
+        else if(alvo.tag == "paredeTiro")
             DestroyGameObject();
 
     }
