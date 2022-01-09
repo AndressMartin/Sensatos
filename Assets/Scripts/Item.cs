@@ -7,7 +7,10 @@ public class Item : MonoBehaviour
     public enum Tipo { Consumivel, Ferramenta, ItemChave };
 
     [SerializeField] public Tipo tipo;
+    public Sprite spriteArma;
     [SerializeField] public string nome;
+    public string descricao = "Não há descrição.";
+
 
     virtual public void Usar(Player player)
     {

@@ -11,14 +11,14 @@ public class Inventario : MonoBehaviour
     public ArmaDeFogo armaSlot1;
     public ArmaDeFogo armaSlot2;
     public Item itemAtual;
-    public List<Item> itemsEmAtalhos = new List<Item>();
+    public List<Item> itensEmAtalhos = new List<Item>();
 
-    public UnityEvent sortedWeapons;
+    public UnityEvent hasSortedWeapons;
     // Start is called before the first frame update
     void Start()
     {
-        if (sortedWeapons == null)
-            sortedWeapons = new UnityEvent();
+        if (hasSortedWeapons == null)
+            hasSortedWeapons = new UnityEvent();
         player = GetComponentInParent<Player>();
         InitWeaponConfig();
     }
@@ -109,6 +109,6 @@ public class Inventario : MonoBehaviour
         {
             armas.Add(arma);
         }
-        sortedWeapons.Invoke();
+        hasSortedWeapons.Invoke();
     }
 }

@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &7043026389037588726
+--- !u!1 &3892329996180617261
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,22 +8,22 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 2608394423259837228}
-  - component: {fileID: 8604403824981294011}
+  - component: {fileID: 3379001828228371297}
+  - component: {fileID: 454420426423491596}
   m_Layer: 0
-  m_Name: Alicate
+  m_Name: BarraDeOuro
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &2608394423259837228
+--- !u!4 &3379001828228371297
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7043026389037588726}
+  m_GameObject: {fileID: 3892329996180617261}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -31,22 +31,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8604403824981294011
+--- !u!114 &454420426423491596
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7043026389037588726}
+  m_GameObject: {fileID: 3892329996180617261}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aeffcb4fbcd801d4f95f2ea04d30092e, type: 3}
+  m_Script: {fileID: 11500000, guid: fb8afa571d1f72746a227e95bdf93187, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tipo: 1
-  spriteArma: {fileID: 21300000, guid: 48b146d8e786eb544808ccd45a2a3fc3, type: 3}
-  nome: Alicate
-  descricao: Ali! Cate! Foi mal.
-  dano: 1
-  quantidadeDeUsos: 25
-  nomeAnimacao: Alicate1
+  tipo: 0
+  spriteArma: {fileID: 21300000, guid: bf45384915468174a977bfdf3ee8d304, type: 3}
+  nome: Barra de Ouro
+  descricao: US$250 por grama!

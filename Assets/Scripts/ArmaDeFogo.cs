@@ -18,6 +18,7 @@ public class ArmaDeFogo : MonoBehaviour
     public int index;
     public string nome;
     public string nomeVisual;
+    public string descricao = "Não há descrição.";
     public float distanciaMaxProjetil;
 
     [SerializeField] private float raioTiro;

@@ -11,6 +11,8 @@ public class WeaponInfo : UIScreen
     public GameObject weaponsPanel;
     public GameObject weaponPanelPrefab;
     private UIScrollToSelection UIKeyboardScroller;
+    [SerializeField] private ExplainPanel explainPanel;
+    private GameObject currentSelected;
     [SerializeField] private Inventario inventario;
     // Start is called before the first frame update
     void Start()
@@ -43,6 +45,7 @@ public class WeaponInfo : UIScreen
         inventario.ReSort();
         SetWeaponSlots();
         SortListAndNav();
+
     }
     // Update is called once per frame
     void Update()
@@ -51,8 +54,12 @@ public class WeaponInfo : UIScreen
         {
             if (Input.GetAxisRaw("Vertical") == 1 || Input.GetAxisRaw("Vertical") == -1)
             {
-                var currentSelected = EventSystem.current.currentSelectedGameObject;
-
+                currentSelected = EventSystem.current.currentSelectedGameObject;
+                if (currentSelected.GetComponent<WeaponFrame>().GetSavedWeapon())
+                {
+                    var selectedWeapon = currentSelected.GetComponent<WeaponFrame>().GetSavedWeapon();
+                    explainPanel.ChangeUI(selectedWeapon);
+                }
                 foreach (var btn in weaponButtons)
                 {
                     if (currentSelected.name == btn.name)
