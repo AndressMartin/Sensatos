@@ -14,7 +14,6 @@ public class Cerca : ParedeModel
     private BoxCollider2D hitBoxTiro;
     private DialogueActivator dialogo;
     private DialogueList listaDeDialogos;
-    private Animator animator;
 
     //Enums
     public enum Tipo { Quebravel, Indestrutivel }
@@ -47,7 +46,6 @@ public class Cerca : ParedeModel
         hitBoxTiro = transform.Find("HitBoxTiro").GetComponent<BoxCollider2D>();
         dialogo = GetComponent<DialogueActivator>();
         listaDeDialogos = GetComponent<DialogueList>();
-        animator = GetComponent<Animator>();
 
         //Variaveis
         vida = vidaMax;
@@ -153,14 +151,16 @@ public class Cerca : ParedeModel
         switch(direcao)
         {
             case Direcao.Horizontal:
-                boxCollider2D.size = new Vector2(1, 0.2f);
-                boxCollider2D.offset = new Vector2(0, 0.1f);
-                hitBoxTiro.size = new Vector2(1, 1);
+                boxCollider2D.size = new Vector2(1, 0.9f);
+                boxCollider2D.offset = new Vector2(0, 0.45f);
+                hitBoxTiro.size = new Vector2(1, 1.5f);
+                hitBoxTiro.offset = new Vector2(0, 2.25f);
                 break;
             case Direcao.Vertical:
                 boxCollider2D.size = new Vector2(0.2f, 1);
                 boxCollider2D.offset = new Vector2(0, 0.5f);
-                hitBoxTiro.size = new Vector2(0.2f, 1);
+                hitBoxTiro.size = new Vector2(0.2f, 3f);
+                hitBoxTiro.offset = new Vector2(0, 1.5f);
                 break;
         }
     }
