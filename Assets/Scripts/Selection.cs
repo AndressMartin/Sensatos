@@ -62,7 +62,8 @@ public class Selection : SingletonInstance<Selection>
         {
             if (openedScreen && onSubScreen)
             {
-                SetEventSysFirstButton(FirstSelection.gameObject);
+                if(openedScreen.objectThatCalled) SetEventSysFirstButton(openedScreen.objectThatCalled);
+                else SetEventSysFirstButton(FirstSelection.gameObject);
                 onSubScreen = false;
                 openedScreen.transform.GetChild(0).gameObject.SetActive(false);
             }
