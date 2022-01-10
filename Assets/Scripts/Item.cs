@@ -26,4 +26,9 @@ public class Item : MonoBehaviour
     {
         return "";
     }
+
+    public void ThrowAway()
+    {
+
+    }
 }
