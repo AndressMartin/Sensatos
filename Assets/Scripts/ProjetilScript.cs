@@ -2,14 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Projetil : MonoBehaviour
+public class ProjetilScript : MonoBehaviour
 {
     private Rigidbody2D rb;
     private GameObject alvo;
     Vector3 pontaArmaAoDisparar;
 
     public Vector3 playerVector3;
-    public GameObject FatherFromGun;
+    public EntityModel FatherFromGun;
 
     Vector3 directionPlayer;
     float horizontal, vertical;
@@ -34,11 +34,11 @@ public class Projetil : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(FatherFromGun.GetComponent<Player>())
+        if(FatherFromGun.transform.GetComponent<Player>())
         {
             FatherPlayer();
         }
-        else if (FatherFromGun.GetComponent<Enemy>())
+        else if (FatherFromGun.transform.GetComponent<Enemy>())
         {
             FatherEnemy();
         }
@@ -129,7 +129,7 @@ public class Projetil : MonoBehaviour
         if (alvo.tag == "HitboxDano")
         {
 
-            if (alvo.transform.parent.gameObject != FatherFromGun)
+            if (alvo.transform.parent.gameObject != FatherFromGun.gameObject)
             {     
                 HitTarget();
             }

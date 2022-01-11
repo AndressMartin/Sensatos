@@ -4,29 +4,28 @@ using UnityEngine;
 
 public class EnemyAttackRange : MonoBehaviour
 {
-    [SerializeField]private EnemyVision enemyVision;
+    private EnemyVisionScript enemyVision;
     private Enemy enemy;
-    private EnemyMove enemyMove;
+    private EnemyMovement enemyMovement;
 
     // Start is called before the first frame update
     void Start()
     {
         enemy = GetComponentInParent<Enemy>();
-        enemyVision = transform.parent.Find("EnemyVision").gameObject.GetComponent<EnemyVision>();
-        enemyMove = enemy.GetComponent<EnemyMove>();
+        enemyVision = transform.parent.GetComponentInChildren<EnemyVisionScript>();
+        enemyMovement = enemy.GetComponent<EnemyMovement>();
     }
 
     private void OnTriggerStay2D(Collider2D collision)
     {
         Player temp = collision.gameObject.GetComponent<Player>();
 
-
         if (temp != null)
         {
             if (enemyVision.polygonCollider.enabled == false)
             {
                 enemyVision.OnAttackRange(true, collision.gameObject);
-                enemyMove.playerOnAttackRange = true;
+                enemyMovement.playerOnAttackRange = true;
             }
         }
     }
@@ -36,14 +35,14 @@ public class EnemyAttackRange : MonoBehaviour
         if (collision.gameObject.tag == "Player" && enemyVision.polygonCollider.enabled == true)
         {
             enemyVision.OnAttackRange(false, null);
-            enemyMove.playerOnAttackRange = false;
+            enemyMovement.playerOnAttackRange = false;
 
         }
 
         if (collision.gameObject.tag == "Player" && enemyVision.polygonCollider.enabled == false)
         {
             enemyVision.OnAttackRange(false, null);
-            enemyMove.playerOnAttackRange = false;
+            enemyMovement.playerOnAttackRange = false;
 
         }
     }

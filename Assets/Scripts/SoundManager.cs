@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SoundManager : MonoBehaviour
 {
-    [SerializeField] private Sound sound;
+    [SerializeField] private PlayerSound sound;
 
     // Start is called before the first frame update
     public void InstantiatSound()

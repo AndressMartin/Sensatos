@@ -10,30 +10,33 @@ public class Enemy : EntityModel
     private BulletCreator bulletCreator;
 
     //Componentes
-    private PontaArma pontaArma;
+    private PontaArmaScript pontaArma;
     private AnimacaoJogador animacao;
     private Inventario inventario;
-    private EnemyMove enemyMove;
-    private EnemyVision enemyVision;
+    private EnemyMovement enemyMovement;
+    private EnemyVisionScript enemyVision;
 
     //Variaveis
     public override int vida { get; protected set; }
+    [SerializeField] private int vidaInicial;
 
     public enum Estado { Normal, TomandoDano };
     public Estado estado;
 
-    [SerializeField] private int vidaInicial;
     public bool morto;
 
     bool tiroColldown;
     float timeCooldwon;
     float timeCooldownTiro;
 
+    [SerializeField] private float distanceCenter;
+    [SerializeField] private float distanceY;
+
     //Variaveis de respawn
     private bool mortoRespawn;
     private Vector2 posicaoRespawn;
     private Direcao direcaoRespawn;
-    private EnemyMove.ModoPatrulha modoPatrulhaRespawn;
+    private EnemyMovement.ModoPatrulha modoPatrulhaRespawn;
 
     // Start is called before the first frame update
     void Start()
@@ -47,10 +50,10 @@ public class Enemy : EntityModel
         objectManager.adicionarAosInimigos(this);
 
         //Componentes
-        enemyVision = GetComponentInChildren<EnemyVision>();
-        enemyMove = GetComponent<EnemyMove>();
+        enemyVision = GetComponentInChildren<EnemyVisionScript>();
+        enemyMovement = GetComponent<EnemyMovement>();
         inventario = GetComponent<Inventario>();
-        pontaArma = GetComponentInChildren<PontaArma>();
+        pontaArma = GetComponentInChildren<PontaArmaScript>();
         animacao = transform.GetComponent<AnimacaoJogador>();
 
         //Variaveis
@@ -80,13 +83,13 @@ public class Enemy : EntityModel
     {
         posicaoRespawn = transform.position;
         direcaoRespawn = direcao;
-        modoPatrulhaRespawn = enemyMove.modoPatrulha;
+        modoPatrulhaRespawn = enemyMovement.modoPatrulha;
     }
 
     public void SetRespawn()
     {
         mortoRespawn = morto;
-        modoPatrulhaRespawn = enemyMove.modoPatrulha;
+        modoPatrulhaRespawn = enemyMovement.modoPatrulha;
     }
 
     public void Respawn()
@@ -98,12 +101,12 @@ public class Enemy : EntityModel
             vida = vidaInicial;
             transform.position = posicaoRespawn;
             direcao = direcaoRespawn;
-            enemyMove.modoPatrulha = modoPatrulhaRespawn;
+            enemyMovement.modoPatrulha = modoPatrulhaRespawn;
 
-            enemyMove.estado = EnemyMove.Estado.Rotina;
-            enemyMove.stance = EnemyMove.Stances.Patrolling;
-            enemyMove.fazerMovimentoAlerta = EnemyMove.FazerMovimentoAlerta.NA;
-            enemyMove.ZerarVelocidade();
+            enemyMovement.estado = EnemyMovement.Estado.Rotina;
+            enemyMovement.stance = EnemyMovement.Stances.Patrolling;
+            enemyMovement.fazerMovimentoAlerta = EnemyMovement.FazerMovimentoAlerta.NA;
+            enemyMovement.ZerarVelocidade();
 
 
             ResetarVariaveisDeControle();
@@ -115,7 +118,7 @@ public class Enemy : EntityModel
         estado = Estado.Normal;
         tiroColldown = false;
         timeCooldwon = 0;
-        enemyMove.ResetarVariaveisDeControle();
+        enemyMovement.ResetarVariaveisDeControle();
         enemyVision.ResetarVariaveisDeControle();
     }
 
@@ -126,7 +129,7 @@ public class Enemy : EntityModel
             //Debug.Log("Inimigo Vel X: " + enemyMove.velX + ", Vel Y: " + enemyMove.velY);
             animacao.AtualizarDirecao(direcao, direcao);
             Animar();
-            enemyMove.Main();
+            enemyMovement.Main();
             enemyVision.Main();
             TiroColldown();
         } 
@@ -137,11 +140,11 @@ public class Enemy : EntityModel
         switch (estado)
         {
             case Estado.Normal:
-                if ((enemyMove.rb.velocity.x == 0 && enemyMove.rb.velocity.y == 0) && animacao.GetAnimacaoAtual() != "Idle")
+                if ((enemyMovement.rb.velocity.x == 0 && enemyMovement.rb.velocity.y == 0) && animacao.GetAnimacaoAtual() != "Idle")
                 {
                     animacao.TrocarAnimacao("Idle");
                 }
-                else if ((enemyMove.rb.velocity.x != 0 || enemyMove.rb.velocity.y != 0) && animacao.GetAnimacaoAtual() != "Andando")
+                else if ((enemyMovement.rb.velocity.x != 0 || enemyMovement.rb.velocity.y != 0) && animacao.GetAnimacaoAtual() != "Andando")
                 {
                     animacao.TrocarAnimacao("Andando");
                 }
@@ -161,7 +164,7 @@ public class Enemy : EntityModel
         TrocarDirecaoAtaque(FindObjectOfType<Player>().transform.position);
         if (!tiroColldown)
         {
-            inventario.armaSlot1.Atirar(gameObject, bulletCreator);
+            inventario.armaSlot1.Atirar(this, bulletCreator);
             animacao.AtualizarArmaBracos(inventario.armaSlot1.nomeVisual);
             tiroColldown = true;
         }
@@ -170,7 +173,7 @@ public class Enemy : EntityModel
     public void die()
     {
         morto = true;
-        enemyMove.ZerarVelocidade();
+        enemyMovement.ZerarVelocidade();
         Debug.Log("to morto");
     }
     public void stealthKill()
@@ -196,7 +199,7 @@ public class Enemy : EntityModel
     public void ChangeDirection(Direcao _direction)
     {
         direcao = _direction;
-        pontaArma.AtualizarPontaArma(direcao);
+        pontaArma.AtualizarPontaArma(direcao, distanceCenter, distanceY);
     }
     public void TrocarDirecaoAtaque(Vector3 alvo)
     {
@@ -226,7 +229,7 @@ public class Enemy : EntityModel
     }
     public override void KnockBack(float _horizontal, float _vertical,float _knockBack)
     {
-        enemyMove.KnockBack(_horizontal, _vertical,_knockBack);
+        enemyMovement.KnockBack(_horizontal, _vertical,_knockBack);
         
     }
     private void OnCollisionStay2D(Collision2D collision)
@@ -248,6 +251,6 @@ public class Enemy : EntityModel
 
     public void EscutarSom(Player player, bool somTiro)
     {
-        enemyMove.EscutarSom(player, somTiro);
+        enemyMovement.EscutarSom(player, somTiro);
     }
 }

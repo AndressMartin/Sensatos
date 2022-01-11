@@ -2,14 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyMove : MonoBehaviour
+public class EnemyMovement : MonoBehaviour
 {
     //Componentes
     private GameObject gameObjectPlayerReservaAlt;
     private GameObject playerGameObject;
     private LockDown lockDown;
     private Enemy enemy;
-    private EnemyVision enemyVision;
+    private EnemyVisionScript enemyVision;
     private PathFinding pathFinding;
     public Rigidbody2D rb;
     private ModoLockDown modoLockDown;
@@ -637,7 +637,7 @@ public class EnemyMove : MonoBehaviour
         knockBackCont = 0;
     }
 
-    public void EnemyVissionReference(EnemyVision _enemyVision)
+    public void EnemyVissionReference(EnemyVisionScript _enemyVision)
     {
         enemyVision = _enemyVision;
     }

@@ -5,19 +5,19 @@ using UnityEngine;
 public class BulletCreator : MonoBehaviour
 {
     // Start is called before the first frame update
-    private Projetil bullet;
+    private ProjetilScript bullet;
     private int dano;
     private Transform pontaArma;
     private float velocity;
-    private GameObject FatherFromGun;
+    private EntityModel FatherFromGun;
     private float knockBackValue;
     private float distanciaMaxProjetil;
 
-    public void BulletReference(ArmaDeFogo _armaDeFogo)
+    public void BulletReference(ArmaDeFogo _armaDeFogo, EntityModel.Direcao direcao)
     {
-        CreateShot(_armaDeFogo);
+        CreateShot(_armaDeFogo, direcao);
     }
-    void CreateShot (ArmaDeFogo _armaDeFogo)
+    void CreateShot (ArmaDeFogo _armaDeFogo, EntityModel.Direcao direcao)
     {
         pontaArma = _armaDeFogo.pontaArma;
         bullet = _armaDeFogo.projetil;
@@ -27,10 +27,10 @@ public class BulletCreator : MonoBehaviour
         knockBackValue = _armaDeFogo.knockbackValue;
         distanciaMaxProjetil = _armaDeFogo.distanciaMaxProjetil;
 
-        Projetil novoProjetil;
+        ProjetilScript novoProjetil;
 
         novoProjetil = Instantiate(bullet, pontaArma.position, Quaternion.identity);
-        novoProjetil.direcao = (EntityModel.Direcao)pontaArma.GetComponentInChildren<PontaArma>().direcao;
+        novoProjetil.direcao = direcao;
         novoProjetil.dano = dano;
         novoProjetil.FatherFromGun = FatherFromGun;
         novoProjetil.Shooted(pontaArma);

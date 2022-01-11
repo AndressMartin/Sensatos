@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class EnemyVision : EntityModel
+public class EnemyVisionScript : EntityModel
 {
 
     //variaveis
@@ -22,7 +22,7 @@ public class EnemyVision : EntityModel
     public bool seePlayer;
 
     //componente
-    private EnemyMove enemyMove;
+    private EnemyMovement enemyMove;
     public PolygonCollider2D polygonCollider;
     private CircleCollider2D circleCollider2D;
     GameObject playerGameObject;
@@ -37,7 +37,7 @@ public class EnemyVision : EntityModel
 
         circleCollider2D = GetComponent<CircleCollider2D>();
         transformFather = GetComponentInParent<Transform>();
-        enemyMove = GetComponentInParent<EnemyMove>();
+        enemyMove = GetComponentInParent<EnemyMovement>();
         polygonCollider = GetComponent<PolygonCollider2D>();
         enemyModel = GetComponentInParent<Enemy>();
         enemyMove.EnemyVissionReference(this);

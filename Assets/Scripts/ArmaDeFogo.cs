@@ -6,12 +6,12 @@ using UnityEngine.UI;
 public class ArmaDeFogo : MonoBehaviour
 {
     private BulletCreator bulletCreator;
-    [SerializeField] public Projetil projetil;   
+    [SerializeField] public ProjetilScript projetil;   
     public Transform pontaArma;
     public Sprite myImage;
     public int dano;
     public float velocityProjetil;
-    public GameObject objQueChamou;
+    public EntityModel objQueChamou;
     public float knockbackValue;
     public int municaoMax;
     public int municaoAtual;
@@ -36,16 +36,16 @@ public class ArmaDeFogo : MonoBehaviour
         }
     }
 
-    public void Atirar(GameObject objQueChamou, BulletCreator bulletCreator)
+    public void Atirar(EntityModel objQueChamou, BulletCreator bulletCreator)
     {
         this.bulletCreator = bulletCreator;
         CreateShoot(objQueChamou);
     }
 
-    void CreateShoot(GameObject _objQueChamou)
+    void CreateShoot(EntityModel _objQueChamou)
     {
-        pontaArma = _objQueChamou.GetComponentInChildren<PontaArma>().transform;
+        pontaArma = _objQueChamou.GetComponentInChildren<PontaArmaScript>().transform;
         objQueChamou = _objQueChamou;
-        bulletCreator.BulletReference(this);
+        bulletCreator.BulletReference(this, objQueChamou.direcao);
     }
 }

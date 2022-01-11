@@ -7,8 +7,8 @@ using UnityEngine.UIElements;
 
 public class ModoLockDown : MonoBehaviour
 {
-    [SerializeField] List<EnemyMove> enemies = new List<EnemyMove>();
-    [SerializeField] List<EnemyMove> enemiesMortos = new List<EnemyMove>();
+    [SerializeField] List<EnemyMovement> enemies = new List<EnemyMovement>();
+    [SerializeField] List<EnemyMovement> enemiesMortos = new List<EnemyMovement>();
 
     [SerializeField] private TMP_Text textoDetecção;
     [SerializeField] private TMP_Text textoFugindo;
@@ -34,7 +34,7 @@ public class ModoLockDown : MonoBehaviour
     void Update()
     {
         bool emAlerta = false;
-        foreach (EnemyMove item in enemies)
+        foreach (EnemyMovement item in enemies)
         {
             if (item.RetornarVendoPlayer()) 
             {
@@ -104,7 +104,7 @@ public class ModoLockDown : MonoBehaviour
 
     }
 
-    public void AddtoLista(EnemyMove enemy,float tempoMax,float tempoResetMax)
+    public void AddtoLista(EnemyMovement enemy,float tempoMax,float tempoResetMax)
     {
         if(!enemies.Contains(enemy))
         {
@@ -117,7 +117,7 @@ public class ModoLockDown : MonoBehaviour
         }
         
     }
-    void addMorto(EnemyMove enemy)
+    void addMorto(EnemyMovement enemy)
     {
         if (!enemiesMortos.Contains(enemy))
         {

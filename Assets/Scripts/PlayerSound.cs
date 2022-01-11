@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Sound : MonoBehaviour
+public class PlayerSound : MonoBehaviour
 {
     //Managers
     private ObjectManagerScript objectManager;

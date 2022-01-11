@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Movement : SingletonInstance<Movement>
+public class PlayerMovement : MonoBehaviour
 {
     //Componentes
     private Player player;

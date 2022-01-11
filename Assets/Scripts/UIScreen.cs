@@ -35,7 +35,7 @@ public class UIScreen : MonoBehaviour
 
     public virtual void CloseScreen()
     {
-        Debug.LogWarning($"CLOSE {name} + {gameObject.name}");
+        //Debug.LogWarning($"CLOSE {name} + {gameObject.name}");
         transform.GetChild(0).gameObject.SetActive(false);
         if (objectThatCalled) Selection.GetInstance().SetEventSysFirstButton(objectThatCalled);
     }

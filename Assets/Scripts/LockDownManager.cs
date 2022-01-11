@@ -21,7 +21,7 @@ public class LockDownManager : MonoBehaviour
     {
         foreach (Enemy enemy in objectManagerScript.listaInimigos)
         {
-            enemy.GetComponent<EnemyMove>().LockDownAtivo(posicaoDoPlayer);
+            enemy.GetComponent<EnemyMovement>().LockDownAtivo(posicaoDoPlayer);
         }
         TrancarPortas();
        

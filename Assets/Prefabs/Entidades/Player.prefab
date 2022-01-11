@@ -122,10 +122,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 2730473974975081475}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 92cd05ccef27ab940afdda701e07fb60, type: 3}
+  m_Script: {fileID: 11500000, guid: fe40b387ffe57f540bfe045c5ff29af5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direcao: 0
 --- !u!1 &3408136999384518736
 GameObject:
   m_ObjectHideFlags: 0
@@ -313,13 +312,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3234e1528dd104c44bae558320cae4d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  horizontal: 0
+  vertical: 0
   runSpeed: 0
   canMove: 1
-  _tempX: 0
-  _tempY: 0
   knockBackHorizontal: 0
   knockBackVertical: 0
-  timeMaxOriginal: 0.5
+  _tempX: 0
+  _tempY: 0
 --- !u!114 &5082819183783505518
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -332,13 +332,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 017eee17d09df1543ba6af126079d131, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interagindo: 0
-  usandoItem: 0
-  movimento: 2
-  colldown: 0
-  colldowMax: 0.3
-  colldownUsandoItem: 0
-  colldowMaxUsandoItem: 0.3
 --- !u!114 &8003618298857930454
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -352,16 +345,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   direcao: 0
-  enemies: []
+  vidaInicial: 0
   direcaoMovimento: 0
+  distanceCenter: 0.5
+  distanceY: 1
   posAnterior: {x: 0, y: 0, z: 0}
-  initialLife: 50
-  distanciaTiroY: 0
   modoMovimento: 0
   estado: 0
-  time: 0
-  timeMax: 0.3
-  imune: 0
+  distanciaTiroY: 0
 --- !u!114 &2150433992448801304
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -381,7 +372,10 @@ MonoBehaviour:
   armaSlot1: {fileID: 0}
   armaSlot2: {fileID: 0}
   itemAtual: {fileID: 8604403824981294011, guid: b2737c33e52db5c4e9ef5bbc75a56c9c, type: 3}
-  itemsEmAtalhos: []
+  itensEmAtalhos: []
+  hasSortedWeapons:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &7187578302697251405
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -672,8 +666,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bb130e27abecc34e843b73e659463c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  horizontal: 0
-  vertical: 0
 --- !u!1 &8916929928804292810
 GameObject:
   m_ObjectHideFlags: 0
@@ -878,9 +870,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a32da9f9230dc2c4fad833beef21665f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shoot: 0
-  agachado: 0
-  timeMaxOriginal: 0.5
 --- !u!58 &8916929929232640012
 CircleCollider2D:
   m_ObjectHideFlags: 0

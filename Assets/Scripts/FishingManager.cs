@@ -49,7 +49,7 @@ public class FishingManager : SingletonInstance<FishingManager>
         if (Input.GetKeyDown(KeyCode.E) && fishingStates == FishingStates.Idle)
         {
             ShootHook();
-            Movement.GetInstance().canMove = false;
+            //PlayerMovement.GetInstance().canMove = false;
             points += (int)fishSlider.value;
             fishingObject.SetActive(true);
         }
@@ -76,7 +76,7 @@ public class FishingManager : SingletonInstance<FishingManager>
     private void EndFishingGame()
     {
         fishingStates = FishingStates.Idle;
-        Movement.GetInstance().canMove = true;
+        //PlayerMovement.GetInstance().canMove = true;
         Debug.Log("Congratulations! You got a generic fish :(");
         fishingObject.SetActive(false);
         fishingUI.SetActive(false);

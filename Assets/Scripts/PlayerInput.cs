@@ -2,13 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class State : MonoBehaviour
+public class PlayerInput : MonoBehaviour
 {
     //Managers
     private PauseManagerScript pauseManager;
 
     private Player player;
-    private Movement movement;
+    private PlayerMovement movement;
     private Inventario inventario;
 
     // Start is called before the first frame update
@@ -18,7 +18,7 @@ public class State : MonoBehaviour
         pauseManager = FindObjectOfType<PauseManagerScript>();
 
         inventario = GetComponent<Inventario>();
-        movement = GetComponent<Movement>();
+        movement = GetComponent<PlayerMovement>();
         player = GetComponent<Player>();
     }
 

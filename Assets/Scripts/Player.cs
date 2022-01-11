@@ -12,12 +12,12 @@ public class Player : EntityModel
 
     //Componentes
     private Rigidbody2D rb;
-    private Movement movement;
+    private PlayerMovement movement;
     private AnimacaoJogador animacao;
     private InteragirScript interacaoHitBox;
     private AtaqueFisico ataqueHitBox;
-    private Sound sound;
-    private PontaArma pontaArma;
+    private PlayerSound sound;
+    private PontaArmaScript pontaArma;
     private Inventario inventario;
     private InventarioMissao inventarioMissao;
 
@@ -31,6 +31,8 @@ public class Player : EntityModel
 
     public Direcao direcaoMovimento;
 
+    [SerializeField] private float distanceCenter;
+    [SerializeField] private float distanceY;
     private float raioPassos;
 
     //Variaveis de controle
@@ -66,12 +68,12 @@ public class Player : EntityModel
 
         //Componentes
         rb = GetComponent<Rigidbody2D>();
-        movement = GetComponent<Movement>();
+        movement = GetComponent<PlayerMovement>();
         animacao = transform.GetComponent<AnimacaoJogador>();
         interacaoHitBox = GetComponentInChildren<InteragirScript>();
         ataqueHitBox = GetComponentInChildren<AtaqueFisico>();
-        sound = FindObjectOfType<Sound>();
-        pontaArma = GetComponentInChildren<PontaArma>();
+        sound = FindObjectOfType<PlayerSound>();
+        pontaArma = GetComponentInChildren<PontaArmaScript>();
         inventario = GetComponent<Inventario>();
         inventarioMissao = GetComponent<InventarioMissao>();
 
@@ -279,7 +281,7 @@ public class Player : EntityModel
         if (estado == Estado.Normal)
         {
             GerarSom(inventario.armaSlot1.RaioTiro, true);
-            inventario.armaSlot1.Atirar(gameObject, bulletCreator);
+            inventario.armaSlot1.Atirar(this, bulletCreator);
             animacao.AtualizarArmaBracos(inventario.armaSlot1.nomeVisual);
         }
     }
@@ -397,7 +399,7 @@ public class Player : EntityModel
                 direcao = Direcao.Baixo;
                 break;
         }
-        pontaArma.AtualizarPontaArma(direcao);
+        pontaArma.AtualizarPontaArma(direcao, distanceCenter, distanceY);
     }
 
     public void ChangeDirectionMovement(string lado)

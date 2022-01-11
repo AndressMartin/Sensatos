@@ -94,16 +94,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 8583994499093954912}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d03f175c6136e184b8fa927f465eb0a3, type: 3}
+  m_Script: {fileID: 11500000, guid: 8ceb2395c2142fe43a4c5f90114e1cf2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   playerVector3: {x: 0, y: 0, z: 0}
   FatherFromGun: {fileID: 0}
-  velocidadeProjetil: 10
-  distanciaMaxProjetil: 5
+  velocidadeProjetil: 0
+  distanciaMaxProjetil: 0
   dano: 0
   knockBackValue: 0
-  direcao: 1
+  direcao: 0
 --- !u!50 &8583994499093954914
 Rigidbody2D:
   serializedVersion: 4

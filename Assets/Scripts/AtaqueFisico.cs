@@ -87,9 +87,9 @@ public class AtaqueFisico : MonoBehaviour
         temp.TomarDano(dano, horizontal, vertical, knockBack);
 
         
-        if (temp.GetComponentInChildren<EnemyVision>() != null)
+        if (temp.GetComponentInChildren<EnemyVisionScript>() != null)
         {
-            if (temp.GetComponentInChildren<EnemyVision>().polygonCollider.enabled)
+            if (temp.GetComponentInChildren<EnemyVisionScript>().polygonCollider.enabled)
             {
                 Enemy tempEnemy = temp.GetComponent<Enemy>();
                 tempEnemy.stealthKill();

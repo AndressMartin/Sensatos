@@ -7,7 +7,7 @@ public class DetecSystem : MonoBehaviour
 {
      private TMP_Text textoDeteccao;
      private TMP_Text textoFugindo;
-     private EnemyMove item;
+     private EnemyMovement item;
 
     [SerializeField] float valorDetect;
     [SerializeField] float valorFugindo;
@@ -23,7 +23,7 @@ public class DetecSystem : MonoBehaviour
         textoDeteccao = temp[0];
         textoFugindo = temp[1];
 
-        item = transform.parent.GetComponent<EnemyMove>();
+        item = transform.parent.GetComponent<EnemyMovement>();
     }
 
     // Update is called once per frame

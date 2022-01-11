@@ -567,7 +567,7 @@ GameObject:
   - component: {fileID: 1781038435}
   - component: {fileID: 1781038436}
   m_Layer: 3
-  m_Name: "Detec\xE7\xE3o"
+  m_Name: Deteccao
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -622,7 +622,6 @@ GameObject:
   - component: {fileID: 6297625325533714480}
   - component: {fileID: 6297625325533714495}
   - component: {fileID: 6297625325533714492}
-  - component: {fileID: 6297625325533714482}
   - component: {fileID: 6297625325533714490}
   - component: {fileID: 6297625325533714493}
   - component: {fileID: 1338069367}
@@ -649,9 +648,9 @@ Transform:
   - {fileID: 180495875}
   - {fileID: 380813995}
   - {fileID: 6297625327472927379}
+  - {fileID: 3722818306293565604}
   - {fileID: 6297625326220625050}
   - {fileID: 6297625326670532827}
-  - {fileID: 3722818306293565604}
   - {fileID: 1781038435}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -690,9 +689,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   direcao: 0
-  estado: 0
   vidaInicial: 10
+  estado: 0
   morto: 0
+  distanceCenter: 0.5
+  distanceY: 1
 --- !u!114 &6297625325533714492
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -702,7 +703,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6297625325533714485}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 165274e93f6205a458fc560af0e1f5ac, type: 3}
+  m_Script: {fileID: 11500000, guid: 655295f42ef173d4d814621630d386c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 0}
@@ -728,19 +729,6 @@ MonoBehaviour:
   stance: 1
   fazerMovimentoAlerta: 0
   modoPatrulha: 0
---- !u!114 &6297625325533714482
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6297625325533714485}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a80a96c04c3d6a64c91fbd8c5eaa42ce, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  estadoCombate: 0
 --- !u!114 &6297625325533714490
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -774,7 +762,10 @@ MonoBehaviour:
   armaSlot1: {fileID: 7703806124257995746, guid: 74b17ffc4bfc3144d8c2041820ad2f94, type: 3}
   armaSlot2: {fileID: 0}
   itemAtual: {fileID: 0}
-  itemsEmAtalhos: []
+  itensEmAtalhos: []
+  hasSortedWeapons:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!61 &1338069367
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -855,7 +846,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6297625325533714494}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6297625326220625051
 MonoBehaviour:
@@ -866,7 +857,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6297625326220625053}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cdfd1e7511ec3df4bb7785be3d1258e2, type: 3}
+  m_Script: {fileID: 11500000, guid: 6db20dee630130e4d94102f6cec2f2b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   direcao: 0
@@ -956,7 +947,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6297625325533714494}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6297625326670532825
 MonoBehaviour:
@@ -970,7 +961,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb6b2103a329167409756f77064b043f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyVision: {fileID: 0}
 --- !u!58 &6297625326670532824
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -1074,7 +1064,7 @@ Transform:
   m_LocalScale: {x: 0.15256, y: 0.15256, z: 0.15256}
   m_Children: []
   m_Father: {fileID: 6297625325533714494}
-  m_RootOrder: 5
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &2414356659861401233
 SpriteRenderer:
@@ -1136,7 +1126,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 7730406947702887739}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 92cd05ccef27ab940afdda701e07fb60, type: 3}
+  m_Script: {fileID: 11500000, guid: fe40b387ffe57f540bfe045c5ff29af5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direcao: 0
