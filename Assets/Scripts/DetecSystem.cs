@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
+
+
 
 public class DetecSystem : MonoBehaviour
 {
@@ -27,50 +30,59 @@ public class DetecSystem : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    public void Main()
     {
-        bool emAlerta = false;
-        
-        if (item.RetornarVendoPlayer())
+        if (item.RetornarMorto())//não funciona porque o fato de estar morto acaba não chamando o main,teria que colocar quando morrer passa infos pra ca mas mt role
         {
-            emAlerta = true;
-        }
+            textoDeteccao.text = "Detecão % Morto";
+            textoFugindo.text = "Fugindo % Morto";
 
-        if(emAlerta)
-        {
-            float valorMax = 0.0f;
-            if (item.RetornarTimerDeAlerta() > valorMax)
-                valorMax = item.RetornarTimerDeAlerta();
-            else
-                valorMax = item.RetornarTimerDeAlerta();
-       
-        valorDetect = (valorMax / tempoPraEntarEmAlertaMax) * 100;
-        textoDeteccao.text = "Detecão % " + valorDetect.ToString();
         }
-
         else
         {
-            bool zerou = false;
-            float valorMax = 0.0f;              
-            if (item.RetornarTimerDeAlerta() > valorMax)
-                valorMax = item.RetornarTimeResetandoAlerta();
-              
-            else
-                valorMax = item.RetornarTimeResetandoAlerta();
-            
-            valorFugindo = (valorMax / tempoPraResetarAlertaMax) * 100;
-            textoFugindo.text = "Fugindo % " + valorFugindo.ToString();
 
-            if (valorFugindo >= 99)
+            bool emAlerta = false;
+
+            if (item.RetornarVendoPlayer())
             {
-                zerou = true;
+                emAlerta = true;
             }
-            if (zerou)
+
+            if (emAlerta)
             {
-                textoDeteccao.text = "Detecão % " + 0;
+                float valorMax = 0.0f;
+                if (item.RetornarTimerDeAlerta() > valorMax)
+                    valorMax = item.RetornarTimerDeAlerta();
+                else
+                    valorMax = item.RetornarTimerDeAlerta();
+
+                valorDetect = (valorMax / tempoPraEntarEmAlertaMax) * 100;
+                textoDeteccao.text = "Detecão % " + valorDetect.ToString();
+            }
+
+            else
+            {
+                bool zerou = false;
+                float valorMax = 0.0f;
+                if (item.RetornarTimerDeAlerta() > valorMax)
+                    valorMax = item.RetornarTimeResetandoAlerta();
+
+                else
+                    valorMax = item.RetornarTimeResetandoAlerta();
+
+                valorFugindo = (valorMax / tempoPraResetarAlertaMax) * 100;
+                textoFugindo.text = "Fugindo % " + valorFugindo.ToString();
+
+                if (valorFugindo >= 99)
+                {
+                    zerou = true;
+                }
+                if (zerou)
+                {
+                    textoDeteccao.text = "Detecão % " + 0;
+                }
             }
         }
-
     }
     public void AddtoLista(float tempoMax, float tempoResetMax)
     {

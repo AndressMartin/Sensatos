@@ -13,15 +13,18 @@ public class ModoLockDown : MonoBehaviour
     [SerializeField] private TMP_Text textoDetecção;
     [SerializeField] private TMP_Text textoFugindo;
 
-    [SerializeField] public Image image;
+    LockDownManager lockDownManager;
     float tempoPraEntarEmAlertaMax;
     float tempoPraResetarAlertaMax;
 
     float valorDetect;
     float valorFugindo;
+
+    bool controle = false;
     // Start is called before the first frame update
     void Start()
     {
+        lockDownManager = FindObjectOfType<LockDownManager>();
         //image=GetComponent<Sprite>();
         /*Component[] components = gameObject.GetComponents(typeof(Component));
         foreach (Component component in components)
@@ -36,77 +39,92 @@ public class ModoLockDown : MonoBehaviour
         bool emAlerta = false;
         foreach (EnemyMovement item in enemies)
         {
-            if (item.RetornarVendoPlayer()) 
-            {
-                emAlerta = true;
-                
-            }
-            if(item.RetornarMorto())
+            if (item.RetornarMorto())
             {
                 addMorto(item);
             }
-            else
+            else if (item.RetornarVendoPlayer())
             {
-                if(enemiesMortos.Contains(item))
+                emAlerta = true;
+            }
+
+            if (!item.RetornarMorto())
+            {
+                if (enemiesMortos.Contains(item))
                 {
                     enemiesMortos.Remove(item);
                 }
             }
-            Debug.Log(item.RetornarMorto());
         }
-        if (emAlerta)
+        ZerarHudQuandoNãoTiverInimigos();
+
+        if (!controle)
         {
-            float valorMax = 0.0f;
-            for (int i = 0; i < enemies.Count; i++)
+            if (emAlerta)
             {
-                if (i != 0)
+                float valorMax = 0.0f;
+                for (int i = 0; i < enemies.Count; i++)
                 {
-                    if (enemies[i].RetornarTimerDeAlerta() > valorMax)
+                    if (i != 0)
+                    {
+                        if (enemies[i].RetornarTimerDeAlerta() > valorMax)
+                            valorMax = enemies[i].RetornarTimerDeAlerta();
+                    }
+                    else
                         valorMax = enemies[i].RetornarTimerDeAlerta();
                 }
-                else
-                    valorMax = enemies[i].RetornarTimerDeAlerta();
+                valorDetect = (valorMax / tempoPraEntarEmAlertaMax) * 100;
+                textoDetecção.text = "Detecão % " + valorDetect.ToString();
             }
-            valorDetect = (valorMax / tempoPraEntarEmAlertaMax) * 100;
-            textoDetecção.text = "Detecão % "+ valorDetect.ToString();
-        }
-        else 
-        {
-            bool zerou = false;
-            float valorMax = 0.0f;
-            for (int i = 0; i < enemies.Count; i++)
+            else
             {
-                if (i != 0)
+                bool zerou = false;
+                float valorMax = 0.0f;
+                for (int i = 0; i < enemies.Count; i++)
                 {
-                    if (enemies[i].RetornarTimerDeAlerta() > valorMax)
+                    if (i != 0)
+                    {
+                        if (enemies[i].RetornarTimerDeAlerta() > valorMax)
+                            valorMax = enemies[i].RetornarTimeResetandoAlerta();
+                    }
+                    else
                         valorMax = enemies[i].RetornarTimeResetandoAlerta();
                 }
-                else
-                    valorMax = enemies[i].RetornarTimeResetandoAlerta();
-            }
-            
 
-            valorFugindo = (valorMax / tempoPraResetarAlertaMax) * 100;
 
-            textoFugindo.text = "Fugindo % " + valorFugindo.ToString();
+                valorFugindo = (valorMax / tempoPraResetarAlertaMax) * 100;
 
-            if (valorFugindo >= 99)
-            {
-                zerou = true;
-            }
+                textoFugindo.text = "Fugindo % " + valorFugindo.ToString();
 
-            if (zerou)
-            {
-                textoDetecção.text = "Detecão % " + 0;
+                if (valorFugindo >= 99)
+                {
+                    zerou = true;
+                }
+
+                if (zerou)
+                {
+                    textoDetecção.text = "Detecão % " + 0;
+                }
             }
         }
-
-
     }
-
-    public void AddtoLista(EnemyMovement enemy,float tempoMax,float tempoResetMax)
+    void ZerarHudQuandoNãoTiverInimigos()
     {
-        if(!enemies.Contains(enemy))
+        if (enemies.Count == enemiesMortos.Count)
+        {
+            controle = true;
+        }
+        else
+        {
+            controle = false;
+            textoDetecção.text = "Detecão % " + 0;
+            textoFugindo.text = "Fugindo % " + 0;
+
+        }
+    }
+    public void AddtoLista(EnemyMovement enemy, float tempoMax, float tempoResetMax)
+    {
+        if (!enemies.Contains(enemy))
         {
             enemies.Add(enemy);
 
@@ -115,7 +133,7 @@ public class ModoLockDown : MonoBehaviour
 
             enemy.GetComponentInChildren<DetecSystem>().AddtoLista(tempoMax, tempoResetMax);
         }
-        
+
     }
     void addMorto(EnemyMovement enemy)
     {
@@ -124,4 +142,5 @@ public class ModoLockDown : MonoBehaviour
             enemiesMortos.Add(enemy);
         }
     }
+
 }

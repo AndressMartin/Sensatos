@@ -3,242 +3,146 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class EnemyVisionScript : EntityModel
+public class EnemyVisionScript : MonoBehaviour 
 {
 
     //variaveis
     [SerializeField] LayerMask mask;
-    [SerializeField] private float xPointOrigin, yPointOrigin;
-    [SerializeField] private float xPointMax, yPointMax;
-    float xpontoMaxOrigin, ypontoMaxOrigin;
-
-    [SerializeField]private float xp, yp;
+    [SerializeField] private float pontoX, pontoY;
+    private float larguraConeVisao, alturaConeVisao;
+    private float pontoXMax, pontoYMax;
+    EntityModel.Direcao direcao;
     Vector2 v1, v2 = new Vector2(0, 0), v3 = new Vector2(0, 0);
 
-    List<GameObject> walls = new List<GameObject>();
-
     //variaveis controle
-    public bool playerOnAttackRange;
-    public bool seePlayer;
-
+    public bool vendoPlayer;
+    public bool vendoPlayerCircular;
     //componente
+    private Enemy enemy;
     private EnemyMovement enemyMove;
-    public PolygonCollider2D polygonCollider;
-    private CircleCollider2D circleCollider2D;
-    GameObject playerGameObject;
-    Transform transformFather;
-    Enemy enemyModel;
-
+    private VisaoCircularEnemy visaoCircularEnemy;
+    private PolygonCollider2D polygonCollider;
     // Start is called before the first frame update
     void Start()
     {
-        xpontoMaxOrigin = xPointMax;
-        ypontoMaxOrigin = yPointMax;
+        pontoXMax = pontoX;
+        pontoYMax = pontoY;
 
-        circleCollider2D = GetComponent<CircleCollider2D>();
-        transformFather = GetComponentInParent<Transform>();
+        visaoCircularEnemy = GetComponentInChildren<VisaoCircularEnemy>();
         enemyMove = GetComponentInParent<EnemyMovement>();
         polygonCollider = GetComponent<PolygonCollider2D>();
-        enemyModel = GetComponentInParent<Enemy>();
+        enemy = GetComponentInParent<Enemy>();
         enemyMove.EnemyVissionReference(this);
-        v1 = new Vector2(xPointOrigin, yPointOrigin);
+
+        visaoCircularEnemy.mudarRaio(Mathf.Sqrt((larguraConeVisao - pontoX) * (larguraConeVisao - pontoX) + (alturaConeVisao - pontoY) * (alturaConeVisao - pontoY)));
+        v1 = new Vector2(larguraConeVisao, alturaConeVisao);
     }
-    public void ResetarVariaveisDeControle()
-    {
-        xPointMax = xpontoMaxOrigin;
-        yPointMax = ypontoMaxOrigin;
-        Debug.Log("aqui dentro");
-        seePlayer = false;
-        playerOnAttackRange = false;
-
-        circleCollider2D.enabled = false;
-        polygonCollider.enabled = true;
-        Debug.Log("aqui fora");
-
-    }
-
     public void Main()
     {
-        xp = transformFather.position.x;
-        yp = transformFather.position.y;
-        direcao = enemyModel.direcao;
-
-        if (seePlayer)
-        {
-            polygonCollider.enabled = false;
-            circleCollider2D.enabled = true;
-        }
-        else
-        {
-            circleCollider2D.enabled = false;
-            polygonCollider.enabled = true;
-
-        }
+        vendoPlayerCircular=visaoCircularEnemy.VendoPlayer;
+        direcao = enemy.direcao;
         MudarDirecaoConeVisao();
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        EntityModel entityModelTemp = collision.gameObject.GetComponent<EntityModel>();
+
+        if (entityModelTemp != null)
+        {
+            //Debug.Log(entityModelTemp.transform.name);
+            float wDif = 0.0F;
+            RaycastHit2D hits;
+            hits = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y), new Vector2(entityModelTemp.transform.position.x - transform.position.x, entityModelTemp.transform.position.y - transform.position.y), 11000, mask.value);
+
+            if (hits)//caso tenha acertado algo
+            {
+                Debug.DrawRay(new Vector2(transform.position.x, transform.position.y), new Vector2(hits.transform.position.x - transform.position.x, hits.transform.position.y - transform.position.y), Color.red);
+
+                if (hits.transform.GetComponent<Player>() != null)//caso atinga o player o raio
+                {
+                    vendoPlayer = true;
+                    //antigo see player
+                    // =new Vector3(hit.transform.position.x, hit.transform.position.y, hit.transform.position.z); 
+                }
+
+                /*if(hits.transform.GetComponent<Enemy>() != null)
+                {
+                    if (entityTemp.morto)
+                    {
+                        //Debug.Log("To vendo um corpo");
+                        //deteceta um corpo de inimigo no chao
+                    }*/
+            }
+        }
+    }
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+
+        if (collision.gameObject.tag == "Player")
+        {
+            ZerarVariaveis();
+        }
+
+        else if (collision.gameObject.tag == "Player")
+        {
+            vendoPlayer=false;
+            ZerarVariaveis();
+        }
+        
+
+    }
+    void SeePlayer(bool _player, GameObject _gameObject)
+    {
+        vendoPlayer = _player;
+        enemyMove.SawEnemy(_gameObject);
+    }
+
+    public void ResetarVariaveisDeControle()
+    {
+        pontoX = pontoXMax;
+        pontoY = pontoYMax;
+        vendoPlayer = false;
     }
     public void EntrarModoPatrulha()
     {
-        xPointMax += 2;
-        yPointMax += 2;
+        pontoX += 2;
+        pontoY += 2;
+    }
+    void ZerarVariaveis()
+    {
+        vendoPlayer = false;
+        enemyMove.SawEnemy(null);
+
     }
     void MudarDirecaoConeVisao()
     {
         switch (direcao)
         {
             //rodar plano cartesiano
-            case Direcao.Esquerda:
-                v2 = new Vector2(-(xPointMax - xPointOrigin), (yPointMax + yPointOrigin));
-                v3 = new Vector2(-(xPointMax - xPointOrigin), -(yPointMax - yPointOrigin));
+            case EntityModel.Direcao.Esquerda:
+                v2 = new Vector2(-(pontoX - larguraConeVisao), (pontoY + alturaConeVisao));
+                v3 = new Vector2(-(pontoX - larguraConeVisao), -(pontoY - alturaConeVisao));
                 break;
 
-            case Direcao.Direita:
-                v2 = new Vector2((xPointMax + xPointOrigin), (yPointMax + yPointOrigin));
-                v3 = new Vector2((xPointMax + xPointOrigin), -(yPointMax - yPointOrigin));
+            case EntityModel.Direcao.Direita:
+                v2 = new Vector2((pontoX + larguraConeVisao), (pontoY + alturaConeVisao));
+                v3 = new Vector2((pontoX + larguraConeVisao), -(pontoY - alturaConeVisao));
                 break;
 
-            case Direcao.Cima:
-                v2 = new Vector2(-(yPointMax - xPointOrigin), (xPointMax + yPointOrigin));
-                v3 = new Vector2(+(yPointMax + xPointOrigin), (xPointMax + yPointOrigin));
+            case EntityModel.Direcao.Cima:
+                v2 = new Vector2(-(pontoY - larguraConeVisao), (pontoX + alturaConeVisao));
+                v3 = new Vector2(+(pontoY + larguraConeVisao), (pontoX + alturaConeVisao));
                 break;
 
-            case Direcao.Baixo:
-                v2 = new Vector2((yPointMax + xPointOrigin), -(xPointMax - yPointOrigin));
-                v3 = new Vector2(-(yPointMax - xPointOrigin), -(xPointMax - yPointOrigin));
+            case EntityModel.Direcao.Baixo:
+                v2 = new Vector2((pontoY + larguraConeVisao), -(pontoX - alturaConeVisao));
+                v3 = new Vector2(-(pontoY - larguraConeVisao), -(pontoX - alturaConeVisao));
                 break;
 
         }
-        float h2 = (xPointOrigin - xPointMax) * (xPointOrigin - xPointMax) + (yPointOrigin - yPointMax) * (yPointOrigin - yPointMax);
-        circleCollider2D.radius = Mathf.Sqrt(h2);
         polygonCollider.points = new[] { v1, v2, v3 };
-    }
-
-
-    void ChangeCollision(bool _poligon)
-    {
-        if (!enemyModel.morto)
-        {
-            polygonCollider.enabled = _poligon;
-            circleCollider2D.enabled = !_poligon;
-            if (circleCollider2D.enabled == true)
-                seePlayer = true;
-        }
-    }
-
-    private void OnTriggerStay2D(Collider2D collision)
-    {//Debug.DrawRay(new Vector3(xp, yp, 0), new Vector3(cerca.transform.localPosition.x - xp, cerca.transform.localPosition.y - yp, cerca.transform.localPosition.z), Color.red);
-
-        if (!enemyModel.morto)
-        {
-            if (polygonCollider.enabled && !seePlayer)
-            {
-                PollygonCollider(collision);
-            }
-            if (circleCollider2D.enabled)
-            {
-                CircleCollider(collision);
-            }
-        }
-    }
-    void PollygonCollider(Collider2D collision)
-    {
-        Enemy entityTemp = collision.gameObject.GetComponent<Enemy>();
-        if (entityTemp != null)
-        {
-            if(entityTemp.morto)
-            {
-                //Debug.Log("To vendo um corpo");
-                //deteceta um corpo de inimigo no chao
-            }
-        }
-
-
-        EntityModel entityModelTemp = collision.gameObject.GetComponent<Player>();
-        if (entityModelTemp != null)
-        {
-            //Debug.Log(entityModelTemp.transform.name);
-
-            if (!playerOnAttackRange)
-            {
-                float wDif=0.0F;
-                RaycastHit2D hits;
-                hits = Physics2D.Raycast(new Vector2(xp, yp), new Vector2(entityModelTemp.transform.position.x - xp, entityModelTemp.transform.position.y - yp),11000,mask.value);
-
-                if (hits)
-                {
-                    Debug.DrawRay(new Vector2(xp, yp), new Vector2(hits.transform.position.x - xp, hits.transform.position.y - yp), Color.red);
-
-                    if (hits.transform.GetComponent<ParedeModel>() != null)
-                    {
-                        if (!walls.Contains(hits.transform.gameObject))
-                        {
-                            walls.Add(hits.transform.gameObject);// =new Vector3(hit.transform.position.x, hit.transform.position.y, hit.transform.position.z);
-                        }
-
-                    }
-
-                    if (hits.transform.GetComponent<Player>() != null)
-                    {
-                        SeePlayer(true, collision.gameObject);
-
-                        // =new Vector3(hit.transform.position.x, hit.transform.position.y, hit.transform.position.z); 
-                    }
-                }       
-                
-            }
-        }
-    }
-
-    void CircleCollider(Collider2D collision)
-    {
-        PollygonCollider(collision);
-        //SeePlayer(seePlayer, playerGameObject);
-    }
-
-    void SeePlayer(bool _player, GameObject _gameObject)
-    {
-        seePlayer = _player;
-        playerGameObject = _gameObject;
-        enemyMove.SawEnemy(playerGameObject);
-    }
-    
-    
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (!enemyModel.morto)
-        {
-            if (collision.gameObject.tag == "Player" && polygonCollider.enabled == true)
-            {
-                // seePlayer = false;
-                ZerarVariaveis();
-            }
-
-            else if (collision.gameObject.tag == "Player" && circleCollider2D.enabled == true)
-            {
-                enemyMove.SawEnemy(null);
-                ZerarVariaveis();
-            }
-        }
-
-    }
-
-    public void OnAttackRange(bool _playerVisible,GameObject _playerGameObject)
-    {
-        if (!enemyModel.morto)
-        {
-            playerOnAttackRange = _playerVisible;
-
-            if (playerOnAttackRange) { SeePlayer(seePlayer, _playerGameObject); ChangeCollision(false); }
-        }
-    }
-
-    void ZerarVariaveis()
-    {
-        polygonCollider.enabled = true;
-        circleCollider2D.enabled = false;
-        playerOnAttackRange = false;
-        playerGameObject = null;
-        seePlayer = false;
-        enemyMove.SawEnemy(null);
+        //float h2 = (larguraConeVisao - pontoX) * (larguraConeVisao - pontoX) + (alturaConeVisao - pontoY) * (alturaConeVisao - pontoY);
 
     }
 }

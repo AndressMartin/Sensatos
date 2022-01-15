@@ -140,7 +140,7 @@ public class PlayerInput : MonoBehaviour
         }
         
         //Se movimentar
-        if(movement.canMove == true)
+        if(player.estado == Player.Estado.Normal)
         {
             movement.horizontal = Input.GetAxisRaw("Horizontal"); // -1 is left
             movement.vertical = Input.GetAxisRaw("Vertical"); // -1 is down

@@ -42,21 +42,29 @@ public class AtaqueFisico : MonoBehaviour
                 boxCollider2D.size = new Vector2(height, width);
                 spriteRenderer.size = new Vector2(height, width);
                 transform.position = new Vector2(transform.parent.transform.position.x - _distanceH, transform.parent.transform.position.y + _distanceY);
+                horizontal = -1;
+                vertical = 0;
                 break;
             case EntityModel.Direcao.Direita:
                 boxCollider2D.size = new Vector2(height, width);
                 spriteRenderer.size = new Vector2(height, width);
                 transform.position = new Vector2(transform.parent.transform.position.x + _distanceH, transform.parent.transform.position.y + _distanceY);
+                horizontal = 1;
+                vertical = 0;
                 break;
             case EntityModel.Direcao.Cima:
                 boxCollider2D.size = new Vector2(width, height);
                 spriteRenderer.size = new Vector2(width, height);
                 transform.position = new Vector2(transform.parent.transform.position.x, transform.parent.transform.position.y + _distanceV + _distanceY);
+                horizontal = 0;
+                vertical = 1;
                 break;
             case EntityModel.Direcao.Baixo:
                 boxCollider2D.size = new Vector2(width, height);
                 spriteRenderer.size = new Vector2(width, height);
                 transform.position = new Vector2(transform.parent.transform.position.x, transform.parent.transform.position.y - _distanceV + _distanceY);
+                horizontal = 0;
+                vertical = -1;
                 break;
         }
 
@@ -71,29 +79,14 @@ public class AtaqueFisico : MonoBehaviour
         {
             if (Colisao.HitTest(boxCollider2D, inimigo.transform.Find("HitboxDano").GetComponent<BoxCollider2D>()))
             {
-                HitTarget(inimigo.gameObject);
-                //Debug.Log("Acertou o inimigo");
+                HitTarget(inimigo);
             }
         }
         boxCollider2D.enabled = false;
     }
 
-    void HitTarget(GameObject alvo)
-    {
-        //Debug.Log("Entrou no trigger");
-        EntityModel temp;
-
-        temp = alvo.GetComponent<EntityModel>();
-        temp.TomarDano(dano, horizontal, vertical, knockBack);
-
-        
-        if (temp.GetComponentInChildren<EnemyVisionScript>() != null)
-        {
-            if (temp.GetComponentInChildren<EnemyVisionScript>().polygonCollider.enabled)
-            {
-                Enemy tempEnemy = temp.GetComponent<Enemy>();
-                tempEnemy.stealthKill();
-            }
-        }
+    void HitTarget(Enemy alvo)
+    {  
+        alvo.TomarDanoFisico(dano, horizontal, vertical, knockBack);
     }
 }

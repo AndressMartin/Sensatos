@@ -12,7 +12,7 @@ public class Player : EntityModel
 
     //Componentes
     private Rigidbody2D rb;
-    private PlayerMovement movement;
+    private PlayerMovement playerMovement;
     private AnimacaoJogador animacao;
     private InteragirScript interacaoHitBox;
     private AtaqueFisico ataqueHitBox;
@@ -36,17 +36,18 @@ public class Player : EntityModel
     private float raioPassos;
 
     //Variaveis de controle
-    public Vector3 posAnterior;
+    private Vector3 posAnterior;
 
     public ModoMovimento modoMovimento;
     public Estado estado;
 
     private float tempoImune;
     private float tempoImuneMax;
-    private bool imune;
-    private bool collisionState;
     private float tempoSoftlock,
                   tempoSoftlockMax;
+
+    private bool imune;
+    private bool collisionState;
 
     //Variaveis de respawn
     private Vector2 posicaoRespawn;
@@ -68,7 +69,7 @@ public class Player : EntityModel
 
         //Componentes
         rb = GetComponent<Rigidbody2D>();
-        movement = GetComponent<PlayerMovement>();
+        playerMovement = GetComponent<PlayerMovement>();
         animacao = transform.GetComponent<AnimacaoJogador>();
         interacaoHitBox = GetComponentInChildren<InteragirScript>();
         ataqueHitBox = GetComponentInChildren<AtaqueFisico>();
@@ -109,14 +110,7 @@ public class Player : EntityModel
         {
             if (imune)
             {
-                animacao.Piscar();
-                tempoImune += Time.deltaTime;
-                if (tempoImune > tempoImuneMax)
-                {
-                    animacao.SetarVisibilidade(true);
-                    imune = false;
-                    tempoImune = 0;
-                }
+                EnquantoEstiverImuneContador();
             }
             else if (collisionState)
             {
@@ -130,7 +124,7 @@ public class Player : EntityModel
             //Debug.Log("\nPosicao Anter: " + posAnterior + ", Posicao Atual: " + transform.position + ", Posicao diferente: " + PosicaoDiferente(posAnterior, transform.position));
             animacao.AtualizarDirecao(direcao, direcaoMovimento);
             Animar();
-            movement.Mover();
+            playerMovement.Mover();
 
             ImpedirSoftlock();
         }
@@ -158,7 +152,7 @@ public class Player : EntityModel
         vida = vidaInicial;
         transform.position = posicaoRespawn;
         direcao = direcaoRespawn;
-        movement.ZerarVelocidade();
+        playerMovement.ZerarVelocidade();
 
         ResetarVariaveisDeControle();
     }
@@ -168,7 +162,6 @@ public class Player : EntityModel
         posAnterior = transform.position;
         modoMovimento = ModoMovimento.Normal;
         estado = Estado.Normal;
-        movement.canMove = true;
         tempoImune = 0;
         imune = false;
         collisionState = false;
@@ -260,7 +253,6 @@ public class Player : EntityModel
         if (estado == Estado.Normal)
         {
             estado = Estado.Atacando;
-            movement.canMove = false;
             animacao.AtualizarArmaBracos("");
         }
     }
@@ -273,7 +265,6 @@ public class Player : EntityModel
     public void FinalizarAnimacao()
     {
         estado = Estado.Normal;
-        movement.canMove = true;
     }
 
     public void Atirar()
@@ -325,7 +316,6 @@ public class Player : EntityModel
     public void AnimacaoItem(Item item)
     {
         estado = Estado.UsandoItem;
-        movement.canMove = false;
         inventario.SetarItemAtual(item);
     }
 
@@ -361,14 +351,13 @@ public class Player : EntityModel
 
     public override void KnockBack(float _horizontal, float _vertical,float _knockBack)
     {
-        movement.KnockBack(_horizontal, _vertical, _knockBack);
+        playerMovement.KnockBack(_horizontal, _vertical, _knockBack);
     }
 
     private void Morrer()
     {
         estado = Estado.Morto;
-        movement.canMove = false;
-        movement.ZerarVelocidade();
+        playerMovement.ZerarVelocidade();
         animacao.AtualizarArmaBracos("");
         animacao.TrocarAnimacao("Morto");
     }
@@ -452,6 +441,18 @@ public class Player : EntityModel
             {
                 changeCollision(collision, true);
             }
+        }
+    }
+
+    void EnquantoEstiverImuneContador()
+    {
+        animacao.Piscar();
+        tempoImune += Time.deltaTime;
+        if (tempoImune > tempoImuneMax)
+        {
+            animacao.SetarVisibilidade(true);
+            imune = false;
+            tempoImune = 0;
         }
     }
 }

@@ -9,23 +9,21 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody2D rb;
 
     //Variaveis
-    public float horizontal;
-    public float vertical;
-    public float runSpeed;
-    private float velocityMax,
-                  velocityMaxAndando,
-                  velocityMaxAndandoSorrateiramente;
+    [HideInInspector] public float horizontal;
+    [HideInInspector] public float vertical;
 
-    public bool canMove = true;
-    private float acelerationSpeed;
+    private float velocity,
+                  velocityAndando,
+                  velocityAndandoSorrateiramente;
 
-    public float knockBackHorizontal,
+    private float knockBackHorizontal,
                  knockBackVertical;
+
     private float timeKnockBack;
     private float timeKnockBackMax;
 
-    public float _tempX = 0;
-    public float _tempY = 0;
+    private float _tempX = 0;
+    private float _tempY = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -35,19 +33,18 @@ public class PlayerMovement : MonoBehaviour
         player = GetComponent<Player>();
 
         //Variaveis
-        velocityMaxAndando = 5;
-        velocityMaxAndandoSorrateiramente = 2.5f;
-        velocityMax = velocityMaxAndando;
+        velocityAndando = 5;
+        velocityAndandoSorrateiramente = 2.5f;
+        velocity = velocityAndando;
 
         timeKnockBackMax = 0.5f;
 
-        acelerationSpeed = velocityMaxAndando * 3;
     }
 
     //Pega os inputs e move o personagem
     public void Mover()
     {
-        if (canMove)
+        if (player.estado == Player.Estado.Normal)
         {
             if(player.modoMovimento != Player.ModoMovimento.Strafing)
             {
@@ -112,11 +109,11 @@ public class PlayerMovement : MonoBehaviour
     {
         if(player.modoMovimento == Player.ModoMovimento.AndandoSorrateiramente)
         {
-            velocityMax = velocityMaxAndandoSorrateiramente;
+            velocity = velocityAndandoSorrateiramente;
         }
         else
         {
-            velocityMax = velocityMaxAndando;
+            velocity = velocityAndando;
         }
 
         switch(player.estado)
@@ -124,134 +121,20 @@ public class PlayerMovement : MonoBehaviour
             case Player.Estado.Normal: //movimentacao padrao, caso esteja sendo empurrado nao fazer contas para se movimentar
                 if (horizontal != 0)//se esta andando na vertical guarda em uma variavel a aceleracao e soma no final com addForce
                 {
-                    _tempX = horizontal * velocityMax;
-                    /*
-                    if(player.andandoSorrateiramente == false && player.strafing == false)
-                    {
-                        _tempX += horizontal * (acelerationSpeed) * (Time.deltaTime);
-                    }
-                    else
-                    {
-                        _tempX += horizontal * (acelerationSpeed);
-                    }
-
-                    if (_tempX >= velocityMax)
-                    {
-                        _tempX = velocityMax;
-                        //rb.velocity = new Vector2(velocityMaxX, rb.velocity.y);
-                    }
-                    else if (_tempX <= -velocityMax)
-                    {
-                        _tempX = -velocityMax;
-                        //rb.velocity = new Vector2(-velocityMaxX, rb.velocity.y);
-                    }
-                    */
+                    _tempX = horizontal * velocity;                   
                 }
                 else
                 {
                     _tempX = 0;
-                    /*
-                    if (_tempX > 0)
-                    {
-                        if (player.andandoSorrateiramente == false && player.strafing == false)
-                        {
-                            _tempX -= (acelerationSpeed) * (Time.deltaTime);
-                        }
-                        else
-                        {
-                            _tempX = 0;
-                        }
-
-                        if (_tempX < 0)
-                        {
-                            _tempX = 0;
-                            //rb.velocity = new Vector2(0, rb.velocity.y);
-                        }
-                    }
-                    else if (_tempX < 0)
-                    {
-                        if (player.andandoSorrateiramente == false && player.strafing == false)
-                        {
-                            _tempX += (acelerationSpeed) * (Time.deltaTime);
-                        }
-                        else
-                        {
-                            _tempX = 0;
-                        }
-
-                        if (_tempX > 0)
-                        {
-                            _tempX = 0;
-                            //rb.velocity = new Vector2(0, rb.velocity.y);
-                        }
-                    }
-                    */
                 }
 
                 if (vertical != 0)
                 {
-                    _tempY = vertical * velocityMax;
-                    /*
-                    if (player.andandoSorrateiramente == false && player.strafing == false)
-                    {
-                        _tempY += vertical * (acelerationSpeed) * (Time.deltaTime);
-                    }
-                    else
-                    {
-                        _tempY += vertical * (acelerationSpeed);
-                    }
-
-                    if (_tempY >= velocityMax)
-                    {
-                        _tempY = velocityMax;
-                        //rb.velocity = new Vector2(rb.velocity.x, velocityMaxY);
-                    }
-                    else if (_tempY <= -velocityMax)
-                    {
-                        _tempY = -velocityMax;
-                        //rb.velocity = new Vector2(rb.velocity.x, -velocityMaxY);
-                    }
-                    */
+                    _tempY = vertical * velocity;
                 }
                 else
                 {
                     _tempY = 0;
-                    /*
-                    if (_tempY > 0)
-                    {
-                        if (player.andandoSorrateiramente == false && player.strafing == false)
-                        {
-                            _tempY -= (acelerationSpeed) * (Time.deltaTime);
-                        }
-                        else
-                        {
-                            _tempY = 0;
-                        }
-
-                        if (_tempY < 0)
-                        {
-                            _tempY = 0;
-                            //rb.velocity = new Vector2(rb.velocity.x, 0);
-                        }
-                    }
-                    else if (_tempY < 0)
-                    {
-                        if (player.andandoSorrateiramente == false && player.strafing == false)
-                        {
-                            _tempY += (acelerationSpeed) * (Time.deltaTime);
-                        }
-                        else
-                        {
-                            _tempY = 0;
-                        }
-
-                        if (_tempY > 0)
-                        {
-                            _tempY = 0;
-                            //rb.velocity = new Vector2(rb.velocity.x, 0);
-                        }
-                    }
-                    */
                 }
                 break;
 
@@ -276,13 +159,11 @@ public class PlayerMovement : MonoBehaviour
 
     void KnockBackContador()
     {
-        canMove = false;
         timeKnockBack += Time.deltaTime;
         if (timeKnockBack > timeKnockBackMax)
         {
             player.estado = Player.Estado.Normal;
             timeKnockBack = 0;
-            canMove = true;
             knockBackHorizontal = 0;
             knockBackVertical = 0;
             player.FinalizarKnockback();
@@ -291,7 +172,6 @@ public class PlayerMovement : MonoBehaviour
 
     void Walk(float _horizontal, float _vertical)
     {
-        //Debug.Log("Velocidade" + new Vector2(horizontal, vertical).normalized);
         if (!(horizontal != 0 && vertical != 0))
         {
             rb.velocity = new Vector2(_tempX, _tempY);

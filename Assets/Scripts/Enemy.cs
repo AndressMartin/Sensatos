@@ -12,7 +12,7 @@ public class Enemy : EntityModel
     //Componentes
     private PontaArmaScript pontaArma;
     private AnimacaoJogador animacao;
-    private Inventario inventario;
+    private InventarioEnemy inventario;
     private EnemyMovement enemyMovement;
     private EnemyVisionScript enemyVision;
 
@@ -24,6 +24,9 @@ public class Enemy : EntityModel
     public Estado estado;
 
     public bool morto;
+    public bool playerOnAttackRange;
+    public bool vendoPlayer;
+    public bool vendoPlayerCircular;
 
     bool tiroColldown;
     float timeCooldwon;
@@ -52,7 +55,7 @@ public class Enemy : EntityModel
         //Componentes
         enemyVision = GetComponentInChildren<EnemyVisionScript>();
         enemyMovement = GetComponent<EnemyMovement>();
-        inventario = GetComponent<Inventario>();
+        inventario = GetComponent<InventarioEnemy>();
         pontaArma = GetComponentInChildren<PontaArmaScript>();
         animacao = transform.GetComponent<AnimacaoJogador>();
 
@@ -77,6 +80,11 @@ public class Enemy : EntityModel
         {
             AllEnemySubClass();
         }
+    }
+    void VariaveisAtualizamTodoFrame()
+    {
+        vendoPlayer = enemyVision.vendoPlayer;
+        vendoPlayerCircular=enemyVision.vendoPlayerCircular;
     }
 
     private void SetRespawnInicial()
@@ -117,6 +125,7 @@ public class Enemy : EntityModel
     {
         estado = Estado.Normal;
         tiroColldown = false;
+        playerOnAttackRange = false;
         timeCooldwon = 0;
         enemyMovement.ResetarVariaveisDeControle();
         enemyVision.ResetarVariaveisDeControle();
@@ -126,6 +135,7 @@ public class Enemy : EntityModel
     {
         if (!morto)
         {
+            VariaveisAtualizamTodoFrame();
             //Debug.Log("Inimigo Vel X: " + enemyMove.velX + ", Vel Y: " + enemyMove.velY);
             animacao.AtualizarDirecao(direcao, direcao);
             Animar();
@@ -164,8 +174,8 @@ public class Enemy : EntityModel
         TrocarDirecaoAtaque(FindObjectOfType<Player>().transform.position);
         if (!tiroColldown)
         {
-            inventario.armaSlot1.Atirar(this, bulletCreator);
-            animacao.AtualizarArmaBracos(inventario.armaSlot1.nomeVisual);
+            inventario.ArmaSlot.Atirar(this, bulletCreator);
+            animacao.AtualizarArmaBracos(inventario.ArmaSlot.nomeVisual);
             tiroColldown = true;
         }
         
@@ -192,8 +202,19 @@ public class Enemy : EntityModel
         {
             KnockBack(_horizontal, _vertical , _knockBack);
             vida -= _dano;
+        }    
+    }
+    public void TomarDanoFisico(int _dano, float _horizontal, float _vertical, float _knockBack)
+    {
+        // mudar pra quando tiver variavel de inimgo vendo
+        if (!enemyVision.vendoPlayer)//ageitar
+        {
+            stealthKill();
         }
-
+        else
+        {
+            TomarDano(_dano, _horizontal, _vertical, _knockBack);
+        }
         
     }
     public void ChangeDirection(Direcao _direction)

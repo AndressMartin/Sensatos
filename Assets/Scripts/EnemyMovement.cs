@@ -13,6 +13,7 @@ public class EnemyMovement : MonoBehaviour
     private PathFinding pathFinding;
     public Rigidbody2D rb;
     private ModoLockDown modoLockDown;
+    private DetecSystem detecSystem;
 
     //Variaveis
     public int velocity;
@@ -82,6 +83,7 @@ public class EnemyMovement : MonoBehaviour
 
     void getComponent()
     {
+        detecSystem = GetComponentInChildren<DetecSystem>();
         modoLockDown = FindObjectOfType<ModoLockDown>();
         pathFinding = GetComponent<PathFinding>();
         rb = GetComponent<Rigidbody2D>();
@@ -119,6 +121,7 @@ public class EnemyMovement : MonoBehaviour
     {
         //componentes
         getComponent();
+        modoLockDown.AddtoLista(this, timerPraEntarEmModoCombateMax, timerResetarModoEmAlertaMax);
 
         ultimaposicaoOrigem = new Vector3(transform.position.x, transform.position.y, transform.position.z);        
         stance = Stances.Patrolling;
@@ -251,7 +254,7 @@ public class EnemyMovement : MonoBehaviour
         {           
             enemy.UseItem();//ataque
         }
-        else if (enemyVision.seePlayer)
+        else if (enemyVision.vendoPlayer)
         {
             if (Vector2.Distance(transform.position, playerGameObject.transform.position) > 1.0f)//Esse num tem que ser o valor do raio+-
             {
@@ -262,9 +265,9 @@ public class EnemyMovement : MonoBehaviour
     }
     public void Main()
     {
-        modoLockDown.AddtoLista(this, timerPraEntarEmModoCombateMax, timerResetarModoEmAlertaMax);
+        detecSystem.Main();
         CounterAlertTimer();
-        vendoPlayer = enemyVision.seePlayer;
+        vendoPlayer = enemyVision.vendoPlayer;
         difLockDownButton = Vector2.Distance(lockDown.transform.position, transform.position);
 
         if (vendoPlayer)//caso esteja vendo o player
