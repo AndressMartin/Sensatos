@@ -56,6 +56,7 @@ public class ArmaDeFogo : MonoBehaviour
             {
                 CriarTiro(objQueChamou, bulletManager, posicao, direcao, alvo);
                 municaoCartucho--;
+                player.CadenciaTiro(cadenciaDosTiros);
             }
             else if (municao > 0)
             {

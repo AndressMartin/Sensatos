@@ -68,6 +68,8 @@ public class PlayerInput : MonoBehaviour
                 player.Atirar();
             }
 
+            if(Input.get)
+
             //Botão de interação
             if (Input.GetKeyDown(KeyCode.E))
             {

@@ -897,6 +897,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1193014887, guid: 7bb8e4c1f32bbe84cb8f208ad0a21a8a, type: 3}
+      propertyPath: m_PixelSnapping
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4313159731838897376, guid: 7bb8e4c1f32bbe84cb8f208ad0a21a8a, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -941,6 +945,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4313159731838897377, guid: 7bb8e4c1f32bbe84cb8f208ad0a21a8a, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4313159731838897379, guid: 7bb8e4c1f32bbe84cb8f208ad0a21a8a, type: 3}
       propertyPath: m_ClearFlags
       value: 1
@@ -954,6 +962,10 @@ PrefabInstance:
       value: MainCamera
       objectReference: {fileID: 0}
     - target: {fileID: 4313159731838897405, guid: 7bb8e4c1f32bbe84cb8f208ad0a21a8a, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4313159732695190744, guid: 7bb8e4c1f32bbe84cb8f208ad0a21a8a, type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
@@ -1634,6 +1646,11 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!20 &825501546 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 4313159731838897379, guid: 7bb8e4c1f32bbe84cb8f208ad0a21a8a, type: 3}
+  m_PrefabInstance: {fileID: 348758053}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &828238559 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2466371015003547470, guid: ad9419e4686d98548937b4e9f0f4c1b6, type: 3}
@@ -13441,6 +13458,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1345658172, guid: 6d63f8b028557034bbfc590405d0f4e6, type: 3}
+      propertyPath: cameraAtiva
+      value: 
+      objectReference: {fileID: 825501546}
     - target: {fileID: 700864800803910912, guid: 6d63f8b028557034bbfc590405d0f4e6, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -13529,6 +13550,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: UI
       objectReference: {fileID: 0}
+    - target: {fileID: 700864800803910919, guid: 6d63f8b028557034bbfc590405d0f4e6, type: 3}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 825501546}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6d63f8b028557034bbfc590405d0f4e6, type: 3}
 --- !u!1001 &1821151288

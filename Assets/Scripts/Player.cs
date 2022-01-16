@@ -8,6 +8,8 @@ public class Player : EntityModel
     private ObjectManagerScript objectManager;
     private PauseManagerScript pauseManager;
     private BulletManagerScript bulletManager;
+
+    private HUDScript hud;
     private DialogueUI dialogueUI;
 
     //Componentes
@@ -41,6 +43,8 @@ public class Player : EntityModel
     public ModoMovimento modoMovimento;
     private Estado estado;
 
+    private float tempoTiro;
+
     private bool recarregando;
     private float tempoRecarregar;
     private float tempoRecarregarMax;
@@ -71,6 +75,7 @@ public class Player : EntityModel
         objectManager = FindObjectOfType<ObjectManagerScript>();
         pauseManager = FindObjectOfType<PauseManagerScript>();
         bulletManager = FindObjectOfType<BulletManagerScript>();
+        hud = FindObjectOfType<HUDScript>();
         dialogueUI = FindObjectOfType<DialogueUI>();
 
         //Componentes
@@ -94,6 +99,8 @@ public class Player : EntityModel
         modoMovimento = ModoMovimento.Normal;
         estado = Estado.Normal;
 
+        tempoTiro = 0;
+
         recarregando = false;
         tempoRecarregar = 0;
         tempoRecarregarMax = 0;
@@ -111,7 +118,7 @@ public class Player : EntityModel
 
     void Update()
     {
-        if(pauseManager.JogoPausado == false && estado != Estado.Morto)
+        if (pauseManager.JogoPausado == false && estado != Estado.Morto)
         {
             if (imune)
             {
@@ -126,9 +133,20 @@ public class Player : EntityModel
                 collisionState = false;
             }
 
+            if(tempoTiro > 0)
+            {
+                tempoTiro -= Time.deltaTime;
+
+                if(tempoTiro < 0)
+                {
+                    tempoTiro = 0;
+                }
+            }
+
             if(recarregando == true)
             {
                 RecarregarContador();
+                hud.AtualizarBarraDeRecarregamento(tempoRecarregar, tempoRecarregarMax);
             }
 
             animacao.AtualizarDirecao(direcao, direcaoMovimento);
@@ -142,6 +160,11 @@ public class Player : EntityModel
     private void FixedUpdate()
     {
         posAnterior = transform.position;
+        if(recarregando == true)
+        {
+            hud.AtualizarPosicaoDaBarraDeRecarregamento(this);
+            hud.BarraDeRecarregamentoAtiva(true);
+        }
     }
 
     private void SetRespawn()
@@ -171,12 +194,14 @@ public class Player : EntityModel
         posAnterior = transform.position;
         modoMovimento = ModoMovimento.Normal;
         estado = Estado.Normal;
+        tempoTiro = 0;
         tempoImune = 0;
         imune = false;
         collisionState = false;
         tempoSoftlock = 0;
 
         animacao.SetarVisibilidade(true);
+        FinalizarRecarregamento();
     }
 
     private bool PosicaoDiferente(Vector3 posAnterior, Vector3 posAtual)
@@ -270,11 +295,14 @@ public class Player : EntityModel
     {
         if (estado == Estado.Normal)
         {
-            if(recarregando == false)
+            if (tempoTiro <= 0)
             {
-                GerarSom(inventario.armaSlot1.RaioDoSomDoTiro, true);
-                inventario.armaSlot1.Atirar(this, bulletManager, pontaArma.transform.position, VetorDirecao(direcao), Alvo.Enemy);
-                animacao.AtualizarArmaBracos(inventario.armaSlot1.NomeAnimacao);
+                if (recarregando == false)
+                {
+                    GerarSom(inventario.armaSlot1.RaioDoSomDoTiro, true);
+                    inventario.armaSlot1.Atirar(this, bulletManager, pontaArma.transform.position, VetorDirecao(direcao), Alvo.Enemy);
+                    animacao.AtualizarArmaBracos(inventario.armaSlot1.NomeAnimacao);
+                }
             }
         }
     }
@@ -296,13 +324,14 @@ public class Player : EntityModel
         if(tempoRecarregar >= tempoRecarregarMax)
         {
             inventario.armaSlot1.Recarregar();
-            recarregando = false;
+            FinalizarRecarregamento();
         }
     }
 
-    private void CancelarRecarregamento()
+    private void FinalizarRecarregamento()
     {
         recarregando = false;
+        hud.BarraDeRecarregamentoAtiva(false);
     }
 
     public void SemMunicao()
@@ -310,11 +339,16 @@ public class Player : EntityModel
         Debug.Log("Sem Municao!");
     }
 
+    public void CadenciaTiro(float cadenciaDosTiros)
+    {
+        tempoTiro = cadenciaDosTiros;
+    }
+
     public void AtualizarArma()
     {
         if(recarregando == true)
         {
-            CancelarRecarregamento();
+            FinalizarRecarregamento();
         }
         animacao.AtualizarArmaBracos(inventario.armaSlot1.NomeAnimacao);
     }
@@ -397,6 +431,8 @@ public class Player : EntityModel
         playerMovement.ZerarVelocidade();
         animacao.AtualizarArmaBracos("");
         animacao.TrocarAnimacao("Morto");
+
+        FinalizarRecarregamento();
     }
 
     public void GerarSom(float raio, bool somTiro)
