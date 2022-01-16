@@ -49,7 +49,7 @@ public class Cerca : ParedeModel
 
         //Variaveis
         vida = vidaMax;
-        lockDownAtivo = true;
+        ativo = true;
         spriteAtual = "Quebravel";
 
         //Se adicionar a lista de objetos interagiveis do ObjectManager
@@ -75,10 +75,10 @@ public class Cerca : ParedeModel
     public override void SetRespawn()
     {
         vidaRespawn = vida;
-        ativoRespawn = lockDownAtivo;
+        ativoRespawn = ativo;
         spriteAtualRespawn = spriteAtual;
 
-        if(lockDownAtivo == true)
+        if(ativo == true)
         {
             boxCollider2D.enabled = true;
             hitBoxTiro.enabled = true;
@@ -88,7 +88,7 @@ public class Cerca : ParedeModel
     public override void Respawn()
     {
         vida = vidaRespawn;
-        lockDownAtivo = ativoRespawn;
+        ativo = ativoRespawn;
         TrocarSprite(spriteAtualRespawn);
     }
 
@@ -137,7 +137,7 @@ public class Cerca : ParedeModel
         TrocarSprite(spriteAtual);
         boxCollider2D.enabled = false;
         hitBoxTiro.enabled = false;
-        lockDownAtivo = false;
+        ativo = false;
     }
 
     private void TrocarSprite(string spriteName)

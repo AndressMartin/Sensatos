@@ -15,8 +15,8 @@ public class ExplainPanel : MonoBehaviour
 
     public void ChangeUI(ArmaDeFogo arma)
     {
-        weaponName.text = arma.nome;
-        description.text = arma.descricao;
+        weaponName.text = arma.Nome;
+        description.text = arma.Descricao;
     }
 }
 

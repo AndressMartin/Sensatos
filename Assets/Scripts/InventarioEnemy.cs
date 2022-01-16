@@ -7,5 +7,4 @@ public class InventarioEnemy : MonoBehaviour
     [SerializeField] private ArmaDeFogo armaSlot;
     
     public ArmaDeFogo ArmaSlot => armaSlot;
-
 }

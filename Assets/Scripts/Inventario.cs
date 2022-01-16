@@ -21,6 +21,10 @@ public class Inventario : MonoBehaviour
             hasSortedWeapons = new UnityEvent();
         player = GetComponentInParent<Player>();
         InitWeaponConfig();
+
+        //Para testes
+        armaSlot1.AdicionarMunicao(999);
+        armaSlot2.AdicionarMunicao(999);
     }
 
     private void InitWeaponConfig()

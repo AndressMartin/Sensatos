@@ -7,7 +7,7 @@ public class Enemy : EntityModel
     //Managers
     private ObjectManagerScript objectManager;
     private PauseManagerScript pauseManager;
-    private BulletCreator bulletCreator;
+    private BulletManagerScript bulletManager;
 
     //Componentes
     private PontaArmaScript pontaArma;
@@ -21,7 +21,7 @@ public class Enemy : EntityModel
     [SerializeField] private int vidaInicial;
 
     public enum Estado { Normal, TomandoDano };
-    public Estado estado;
+    private Estado estado;
 
     public bool morto;
     public bool playerOnAttackRange;
@@ -35,19 +35,24 @@ public class Enemy : EntityModel
     [SerializeField] private float distanceCenter;
     [SerializeField] private float distanceY;
 
+    private float knockBackTrigger;
+    private float knockBackTriggerMax;
+
     //Variaveis de respawn
     private bool mortoRespawn;
     private Vector2 posicaoRespawn;
     private Direcao direcaoRespawn;
     private EnemyMovement.ModoPatrulha modoPatrulhaRespawn;
 
-    // Start is called before the first frame update
+    //Getters
+    public Estado GetEstado => estado;
+
     void Start()
     {
         //Managers
         objectManager = FindObjectOfType<ObjectManagerScript>();
         pauseManager = FindObjectOfType<PauseManagerScript>();
-        bulletCreator = FindObjectOfType<BulletCreator>();
+        bulletManager = FindObjectOfType<BulletManagerScript>();
 
         //Se adicionar a lista de inimigos do ObjectManager
         objectManager.adicionarAosInimigos(this);
@@ -70,10 +75,12 @@ public class Enemy : EntityModel
         timeCooldwon = 0;
         timeCooldownTiro = 0.5f;
 
+        knockBackTrigger = 0;
+        knockBackTriggerMax = 10;
+
         SetRespawnInicial();
     }
 
-    // Update is called once per frame
     void Update()
     { 
         if(pauseManager.JogoPausado == false)
@@ -169,18 +176,23 @@ public class Enemy : EntityModel
         }
     }
 
+    public void FinalizarAnimacao()
+    {
+        estado = Estado.Normal;
+    }
+
     public void UseItem()
     {
         TrocarDirecaoAtaque(FindObjectOfType<Player>().transform.position);
         if (!tiroColldown)
         {
-            inventario.ArmaSlot.Atirar(this, bulletCreator);
-            animacao.AtualizarArmaBracos(inventario.ArmaSlot.nomeVisual);
+            inventario.ArmaSlot.Atirar(this, bulletManager, pontaArma.transform.position, VetorDirecao(direcao), Alvo.Player);
+            animacao.AtualizarArmaBracos(inventario.ArmaSlot.NomeAnimacao);
             tiroColldown = true;
         }
         
     }
-    public void die()
+    public void Die()
     {
         morto = true;
         enemyMovement.ZerarVelocidade();
@@ -188,23 +200,10 @@ public class Enemy : EntityModel
     }
     public void stealthKill()
     {
-        die();
+        Die();
     }
 
-    public override void TomarDano(int _dano, float _horizontal, float _vertical,float _knockBack)
-    {
-       
-        if (vida <= 0)
-        {
-            die();
-        }
-        else
-        {
-            KnockBack(_horizontal, _vertical , _knockBack);
-            vida -= _dano;
-        }    
-    }
-    public void TomarDanoFisico(int _dano, float _horizontal, float _vertical, float _knockBack)
+    public void TomarDanoFisico(int _dano, float _knockBack, Vector2 _direcaoKnockBack)
     {
         // mudar pra quando tiver variavel de inimgo vendo
         if (!enemyVision.vendoPlayer)//ageitar
@@ -213,10 +212,39 @@ public class Enemy : EntityModel
         }
         else
         {
-            TomarDano(_dano, _horizontal, _vertical, _knockBack);
+            TomarDano(_dano, _knockBack, 0, _direcaoKnockBack);
         }
-        
     }
+
+    public override void TomarDano(int _dano, float _knockBack, float _knockBackTrigger, Vector2 _direcaoKnockBack)
+    {
+        if(estado == Estado.Normal)
+        {
+            if (vida <= 0)
+            {
+                Die();
+            }
+            else
+            {
+                vida -= _dano;
+
+                knockBackTrigger += _knockBackTrigger;
+
+                if (knockBackTrigger >= knockBackTriggerMax)
+                {
+                    estado = Estado.TomandoDano;
+                    KnockBack(_knockBack, _direcaoKnockBack);
+                }
+            }
+        } 
+    }
+
+    public override void KnockBack(float _knockBack, Vector2 _direcaoKnockBack)
+    {
+        enemyMovement.KnockBack(_knockBack, _direcaoKnockBack);
+
+    }
+
     public void ChangeDirection(Direcao _direction)
     {
         direcao = _direction;
@@ -248,11 +276,7 @@ public class Enemy : EntityModel
             ChangeDirection(EntityModel.Direcao.Esquerda);
         }
     }
-    public override void KnockBack(float _horizontal, float _vertical,float _knockBack)
-    {
-        enemyMovement.KnockBack(_horizontal, _vertical,_knockBack);
-        
-    }
+    
     private void OnCollisionStay2D(Collision2D collision)
     {
        

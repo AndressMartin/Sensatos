@@ -6,6 +6,7 @@ public class RespawnManagerScript : MonoBehaviour
 {
     //Managers
     private ObjectManagerScript objectManager;
+    private BulletManagerScript bulletManager;
 
     private Player player;
 
@@ -13,6 +14,7 @@ public class RespawnManagerScript : MonoBehaviour
     {
         //Managers
         objectManager = FindObjectOfType<ObjectManagerScript>();
+        bulletManager = FindObjectOfType<BulletManagerScript>();
 
         player = FindObjectOfType<Player>();
     }
@@ -49,7 +51,7 @@ public class RespawnManagerScript : MonoBehaviour
             inimigo.SetRespawn();
         }
 
-        foreach (LockDown alarme in objectManager.listaAlarme)
+        foreach (LockDown alarme in objectManager.listaAlarmes)
         {
             alarme.SetRespawn();
         }
@@ -79,7 +81,7 @@ public class RespawnManagerScript : MonoBehaviour
             inimigo.Respawn();
         }
 
-        foreach (LockDown alarme in objectManager.listaAlarme)
+        foreach (LockDown alarme in objectManager.listaAlarmes)
         {
             alarme.Respawn();
         }
@@ -88,5 +90,7 @@ public class RespawnManagerScript : MonoBehaviour
         {
             porta.Respawn();
         }
+
+        bulletManager.DeletarProjeteis();
     }
 }

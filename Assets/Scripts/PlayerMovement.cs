@@ -12,18 +12,17 @@ public class PlayerMovement : MonoBehaviour
     [HideInInspector] public float horizontal;
     [HideInInspector] public float vertical;
 
-    private float velocity,
-                  velocityAndando,
-                  velocityAndandoSorrateiramente;
+    private float velocidade,
+                  velocidadeAndando,
+                  velocidadeAndandoSorrateiramente;
 
-    private float knockBackHorizontal,
-                 knockBackVertical;
+    private float movimentoX = 0;
+    private float movimentoY = 0;
+    private Vector2 vetorKnockBack;
 
+    //Variaveis de controle
     private float timeKnockBack;
     private float timeKnockBackMax;
-
-    private float _tempX = 0;
-    private float _tempY = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -33,18 +32,27 @@ public class PlayerMovement : MonoBehaviour
         player = GetComponent<Player>();
 
         //Variaveis
-        velocityAndando = 5;
-        velocityAndandoSorrateiramente = 2.5f;
-        velocity = velocityAndando;
+        velocidadeAndando = 5;
+        velocidadeAndandoSorrateiramente = 2.5f;
+        velocidade = velocidadeAndando;
 
+        //Variaveis de controle
+        timeKnockBack = 0;
         timeKnockBackMax = 0.5f;
 
+    }
+
+    public void ResetarVariaveisDeControle()
+    {
+        timeKnockBack = 0;
+        vetorKnockBack = Vector2.zero;
+        ZerarVelocidade();
     }
 
     //Pega os inputs e move o personagem
     public void Mover()
     {
-        if (player.estado == Player.Estado.Normal)
+        if (player.GetEstado == Player.Estado.Normal)
         {
             if(player.modoMovimento != Player.ModoMovimento.Strafing)
             {
@@ -90,71 +98,19 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-        Move();
-        if(player.estado == Player.Estado.TomandoDano)
+        DefinirMovimento();
+
+        if(player.GetEstado == Player.Estado.TomandoDano)
         {
             KnockBackContador();
         }
     }
 
-    public void KnockBack(float _horizontal, float _vertical, float _knockBack)
+    public void KnockBack(float _knockBack, Vector2 _direcaoKnockBack)
     {
-        knockBackHorizontal = _horizontal * _knockBack;
-        knockBackVertical = _vertical * _knockBack;
+        vetorKnockBack = _direcaoKnockBack * _knockBack;
 
         timeKnockBack = 0;
-    }
-
-    void Move()
-    {
-        if(player.modoMovimento == Player.ModoMovimento.AndandoSorrateiramente)
-        {
-            velocity = velocityAndandoSorrateiramente;
-        }
-        else
-        {
-            velocity = velocityAndando;
-        }
-
-        switch(player.estado)
-        {
-            case Player.Estado.Normal: //movimentacao padrao, caso esteja sendo empurrado nao fazer contas para se movimentar
-                if (horizontal != 0)//se esta andando na vertical guarda em uma variavel a aceleracao e soma no final com addForce
-                {
-                    _tempX = horizontal * velocity;                   
-                }
-                else
-                {
-                    _tempX = 0;
-                }
-
-                if (vertical != 0)
-                {
-                    _tempY = vertical * velocity;
-                }
-                else
-                {
-                    _tempY = 0;
-                }
-                break;
-
-            case Player.Estado.TomandoDano:
-                _tempX = knockBackHorizontal;
-                _tempY = knockBackVertical;
-                break;
-
-            case Player.Estado.Atacando:
-                _tempX = 0;
-                _tempY = 0;
-                break;
-
-            case Player.Estado.UsandoItem:
-                _tempX = 0;
-                _tempY = 0;
-                break;
-        }
-
-        Walk(_tempX, _tempY);
     }
 
     void KnockBackContador()
@@ -162,31 +118,77 @@ public class PlayerMovement : MonoBehaviour
         timeKnockBack += Time.deltaTime;
         if (timeKnockBack > timeKnockBackMax)
         {
-            player.estado = Player.Estado.Normal;
             timeKnockBack = 0;
-            knockBackHorizontal = 0;
-            knockBackVertical = 0;
-            player.FinalizarKnockback();
+            vetorKnockBack = Vector2.zero;
+            player.FinalizarAnimacao();
         }
     }
 
-    void Walk(float _horizontal, float _vertical)
+    void DefinirMovimento()
     {
-        if (!(horizontal != 0 && vertical != 0))
+        if(player.modoMovimento == Player.ModoMovimento.AndandoSorrateiramente)
         {
-            rb.velocity = new Vector2(_tempX, _tempY);
+            velocidade = velocidadeAndandoSorrateiramente;
         }
         else
         {
-            rb.velocity = new Vector2(_tempX * 0.7f, _tempY * 0.7f);
+            velocidade = velocidadeAndando;
         }
 
-        if(!(_tempX == 0 && _tempY == 0))
+        if(player.GetEstado == Player.Estado.Normal)
         {
-            if (player.estado == Player.Estado.Normal && player.modoMovimento != Player.ModoMovimento.AndandoSorrateiramente)
+            if (horizontal != 0)
             {
-                player.GerarSom(0f, false);
+                movimentoX = horizontal * velocidade;
             }
+            else
+            {
+                movimentoX = 0;
+            }
+
+            if (vertical != 0)
+            {
+                movimentoY = vertical * velocidade;
+            }
+            else
+            {
+                movimentoY = 0;
+            }
+        }
+
+        MoverObjeto(movimentoX, movimentoY);
+    }
+
+    void MoverObjeto(float _horizontal, float _vertical)
+    {
+        switch(player.GetEstado)
+        {
+            case Player.Estado.Normal:
+                if (horizontal == 0 || vertical == 0)
+                {
+                    rb.velocity = new Vector2(movimentoX, movimentoY);
+                }
+                else
+                {
+                    rb.velocity = new Vector2(movimentoX * 0.7f, movimentoY * 0.7f);
+                }
+
+                if (!(movimentoX == 0 && movimentoY == 0))
+                {
+                    if (player.modoMovimento != Player.ModoMovimento.AndandoSorrateiramente)
+                    {
+                        player.GerarSom(0f, false);
+                    }
+                }
+                break;
+
+            case Player.Estado.TomandoDano:
+                rb.velocity = vetorKnockBack;
+                break;
+
+            default:
+                ZerarVelocidade();
+                break;
         }
     }
 

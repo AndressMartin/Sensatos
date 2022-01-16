@@ -4,153 +4,120 @@ using UnityEngine;
 
 public class ProjetilScript : MonoBehaviour
 {
+    //Managers
+    BulletManagerScript bulletManager;
+
+    //Componentes
     private Rigidbody2D rb;
-    private GameObject alvo;
-    Vector3 pontaArmaAoDisparar;
+    private GameObject alvoAcertado;
 
-    public Vector3 playerVector3;
-    public EntityModel FatherFromGun;
+    //Variaveis
+    private int dano;
+    private float velocidadeProjetil;
+    private float knockBack;
+    private float knockBackTrigger; //Usado nos inimigos para fazer eles tomarem um KnockBack verdadeiro
+    private float distanciaMaxProjetil;
 
-    Vector3 directionPlayer;
-    float horizontal, vertical;
-    bool saberDirecaoDisparo;
-    bool disparou;
-    public float velocidadeProjetil;
-    public float distanciaMaxProjetil;
-    public int dano;
-    public float knockBackValue;
+    private EntityModel objQueChamou;
+    private EntityModel.Alvo alvo;
+    private Vector2 direcao;
+    private Vector3 posicaoInicial;
 
-    //EntityModel.Direcao;
-    //public enum Direcao { Esquerda, Cima, Direita, Baixo };
-    //public Direcao direcao;
-    public EntityModel.Direcao direcao;
-    // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        
     }
 
-    // Update is called once per frame
+    public void Iniciar(EntityModel objQueChamou, BulletManagerScript bulletManager, ArmaDeFogo armaDeFogo, Vector2 direcao, EntityModel.Alvo alvo)
+    {
+        this.objQueChamou = objQueChamou;
+        this.bulletManager = bulletManager;
+        this.alvo = alvo;
+        this.direcao = direcao;
+        this.posicaoInicial = this.transform.position;
+
+        this.dano = armaDeFogo.Dano;
+        this.velocidadeProjetil = armaDeFogo.VelocidadeProjetil;
+        this.knockBack = armaDeFogo.KnockBack;
+        this.knockBackTrigger = armaDeFogo.KnockBackTrigger;
+        this.distanciaMaxProjetil = armaDeFogo.DistanciaMaxProjetil;
+    }
+
     void Update()
     {
-        if(FatherFromGun.transform.GetComponent<Player>())
-        {
-            FatherPlayer();
-        }
-        else if (FatherFromGun.transform.GetComponent<Enemy>())
-        {
-            FatherEnemy();
-        }
-
+        Mover();
     }
-    void FatherPlayer()
-    {
-        if (disparou)
-        {
-            if (!saberDirecaoDisparo)
-            {
 
-                switch (direcao)
-                {
-                    case EntityModel.Direcao.Esquerda:
-                        horizontal = -1;
-                        break;
-                    case EntityModel.Direcao.Direita:
-                        horizontal = 1;
-                        break;
-                    case EntityModel.Direcao.Cima:
-
-                        vertical = 1;
-                        break;
-                    case EntityModel.Direcao.Baixo:
-                        vertical = -1;
-                        break;
-
-                }
-                saberDirecaoDisparo = true;
-            }
-            DistanciaProjetil();
-
-            rb.velocity = new Vector2(horizontal, vertical) * velocidadeProjetil;
-        }
-    }
-    void FatherEnemy()
-    {
-        if (disparou)
-        {
-            if (!saberDirecaoDisparo)
-            {
-                Player player = FindObjectOfType<Player>().GetComponent<Player>();
-                Vector2 temp = player.GetComponent<Transform>().position;
-                playerVector3 = new Vector2(temp.x,(temp.y+player.distanciaTiroY));
-               
-                directionPlayer = playerVector3 - transform.position;
-                horizontal = directionPlayer.x;
-                vertical = directionPlayer.y;
-                directionPlayer.Normalize();
-                saberDirecaoDisparo = true;
-                disparou = false;
-            }
-                   
-        }
-        MOVE(directionPlayer);
-        
-    }
-    void MOVE(Vector2 _direction)
+    void Mover()
     {
         DistanciaProjetil();
-        rb.velocity = new Vector2(_direction.x * velocidadeProjetil,_direction.y * velocidadeProjetil);
-       // rb.MovePosition((Vector2)transform.position + (_direction * velocidadeProjetil * Time.deltaTime));
-
+        rb.velocity = direcao * velocidadeProjetil;
     }
-
 
     void DistanciaProjetil()
     {
-        float difX = Mathf.Abs(pontaArmaAoDisparar.x) - Mathf.Abs(transform.position.x);
-        float difY = Mathf.Abs(pontaArmaAoDisparar.y) - Mathf.Abs(transform.position.y);
-        if (Mathf.Abs(difY) >= Mathf.Abs(distanciaMaxProjetil) || Mathf.Abs(difX) >= Mathf.Abs(distanciaMaxProjetil))
+        //Ve se a distancia do projetil do seu ponto inicial e maior que a distancia maxima que ele pode percorrer, usando sqrMagnitude para ser um pouco mais otimizado
+        Vector3 diferenca = transform.position - posicaoInicial;
+        float distancia = diferenca.sqrMagnitude;
+
+        if(distancia > distanciaMaxProjetil * distanciaMaxProjetil)
         {
-            DestroyGameObject();
+            SeDestruir();
         }
     }
-
-    public void Shooted(Transform _pontaArma)
+ 
+    void HitTarget(GameObject alvoAcertado)
     {
-        disparou = true;
-        transform.position = _pontaArma.transform.position;
-        pontaArmaAoDisparar = transform.position;
+        EntityModel temp;
+        temp = alvoAcertado.transform.parent.GetComponent<EntityModel>();
+        temp.TomarDano(dano, knockBack, knockBackTrigger, direcao);
+        SeDestruir();
+    }
+    void SeDestruir()
+    {
+        bulletManager.RemoverDosProjeteis(this);
+        Destroy(gameObject);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        alvo = collision.gameObject;
-        if (alvo.tag == "HitboxDano")
-        {
+        alvoAcertado = collision.gameObject;
 
-            if (alvo.transform.parent.gameObject != FatherFromGun.gameObject)
-            {     
-                HitTarget();
+        if (alvoAcertado.tag == "HitboxDano")
+        {
+            if (alvoAcertado.transform.parent.gameObject != objQueChamou.gameObject)
+            {
+                switch (alvo)
+                {
+                    case EntityModel.Alvo.Player:
+                        if (alvoAcertado.transform.parent.tag == "Player")
+                        {
+                            HitTarget(alvoAcertado);
+                        }
+                        break;
+
+                    case EntityModel.Alvo.Enemy:
+                        if (alvoAcertado.transform.parent.tag == "Enemy")
+                        {
+                            HitTarget(alvoAcertado);
+                        }
+                        break;
+                }
             }
         }
-        else if(alvo.tag == "paredeTiro")
-            DestroyGameObject();
-
+        else if (alvoAcertado.tag == "paredeTiro")
+        {
+            SeDestruir();
+        }
     }
- 
- 
-    void HitTarget()
-    {
 
-        EntityModel temp;
-        temp = alvo.transform.parent.GetComponent<EntityModel>();
-        temp.TomarDano(dano, horizontal, vertical,knockBackValue);
-        DestroyGameObject();
-        
-    }
-    void DestroyGameObject()
+    //Mover essa funcao para o inimigo
+    private Vector2 DirecaoPlayer(Player player)
     {
-        Destroy(gameObject);
+        Vector3 posicaoPlayer = player.transform.position;
+        Vector3 direcaoPlayer = posicaoPlayer - transform.position;
+        direcaoPlayer.Normalize();
+
+        return direcaoPlayer;
     }
 }

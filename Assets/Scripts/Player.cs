@@ -7,7 +7,7 @@ public class Player : EntityModel
     //Managers
     private ObjectManagerScript objectManager;
     private PauseManagerScript pauseManager;
-    private BulletCreator bulletCreator;
+    private BulletManagerScript bulletManager;
     private DialogueUI dialogueUI;
 
     //Componentes
@@ -27,7 +27,7 @@ public class Player : EntityModel
 
     //Variaveis
     public override int vida { get; protected set; }
-    public int vidaInicial;
+    [SerializeField] private int vidaInicial;
 
     public Direcao direcaoMovimento;
 
@@ -39,7 +39,11 @@ public class Player : EntityModel
     private Vector3 posAnterior;
 
     public ModoMovimento modoMovimento;
-    public Estado estado;
+    private Estado estado;
+
+    private bool recarregando;
+    private float tempoRecarregar;
+    private float tempoRecarregarMax;
 
     private float tempoImune;
     private float tempoImuneMax;
@@ -53,18 +57,20 @@ public class Player : EntityModel
     private Vector2 posicaoRespawn;
     private Direcao direcaoRespawn;
 
-    //Retirar
-    public float distanciaTiroY;
-
-    //Getter
+    //Getters
+    public ObjectManagerScript GetObjectManager => objectManager;
     public DialogueUI DialogueUI => dialogueUI;
+    public float DistanceY => distanceY;
+    public Estado GetEstado => estado;
+    public float TempoRecarregar => tempoRecarregar;
+    public float TempoRecarregarMax => tempoRecarregarMax;
 
     void Start()
     {
         //Managers
         objectManager = FindObjectOfType<ObjectManagerScript>();
         pauseManager = FindObjectOfType<PauseManagerScript>();
-        bulletCreator = FindObjectOfType<BulletCreator>();
+        bulletManager = FindObjectOfType<BulletManagerScript>();
         dialogueUI = FindObjectOfType<DialogueUI>();
 
         //Componentes
@@ -78,7 +84,6 @@ public class Player : EntityModel
         inventario = GetComponent<Inventario>();
         inventarioMissao = GetComponent<InventarioMissao>();
 
-
         //Variaveis
         vida = vidaInicial;
         raioPassos = 1.5f;
@@ -89,6 +94,10 @@ public class Player : EntityModel
         modoMovimento = ModoMovimento.Normal;
         estado = Estado.Normal;
 
+        recarregando = false;
+        tempoRecarregar = 0;
+        tempoRecarregarMax = 0;
+
         tempoImune = 0;
         tempoImuneMax = 1.5f;
         imune = false;
@@ -97,13 +106,9 @@ public class Player : EntityModel
         tempoSoftlock = 0;
         tempoSoftlockMax = 10f;
 
-        //Retirar
-        distanciaTiroY = 1f;
-
         SetRespawn();
     }
 
-    // Update is called once per frame
     void Update()
     {
         if(pauseManager.JogoPausado == false && estado != Estado.Morto)
@@ -121,7 +126,11 @@ public class Player : EntityModel
                 collisionState = false;
             }
 
-            //Debug.Log("\nPosicao Anter: " + posAnterior + ", Posicao Atual: " + transform.position + ", Posicao diferente: " + PosicaoDiferente(posAnterior, transform.position));
+            if(recarregando == true)
+            {
+                RecarregarContador();
+            }
+
             animacao.AtualizarDirecao(direcao, direcaoMovimento);
             Animar();
             playerMovement.Mover();
@@ -152,7 +161,7 @@ public class Player : EntityModel
         vida = vidaInicial;
         transform.position = posicaoRespawn;
         direcao = direcaoRespawn;
-        playerMovement.ZerarVelocidade();
+        playerMovement.ResetarVariaveisDeControle();
 
         ResetarVariaveisDeControle();
     }
@@ -168,6 +177,11 @@ public class Player : EntityModel
         tempoSoftlock = 0;
 
         animacao.SetarVisibilidade(true);
+    }
+
+    private bool PosicaoDiferente(Vector3 posAnterior, Vector3 posAtual)
+    {
+        return Mathf.Abs(posAtual.x - posAnterior.x) > 0.01f || Mathf.Abs(posAtual.y - posAnterior.y) > 0.01f;
     }
 
     private void Animar()
@@ -219,14 +233,9 @@ public class Player : EntityModel
         }
     }
 
-    private bool PosicaoDiferente(Vector3 posAnterior, Vector3 posAtual)
+    public void FinalizarAnimacao()
     {
-        return Mathf.Abs(posAtual.x - posAnterior.x) > 0.01f || Mathf.Abs(posAtual.y - posAnterior.y) > 0.01f;
-    }
-
-    public void FinalizarKnockback()
-    {
-        animacao.TrocarAnimacao("Idle");
+        estado = Estado.Normal;
     }
 
     public void Interagir()
@@ -243,11 +252,6 @@ public class Player : EntityModel
         return interacaoHitBox.GetBoxCollider2D();
     }
 
-    public ObjectManagerScript GetObjectManager()
-    {
-        return objectManager;
-    }
-
     public void Atacar()
     {
         if (estado == Estado.Normal)
@@ -262,24 +266,57 @@ public class Player : EntityModel
         ataqueHitBox.Atacar(direcao, 1, 0.8f, 1.1f, 0.87f);
     }
 
-    public void FinalizarAnimacao()
-    {
-        estado = Estado.Normal;
-    }
-
     public void Atirar()
     {
         if (estado == Estado.Normal)
         {
-            GerarSom(inventario.armaSlot1.RaioTiro, true);
-            inventario.armaSlot1.Atirar(this, bulletCreator);
-            animacao.AtualizarArmaBracos(inventario.armaSlot1.nomeVisual);
+            if(recarregando == false)
+            {
+                GerarSom(inventario.armaSlot1.RaioDoSomDoTiro, true);
+                inventario.armaSlot1.Atirar(this, bulletManager, pontaArma.transform.position, VetorDirecao(direcao), Alvo.Enemy);
+                animacao.AtualizarArmaBracos(inventario.armaSlot1.NomeAnimacao);
+            }
         }
+    }
+
+    public void Recarregar()
+    {
+        if(recarregando == false)
+        {
+            recarregando = true;
+            tempoRecarregar = 0;
+            tempoRecarregarMax = inventario.armaSlot1.TempoParaRecarregar;
+        }
+    }
+
+    private void RecarregarContador()
+    {
+        tempoRecarregar += Time.deltaTime;
+
+        if(tempoRecarregar >= tempoRecarregarMax)
+        {
+            inventario.armaSlot1.Recarregar();
+            recarregando = false;
+        }
+    }
+
+    private void CancelarRecarregamento()
+    {
+        recarregando = false;
+    }
+
+    public void SemMunicao()
+    {
+        Debug.Log("Sem Municao!");
     }
 
     public void AtualizarArma()
     {
-        animacao.AtualizarArmaBracos(inventario.armaSlot1.nomeVisual);
+        if(recarregando == true)
+        {
+            CancelarRecarregamento();
+        }
+        animacao.AtualizarArmaBracos(inventario.armaSlot1.NomeAnimacao);
     }
 
     public void AdicionarAoInventario(Item item)
@@ -324,7 +361,7 @@ public class Player : EntityModel
         inventario.itemAtual.UsarNaGameplay(this);
     }
 
-    public override void TomarDano(int _dano, float _horizontal, float _vertical, float _knockBack)
+    public override void TomarDano(int _dano, float _knockBack, float _knockBackTrigger, Vector2 _direcaoKnockBack)
     {
         if (!imune && estado != Estado.Morto)
         {
@@ -344,14 +381,14 @@ public class Player : EntityModel
                 imune = true;
                 tempoImune = 0;
                 estado = Estado.TomandoDano;
-                KnockBack(_horizontal,_vertical,_knockBack);
+                KnockBack(_knockBack, _direcaoKnockBack);
             }
         }
     }
 
-    public override void KnockBack(float _horizontal, float _vertical,float _knockBack)
+    public override void KnockBack(float _knockBack, Vector2 _direcaoKnockBack)
     {
-        playerMovement.KnockBack(_horizontal, _vertical, _knockBack);
+        playerMovement.KnockBack(_knockBack, _direcaoKnockBack);
     }
 
     private void Morrer()
@@ -427,7 +464,7 @@ public class Player : EntityModel
         }
     }
 
-    private void changeCollision(Collision2D collision, bool ignorarColisao)
+    private void ChangeCollision(Collision2D collision, bool ignorarColisao)
     {
         Physics2D.IgnoreCollision(collision.gameObject.GetComponent<Collider2D>(), GetComponent<Collider2D>(), ignorarColisao);
         collisionState = ignorarColisao;
@@ -439,7 +476,7 @@ public class Player : EntityModel
         {
             if (collision.gameObject.GetComponent<Enemy>())
             {
-                changeCollision(collision, true);
+                ChangeCollision(collision, true);
             }
         }
     }

@@ -94,19 +94,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   projetil: {fileID: 8583994499093954915, guid: f4376ad71d743964f8fad577b404e7d2, type: 3}
-  pontaArma: {fileID: 0}
-  myImage: {fileID: 21300000, guid: 2abff2a3b0df83a45982946068bb6d78, type: 3}
-  dano: 15
-  velocityProjetil: 10
-  objQueChamou: {fileID: 0}
-  knockbackValue: 0
-  municaoMax: 0
-  municaoAtual: 0
-  index: 1
+  imagemInventario: {fileID: 21300000, guid: 2abff2a3b0df83a45982946068bb6d78, type: 3}
   nome: 12
-  nomeVisual: Arma2
+  nomeAnimacao: Arma2
+  descricao: Arma de fogo melee.
+  dano: 15
+  velocidadeProjetil: 4
+  knockBack: 3
+  knockBackTrigger: 3.5
   distanciaMaxProjetil: 4
-  raioTiro: 8
+  cadenciaDosTiros: 0.8
+  tempoParaRecarregar: 2
+  raioDoSomDoTiro: 10
+  municaoMaxCartucho: 8
+  municaoMax: 24
+  index: 1
 --- !u!212 &81589876889633318
 SpriteRenderer:
   m_ObjectHideFlags: 0

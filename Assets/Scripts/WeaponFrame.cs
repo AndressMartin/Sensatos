@@ -27,9 +27,9 @@ public class WeaponFrame : MonoBehaviour
     public void Init(ArmaDeFogo armaRef)
     {
         savedWeaponRef = armaRef;
-        nameTxt.text = armaRef.nome;
-        municaoTxt.text = $"{armaRef.municaoAtual}/{armaRef.municaoMax}";
-        weaponImage.sprite = armaRef.myImage;
+        nameTxt.text = armaRef.Nome;
+        municaoTxt.text = $"{armaRef.MunicaoCartucho}/{armaRef.Municao}";
+        weaponImage.sprite = armaRef.ImagemInventario;
         ResetColor();
     }
 

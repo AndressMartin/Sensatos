@@ -12,10 +12,10 @@ public class Alicate : Item
 
     public override void Usar(Player player)
     {
-        if(player.estado == Player.Estado.Normal && quantidadeDeUsos > 0)
+        if(player.GetEstado == Player.Estado.Normal && quantidadeDeUsos > 0)
         {
             BoxCollider2D boxCollider2D = player.GetHitBoxInteracao();
-            ObjectManagerScript objectManager = player.GetObjectManager();
+            ObjectManagerScript objectManager = player.GetObjectManager;
             ProcurarCerca(player, boxCollider2D, objectManager);
         }
     }

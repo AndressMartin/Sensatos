@@ -121,7 +121,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 0, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -129,7 +129,7 @@ SpriteRenderer:
   m_Size: {x: 0.2, y: 0.2}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!114 &7703806124257995746
@@ -145,16 +145,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   projetil: {fileID: 8583994499093954915, guid: f4376ad71d743964f8fad577b404e7d2, type: 3}
-  pontaArma: {fileID: 0}
-  myImage: {fileID: 21300000, guid: 0deda9b2c2fba85448e94a5ff4712292, type: 3}
-  dano: 10
-  velocityProjetil: 10
-  objQueChamou: {fileID: 0}
-  knockbackValue: 0
-  municaoMax: 0
-  municaoAtual: 0
-  index: 0
+  imagemInventario: {fileID: 0}
   nome: 38
-  nomeVisual: Arma1
-  distanciaMaxProjetil: 6
-  raioTiro: 5
+  nomeAnimacao: Arma1
+  descricao: Gohan pega o 38 do pai.
+  dano: 10
+  velocidadeProjetil: 10
+  knockBack: 3
+  knockBackTrigger: 0
+  distanciaMaxProjetil: 8
+  cadenciaDosTiros: 0.3
+  tempoParaRecarregar: 1
+  raioDoSomDoTiro: 5
+  municaoMaxCartucho: 10
+  municaoMax: 60
+  index: 1

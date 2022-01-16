@@ -53,7 +53,7 @@ public class PlayerInput : MonoBehaviour
     //Comandos da gameplay principal
     void ComandosGameplay()
     {
-        if(player.estado == Player.Estado.Normal)
+        if(player.GetEstado == Player.Estado.Normal)
         {
             //Trocar arma
             if (Input.GetKeyDown(KeyCode.Q))
@@ -78,7 +78,7 @@ public class PlayerInput : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.G))
             {
-                player.TomarDano(0, Random.Range(-1f, 1f), Random.Range(-1f, 1f), 2);
+                player.TomarDano(0, 2, 0, new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f)));
             }
 
 
@@ -140,7 +140,7 @@ public class PlayerInput : MonoBehaviour
         }
         
         //Se movimentar
-        if(player.estado == Player.Estado.Normal)
+        if(player.GetEstado == Player.Estado.Normal)
         {
             movement.horizontal = Input.GetAxisRaw("Horizontal"); // -1 is left
             movement.vertical = Input.GetAxisRaw("Vertical"); // -1 is down

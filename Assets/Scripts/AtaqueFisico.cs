@@ -33,6 +33,27 @@ public class AtaqueFisico : MonoBehaviour
         height = 0.75f;
     }
 
+    private Vector2 VetorDirecao(EntityModel.Direcao direcao)
+    {
+        switch (direcao)
+        {
+            case EntityModel.Direcao.Baixo:
+                return new Vector2(0, -1);
+
+            case EntityModel.Direcao.Esquerda:
+                return new Vector2(-1, 0);
+
+            case EntityModel.Direcao.Cima:
+                return new Vector2(0, 1);
+
+            case EntityModel.Direcao.Direita:
+                return new Vector2(1, 0);
+
+            default:
+                return new Vector2(0, -1);
+        }
+    }
+
     public void Atacar(EntityModel.Direcao _direcao, float knockBack, float _distanceH, float _distanceV, float _distanceY)
     {
         this.knockBack = knockBack;
@@ -68,25 +89,25 @@ public class AtaqueFisico : MonoBehaviour
                 break;
         }
 
-        AtacarInimigos();
+        AtacarInimigos(_direcao);
     }
 
     //Passa pela lista de inimigos, confere se ha colisao com alguns deles e causa dano se houver
-    private void AtacarInimigos()
+    private void AtacarInimigos(EntityModel.Direcao _direcao)
     {
         boxCollider2D.enabled = true;
         foreach (Enemy inimigo in objectManager.listaInimigos)
         {
             if (Colisao.HitTest(boxCollider2D, inimigo.transform.Find("HitboxDano").GetComponent<BoxCollider2D>()))
             {
-                HitTarget(inimigo);
+                HitTarget(inimigo, _direcao);
             }
         }
         boxCollider2D.enabled = false;
     }
 
-    void HitTarget(Enemy alvo)
+    void HitTarget(Enemy alvo, EntityModel.Direcao _direcao)
     {  
-        alvo.TomarDanoFisico(dano, horizontal, vertical, knockBack);
+        alvo.TomarDanoFisico(dano, knockBack, VetorDirecao(_direcao));
     }
 }

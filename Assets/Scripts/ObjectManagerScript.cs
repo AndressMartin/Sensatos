@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class ObjectManagerScript : MonoBehaviour
 {
+    //Listas
     [SerializeField] public List<ObjetoInteragivel> listaObjetosInteragiveis;
     [SerializeField] public List<ParedeModel> listaParedesQuebraveis;
     [SerializeField] public List<Enemy> listaInimigos;
-    [SerializeField] public List<LockDown> listaAlarme;
+    [SerializeField] public List<LockDown> listaAlarmes;
     [SerializeField] public List<Porta> listaPortas;
 
     public void adicionarAosObjetosInteragiveis(ObjetoInteragivel objetoInteragivel)
@@ -42,12 +43,12 @@ public class ObjectManagerScript : MonoBehaviour
 
     public void adicionarAosAlarmes(LockDown alarme)
     {
-        listaAlarme.Add(alarme);
+        listaAlarmes.Add(alarme);
     }
 
     public void removerDosAlarmes(LockDown alarme)
     {
-        listaAlarme.Remove(alarme);
+        listaAlarmes.Remove(alarme);
     }
 
     public void adicionarAsPortas(Porta porta)

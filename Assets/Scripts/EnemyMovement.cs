@@ -27,7 +27,7 @@ public class EnemyMovement : MonoBehaviour
 
     [SerializeField] private Vector3 lastPlayerPosition;
 
-    
+    private Vector2 vetorKnockBack;
 
     //Variaveis de controle
     [SerializeField] private int contQuantosTirosParaTomarKnockBack;
@@ -43,10 +43,11 @@ public class EnemyMovement : MonoBehaviour
     private int lastMoveSpot;
 
     bool firstTimeOnLoop = true;
-    bool Knock;
-    bool knockBacking;
     bool noContadorAlert;
     bool enemyPlayerReserva = false;
+
+    private float timeKnockBack;
+    private float timeKnockBackMax;
 
 
     //Contadores
@@ -103,8 +104,6 @@ public class EnemyMovement : MonoBehaviour
         randomSpot = 0;
         lastMoveSpot = 0;
         firstTimeOnLoop = true;
-        Knock = false;
-        knockBacking = false;
         noContadorAlert = false;
         enemyPlayerReserva = false;
         timerSeguirPlayerAposPerderEleDeVista = 0.0F;
@@ -119,13 +118,17 @@ public class EnemyMovement : MonoBehaviour
 
     private void Start()
     {
-        //componentes
+        //Componentes
         getComponent();
         modoLockDown.AddtoLista(this, timerPraEntarEmModoCombateMax, timerResetarModoEmAlertaMax);
 
         ultimaposicaoOrigem = new Vector3(transform.position.x, transform.position.y, transform.position.z);        
         stance = Stances.Patrolling;
         randomSpot = 0;
+
+        //Variaveis de controle
+        timeKnockBack = 0;
+        timeKnockBackMax = 0.5f;
     }
 
 
@@ -199,7 +202,7 @@ public class EnemyMovement : MonoBehaviour
         difPlayer = Vector2.Distance(playerGameObject.transform.position, transform.position);
 
 
-        if (!knockBacking) 
+        if (enemy.GetEstado == Enemy.Estado.Normal) 
         { 
             if (firstTimeOnLoop)
             {
@@ -361,8 +364,11 @@ public class EnemyMovement : MonoBehaviour
                 
             }
         }
-        ResetKnockBackCont();
-        KnockBackContador();
+
+        if (enemy.GetEstado == Enemy.Estado.TomandoDano)
+        {
+            KnockBackContador();
+        }
     }
     public void LockDownAtivo(Vector2 posicaoPlayer)
     {
@@ -606,38 +612,21 @@ public class EnemyMovement : MonoBehaviour
             enemy.ChangeDirection(Enemy.Direcao.Esquerda);
         }
     }
-    public void KnockBack(float _horizontal, float _vertical, float _knockBack)
+    public void KnockBack(float _knockBack, Vector2 _direcaoKnockBack)
     {
-        knockBackCont++;
-        timerResetKnockBack = 0;
-        if (knockBackCont == contQuantosTirosParaTomarKnockBack)
-            KnockBackComplex(_horizontal, _vertical, _knockBack);
-        else
-            KnockBackSimple(_horizontal, _vertical, _knockBack);
+        vetorKnockBack = _direcaoKnockBack * _knockBack;
+        timeKnockBack = 0;
     }
-    void ResetKnockBackCont()
+
+    void KnockBackContador()
     {
-        if (knockBackCont != 0)
+        timeKnockBack += Time.deltaTime;
+        if (timeKnockBack > timeKnockBackMax)
         {
-            //inicia contador de tempo para levar o knockback forte
-            timerResetKnockBack += Time.deltaTime;
-            if (timerResetKnockBack > timerResetKnockBackMax)
-            {
-                knockBackCont = 0;
-                timerResetKnockBack = 0;
-            }
+            timeKnockBack = 0;
+            vetorKnockBack = Vector2.zero;
+            enemy.FinalizarAnimacao();
         }
-    }
-    void KnockBackSimple(float _horizontal, float _vertical, float _knockBack)
-    {
-        transform.position = new Vector3(transform.position.x + _horizontal * _knockBack, transform.position.y + _vertical * _knockBack, transform.position.z);
-    }
-    void KnockBackComplex(float _horizontal, float _vertical, float _knockBack)
-    {
-        transform.position = new Vector3(transform.position.x + _horizontal * _knockBack, transform.position.y + _vertical * _knockBack, transform.position.z);
-        knockBacking = true;
-        Knock = true;
-        knockBackCont = 0;
     }
 
     public void EnemyVissionReference(EnemyVisionScript _enemyVision)
@@ -670,22 +659,6 @@ public class EnemyMovement : MonoBehaviour
             timerSeguirPlayerAposPerderEleDeVista = 0;
         }
 
-    }
-    void KnockBackContador()
-    {
-        if (Knock)
-        {
-            timerKnockback += Time.deltaTime;
-            if (timerKnockback > timerKnockbackMax)
-            {
-                Knock = false;
-                timerKnockback = 0;
-            }
-        }
-        else
-        {
-            knockBacking = false;
-        }
     }
 
     public void ZerarVelocidade()
