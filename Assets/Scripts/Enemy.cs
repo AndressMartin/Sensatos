@@ -326,7 +326,7 @@ public class Enemy : EntityModel
     private void AtualizarPontaDaArma()
     {
         DefinirPontaDaArma(out float offSetX, out float offSetY);
-        pontaArma.AtualizarPontaArma(direcao, offSetX, offSetY);
+        pontaArma.AtualizarPontaArma(offSetX, offSetY);
     }
 
     public void TrocarDirecaoAtaque(Vector3 alvo)

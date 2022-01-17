@@ -5,9 +5,11 @@ using UnityEngine;
 public class ProjetilScript : MonoBehaviour
 {
     //Managers
+    protected PauseManagerScript pauseManager;
     protected BulletManagerScript bulletManager;
 
     //Componentes
+    protected BoxCollider2D boxCollider2D;
     protected Rigidbody2D rb;
     protected GameObject alvoAcertado;
     protected Animator animator;
@@ -26,9 +28,13 @@ public class ProjetilScript : MonoBehaviour
 
     protected bool ativo;
 
-    void Start()
+    protected virtual void Start()
     {
+        //Managers
+        pauseManager = FindObjectOfType<PauseManagerScript>();
+
         //Componentes
+        boxCollider2D = GetComponent<BoxCollider2D>();
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
 
@@ -53,11 +59,14 @@ public class ProjetilScript : MonoBehaviour
         ativo = true;
     }
 
-    void Update()
+    protected virtual void Update()
     {
-        if(ativo == true)
+        if (pauseManager.JogoPausado == false)
         {
-            Mover();
+            if (ativo == true)
+            {
+                Mover();
+            }
         }
     }
 
@@ -114,6 +123,7 @@ public class ProjetilScript : MonoBehaviour
     {
         TrocarAnimacao("SeDestruindo");
         ZerarVelocidade();
+        DesativarHitBox();
         ativo = false;
     }
 
@@ -121,6 +131,16 @@ public class ProjetilScript : MonoBehaviour
     public void EventoAnimacaoSeDestruir()
     {
         SeDestruir();
+    }
+
+    public void AtivarHitBox()
+    {
+        boxCollider2D.enabled = true;
+    }
+
+    public void DesativarHitBox()
+    {
+        boxCollider2D.enabled = false;
     }
 
     protected virtual void OnTriggerEnter2D(Collider2D collision)

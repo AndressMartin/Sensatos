@@ -410,6 +410,11 @@ public class Player : EntityModel
                 dialogueUI.ForcedCloseDialogueBox();
             }
 
+            if (recarregando == true)
+            {
+                FinalizarRecarregamento();
+            }
+
             if (vida <= 0)
             {
                 Morrer();
@@ -528,7 +533,7 @@ public class Player : EntityModel
     private void AtualizarPontaDaArma()
     {
         DefinirPontaDaArma(out float offSetX, out float offSetY);
-        pontaArma.AtualizarPontaArma(direcao, offSetX, offSetY);
+        pontaArma.AtualizarPontaArma(offSetX, offSetY);
     }
 
     private void ImpedirSoftlock()

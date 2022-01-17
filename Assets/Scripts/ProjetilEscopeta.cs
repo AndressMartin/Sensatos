@@ -5,14 +5,16 @@ using UnityEngine;
 public class ProjetilEscopeta : ProjetilScript
 {
     //Componentes
-    protected BoxCollider2D boxCollider2D;
     private PontaArmaScript pontaArma;
 
     //Variaveis
     private bool temUmaPontaArma;
 
-    void Start()
+    protected override void Start()
     {
+        //Managers
+        pauseManager = FindObjectOfType<PauseManagerScript>();
+
         //Componentes
         boxCollider2D = GetComponent<BoxCollider2D>();
         rb = GetComponent<Rigidbody2D>();
@@ -43,6 +45,11 @@ public class ProjetilEscopeta : ProjetilScript
         }
     }
 
+    protected override void Update()
+    {
+        //Nada
+    }
+
     private void FixedUpdate()
     {
         if(temUmaPontaArma == true)
@@ -62,16 +69,6 @@ public class ProjetilEscopeta : ProjetilScript
         EntityModel temp;
         temp = alvoAcertado.transform.parent.GetComponent<EntityModel>();
         temp.TomarDano(dano, knockBack, knockBackTrigger, direcao);
-    }
-
-    public void AtivarHitBox()
-    {
-        boxCollider2D.enabled = true;
-    }
-
-    public void DesativarHitBox()
-    {
-        boxCollider2D.enabled = false;
     }
 
     protected override void OnTriggerEnter2D(Collider2D collision)

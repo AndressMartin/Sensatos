@@ -16,13 +16,12 @@ public class ArmaDeFogo : MonoBehaviour
     private int municaoCartucho;
     private int municao;
 
-    public int index;
-
     [SerializeField] private int nivelMelhoria;
 
     [SerializeField] private Status statusBase;
     [SerializeField] private List<Melhoria> melhorias;
 
+    [HideInInspector] public int index;
 
     //Getters
     public Sprite ImagemInventario => imagemInventario;
