@@ -10,7 +10,10 @@ public class EntityModel : MonoBehaviour
 
     //Variaveis
     public virtual int vida { get; protected set; }
-    public Direcao direcao;
+    protected Direcao direcao;
+
+    //Getters
+    public Direcao GetDirecao => direcao;
 
     public virtual void TomarDano(int _dano, float _knockBack, float _knockBackTrigger, Vector2 _direcaoKnockBack)
     { }
@@ -18,7 +21,7 @@ public class EntityModel : MonoBehaviour
     public virtual void KnockBack(float _knockBack, Vector2 _direcaoKnockBack)
     { }
 
-    protected Vector2 VetorDirecao(Direcao direcao)
+    public Vector2 VetorDirecao(Direcao direcao)
     {
         switch(direcao)
         {

@@ -59,20 +59,20 @@ public class PlayerMovement : MonoBehaviour
                 switch (horizontal)
                 {
                     case 1:
-                        player.ChangeDirection("Direita");
+                        player.ChangeDirection(EntityModel.Direcao.Direita);
                         break;
                     case -1:
-                        player.ChangeDirection("Esquerda");
+                        player.ChangeDirection(EntityModel.Direcao.Esquerda);
                         break;
                 }
 
                 switch (vertical)
                 {
                     case -1:
-                        player.ChangeDirection("Baixo");
+                        player.ChangeDirection(EntityModel.Direcao.Baixo);
                         break;
                     case 1:
-                        player.ChangeDirection("Cima");
+                        player.ChangeDirection(EntityModel.Direcao.Cima);
                         break;
                 }
             }
@@ -80,20 +80,20 @@ public class PlayerMovement : MonoBehaviour
             switch (horizontal)
             {
                 case 1:
-                    player.ChangeDirectionMovement("Direita");
+                    player.ChangeDirectionMovement(EntityModel.Direcao.Direita);
                     break;
                 case -1:
-                    player.ChangeDirectionMovement("Esquerda");
+                    player.ChangeDirectionMovement(EntityModel.Direcao.Esquerda);
                     break;
             }
 
             switch (vertical)
             {
                 case -1:
-                    player.ChangeDirectionMovement("Baixo");
+                    player.ChangeDirectionMovement(EntityModel.Direcao.Baixo);
                     break;
                 case 1:
-                    player.ChangeDirectionMovement("Cima");
+                    player.ChangeDirectionMovement(EntityModel.Direcao.Cima);
                     break;
             }
         }

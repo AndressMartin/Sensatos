@@ -17,6 +17,7 @@ public class ArmaDeFogo : MonoBehaviour
     [SerializeField] private float knockBackTrigger; //Usado nos inimigos para fazer eles tomarem um KnockBack verdadeiro
     [SerializeField] private float distanciaMaxProjetil;
     [SerializeField] private float cadenciaDosTiros;
+    [SerializeField] private bool rapidFire;
     [SerializeField] private float tempoParaRecarregar;
     [SerializeField] private float raioDoSomDoTiro;
     [SerializeField] private int municaoMaxCartucho;
@@ -39,6 +40,7 @@ public class ArmaDeFogo : MonoBehaviour
     public float KnockBackTrigger => knockBackTrigger;
     public float DistanciaMaxProjetil => distanciaMaxProjetil;
     public float CadenciaDosTiros => cadenciaDosTiros;
+    public bool RapidFire => rapidFire;
     public float TempoParaRecarregar => tempoParaRecarregar;
     public float RaioDoSomDoTiro => raioDoSomDoTiro;
     public float MunicaoMaxCartucho => municaoMaxCartucho;
@@ -56,7 +58,7 @@ public class ArmaDeFogo : MonoBehaviour
             {
                 CriarTiro(objQueChamou, bulletManager, posicao, direcao, alvo);
                 municaoCartucho--;
-                player.CadenciaTiro(cadenciaDosTiros);
+                player.SetCadenciaTiro(cadenciaDosTiros);
             }
             else if (municao > 0)
             {
@@ -80,14 +82,17 @@ public class ArmaDeFogo : MonoBehaviour
 
     public void Recarregar()
     {
-        if (municao > municaoMaxCartucho)
+        int quantidadeParaRecarregar;
+        quantidadeParaRecarregar = municaoMaxCartucho - municaoCartucho;
+
+        if (municao > quantidadeParaRecarregar)
         {
-            municaoCartucho = municaoMaxCartucho;
-            municao -= municaoMaxCartucho;
+            municaoCartucho += quantidadeParaRecarregar;
+            municao -= quantidadeParaRecarregar;
         }
         else
         {
-            municaoCartucho = municao;
+            municaoCartucho += municao;
             municao = 0;
         }
     }

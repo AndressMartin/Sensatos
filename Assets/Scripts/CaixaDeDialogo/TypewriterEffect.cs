@@ -69,7 +69,7 @@ public class TypewriterEffect : MonoBehaviour
         IsRunning = false;
     }
 
-    private bool IsPunctuation(char character, out float waitTime)
+    private bool IsPunctuation(char character, out float waitTime) //Out e uma variavel que vai ser criada e retornada para fora da funcao, ao escrever a funcao deve-se colocar o out tambem para poder usar a variavel, exemplo: IsPonctuation(character, out waitTime);
     {
         foreach(Punctuation punctuationCategory in punctuations)
         {

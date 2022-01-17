@@ -13,9 +13,9 @@ public class BulletManagerScript : MonoBehaviour
         ProjetilScript novoProjetil;
 
         novoProjetil = Instantiate(projetil, posicao, Quaternion.identity);
+        novoProjetil.Iniciar(objQueChamou, this, armaDeFogo, direcao, alvo);
         novoProjetil.transform.parent = transform;
         novoProjetil.transform.position = posicao;
-        novoProjetil.Iniciar(objQueChamou, this, armaDeFogo, direcao, alvo);
 
         AdicionarAosProjeteis(novoProjetil);
     }

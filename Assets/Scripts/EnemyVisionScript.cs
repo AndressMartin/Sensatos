@@ -40,7 +40,7 @@ public class EnemyVisionScript : MonoBehaviour
     public void Main()
     {
         vendoPlayerCircular=visaoCircularEnemy.VendoPlayer;
-        direcao = enemy.direcao;
+        direcao = enemy.GetDirecao;
         MudarDirecaoConeVisao();
     }
 

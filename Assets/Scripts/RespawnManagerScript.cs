@@ -23,7 +23,7 @@ public class RespawnManagerScript : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.H))
         {
-            SetCheckpoint(player.transform.position, player.direcao);
+            SetCheckpoint(player.transform.position, player.GetDirecao);
         }
 
         if (Input.GetKeyDown(KeyCode.J))

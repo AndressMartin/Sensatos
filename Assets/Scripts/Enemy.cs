@@ -16,6 +16,8 @@ public class Enemy : EntityModel
     private EnemyMovement enemyMovement;
     private EnemyVisionScript enemyVision;
 
+    private Player player;
+
     //Variaveis
     public override int vida { get; protected set; }
     [SerializeField] private int vidaInicial;
@@ -28,12 +30,7 @@ public class Enemy : EntityModel
     public bool vendoPlayer;
     public bool vendoPlayerCircular;
 
-    bool tiroColldown;
-    float timeCooldwon;
-    float timeCooldownTiro;
-
-    [SerializeField] private float distanceCenter;
-    [SerializeField] private float distanceY;
+    float tempoTiro;
 
     private float knockBackTrigger;
     private float knockBackTriggerMax;
@@ -62,7 +59,9 @@ public class Enemy : EntityModel
         enemyMovement = GetComponent<EnemyMovement>();
         inventario = GetComponent<InventarioEnemy>();
         pontaArma = GetComponentInChildren<PontaArmaScript>();
-        animacao = transform.GetComponent<AnimacaoJogador>();
+        animacao = GetComponent<AnimacaoJogador>();
+
+        player = FindObjectOfType<Player>();
 
         //Variaveis
         vida = vidaInicial;
@@ -71,9 +70,7 @@ public class Enemy : EntityModel
 
         morto = false;
 
-        tiroColldown = false;
-        timeCooldwon = 0;
-        timeCooldownTiro = 0.5f;
+        tempoTiro = 0;
 
         knockBackTrigger = 0;
         knockBackTriggerMax = 10;
@@ -115,7 +112,7 @@ public class Enemy : EntityModel
         {
             vida = vidaInicial;
             transform.position = posicaoRespawn;
-            direcao = direcaoRespawn;
+            ChangeDirection(direcaoRespawn);
             enemyMovement.modoPatrulha = modoPatrulhaRespawn;
 
             enemyMovement.estado = EnemyMovement.Estado.Rotina;
@@ -131,9 +128,8 @@ public class Enemy : EntityModel
     private void ResetarVariaveisDeControle()
     {
         estado = Estado.Normal;
-        tiroColldown = false;
         playerOnAttackRange = false;
-        timeCooldwon = 0;
+        tempoTiro = 0;
         enemyMovement.ResetarVariaveisDeControle();
         enemyVision.ResetarVariaveisDeControle();
     }
@@ -148,7 +144,8 @@ public class Enemy : EntityModel
             Animar();
             enemyMovement.Main();
             enemyVision.Main();
-            TiroColldown();
+
+            CadenciaTiro();
         } 
     }
 
@@ -181,17 +178,29 @@ public class Enemy : EntityModel
         estado = Estado.Normal;
     }
 
-    public void UseItem()
+    public void Atirar()
     {
-        TrocarDirecaoAtaque(FindObjectOfType<Player>().transform.position);
-        if (!tiroColldown)
+        TrocarDirecaoAtaque(player.transform.position);
+
+        if (tempoTiro <= 0)
         {
-            inventario.ArmaSlot.Atirar(this, bulletManager, pontaArma.transform.position, VetorDirecao(direcao), Alvo.Player);
+            inventario.ArmaSlot.Atirar(this, bulletManager, pontaArma.transform.position, DirecaoPlayer(player), Alvo.Player);
             animacao.AtualizarArmaBracos(inventario.ArmaSlot.NomeAnimacao);
-            tiroColldown = true;
+
+            SetCadenciaTiro(inventario.ArmaSlot.CadenciaDosTiros);
         }
         
     }
+
+    private Vector2 DirecaoPlayer(Player player)
+    {
+        Vector3 posicaoPlayer = player.transform.position;
+        Vector3 direcaoPlayer = posicaoPlayer - transform.position;
+        direcaoPlayer.Normalize();
+
+        return direcaoPlayer;
+    }
+
     public void Die()
     {
         morto = true;
@@ -248,8 +257,79 @@ public class Enemy : EntityModel
     public void ChangeDirection(Direcao _direction)
     {
         direcao = _direction;
-        pontaArma.AtualizarPontaArma(direcao, distanceCenter, distanceY);
+        AtualizarPontaDaArma();
     }
+
+    private void DefinirPontaDaArma(out float offSetX, out float offSetY)
+    {
+        offSetX = 0;
+        offSetY = 0;
+
+        switch (inventario.ArmaSlot.NomeAnimacao)
+        {
+            case "Arma1":
+                switch (direcao)
+                {
+                    case Direcao.Baixo:
+                        offSetX = -0.284f;
+                        offSetY = 0.787f;
+                        break;
+
+                    case Direcao.Esquerda:
+                        offSetX = -0.486f;
+                        offSetY = 1.224f;
+                        break;
+
+                    case Direcao.Cima:
+                        offSetX = 0.283f;
+                        offSetY = 1.56f;
+                        break;
+
+                    case Direcao.Direita:
+                        offSetX = 0.486f;
+                        offSetY = 1.224f;
+                        break;
+                }
+                break;
+
+            case "Arma2":
+                switch (direcao)
+                {
+                    case Direcao.Baixo:
+                        offSetX = -0.188f;
+                        offSetY = 0.62f;
+                        break;
+
+                    case Direcao.Esquerda:
+                        offSetX = -0.715f;
+                        offSetY = 1.227f;
+                        break;
+
+                    case Direcao.Cima:
+                        offSetX = 0.157f;
+                        offSetY = 1.727f;
+                        break;
+
+                    case Direcao.Direita:
+                        offSetX = 0.715f;
+                        offSetY = 1.227f;
+                        break;
+                }
+                break;
+
+            default:
+                offSetX = 0;
+                offSetY = 0;
+                break;
+        }
+    }
+
+    private void AtualizarPontaDaArma()
+    {
+        DefinirPontaDaArma(out float offSetX, out float offSetY);
+        pontaArma.AtualizarPontaArma(direcao, offSetX, offSetY);
+    }
+
     public void TrocarDirecaoAtaque(Vector3 alvo)
     {
         float DistanciaX,
@@ -281,17 +361,23 @@ public class Enemy : EntityModel
     {
        
     }
-    private void TiroColldown()
+
+    private void CadenciaTiro()
     {
-        if (tiroColldown)
+        if (tempoTiro > 0)
         {
-            timeCooldwon += Time.deltaTime;
-            if (timeCooldwon > timeCooldownTiro)
+            tempoTiro -= Time.deltaTime;
+
+            if (tempoTiro < 0)
             {
-                tiroColldown = false;
-                timeCooldwon = 0;
+                tempoTiro = 0;
             }
         }
+    }
+
+    public void SetCadenciaTiro(float cadenciaDosTiros)
+    {
+        tempoTiro = cadenciaDosTiros;
     }
 
     public void EscutarSom(Player player, bool somTiro)

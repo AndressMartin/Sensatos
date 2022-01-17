@@ -19,7 +19,7 @@ public class Player : EntityModel
     private InteragirScript interacaoHitBox;
     private AtaqueFisico ataqueHitBox;
     private PlayerSound sound;
-    private PontaArmaScript pontaArma;
+    private PontaArmaPlayerScript pontaArma;
     private Inventario inventario;
     private InventarioMissao inventarioMissao;
 
@@ -32,9 +32,6 @@ public class Player : EntityModel
     [SerializeField] private int vidaInicial;
 
     public Direcao direcaoMovimento;
-
-    [SerializeField] private float distanceCenter;
-    [SerializeField] private float distanceY;
     private float raioPassos;
 
     //Variaveis de controle
@@ -64,10 +61,10 @@ public class Player : EntityModel
     //Getters
     public ObjectManagerScript GetObjectManager => objectManager;
     public DialogueUI DialogueUI => dialogueUI;
-    public float DistanceY => distanceY;
     public Estado GetEstado => estado;
     public float TempoRecarregar => tempoRecarregar;
     public float TempoRecarregarMax => tempoRecarregarMax;
+    public bool RapidFire => inventario.armaSlot1.RapidFire;
 
     void Start()
     {
@@ -85,13 +82,14 @@ public class Player : EntityModel
         interacaoHitBox = GetComponentInChildren<InteragirScript>();
         ataqueHitBox = GetComponentInChildren<AtaqueFisico>();
         sound = FindObjectOfType<PlayerSound>();
-        pontaArma = GetComponentInChildren<PontaArmaScript>();
+        pontaArma = GetComponentInChildren<PontaArmaPlayerScript>();
         inventario = GetComponent<Inventario>();
         inventarioMissao = GetComponent<InventarioMissao>();
 
         //Variaveis
         vida = vidaInicial;
         raioPassos = 1.5f;
+        ChangeDirection(Direcao.Baixo);
 
         //Variaveis de controle
         posAnterior = transform.position;
@@ -133,15 +131,7 @@ public class Player : EntityModel
                 collisionState = false;
             }
 
-            if(tempoTiro > 0)
-            {
-                tempoTiro -= Time.deltaTime;
-
-                if(tempoTiro < 0)
-                {
-                    tempoTiro = 0;
-                }
-            }
+            CadenciaTiro();
 
             if(recarregando == true)
             {
@@ -183,7 +173,7 @@ public class Player : EntityModel
     {
         vida = vidaInicial;
         transform.position = posicaoRespawn;
-        direcao = direcaoRespawn;
+        ChangeDirection(direcaoRespawn);
         playerMovement.ResetarVariaveisDeControle();
 
         ResetarVariaveisDeControle();
@@ -295,7 +285,9 @@ public class Player : EntityModel
     {
         if (estado == Estado.Normal)
         {
-            if (tempoTiro <= 0)
+            AtualizarPontaDaArma();
+
+            if (tempoTiro <= 0 && pontaArma.ColidindoComParedes <= 0)
             {
                 if (recarregando == false)
                 {
@@ -309,7 +301,7 @@ public class Player : EntityModel
 
     public void Recarregar()
     {
-        if(recarregando == false)
+        if(recarregando == false && (inventario.armaSlot1.MunicaoCartucho < inventario.armaSlot1.MunicaoMaxCartucho))
         {
             recarregando = true;
             tempoRecarregar = 0;
@@ -339,7 +331,20 @@ public class Player : EntityModel
         Debug.Log("Sem Municao!");
     }
 
-    public void CadenciaTiro(float cadenciaDosTiros)
+    private void CadenciaTiro()
+    {
+        if (tempoTiro > 0)
+        {
+            tempoTiro -= Time.deltaTime;
+
+            if (tempoTiro < 0)
+            {
+                tempoTiro = 0;
+            }
+        }
+    }
+
+    public void SetCadenciaTiro(float cadenciaDosTiros)
     {
         tempoTiro = cadenciaDosTiros;
     }
@@ -350,6 +355,7 @@ public class Player : EntityModel
         {
             FinalizarRecarregamento();
         }
+        AtualizarPontaDaArma();
         animacao.AtualizarArmaBracos(inventario.armaSlot1.NomeAnimacao);
     }
 
@@ -444,43 +450,85 @@ public class Player : EntityModel
         sound.GerarSom(this, raio, somTiro);
     }
 
-    public void ChangeDirection(string lado)
+    public void ChangeDirection(Direcao direcao)
     {
-        switch (lado)
-        {
-            case "Esquerda":
-                direcao = Direcao.Esquerda;
-                break;
-            case "Direita":
-                direcao = Direcao.Direita;
-                break;
-            case "Cima":
-                direcao = Direcao.Cima;
-                break;
-            case "Baixo":
-                direcao = Direcao.Baixo;
-                break;
-        }
-        pontaArma.AtualizarPontaArma(direcao, distanceCenter, distanceY);
+        this.direcao = direcao;
+        AtualizarPontaDaArma();
     }
 
-    public void ChangeDirectionMovement(string lado)
+    public void ChangeDirectionMovement(Direcao direcao)
     {
-        switch (lado)
+        direcaoMovimento = direcao;
+    }
+
+    private void DefinirPontaDaArma(out float offSetX, out float offSetY)
+    {
+        offSetX = 0;
+        offSetY = 0;
+
+        switch(inventario.armaSlot1.NomeAnimacao)
         {
-            case "Esquerda":
-                direcaoMovimento = Direcao.Esquerda;
+            case "Arma1":
+                switch(direcao)
+                {
+                    case Direcao.Baixo:
+                        offSetX = -0.284f;
+                        offSetY = 0.787f;
+                        break;
+
+                    case Direcao.Esquerda:
+                        offSetX = -0.486f;
+                        offSetY = 1.224f;
+                        break;
+
+                    case Direcao.Cima:
+                        offSetX = 0.283f;
+                        offSetY = 1.56f;
+                        break;
+
+                    case Direcao.Direita:
+                        offSetX = 0.486f;
+                        offSetY = 1.224f;
+                        break;
+                }
                 break;
-            case "Direita":
-                direcaoMovimento = Direcao.Direita;
+
+            case "Arma2":
+                switch (direcao)
+                {
+                    case Direcao.Baixo:
+                        offSetX = -0.188f;
+                        offSetY = 0.62f;
+                        break;
+
+                    case Direcao.Esquerda:
+                        offSetX = -0.715f;
+                        offSetY = 1.227f;
+                        break;
+
+                    case Direcao.Cima:
+                        offSetX = 0.157f;
+                        offSetY = 1.727f;
+                        break;
+
+                    case Direcao.Direita:
+                        offSetX = 0.715f;
+                        offSetY = 1.227f;
+                        break;
+                }
                 break;
-            case "Cima":
-                direcaoMovimento = Direcao.Cima;
-                break;
-            case "Baixo":
-                direcaoMovimento = Direcao.Baixo;
+
+            default:
+                offSetX = 0;
+                offSetY = 0;
                 break;
         }
+    }
+
+    private void AtualizarPontaDaArma()
+    {
+        DefinirPontaDaArma(out float offSetX, out float offSetY);
+        pontaArma.AtualizarPontaArma(direcao, offSetX, offSetY);
     }
 
     private void ImpedirSoftlock()
@@ -500,6 +548,18 @@ public class Player : EntityModel
         }
     }
 
+    void EnquantoEstiverImuneContador()
+    {
+        animacao.Piscar();
+        tempoImune += Time.deltaTime;
+        if (tempoImune > tempoImuneMax)
+        {
+            animacao.SetarVisibilidade(true);
+            imune = false;
+            tempoImune = 0;
+        }
+    }
+
     private void ChangeCollision(Collision2D collision, bool ignorarColisao)
     {
         Physics2D.IgnoreCollision(collision.gameObject.GetComponent<Collider2D>(), GetComponent<Collider2D>(), ignorarColisao);
@@ -514,18 +574,6 @@ public class Player : EntityModel
             {
                 ChangeCollision(collision, true);
             }
-        }
-    }
-
-    void EnquantoEstiverImuneContador()
-    {
-        animacao.Piscar();
-        tempoImune += Time.deltaTime;
-        if (tempoImune > tempoImuneMax)
-        {
-            animacao.SetarVisibilidade(true);
-            imune = false;
-            tempoImune = 0;
         }
     }
 }

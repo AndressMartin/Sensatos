@@ -255,7 +255,7 @@ public class EnemyMovement : MonoBehaviour
     {
         if (playerOnAttackRange)//caso esteja dentro do range de ataque 
         {           
-            enemy.UseItem();//ataque
+            enemy.Atirar();//ataque
         }
         else if (enemyVision.vendoPlayer)
         {
@@ -514,9 +514,9 @@ public class EnemyMovement : MonoBehaviour
         float dif= Vector2.Distance(transform.position, playerSoundPosition);
 
         if (difX > 0)
-            enemy.direcao = EntityModel.Direcao.Esquerda;
+            enemy.ChangeDirection(EntityModel.Direcao.Esquerda);
         else
-            enemy.direcao = EntityModel.Direcao.Direita;
+            enemy.ChangeDirection(EntityModel.Direcao.Direita);
         contadorOlharDirecao();
     }
     void contadorOlharDirecao()

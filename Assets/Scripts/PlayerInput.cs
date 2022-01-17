@@ -63,12 +63,26 @@ public class PlayerInput : MonoBehaviour
             }
 
             //Atirar
-            if (Input.GetKeyDown(KeyCode.Space))
+            if(player.RapidFire == true)
             {
-                player.Atirar();
+                if(Input.GetButton("Atirar"))
+                {
+                    player.Atirar();
+                }
+            }
+            else
+            {
+                if (Input.GetKeyDown(KeyCode.Space))
+                {
+                    player.Atirar();
+                }
             }
 
-            if(Input.get)
+            //Recarregar
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                player.Recarregar();
+            }
 
             //Botão de interação
             if (Input.GetKeyDown(KeyCode.E))
