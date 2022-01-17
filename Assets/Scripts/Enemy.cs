@@ -187,9 +187,8 @@ public class Enemy : EntityModel
             inventario.ArmaSlot.Atirar(this, bulletManager, pontaArma.transform.position, DirecaoPlayer(player), Alvo.Player);
             animacao.AtualizarArmaBracos(inventario.ArmaSlot.NomeAnimacao);
 
-            SetCadenciaTiro(inventario.ArmaSlot.CadenciaDosTiros);
-        }
-        
+            SetCadenciaTiro(inventario.ArmaSlot.GetStatus.CadenciaDosTiros);
+        }   
     }
 
     private Vector2 DirecaoPlayer(Player player)

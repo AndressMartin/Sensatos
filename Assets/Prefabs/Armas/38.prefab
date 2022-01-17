@@ -144,20 +144,51 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87dc09563ceff534f841683ee5ca485c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projetil: {fileID: 8583994499093954915, guid: f4376ad71d743964f8fad577b404e7d2, type: 3}
   imagemInventario: {fileID: 0}
   nome: 38
   nomeAnimacao: Arma1
   descricao: Gohan pega o 38 do pai.
-  dano: 10
-  velocidadeProjetil: 10
-  knockBack: 3
-  knockBackTrigger: 0
-  distanciaMaxProjetil: 8
-  cadenciaDosTiros: 0.2
   rapidFire: 1
-  tempoParaRecarregar: 1
   raioDoSomDoTiro: 5
-  municaoMaxCartucho: 10
-  municaoMax: 60
-  index: 1
+  index: 0
+  nivelMelhoria: 0
+  statusBase:
+    projetil: {fileID: 8583994499093954915, guid: f4376ad71d743964f8fad577b404e7d2, type: 3}
+    dano: 10
+    velocidadeProjetil: 8
+    knockBack: 3
+    knockBackTrigger: 0
+    distanciaMaxProjetil: 10
+    cadenciaDosTiros: 0.4
+    tempoParaRecarregar: 1
+    municaoMaxCartucho: 5
+    municaoMax: 60
+  melhorias:
+  - imagemMelhoria: {fileID: 0}
+    nome: Carregador Estendido
+    descricao: Mais balas!!!! Uau.
+    status:
+      projetil: {fileID: 8583994499093954915, guid: f4376ad71d743964f8fad577b404e7d2, type: 3}
+      dano: 10
+      velocidadeProjetil: 8
+      knockBack: 3
+      knockBackTrigger: 0
+      distanciaMaxProjetil: 10
+      cadenciaDosTiros: 0.4
+      tempoParaRecarregar: 1
+      municaoMaxCartucho: 10
+      municaoMax: 80
+  - imagemMelhoria: {fileID: 0}
+    nome: Balas Aerodinamicas
+    descricao: Balas do Sonic, mais velocidade em tudo!
+    status:
+      projetil: {fileID: 8583994499093954915, guid: f4376ad71d743964f8fad577b404e7d2, type: 3}
+      dano: 10
+      velocidadeProjetil: 10
+      knockBack: 3
+      knockBackTrigger: 0
+      distanciaMaxProjetil: 10
+      cadenciaDosTiros: 0.2
+      tempoParaRecarregar: 1
+      municaoMaxCartucho: 10
+      municaoMax: 80

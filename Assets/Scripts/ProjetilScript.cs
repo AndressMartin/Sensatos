@@ -44,11 +44,11 @@ public class ProjetilScript : MonoBehaviour
         this.posicaoInicial = this.transform.position;
         Rotacionar(direcao);
 
-        this.dano = armaDeFogo.Dano;
-        this.velocidadeProjetil = armaDeFogo.VelocidadeProjetil;
-        this.knockBack = armaDeFogo.KnockBack;
-        this.knockBackTrigger = armaDeFogo.KnockBackTrigger;
-        this.distanciaMaxProjetil = armaDeFogo.DistanciaMaxProjetil;
+        this.dano = armaDeFogo.GetStatus.Dano;
+        this.velocidadeProjetil = armaDeFogo.GetStatus.VelocidadeProjetil;
+        this.knockBack = armaDeFogo.GetStatus.KnockBack;
+        this.knockBackTrigger = armaDeFogo.GetStatus.KnockBackTrigger;
+        this.distanciaMaxProjetil = armaDeFogo.GetStatus.DistanciaMaxProjetil;
 
         ativo = true;
     }

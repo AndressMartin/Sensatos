@@ -9,7 +9,7 @@ public class BulletManagerScript : MonoBehaviour
 
     public void CriarTiro (EntityModel objQueChamou, ArmaDeFogo armaDeFogo, Vector3 posicao, Vector2 direcao, EntityModel.Alvo alvo)
     {
-        ProjetilScript projetil = armaDeFogo.Projetil;
+        ProjetilScript projetil = armaDeFogo.GetStatus.Projetil;
         ProjetilScript novoProjetil;
 
         novoProjetil = Instantiate(projetil, posicao, Quaternion.identity);

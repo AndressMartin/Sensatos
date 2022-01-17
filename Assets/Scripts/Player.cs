@@ -301,11 +301,11 @@ public class Player : EntityModel
 
     public void Recarregar()
     {
-        if(recarregando == false && (inventario.armaSlot1.MunicaoCartucho < inventario.armaSlot1.MunicaoMaxCartucho))
+        if(recarregando == false && (inventario.armaSlot1.MunicaoCartucho < inventario.armaSlot1.GetStatus.MunicaoMaxCartucho))
         {
             recarregando = true;
             tempoRecarregar = 0;
-            tempoRecarregarMax = inventario.armaSlot1.TempoParaRecarregar;
+            tempoRecarregarMax = inventario.armaSlot1.GetStatus.TempoParaRecarregar;
         }
     }
 

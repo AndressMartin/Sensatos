@@ -144,20 +144,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87dc09563ceff534f841683ee5ca485c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projetil: {fileID: -3273666588168549129, guid: cde5861db3c7034458bf0dc15e2300b4, type: 3}
   imagemInventario: {fileID: 21300000, guid: 2abff2a3b0df83a45982946068bb6d78, type: 3}
   nome: 12
   nomeAnimacao: Arma2
   descricao: Arma de fogo melee.
-  dano: 15
-  velocidadeProjetil: 4
-  knockBack: 3
-  knockBackTrigger: 3.5
-  distanciaMaxProjetil: 4
-  cadenciaDosTiros: 0.5
   rapidFire: 0
-  tempoParaRecarregar: 2
   raioDoSomDoTiro: 10
-  municaoMaxCartucho: 8
-  municaoMax: 24
   index: 0
+  nivelMelhoria: 0
+  statusBase:
+    projetil: {fileID: -3273666588168549129, guid: cde5861db3c7034458bf0dc15e2300b4, type: 3}
+    dano: 15
+    velocidadeProjetil: 4
+    knockBack: 3
+    knockBackTrigger: 3.5
+    distanciaMaxProjetil: 4
+    cadenciaDosTiros: 0.5
+    tempoParaRecarregar: 2
+    municaoMaxCartucho: 8
+    municaoMax: 24
+  melhorias: []

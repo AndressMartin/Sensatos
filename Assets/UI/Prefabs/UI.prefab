@@ -13183,6 +13183,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: DialogueBox
       objectReference: {fileID: 0}
+    - target: {fileID: 1978057606935980223, guid: 7cee5a55ddfbd5944b6a3b667189d59e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1978057607321967032, guid: 7cee5a55ddfbd5944b6a3b667189d59e, type: 3}
       propertyPath: m_fontSize
       value: 42
@@ -15291,6 +15295,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 700864800803910912}
     m_Modifications:
+    - target: {fileID: 1086163791330581630, guid: 858743804a0309542979c097f11d6e66, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1086163792266551929, guid: 858743804a0309542979c097f11d6e66, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5

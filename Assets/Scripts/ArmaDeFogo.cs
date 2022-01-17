@@ -6,47 +6,34 @@ using UnityEngine.UI;
 public class ArmaDeFogo : MonoBehaviour
 {
     //Variaveis
-    [SerializeField] private ProjetilScript projetil;
     [SerializeField] private Sprite imagemInventario;
     [SerializeField] private string nome;
     [SerializeField] private string nomeAnimacao;
     [SerializeField] private string descricao;
-    [SerializeField] private int dano;
-    [SerializeField] private float velocidadeProjetil;
-    [SerializeField] private float knockBack;
-    [SerializeField] private float knockBackTrigger; //Usado nos inimigos para fazer eles tomarem um KnockBack verdadeiro
-    [SerializeField] private float distanciaMaxProjetil;
-    [SerializeField] private float cadenciaDosTiros;
     [SerializeField] private bool rapidFire;
-    [SerializeField] private float tempoParaRecarregar;
     [SerializeField] private float raioDoSomDoTiro;
-    [SerializeField] private int municaoMaxCartucho;
-    [SerializeField] private int municaoMax;
 
     private int municaoCartucho;
     private int municao;
 
     public int index;
 
+    [SerializeField] private int nivelMelhoria;
+
+    [SerializeField] private Status statusBase;
+    [SerializeField] private List<Melhoria> melhorias;
+
+
     //Getters
-    public ProjetilScript Projetil => projetil;
     public Sprite ImagemInventario => imagemInventario;
     public string Nome => nome;
     public string NomeAnimacao => nomeAnimacao;
     public string Descricao => descricao;
-    public int Dano => dano;
-    public float VelocidadeProjetil => velocidadeProjetil;
-    public float KnockBack => knockBack;
-    public float KnockBackTrigger => knockBackTrigger;
-    public float DistanciaMaxProjetil => distanciaMaxProjetil;
-    public float CadenciaDosTiros => cadenciaDosTiros;
     public bool RapidFire => rapidFire;
-    public float TempoParaRecarregar => tempoParaRecarregar;
     public float RaioDoSomDoTiro => raioDoSomDoTiro;
-    public float MunicaoMaxCartucho => municaoMaxCartucho;
-    public float MunicaoMax => municaoMax;
     public float MunicaoCartucho => municaoCartucho;
     public float Municao => municao;
+    public Status GetStatus => GetStatusMetodo();
 
     public void Atirar(EntityModel objQueChamou, BulletManagerScript bulletManager, Vector3 posicao, Vector2 direcao, EntityModel.Alvo alvo)
     {
@@ -58,7 +45,7 @@ public class ArmaDeFogo : MonoBehaviour
             {
                 CriarTiro(objQueChamou, bulletManager, posicao, direcao, alvo);
                 municaoCartucho--;
-                player.SetCadenciaTiro(cadenciaDosTiros);
+                player.SetCadenciaTiro(GetStatus.CadenciaDosTiros);
             }
             else if (municao > 0)
             {
@@ -83,7 +70,7 @@ public class ArmaDeFogo : MonoBehaviour
     public void Recarregar()
     {
         int quantidadeParaRecarregar;
-        quantidadeParaRecarregar = municaoMaxCartucho - municaoCartucho;
+        quantidadeParaRecarregar = GetStatus.MunicaoMaxCartucho - municaoCartucho;
 
         if (municao > quantidadeParaRecarregar)
         {
@@ -99,25 +86,94 @@ public class ArmaDeFogo : MonoBehaviour
 
     public void AdicionarMunicao(int quantidade)
     {
-        if (municao < municaoMax)
+        if (municao < GetStatus.MunicaoMax)
         {
             municao += quantidade;
 
-            if (municao > municaoMax)
+            if (municao > GetStatus.MunicaoMax)
             {
-                quantidade = municao - municaoMax;
-                municao = municaoMax;
+                quantidade = municao - GetStatus.MunicaoMax;
+                municao = GetStatus.MunicaoMax;
 
-                if (municaoCartucho < municaoMaxCartucho)
+                if (municaoCartucho < GetStatus.MunicaoMaxCartucho)
                 {
                     municaoCartucho += quantidade;
 
-                    if (municaoCartucho > municaoMaxCartucho)
+                    if (municaoCartucho > GetStatus.MunicaoMaxCartucho)
                     {
-                        municaoCartucho = municaoMaxCartucho;
+                        municaoCartucho = GetStatus.MunicaoMaxCartucho;
                     }
                 }
             }
         }
+    }
+
+    //Retorna os status base ou da melhoria atual da arma, de acordo com o nivel de melhoria dela
+    private Status GetStatusMetodo()
+    {
+        if(nivelMelhoria > 0)
+        {
+            if (nivelMelhoria <= melhorias.Count)
+            {
+                return melhorias[nivelMelhoria - 1].GetStatus;
+            }
+            else if (melhorias.Count > 0)
+            {
+                return melhorias[melhorias.Count - 1].GetStatus;
+            }
+            else
+            {
+                return statusBase;
+            }
+        }
+        else
+        {
+            return statusBase;
+        }
+    }
+
+    [System.Serializable]
+    public struct Status
+    {
+        //Variaveis
+        [SerializeField] private ProjetilScript projetil;
+        [SerializeField] private int dano;
+        [SerializeField] private float velocidadeProjetil;
+        [SerializeField] private float knockBack;
+        [SerializeField] private float knockBackTrigger; //Usado nos inimigos para fazer eles tomarem um KnockBack verdadeiro
+        [SerializeField] private float distanciaMaxProjetil;
+        [SerializeField] private float cadenciaDosTiros;
+        [SerializeField] private float tempoParaRecarregar;
+
+        [SerializeField] private int municaoMaxCartucho;
+        [SerializeField] private int municaoMax;
+
+        //Getters
+        public ProjetilScript Projetil => projetil;
+        public int Dano => dano;
+        public float VelocidadeProjetil => velocidadeProjetil;
+        public float KnockBack => knockBack;
+        public float KnockBackTrigger => knockBackTrigger;
+        public float DistanciaMaxProjetil => distanciaMaxProjetil;
+        public float CadenciaDosTiros => cadenciaDosTiros;
+        public float TempoParaRecarregar => tempoParaRecarregar;
+        public int  MunicaoMaxCartucho => municaoMaxCartucho;
+        public int  MunicaoMax => municaoMax;
+    }
+
+    [System.Serializable]
+    public struct Melhoria
+    {
+        //Variaveis
+        [SerializeField] private Sprite imagemMelhoria;
+        [SerializeField] private string nome;
+        [SerializeField] private string descricao;
+        [SerializeField] private Status status;
+
+        //Getters
+        public Sprite ImagemMelhoria => imagemMelhoria;
+        public string Descricao => descricao;
+        public string Nome => nome;
+        public Status GetStatus => status;
     }
 }
