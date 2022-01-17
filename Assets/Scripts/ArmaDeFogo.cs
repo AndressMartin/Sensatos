@@ -33,6 +33,7 @@ public class ArmaDeFogo : MonoBehaviour
     public float MunicaoCartucho => municaoCartucho;
     public float Municao => municao;
     public Status GetStatus => GetStatusMetodo();
+    public List<Melhoria> Melhorias => melhorias;
 
     public void Atirar(EntityModel objQueChamou, BulletManagerScript bulletManager, Vector3 posicao, Vector2 direcao, EntityModel.Alvo alvo)
     {
