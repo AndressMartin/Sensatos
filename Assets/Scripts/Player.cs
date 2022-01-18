@@ -34,6 +34,8 @@ public class Player : EntityModel
     public Direcao direcaoMovimento;
     private float raioPassos;
 
+    private bool modoDeCombate;
+
     //Variaveis de controle
     private Vector3 posAnterior;
 
@@ -61,10 +63,13 @@ public class Player : EntityModel
     //Getters
     public ObjectManagerScript GetObjectManager => objectManager;
     public DialogueUI DialogueUI => dialogueUI;
+    public Inventario Inventario => inventario;
+    public InventarioMissao InventarioMissao => inventarioMissao;
+    public bool ModoDeCombate => modoDeCombate;
     public Estado GetEstado => estado;
     public float TempoRecarregar => tempoRecarregar;
     public float TempoRecarregarMax => tempoRecarregarMax;
-    public bool RapidFire => inventario.armaSlot1.RapidFire;
+    public bool RapidFire => inventario.ArmaSlot1.RapidFire;
 
     void Start()
     {
@@ -89,6 +94,9 @@ public class Player : EntityModel
         //Variaveis
         vida = vidaInicial;
         raioPassos = 1.5f;
+
+        modoDeCombate = true;
+
         ChangeDirection(Direcao.Baixo);
 
         //Variaveis de controle
@@ -239,10 +247,10 @@ public class Player : EntityModel
                 break;
 
             case Estado.UsandoItem:
-                if (animacao.GetAnimacaoAtual() != inventario.itemAtual.GetNomeAnimacao() + "Usando")
+                if (animacao.GetAnimacaoAtual() != inventario.ItemAtual.GetNomeAnimacao() + "Usando")
                 {
                     animacao.AtualizarArmaBracos("");
-                    animacao.TrocarAnimacao(inventario.itemAtual.GetNomeAnimacao() + "Usando");
+                    animacao.TrocarAnimacao(inventario.ItemAtual.GetNomeAnimacao() + "Usando");
                 }
                 break;
         }
@@ -283,7 +291,7 @@ public class Player : EntityModel
 
     public void Atirar()
     {
-        if (estado == Estado.Normal)
+        if (estado == Estado.Normal && inventario.ArmaSlot1 != null)
         {
             AtualizarPontaDaArma();
 
@@ -291,9 +299,9 @@ public class Player : EntityModel
             {
                 if (recarregando == false)
                 {
-                    GerarSom(inventario.armaSlot1.RaioDoSomDoTiro, true);
-                    inventario.armaSlot1.Atirar(this, bulletManager, pontaArma.transform.position, VetorDirecao(direcao), Alvo.Enemy);
-                    animacao.AtualizarArmaBracos(inventario.armaSlot1.NomeAnimacao);
+                    GerarSom(inventario.ArmaSlot1.RaioDoSomDoTiro, true);
+                    inventario.ArmaSlot1.Atirar(this, bulletManager, pontaArma.transform.position, VetorDirecao(direcao), Alvo.Enemy);
+                    animacao.AtualizarArmaBracos(inventario.ArmaSlot1.NomeAnimacao);
                 }
             }
         }
@@ -301,11 +309,11 @@ public class Player : EntityModel
 
     public void Recarregar()
     {
-        if(recarregando == false && (inventario.armaSlot1.MunicaoCartucho < inventario.armaSlot1.GetStatus.MunicaoMaxCartucho))
+        if(recarregando == false && (inventario.ArmaSlot1.MunicaoCartucho < inventario.ArmaSlot1.GetStatus.MunicaoMaxCartucho))
         {
             recarregando = true;
             tempoRecarregar = 0;
-            tempoRecarregarMax = inventario.armaSlot1.GetStatus.TempoParaRecarregar;
+            tempoRecarregarMax = inventario.ArmaSlot1.GetStatus.TempoParaRecarregar;
         }
     }
 
@@ -315,7 +323,7 @@ public class Player : EntityModel
 
         if(tempoRecarregar >= tempoRecarregarMax)
         {
-            inventario.armaSlot1.Recarregar();
+            inventario.ArmaSlot1.Recarregar();
             FinalizarRecarregamento();
         }
     }
@@ -356,37 +364,18 @@ public class Player : EntityModel
             FinalizarRecarregamento();
         }
         AtualizarPontaDaArma();
-        animacao.AtualizarArmaBracos(inventario.armaSlot1.NomeAnimacao);
-    }
-
-    public void AdicionarAoInventario(Item item)
-    {
-        inventario.Add(item);
-    }
-
-    public void RemoverDoInventario(Item item)
-    {
-        inventario.Remove(item);
-    }
-
-    public void AdicionarAoInventarioMissao(Item item)
-    {
-        inventarioMissao.Add(item);
-    }
-
-    public void RemoverDoInventarioMissao(Item item)
-    {
-        inventarioMissao.Remove(item);
+        animacao.AtualizarArmaBracos(inventario.ArmaSlot1.NomeAnimacao);
     }
 
     public void UsarItem(Item item)
     {
+        //Arrumar - Ele deve usar o item passado pelo inventario ou atalho e nao o atual!!!
         inventario.UsarItemAtual();
     }
 
     public void UsarItemAtalho(int atalho)
     {
-        //UsarItem(atalho[atalho])
+        //Arrumar - UsarItem(atalho[atalho])
         inventario.UsarItemAtual();
     }
 
@@ -398,7 +387,7 @@ public class Player : EntityModel
 
     public void UsarItemGameplay()
     {
-        inventario.itemAtual.UsarNaGameplay(this);
+        inventario.ItemAtual.UsarNaGameplay(this);
     }
 
     public override void TomarDano(int _dano, float _knockBack, float _knockBackTrigger, Vector2 _direcaoKnockBack)
@@ -455,6 +444,16 @@ public class Player : EntityModel
         sound.GerarSom(this, raio, somTiro);
     }
 
+    public void SetModoDeCombate(bool ativo)
+    {
+        modoDeCombate = ativo;
+
+        if(modoDeCombate == false)
+        {
+            animacao.AtualizarArmaBracos("");
+        }
+    }
+
     public void ChangeDirection(Direcao direcao)
     {
         this.direcao = direcao;
@@ -466,74 +465,47 @@ public class Player : EntityModel
         direcaoMovimento = direcao;
     }
 
-    private void DefinirPontaDaArma(out float offSetX, out float offSetY)
+    private Vector2 PontaDaArmaOffSet()
     {
-        offSetX = 0;
-        offSetY = 0;
+        Vector2 offSet = Vector2.zero;
 
-        switch(inventario.armaSlot1.NomeAnimacao)
+        if(inventario.ArmaSlot1 != null)
         {
-            case "Arma1":
-                switch(direcao)
-                {
-                    case Direcao.Baixo:
-                        offSetX = -0.284f;
-                        offSetY = 0.787f;
-                        break;
+            switch (inventario.ArmaSlot1.NomeAnimacao)
+            {
+                case "Arma1":
+                    offSet = direcao switch
+                    {
+                        Direcao.Baixo => new Vector2(-0.284f, 0.787f),
+                        Direcao.Esquerda => new Vector2(-0.486f, 1.224f),
+                        Direcao.Cima => new Vector2(0.283f, 1.56f),
+                        Direcao.Direita => new Vector2(0.486f, 1.224f),
+                        _ => Vector2.zero,
+                    };
+                    return offSet;
 
-                    case Direcao.Esquerda:
-                        offSetX = -0.486f;
-                        offSetY = 1.224f;
-                        break;
+                case "Arma2":
+                    offSet = direcao switch
+                    {
+                        Direcao.Baixo => new Vector2(-0.188f, 0.62f),
+                        Direcao.Esquerda => new Vector2(-0.715f, 1.227f),
+                        Direcao.Cima => new Vector2(0.157f, 1.727f),
+                        Direcao.Direita => new Vector2(0.715f, 1.227f),
+                        _ => Vector2.zero,
+                    };
+                    return offSet;
 
-                    case Direcao.Cima:
-                        offSetX = 0.283f;
-                        offSetY = 1.56f;
-                        break;
-
-                    case Direcao.Direita:
-                        offSetX = 0.486f;
-                        offSetY = 1.224f;
-                        break;
-                }
-                break;
-
-            case "Arma2":
-                switch (direcao)
-                {
-                    case Direcao.Baixo:
-                        offSetX = -0.188f;
-                        offSetY = 0.62f;
-                        break;
-
-                    case Direcao.Esquerda:
-                        offSetX = -0.715f;
-                        offSetY = 1.227f;
-                        break;
-
-                    case Direcao.Cima:
-                        offSetX = 0.157f;
-                        offSetY = 1.727f;
-                        break;
-
-                    case Direcao.Direita:
-                        offSetX = 0.715f;
-                        offSetY = 1.227f;
-                        break;
-                }
-                break;
-
-            default:
-                offSetX = 0;
-                offSetY = 0;
-                break;
+                default:
+                    return Vector2.zero;
+            }
         }
+
+        return offSet;
     }
 
     private void AtualizarPontaDaArma()
     {
-        DefinirPontaDaArma(out float offSetX, out float offSetY);
-        pontaArma.AtualizarPontaArma(offSetX, offSetY);
+        pontaArma.AtualizarPontaArma(PontaDaArmaOffSet());
     }
 
     private void ImpedirSoftlock()

@@ -55,77 +55,75 @@ public class PlayerInput : MonoBehaviour
     {
         if(player.GetEstado == Player.Estado.Normal)
         {
-            //Trocar arma
-            if (Input.GetKeyDown(KeyCode.Q))
+            if(player.ModoDeCombate == true)
             {
-                inventario.TrocarArma();
-                player.AtualizarArma();
-            }
-
-            //Atirar
-            if(player.RapidFire == true)
-            {
-                if(Input.GetButton("Atirar"))
+                //Trocar arma
+                if (Input.GetKeyDown(KeyCode.Q))
                 {
-                    player.Atirar();
+                    inventario.TrocarArma();
+                    player.AtualizarArma();
                 }
-            }
-            else
-            {
-                if (Input.GetKeyDown(KeyCode.Space))
-                {
-                    player.Atirar();
-                }
-            }
 
-            //Recarregar
-            if (Input.GetKeyDown(KeyCode.R))
-            {
-                player.Recarregar();
+                //Atirar
+                if(player.Inventario.ArmaSlot1 != null)
+                {
+                    if (player.RapidFire == true)
+                    {
+                        if (Input.GetButton("Atirar"))
+                        {
+                            player.Atirar();
+                        }
+                    }
+                    else
+                    {
+                        if (Input.GetKeyDown(KeyCode.Space))
+                        {
+                            player.Atirar();
+                        }
+                    }
+                }
+
+                //Recarregar
+                if (Input.GetKeyDown(KeyCode.R))
+                {
+                    player.Recarregar();
+                }
+
+                //Atacar
+                if (Input.GetKeyDown(KeyCode.F))
+                {
+                    player.Atacar();
+                }
+
+                //Usar o item no atalho 1
+                if (Input.GetKeyDown(KeyCode.Keypad1) || Input.GetKeyDown(KeyCode.Alpha1))
+                {
+                    player.UsarItemAtalho(0);
+                }
+
+                //Usar o item no atalho 2
+                if (Input.GetKeyDown(KeyCode.Keypad2) || Input.GetKeyDown(KeyCode.Alpha2))
+                {
+                    player.UsarItemAtalho(1);
+                }
+
+                //Usar o item no atalho 3
+                if (Input.GetKeyDown(KeyCode.Keypad3) || Input.GetKeyDown(KeyCode.Alpha3))
+                {
+                    player.UsarItemAtalho(2);
+                }
+
+                //Usar o item no atalho 4
+                if (Input.GetKeyDown(KeyCode.Keypad4) || Input.GetKeyDown(KeyCode.Alpha4))
+                {
+                    player.UsarItemAtalho(3);
+                }
             }
 
             //Botão de interação
             if (Input.GetKeyDown(KeyCode.E))
             {
                 player.Interagir();
-            }
-
-            //Debug - Tomar dano
-
-            if (Input.GetKeyDown(KeyCode.G))
-            {
-                player.TomarDano(0, 2, 0, new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f)));
-            }
-
-
-            //Atacar
-            if (Input.GetKeyDown(KeyCode.F))
-            {
-                player.Atacar();
-            }
-
-            //Usar o item no atalho 1
-            if (Input.GetKeyDown(KeyCode.Keypad1) || Input.GetKeyDown(KeyCode.Alpha1))
-            {
-                player.UsarItemAtalho(0);
-            }
-
-            //Usar o item no atalho 2
-            if (Input.GetKeyDown(KeyCode.Keypad2) || Input.GetKeyDown(KeyCode.Alpha2))
-            {
-                player.UsarItemAtalho(1);
-            }
-
-            //Usar o item no atalho 3
-            if (Input.GetKeyDown(KeyCode.Keypad3) || Input.GetKeyDown(KeyCode.Alpha3))
-            {
-                player.UsarItemAtalho(2);
-            }
-
-            //Usar o item no atalho 4
-            if (Input.GetKeyDown(KeyCode.Keypad4) || Input.GetKeyDown(KeyCode.Alpha4))
-            {
-                player.UsarItemAtalho(3);
             }
 
             //Ativar o strafing

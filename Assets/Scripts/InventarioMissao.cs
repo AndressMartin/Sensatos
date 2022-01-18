@@ -4,11 +4,17 @@ using UnityEngine;
 
 public class InventarioMissao : MonoBehaviour
 {
-    public List<Item> itens = new List<Item>();
+    //Variaveis
+    [SerializeField] private List<Item> itens = new List<Item>();
+
+    //Getters
+    public List<Item> Itens => itens;
 
     public void Add(Item item)
     {
-        itens.Add(item);
+        //Cria uma nova instancia do scriptable object e a adiciona no inventario
+        Item novoItem = ScriptableObject.Instantiate(item);
+        itens.Add(novoItem);
     }
 
     public void Remove(Item item)

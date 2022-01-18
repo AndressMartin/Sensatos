@@ -24,6 +24,6 @@ public class ItemFrame : MonoBehaviour
 
     public void Init(Item itemRef)
     {
-        itemImage.sprite = itemRef.spriteArma;
+        itemImage.sprite = itemRef.ImagemInventario;
     }
 }

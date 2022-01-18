@@ -72,16 +72,12 @@ public class ItemColetavel : ObjetoInteragivel
 
     private void AdicionarAoInventario(Player player)
     {
-        Item novoItem;
-        novoItem = Instantiate(item, new Vector3(0, 0, 0), Quaternion.identity);
-        player.AdicionarAoInventario(novoItem);
+        player.Inventario.AddItem(item);
     }
 
     private void AdicionarAoInventarioMissao(Player player)
     {
-        Item novoItem;
-        novoItem = Instantiate(item, new Vector3(0, 0, 0), Quaternion.identity);
-        player.AdicionarAoInventarioMissao(novoItem);
+        player.InventarioMissao.Add(item);
     }
 
     private void Desativar()

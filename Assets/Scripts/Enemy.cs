@@ -259,74 +259,47 @@ public class Enemy : EntityModel
         AtualizarPontaDaArma();
     }
 
-    private void DefinirPontaDaArma(out float offSetX, out float offSetY)
+    private Vector2 PontaDaArmaOffSet()
     {
-        offSetX = 0;
-        offSetY = 0;
+        Vector2 offSet = Vector2.zero;
 
-        switch (inventario.ArmaSlot.NomeAnimacao)
+        if (inventario.ArmaSlot != null)
         {
-            case "Arma1":
-                switch (direcao)
-                {
-                    case Direcao.Baixo:
-                        offSetX = -0.284f;
-                        offSetY = 0.787f;
-                        break;
+            switch (inventario.ArmaSlot.NomeAnimacao)
+            {
+                case "Arma1":
+                    offSet = direcao switch
+                    {
+                        Direcao.Baixo => new Vector2(-0.284f, 0.787f),
+                        Direcao.Esquerda => new Vector2(-0.486f, 1.224f),
+                        Direcao.Cima => new Vector2(0.283f, 1.56f),
+                        Direcao.Direita => new Vector2(0.486f, 1.224f),
+                        _ => Vector2.zero,
+                    };
+                    return offSet;
 
-                    case Direcao.Esquerda:
-                        offSetX = -0.486f;
-                        offSetY = 1.224f;
-                        break;
+                case "Arma2":
+                    offSet = direcao switch
+                    {
+                        Direcao.Baixo => new Vector2(-0.188f, 0.62f),
+                        Direcao.Esquerda => new Vector2(-0.715f, 1.227f),
+                        Direcao.Cima => new Vector2(0.157f, 1.727f),
+                        Direcao.Direita => new Vector2(0.715f, 1.227f),
+                        _ => Vector2.zero,
+                    };
+                    return offSet;
 
-                    case Direcao.Cima:
-                        offSetX = 0.283f;
-                        offSetY = 1.56f;
-                        break;
-
-                    case Direcao.Direita:
-                        offSetX = 0.486f;
-                        offSetY = 1.224f;
-                        break;
-                }
-                break;
-
-            case "Arma2":
-                switch (direcao)
-                {
-                    case Direcao.Baixo:
-                        offSetX = -0.188f;
-                        offSetY = 0.62f;
-                        break;
-
-                    case Direcao.Esquerda:
-                        offSetX = -0.715f;
-                        offSetY = 1.227f;
-                        break;
-
-                    case Direcao.Cima:
-                        offSetX = 0.157f;
-                        offSetY = 1.727f;
-                        break;
-
-                    case Direcao.Direita:
-                        offSetX = 0.715f;
-                        offSetY = 1.227f;
-                        break;
-                }
-                break;
-
-            default:
-                offSetX = 0;
-                offSetY = 0;
-                break;
+                default:
+                    return Vector2.zero;
+            }
         }
+
+        return offSet;
     }
 
     private void AtualizarPontaDaArma()
     {
-        DefinirPontaDaArma(out float offSetX, out float offSetY);
-        pontaArma.AtualizarPontaArma(offSetX, offSetY);
+        pontaArma.AtualizarPontaArma(PontaDaArmaOffSet());
     }
 
     public void TrocarDirecaoAtaque(Vector3 alvo)

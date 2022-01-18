@@ -77,18 +77,15 @@ public class Porta : ObjetoInteragivel
         if(trancado)
         {
             //Verifica se ha uma chave nos itens do jogador e se alguma delas tem o id igual ao da chave que destranca a porta
-            List<Item> listaItens = player.GetComponent<InventarioMissao>().itens;
-            if (listaItens.Contains(chave))
+            List<Item> listaItens = player.GetComponent<InventarioMissao>().Itens;
+            foreach(Item item in listaItens)
             {
-                foreach(Item item in listaItens)
+                if(item is Chave)
                 {
-                    if(item is Chave)
+                    Chave chave = (Chave)item;
+                    if(chave.ID == this.chave.ID)
                     {
-                        Chave chave = (Chave)item;
-                        if(chave.ID == this.chave.ID)
-                        {
-                            Destrancar();
-                        }
+                        Destrancar();
                     }
                 }
             }

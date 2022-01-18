@@ -5,50 +5,75 @@ using UnityEngine.Events;
 
 public class Inventario : MonoBehaviour
 {
+    //Componentes
     private Player player;
-    public List<Item> itens = new List<Item>();
-    public List<ArmaDeFogo> armas = new List<ArmaDeFogo>();
-    public ArmaDeFogo armaSlot1;
-    public ArmaDeFogo armaSlot2;
-    public Item itemAtual;
-    public List<Item> itensEmAtalhos = new List<Item>();
 
-    public UnityEvent hasSortedWeapons;
-    // Start is called before the first frame update
+    //Variaveis
+    [SerializeField] private List<Item> itens = new List<Item>();
+    [SerializeField] private List<Item> itensEmAtalhos = new List<Item>();
+    [SerializeField] private List<ArmaDeFogo> armas = new List<ArmaDeFogo>();
+
+    private ArmaDeFogo armaSlot1;
+    private ArmaDeFogo armaSlot2;
+    private Item itemAtual;
+
+    [HideInInspector] public UnityEvent hasSortedWeapons;
+
+    //Getters
+    public List<Item> Itens => itens;
+    public List<Item> ItensEmAtalhos => itensEmAtalhos;
+    public List<ArmaDeFogo> Armas => armas;
+    public ArmaDeFogo ArmaSlot1 => armaSlot1;
+    public ArmaDeFogo ArmaSlot2 => armaSlot2;
+    public Item ItemAtual => itemAtual;
+
     void Start()
     {
+        //Componentes
+        player = GetComponentInParent<Player>();
+
         if (hasSortedWeapons == null)
             hasSortedWeapons = new UnityEvent();
-        player = GetComponentInParent<Player>();
-        InitWeaponConfig();
-
-        //Para testes
-        armaSlot1.AdicionarMunicao(999);
-        armaSlot2.AdicionarMunicao(999);
     }
 
-    private void InitWeaponConfig()
+    private void SetarArmasEquipadas()
     {
-        armaSlot1 = armas[0];
-        armas[0].index = 0;
-        armaSlot2 = armas[1];
-        armas[1].index = 1;
+        if(armas.Count >= 1)
+        {
+            armaSlot1 = armas[0];
+            armas[0].index = 0;
+        }
+
+        if (armas.Count >= 2)
+        {
+            armaSlot2 = armas[1];
+            armas[1].index = 1;
+        }
     }
 
-    public void Add(Item item)
+    public void AddItem(Item item)
     {
-        itens.Add(item);
+        //Cria uma nova instancia do scriptable object e a adiciona no inventario
+        Item novoItem = ScriptableObject.Instantiate(item);
+        itens.Add(novoItem);
     }
 
-    public void Remove(Item item)
+    public void RemoveItem(Item item)
     {
         itens.Remove(item);
     }
 
     public void AddArma(ArmaDeFogo arma)
     {
-        armas.Add(arma);
-        arma.GetComponent<ArmaDeFogo>().index = armas.Count - 1;
+        //Cria uma nova instancia do scriptable object e a adiciona no inventario
+        ArmaDeFogo novaArma = ScriptableObject.Instantiate(arma);
+        armas.Add(novaArma);
+        novaArma.index = armas.Count - 1;
+
+        if(armas.Count <= 2)
+        {
+            SetarArmasEquipadas();
+        }
         //Needs resorting indexes?
     }
 
@@ -57,19 +82,17 @@ public class Inventario : MonoBehaviour
         itemAtual = item;
     }
 
+    public void UsarItemAtual()
+    {
+        itemAtual?.Usar(player);
+    }
+
     public void EquiparArma(ArmaDeFogo arma)
     {
         armaSlot1 = arma;
         //Needs resorting indexes?
     }
 
-    public void UsarItemAtual()
-    {
-        if (itemAtual != null)
-        {
-            itemAtual.Usar(player);
-        }
-    }
     public void TrocarArma()
     {
         foreach (var arma in armas)
@@ -99,6 +122,7 @@ public class Inventario : MonoBehaviour
         else Debug.LogError("WARNING: SWITCHING WEAPONS IN INVENTORY WENT WRONG.");
         ReSort();
     }
+
     public void ReSort()
     {
         List<ArmaDeFogo> armasTemp = new List<ArmaDeFogo>();

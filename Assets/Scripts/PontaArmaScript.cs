@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class PontaArmaScript : MonoBehaviour
 {
-    public void AtualizarPontaArma(float offSetX, float offSetY) //Atualiza a ponta da arma
+    public void AtualizarPontaArma(Vector2 offSet) //Atualiza a ponta da arma
     {
-        transform.position = new Vector2(transform.parent.transform.position.x + offSetX, transform.parent.transform.position.y + offSetY);
+        transform.position = (Vector2)transform.parent.transform.position + offSet;
     }
 }

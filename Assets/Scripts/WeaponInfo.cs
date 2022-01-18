@@ -21,7 +21,7 @@ public class WeaponInfo : UIScreen
         if (UIKeyboardScroller == null) UIKeyboardScroller = GetComponent<UIScrollToSelection>();
         //Add o item que já vem com o Canvas para a primeira seleção.
         weaponButtons.Add(weaponsPanel.transform.GetChild(0).GetComponent<Button>());
-        for (int i = 1; i < inventario.armas.Count; i++)
+        for (int i = 1; i < inventario.Armas.Count; i++)
         {
             //Skippa o primeiro item. 
             var newPanel = Instantiate(weaponPanelPrefab, weaponsPanel.transform);
@@ -84,13 +84,13 @@ public class WeaponInfo : UIScreen
 
     private void SetWeaponSlots()
     {
-        for (int i = 0; i < inventario.armas.Count; i++)
+        for (int i = 0; i < inventario.Armas.Count; i++)
         {
             if(weaponButtons.Count >= i)
             {
-                weaponButtons[i].GetComponent<WeaponFrame>().Init(inventario.armas[i]);
-                weaponButtons[i].transform.SetSiblingIndex(inventario.armas[i].index);
-                if (objectThatCalled.transform.GetSiblingIndex() == inventario.armas[i].index)
+                weaponButtons[i].GetComponent<WeaponFrame>().Init(inventario.Armas[i]);
+                weaponButtons[i].transform.SetSiblingIndex(inventario.Armas[i].index);
+                if (objectThatCalled.transform.GetSiblingIndex() == inventario.Armas[i].index)
                 {
                     weaponButtons[i].GetComponent<WeaponFrame>().EquipedColor();
                 }

@@ -23,8 +23,8 @@ public class InventoryHUD : UIScreen
         }
         for (int i = 0; i < inventoryItens.Count; i++)
         {
-            if(i < inventario.itens.Count)
-                inventoryItens[i].Init(inventario.itens[i]);
+            if(i < inventario.Itens.Count)
+                inventoryItens[i].Init(inventario.Itens[i]);
         }
     }
     // Update is called once per frame
@@ -38,8 +38,8 @@ public class InventoryHUD : UIScreen
 
     public void SortWeapons()
     {
-        equipedWeaponFrames[0].Init(inventario.armaSlot1);
-        equipedWeaponFrames[1].Init(inventario.armaSlot2);
+        equipedWeaponFrames[0].Init(inventario.ArmaSlot1);
+        equipedWeaponFrames[1].Init(inventario.ArmaSlot2);
     }
 
 }
