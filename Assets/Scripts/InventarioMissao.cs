@@ -5,7 +5,7 @@ using UnityEngine;
 public class InventarioMissao : MonoBehaviour
 {
     //Variaveis
-    [SerializeField] private List<Item> itens = new List<Item>();
+    private List<Item> itens = new List<Item>();
 
     //Getters
     public List<Item> Itens => itens;
@@ -20,5 +20,6 @@ public class InventarioMissao : MonoBehaviour
     public void Remove(Item item)
     {
         itens.Remove(item);
+        Destroy(item);
     }
 }

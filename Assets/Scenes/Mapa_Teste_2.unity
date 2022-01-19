@@ -1746,6 +1746,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 854754850}
     m_Modifications:
+    - target: {fileID: 3401984727565017810, guid: 6712e26531f27d54d88d74c08c419556, type: 3}
+      propertyPath: armaSlotTemporario
+      value: 
+      objectReference: {fileID: 11400000, guid: d7b87461518b6154884ad3ae22a317f3, type: 2}
     - target: {fileID: 6297625325533714480, guid: 6712e26531f27d54d88d74c08c419556, type: 3}
       propertyPath: m_Mass
       value: 100
@@ -4701,6 +4705,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 854754850}
     m_Modifications:
+    - target: {fileID: 3401984727565017810, guid: 6712e26531f27d54d88d74c08c419556, type: 3}
+      propertyPath: armaSlotTemporario
+      value: 
+      objectReference: {fileID: 11400000, guid: 3231560774442e74ba7bb14338d05829, type: 2}
     - target: {fileID: 6297625325533714480, guid: 6712e26531f27d54d88d74c08c419556, type: 3}
       propertyPath: m_Mass
       value: 100
@@ -16020,6 +16028,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: DebugModeManager
       objectReference: {fileID: 0}
+    - target: {fileID: 2953354217862332446, guid: 0a3fd2bf01481964a9ac3212147bc664, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7838020995025491118, guid: 0a3fd2bf01481964a9ac3212147bc664, type: 3}
       propertyPath: m_RootOrder
       value: 6
@@ -16065,12 +16077,16 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8456558371540489037, guid: 0a3fd2bf01481964a9ac3212147bc664, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8456558371540489037, guid: 0a3fd2bf01481964a9ac3212147bc664, type: 3}
       propertyPath: armasIniciais.Array.size
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8456558371540489037, guid: 0a3fd2bf01481964a9ac3212147bc664, type: 3}
       propertyPath: itensIniciais.Array.size
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8456558371540489037, guid: 0a3fd2bf01481964a9ac3212147bc664, type: 3}
       propertyPath: armasIniciais.Array.data[0]
@@ -16277,6 +16293,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2150433992448801304, guid: 83506c14bf685914bad042623edb7cd3, type: 3}
+      propertyPath: itens.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2150433992448801304, guid: 83506c14bf685914bad042623edb7cd3, type: 3}
       propertyPath: armas.Array.data[0]
       value: 
       objectReference: {fileID: 0}
@@ -16284,6 +16304,10 @@ PrefabInstance:
       propertyPath: armas.Array.data[1]
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 2150433992448801304, guid: 83506c14bf685914bad042623edb7cd3, type: 3}
+      propertyPath: itens.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: 962723d179a68a44fbf19fef409f63d2, type: 2}
     - target: {fileID: 4091040286682307908, guid: 83506c14bf685914bad042623edb7cd3, type: 3}
       propertyPath: m_Name
       value: Player

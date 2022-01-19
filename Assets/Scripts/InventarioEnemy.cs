@@ -4,7 +4,20 @@ using UnityEngine;
 
 public class InventarioEnemy : MonoBehaviour
 {
-    [SerializeField] private ArmaDeFogo armaSlot;
-    
+    [SerializeField] private ArmaDeFogo armaSlotTemporario;
+    private ArmaDeFogo armaSlot;
+
     public ArmaDeFogo ArmaSlot => armaSlot;
+
+    private void Start()
+    {
+        SetArma(armaSlotTemporario);
+    }
+
+    public void SetArma(ArmaDeFogo arma)
+    {
+        //Cria uma nova instancia do scriptable object e a adiciona no inventario
+        ArmaDeFogo novaArma = ScriptableObject.Instantiate(arma);
+        armaSlot = novaArma;
+    }
 }

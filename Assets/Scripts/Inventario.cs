@@ -9,9 +9,9 @@ public class Inventario : MonoBehaviour
     private Player player;
 
     //Variaveis
-    [SerializeField] private List<Item> itens = new List<Item>();
-    [SerializeField] private List<Item> itensEmAtalhos = new List<Item>();
-    [SerializeField] private List<ArmaDeFogo> armas = new List<ArmaDeFogo>();
+    private List<Item> itens = new List<Item>();
+    private List<Item> itensEmAtalhos = new List<Item>();
+    private List<ArmaDeFogo> armas = new List<ArmaDeFogo>();
 
     private ArmaDeFogo armaSlot1;
     private ArmaDeFogo armaSlot2;
@@ -61,6 +61,7 @@ public class Inventario : MonoBehaviour
     public void RemoveItem(Item item)
     {
         itens.Remove(item);
+        Destroy(item);
     }
 
     public void AddArma(ArmaDeFogo arma)
