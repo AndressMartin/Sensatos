@@ -15,7 +15,7 @@ public class Enemy : EntityModel
     private InventarioEnemy inventario;
     private EnemyMovement enemyMovement;
     private EnemyVisionScript enemyVision;
-
+    private IA_Enemy iA_Enemy;
     private Player player;
 
     //Variaveis
@@ -27,8 +27,7 @@ public class Enemy : EntityModel
 
     public bool morto;
     public bool playerOnAttackRange;
-    public bool vendoPlayer;
-    public bool vendoPlayerCircular;
+
 
     float tempoTiro;
 
@@ -39,10 +38,11 @@ public class Enemy : EntityModel
     private bool mortoRespawn;
     private Vector2 posicaoRespawn;
     private Direcao direcaoRespawn;
-    private EnemyMovement.ModoPatrulha modoPatrulhaRespawn;
+    private IA_Enemy.ModoPatrulha modoPatrulhaRespawn;
 
     //Getters
     public Estado GetEstado => estado;
+    public Player GetPlayer => player;
 
     void Start()
     {
@@ -60,6 +60,7 @@ public class Enemy : EntityModel
         inventario = GetComponent<InventarioEnemy>();
         pontaArma = GetComponentInChildren<PontaArmaScript>();
         animacao = GetComponent<AnimacaoJogador>();
+        iA_Enemy=GetComponent<IA_Enemy>();
 
         player = FindObjectOfType<Player>();
 
@@ -85,23 +86,19 @@ public class Enemy : EntityModel
             AllEnemySubClass();
         }
     }
-    void VariaveisAtualizamTodoFrame()
-    {
-        vendoPlayer = enemyVision.vendoPlayer;
-        vendoPlayerCircular=enemyVision.vendoPlayerCircular;
-    }
+   
 
     private void SetRespawnInicial()
     {
         posicaoRespawn = transform.position;
         direcaoRespawn = direcao;
-        modoPatrulhaRespawn = enemyMovement.modoPatrulha;
+        modoPatrulhaRespawn = iA_Enemy.modoPatrulha;
     }
 
     public void SetRespawn()
     {
         mortoRespawn = morto;
-        modoPatrulhaRespawn = enemyMovement.modoPatrulha;
+        modoPatrulhaRespawn = iA_Enemy.modoPatrulha;
     }
 
     public void Respawn()
@@ -113,11 +110,8 @@ public class Enemy : EntityModel
             vida = vidaInicial;
             transform.position = posicaoRespawn;
             ChangeDirection(direcaoRespawn);
-            enemyMovement.modoPatrulha = modoPatrulhaRespawn;
 
-            enemyMovement.estado = EnemyMovement.Estado.Rotina;
-            enemyMovement.stance = EnemyMovement.Stances.Patrolling;
-            enemyMovement.fazerMovimentoAlerta = EnemyMovement.FazerMovimentoAlerta.NA;
+            iA_Enemy.Respawn();
             enemyMovement.ZerarVelocidade();
 
 
@@ -138,10 +132,10 @@ public class Enemy : EntityModel
     {
         if (!morto)
         {
-            VariaveisAtualizamTodoFrame();
             //Debug.Log("Inimigo Vel X: " + enemyMove.velX + ", Vel Y: " + enemyMove.velY);
             animacao.AtualizarDirecao(direcao, direcao);
             Animar();
+            iA_Enemy.Main();
             enemyMovement.Main();
             enemyVision.Main();
 
@@ -154,11 +148,11 @@ public class Enemy : EntityModel
         switch (estado)
         {
             case Estado.Normal:
-                if ((enemyMovement.rb.velocity.x == 0 && enemyMovement.rb.velocity.y == 0) && animacao.GetAnimacaoAtual() != "Idle")
+                if ((enemyMovement.GetRb.velocity.x == 0 && enemyMovement.GetRb.velocity.y == 0) && animacao.GetAnimacaoAtual() != "Idle")
                 {
                     animacao.TrocarAnimacao("Idle");
                 }
-                else if ((enemyMovement.rb.velocity.x != 0 || enemyMovement.rb.velocity.y != 0) && animacao.GetAnimacaoAtual() != "Andando")
+                else if ((enemyMovement.GetRb.velocity.x != 0 || enemyMovement.GetRb.velocity.y != 0) && animacao.GetAnimacaoAtual() != "Andando")
                 {
                     animacao.TrocarAnimacao("Andando");
                 }
@@ -213,8 +207,7 @@ public class Enemy : EntityModel
 
     public void TomarDanoFisico(int _dano, float _knockBack, Vector2 _direcaoKnockBack)
     {
-        // mudar pra quando tiver variavel de inimgo vendo
-        if (!enemyVision.vendoPlayer)//ageitar
+        if (!enemyVision.GetVendoPlayer)
         {
             stealthKill();
         }
@@ -250,7 +243,6 @@ public class Enemy : EntityModel
     public override void KnockBack(float _knockBack, Vector2 _direcaoKnockBack)
     {
         enemyMovement.KnockBack(_knockBack, _direcaoKnockBack);
-
     }
 
     public void ChangeDirection(Direcao _direction)
@@ -329,11 +321,6 @@ public class Enemy : EntityModel
         }
     }
     
-    private void OnCollisionStay2D(Collision2D collision)
-    {
-       
-    }
-
     private void CadenciaTiro()
     {
         if (tempoTiro > 0)
@@ -354,6 +341,6 @@ public class Enemy : EntityModel
 
     public void EscutarSom(Player player, bool somTiro)
     {
-        enemyMovement.EscutarSom(player, somTiro);
+        iA_Enemy.EscutarSom(player, somTiro);
     }
 }

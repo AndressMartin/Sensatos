@@ -8,6 +8,10 @@ public class VisaoCircularEnemy : MonoBehaviour
 
     private bool vendoPlayer;
     public bool VendoPlayer => vendoPlayer;
+
+    private float raioOg;
+    private float raioAtual;
+
     private void Start()
     {
         circleCollider2D = GetComponent<CircleCollider2D>();
@@ -28,8 +32,13 @@ public class VisaoCircularEnemy : MonoBehaviour
             vendoPlayer = false;
         }
     }
-    public void mudarRaio(float _raio)
+    public void ValorRaioInicial(float _raio)
     {
-        circleCollider2D.radius = _raio;
+        raioOg = _raio;
+        circleCollider2D.radius = raioOg;
+    }
+    public void MudarRaio()
+    {
+        circleCollider2D.radius = raioOg + 2;
     }
 }

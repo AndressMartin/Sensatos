@@ -10,39 +10,23 @@ public class LockDownManager : MonoBehaviour
         objectManagerScript = FindObjectOfType<ObjectManagerScript>();
 
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        //mets();
-    }
-
-    public void VerPlayer(Vector2 posicaoDoPlayer)
+  public void VerPlayer(Vector2 posicaoDoPlayer)
     {
         foreach (Enemy enemy in objectManagerScript.listaInimigos)
         {
-            enemy.GetComponent<EnemyMovement>().LockDownAtivo(posicaoDoPlayer);
+            enemy.GetComponent<IA_Enemy>().LockDownAtivo(posicaoDoPlayer);
         }
         TrancarPortas();
-       
-
+    }
+    public void Respawn()
+    {
+        DesativaLockDown();
     }
     public void DesativaLockDown()
     {
         DestrancarPortas();
     }
-    void mets()
-    {
-        if (Input.GetKeyDown(KeyCode.J))
-        {
-            VerPlayer(FindObjectOfType<Player>().gameObject.transform.position);
-        }
 
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            DestrancarPortas();
-        }
-    }
     private void TrancarPortas()
     {
         foreach (Porta porta in objectManagerScript.listaPortas)

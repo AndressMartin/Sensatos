@@ -7,6 +7,7 @@ public class RespawnManagerScript : MonoBehaviour
     //Managers
     private ObjectManagerScript objectManager;
     private BulletManagerScript bulletManager;
+    private LockDownManager lockDownManager;
 
     private Player player;
 
@@ -15,6 +16,7 @@ public class RespawnManagerScript : MonoBehaviour
         //Managers
         objectManager = FindObjectOfType<ObjectManagerScript>();
         bulletManager = FindObjectOfType<BulletManagerScript>();
+        lockDownManager = FindObjectOfType<LockDownManager>();
 
         player = FindObjectOfType<Player>();
     }
@@ -77,7 +79,7 @@ public class RespawnManagerScript : MonoBehaviour
         {
             porta.Respawn();
         }
-
+        lockDownManager.Respawn();
         bulletManager.DeletarProjeteis();
     }
 }

@@ -35,33 +35,31 @@ public class LockDown : ObjetoInteragivel
     public override void Respawn()
     {
         DesativarLockDown();
-    }
 
-    void Update()
-    {
-        if(pauseManager.JogoPausado == false)
-        {
-            if (lockDownAtivo)
-            {
-                spriteRenderer.color = Color.green;
-            }
-            else
-            {
-                spriteRenderer.color = Color.blue;
-            }
-        }
     }
-    public void AtivarLockDown(Vector2 posicaoDoPlayer)
+    public void AtivarLockDown()
     {
-        lockDownManager.VerPlayer(posicaoDoPlayer);
+        lockDownAtivo = true;
+        CorBotao();
     }
-    public void DesativarLockDown()
+    private void DesativarLockDown()
     {
         lockDownAtivo = false;
-        lockDownManager.DesativaLockDown();
+        CorBotao();
     }
     public override void Interagir(Player player)
     {
         
+    }
+    void CorBotao()
+    {
+        if (lockDownAtivo)
+        {
+            spriteRenderer.color = Color.green;
+        }
+        else
+        {
+            spriteRenderer.color = Color.blue;
+        }
     }
 }

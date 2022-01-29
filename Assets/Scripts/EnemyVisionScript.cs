@@ -15,26 +15,29 @@ public class EnemyVisionScript : MonoBehaviour
     Vector2 v1, v2 = new Vector2(0, 0), v3 = new Vector2(0, 0);
 
     //variaveis controle
-    public bool vendoPlayer;
-    public bool vendoPlayerCircular;
+    [SerializeField] bool vendoPlayer;
+    [SerializeField] bool vendoPlayerCircular;
+
     //componente
     private Enemy enemy;
-    private EnemyMovement enemyMove;
     private VisaoCircularEnemy visaoCircularEnemy;
     private PolygonCollider2D polygonCollider;
-    // Start is called before the first frame update
+
+    //Getter
+    public bool GetVendoPlayer => vendoPlayer;
+    public bool GetVendoPlayerCircular => vendoPlayerCircular;
+
+
     void Start()
     {
         pontoXMax = pontoX;
         pontoYMax = pontoY;
 
         visaoCircularEnemy = GetComponentInChildren<VisaoCircularEnemy>();
-        enemyMove = GetComponentInParent<EnemyMovement>();
         polygonCollider = GetComponent<PolygonCollider2D>();
         enemy = GetComponentInParent<Enemy>();
-        enemyMove.EnemyVissionReference(this);
-
-        visaoCircularEnemy.mudarRaio(Mathf.Sqrt((larguraConeVisao - pontoX) * (larguraConeVisao - pontoX) + (alturaConeVisao - pontoY) * (alturaConeVisao - pontoY)));
+ 
+        visaoCircularEnemy.ValorRaioInicial(Mathf.Sqrt((larguraConeVisao - pontoX) * (larguraConeVisao - pontoX) + (alturaConeVisao - pontoY) * (alturaConeVisao - pontoY)));
         v1 = new Vector2(larguraConeVisao, alturaConeVisao);
     }
     public void Main()
@@ -62,17 +65,8 @@ public class EnemyVisionScript : MonoBehaviour
                 if (hits.transform.GetComponent<Player>() != null)//caso atinga o player o raio
                 {
                     vendoPlayer = true;
-                    //antigo see player
-                    // =new Vector3(hit.transform.position.x, hit.transform.position.y, hit.transform.position.z); 
+                   
                 }
-
-                /*if(hits.transform.GetComponent<Enemy>() != null)
-                {
-                    if (entityTemp.morto)
-                    {
-                        //Debug.Log("To vendo um corpo");
-                        //deteceta um corpo de inimigo no chao
-                    }*/
             }
         }
     }
@@ -89,14 +83,9 @@ public class EnemyVisionScript : MonoBehaviour
             vendoPlayer=false;
             ZerarVariaveis();
         }
-        
+       
+    }
 
-    }
-    void SeePlayer(bool _player, GameObject _gameObject)
-    {
-        vendoPlayer = _player;
-        enemyMove.SawEnemy(_gameObject);
-    }
 
     public void ResetarVariaveisDeControle()
     {
@@ -108,12 +97,12 @@ public class EnemyVisionScript : MonoBehaviour
     {
         pontoX += 2;
         pontoY += 2;
+        visaoCircularEnemy.MudarRaio();
+
     }
     void ZerarVariaveis()
     {
         vendoPlayer = false;
-        enemyMove.SawEnemy(null);
-
     }
     void MudarDirecaoConeVisao()
     {
