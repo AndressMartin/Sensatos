@@ -286,7 +286,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6297625325533714494}
   - component: {fileID: 6297625325533714495}
-  - component: {fileID: 1973064569535041574}
+  - component: {fileID: 6885532772316150975}
   - component: {fileID: 6297625325533714492}
   - component: {fileID: 3401984727565017810}
   - component: {fileID: 1338069366}
@@ -336,7 +336,7 @@ MonoBehaviour:
   vidaInicial: 10
   morto: 0
   playerOnAttackRange: 0
---- !u!114 &1973064569535041574
+--- !u!114 &6885532772316150975
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -348,16 +348,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a525aa220bdd30468363ee4123cf30b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hearPlayer: 0
-  hearShoot: 0
-  contadorpraPoderEntrarModoAtaquePlayerMax: 0
-  timerEmQueVaiVerificarRegiaoMax: 0
-  contadorPosicaoPlayerPerderDeVistaMax: 0
-  contadorOlharEmDirecaoAoSomMax: 0
-  estado: 0
-  stance: 0
-  fazerMovimentoAlerta: 0
-  modoPatrulha: 0
+  inimigoEstados: 0
+  estadoDeteccaoPlayer: 0
+  tempoVerificarAreaLockdown: 0
+  tempoVerificarAreaLockdownMax: 0
+  tempoSeguirPlayerAposPerderDeVista: 0
+  tempoSeguirPlayerAposPerderDeVistaMax: 0
+  tempoParaEntrarEmCombateComPlayer: 0
+  tempoParaEntrarEmCombateComPlayerMax: 0
+  tempoVerificandoSomPassos: 0
+  tempoVerificandoSomPassosMax: 0
+  tempoVerificandoSomTiro: 0
+  tempoVerificandoSomTiroMax: 0
+  tempoVerificandoUltimaPosicaoPlayer: 0
+  tempoVerificandoUltimaPosicaoPlayerMax: 0
 --- !u!114 &6297625325533714492
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -376,7 +380,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  lastPlayerPosition: {x: 0, y: 0, z: 0}
+  ultimaPosicaoEnquantoFaziaRota: {x: 0, y: 0}
 --- !u!114 &3401984727565017810
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -525,6 +529,8 @@ MonoBehaviour:
     m_Bits: 64
   pontoX: 5
   pontoY: 5
+  vendoPlayer: 0
+  vendoPlayerCircular: 0
 --- !u!60 &6297625326220625048
 PolygonCollider2D:
   m_ObjectHideFlags: 0

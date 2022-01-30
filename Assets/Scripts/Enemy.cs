@@ -38,7 +38,6 @@ public class Enemy : EntityModel
     private bool mortoRespawn;
     private Vector2 posicaoRespawn;
     private Direcao direcaoRespawn;
-    private IA_Enemy.ModoPatrulha modoPatrulhaRespawn;
 
     //Getters
     public Estado GetEstado => estado;
@@ -92,13 +91,11 @@ public class Enemy : EntityModel
     {
         posicaoRespawn = transform.position;
         direcaoRespawn = direcao;
-        modoPatrulhaRespawn = iA_Enemy.modoPatrulha;
     }
 
     public void SetRespawn()
     {
         mortoRespawn = morto;
-        modoPatrulhaRespawn = iA_Enemy.modoPatrulha;
     }
 
     public void Respawn()
@@ -341,6 +338,6 @@ public class Enemy : EntityModel
 
     public void EscutarSom(Player player, bool somTiro)
     {
-        iA_Enemy.EscutarSom(player, somTiro);
+        iA_Enemy.ReceberSom(player.transform.position, somTiro);
     }
 }

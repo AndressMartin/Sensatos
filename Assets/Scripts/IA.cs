@@ -8,30 +8,51 @@ public class IA : MonoBehaviour
     //Componentes
     private Player player;
     private EnemyMovement enemyMovement;
+    private Enemy enemy;
+    private EnemyVisionScript enemyVisionScript;
+    private ObjectManagerScript objectManagerScript;
 
-    enum InimigoEstados { AndandoAtePlayer,Patrulhar,VerificandoArea,AtacarPlayer,SomPassos,SomTiro,AndandoUltimaPosicaoPlayerConhecida};
-    InimigoEstados inimigoEstados;
 
+    //Enun
+    enum InimigoEstados { AndandoAtePlayer,Patrulhar,VerificandoArea,AtacarPlayer,SomPassos,SomTiro,AndandoUltimaPosicaoPlayerConhecida,IndoAtivarLockDown};
+    [SerializeField] InimigoEstados inimigoEstados;
+
+    enum EstadoDeteccaoPlayer {playerDetectado,Detectando };
+    [SerializeField] EstadoDeteccaoPlayer estadoDeteccaoPlayer;
+
+    //Variaveis controle
     bool vendoPlayer;
     bool playerAreaAtaque;
     bool emLockDown;
     bool fazerRotinaLockDown;
     bool somTiro;
     bool somPasso;
-    bool controlePlayerPos;
+    bool controleParaAtualizarPlayerPosicao;
+    bool viuPlayerAlgumaVez;
+    bool controleParaMudarEntreAlertaOuCombate;
 
-    Vector2 posicaoPassosPlayer;
+    int indiceDoBotaoMaisPerto;
+
     Vector2 posicaoTiroPlayer;
     Vector2 posicaoUltimoLugarVisto;
     Vector2 posicaoAtualPlayer;
-    Vector2 posicaoUltimoPontoRota;
 
-    float tempoVerificarAreaLockdown, tempoVerificarAreaLockdownMax;
+    //Controladores
+    [SerializeField] float tempoVerificarAreaLockdown, tempoVerificarAreaLockdownMax;
+    [SerializeField] float tempoSeguirPlayerAposPerderDeVista, tempoSeguirPlayerAposPerderDeVistaMax;
+    [SerializeField] float tempoParaEntrarEmCombateComPlayer, tempoParaEntrarEmCombateComPlayerMax;
+    [SerializeField] float tempoVerificandoSomPassos, tempoVerificandoSomPassosMax;
+    [SerializeField] float tempoVerificandoSomTiro, tempoVerificandoSomTiroMax;
+    [SerializeField] float tempoVerificandoUltimaPosicaoPlayer, tempoVerificandoUltimaPosicaoPlayerMax;
+
 
     void Start()
     {
-        player = FindObjectOfType<Player>();
         enemyMovement= GetComponent<EnemyMovement>();
+        enemy = GetComponent<Enemy>();
+        enemyVisionScript = GetComponentInChildren<EnemyVisionScript>();
+        objectManagerScript = FindObjectOfType<ObjectManagerScript>();
+
 
         vendoPlayer = false;
         playerAreaAtaque = false;
@@ -39,30 +60,73 @@ public class IA : MonoBehaviour
         fazerRotinaLockDown = false;
         somPasso = false;
         somTiro = false;
-        controlePlayerPos = true;
-        emLockDown = false;
+        controleParaAtualizarPlayerPosicao = true;
+        viuPlayerAlgumaVez = false;
+        controleParaMudarEntreAlertaOuCombate = false;
+
+        indiceDoBotaoMaisPerto = 0;
+
+
+        posicaoTiroPlayer = Vector2.zero;
+        posicaoUltimoLugarVisto = Vector2.zero;
+        posicaoAtualPlayer = Vector2.zero;
+
+        ResetarContadores();
     }
 
     // Update is called once per frame
-    void Update()
-    { 
-        if(!vendoPlayer && !controlePlayerPos)
+    public void Main()
+    {
+        ReferenciaVariaveisExternas();
+
+
+
+        if(viuPlayerAlgumaVez && !emLockDown && //caso não tenha entrado em lockDown,esteja vendo o player e esteja mais perto do botão do que do player
+            Vector2.Distance(transform.position, objectManagerScript.listaAlarmes[indiceDoBotaoMaisPerto].transform.position) < Vector2.Distance(transform.position, enemy.GetPlayer.transform.position))
         {
-            controlePlayerPos = Contador(0,2);
+            inimigoEstados = InimigoEstados.IndoAtivarLockDown;
+        }
+
+        if (!vendoPlayer && !controleParaAtualizarPlayerPosicao) //caso tenha perdido o player de vista, por quanto tempo vai atualizar sua posicao
+        {
+            controleParaAtualizarPlayerPosicao = Contador(ref tempoSeguirPlayerAposPerderDeVista,tempoSeguirPlayerAposPerderDeVistaMax);
             posicaoUltimoLugarVisto = posicaoAtualPlayer;
         }
-        
 
-        if(playerAreaAtaque)
+        if(!vendoPlayer && controleParaMudarEntreAlertaOuCombate)//caso nao estja vendo o player mas ja tenha visto alguma vez
+        {
+            if(Contador(ref tempoParaEntrarEmCombateComPlayer,tempoParaEntrarEmCombateComPlayerMax)) // tempo Para Entrar em alerta // 
+            {
+                controleParaMudarEntreAlertaOuCombate=false;
+                estadoDeteccaoPlayer = EstadoDeteccaoPlayer.playerDetectado;
+            }
+            else
+            {
+                estadoDeteccaoPlayer = EstadoDeteccaoPlayer.playerDetectado;
+            }
+        }
+        
+        if (playerAreaAtaque && estadoDeteccaoPlayer == EstadoDeteccaoPlayer.playerDetectado) // se player esta no range de ataque
         {
             inimigoEstados = InimigoEstados.AtacarPlayer;
         }
-        else if(vendoPlayer)
+        else if(vendoPlayer) // se esta vendo o player
         {
-            controlePlayerPos = false;
-            inimigoEstados = InimigoEstados.AndandoAtePlayer;
+            viuPlayerAlgumaVez = true;
+            switch (estadoDeteccaoPlayer)
+            {
+                case EstadoDeteccaoPlayer.playerDetectado:
+                    inimigoEstados = InimigoEstados.AndandoAtePlayer;
+                    controleParaAtualizarPlayerPosicao = false;
+                    break;
+                case EstadoDeteccaoPlayer.Detectando:
+                    controleParaMudarEntreAlertaOuCombate = true;
+
+                    break;
+
+            }
         }
-        else if(somTiro || somPasso)
+        else if(somTiro || somPasso) // se ouviu algum passo ou tiro
         {
             if(somTiro)
             {
@@ -73,16 +137,15 @@ public class IA : MonoBehaviour
                 inimigoEstados = InimigoEstados.SomPassos;
             }
         }
-        else if (fazerRotinaLockDown)
+        else if (fazerRotinaLockDown) //se chamaram lockdown
         {
-            if ( /*Distancia sua ate o local que relataram o player > 0.5*/true)
+            if (Vector2.Distance(transform.position,posicaoUltimoLugarVisto) > 0.5)
             {
                 inimigoEstados = InimigoEstados.AndandoUltimaPosicaoPlayerConhecida;
             }
             else //caso chegue na area em que o jogador estava
             {
-
-                if (VerificandoArea(tempoVerificarAreaLockdown,tempoVerificarAreaLockdownMax))
+                if (VerificandoArea(ref tempoVerificarAreaLockdown,tempoVerificarAreaLockdownMax))
                 {
                     inimigoEstados = InimigoEstados.Patrulhar;
                 }
@@ -105,15 +168,23 @@ public class IA : MonoBehaviour
                 break;
 
             case InimigoEstados.SomPassos:
-                FuncVerificarArea(0, 9, InimigoEstados.Patrulhar);
+                FuncVerificarArea(ref tempoVerificandoSomPassos, tempoVerificandoSomPassosMax, InimigoEstados.Patrulhar);
                 break;
 
             case InimigoEstados.SomTiro:
-                FuncaoIrAteLugarVerificarArea(posicaoTiroPlayer, 0, 1, InimigoEstados.Patrulhar);
+                FuncaoIrAteLugarVerificarArea(posicaoTiroPlayer, ref tempoVerificandoSomTiro, tempoVerificandoSomTiroMax, InimigoEstados.Patrulhar);
                 break;
 
             case InimigoEstados.AndandoUltimaPosicaoPlayerConhecida:
-                FuncaoIrAteLugarVerificarArea(posicaoUltimoLugarVisto, 0, 1, InimigoEstados.Patrulhar);
+                FuncaoIrAteLugarVerificarArea(posicaoUltimoLugarVisto, ref tempoVerificandoUltimaPosicaoPlayer, tempoVerificandoUltimaPosicaoPlayerMax, InimigoEstados.Patrulhar);
+                break;
+            case InimigoEstados.IndoAtivarLockDown:
+                if(VerificarAndarAteAlvo(objectManagerScript.listaAlarmes[indiceDoBotaoMaisPerto].transform.position))
+                {
+                    objectManagerScript.listaAlarmes[indiceDoBotaoMaisPerto].AtivarLockDown();
+                    FindObjectOfType<LockDownManager>().VerPlayer(posicaoUltimoLugarVisto);
+                    fazerRotinaLockDown = true;
+                }
                 break;
 
             default:
@@ -122,57 +193,58 @@ public class IA : MonoBehaviour
     }
     void Patrulhar()
     {
-
+        enemyMovement.Patrulhar();
     }
-
     void Atacar()
     {
-
+        enemy.Atirar();
     }
     void Mover(Vector2 _alvo)
     {
         enemyMovement.Movimentar(enemyMovement.calcMovimemto(_alvo));
     }
-    public void AtivarLockDown(bool ativo)
+    void ReferenciaVariaveisExternas()
     {
-        ativo = true;
-        emLockDown = ativo;
-        fazerRotinaLockDown = ativo;
-        //mudar Variaveis conforme LockDown
+        vendoPlayer = enemyVisionScript.GetVendoPlayer;
+        playerAreaAtaque = enemy.playerOnAttackRange;
+        posicaoAtualPlayer = enemy.GetPlayer.transform.position;
+        indiceDoBotaoMaisPerto = RetornarIndiceBotaoLockDownMaisPerto();
     }
 
+
     #region IrAteLugarVerificarArea
-    void FuncaoIrAteLugarVerificarArea(Vector2 posicaoAlvo, float tempo, float tempoMax, InimigoEstados estadoQueVaiFicarNoFim)
+    void FuncaoIrAteLugarVerificarArea(Vector2 posicaoAlvo, ref float tempo, float tempoMax, InimigoEstados estadoQueVaiFicarNoFim)
     {
         if (VerificarAndarAteAlvo(posicaoAlvo))
         {
-            FuncVerificarArea(tempo, tempoMax, estadoQueVaiFicarNoFim);
+            FuncVerificarArea(ref tempo, tempoMax, estadoQueVaiFicarNoFim);
         }
     }
-    void FuncVerificarArea(float tempo, float tempoMax, InimigoEstados estadoQueVaiFicarNoFim)
+    void FuncVerificarArea(ref float tempo, float tempoMax, InimigoEstados estadoQueVaiFicarNoFim)
     {
-        if (VerificandoArea(tempo, tempoMax))
+        if (VerificandoArea(ref tempo, tempoMax))
         {
             inimigoEstados = estadoQueVaiFicarNoFim;
         }
     }
     bool VerificarAndarAteAlvo(Vector2 alvo)
     {
-        if (Vector2.Distance(transform.position, alvo) < 0.5)
+        if (Vector2.Distance(transform.position, alvo) > 0.5)
         {
             Mover(alvo);
             return true;
         }
         return false;
     }
-    bool VerificandoArea(float tempo, float tempoMax)
+    bool VerificandoArea(ref float tempo, float tempoMax)
     {
         inimigoEstados = InimigoEstados.VerificandoArea;
-        return Contador(tempo, tempoMax);
+        return Contador(ref tempo, tempoMax);
     }
 
     #endregion
-    bool Contador(float tempo, float tempoMax)
+
+    bool Contador(ref float tempo, float tempoMax)
     {
         tempo += Time.deltaTime;
         if (tempo > tempoMax)
@@ -181,8 +253,81 @@ public class IA : MonoBehaviour
         }
         return false;
     }
-    public void FazerRespawn()
+    private int RetornarIndiceBotaoLockDownMaisPerto()
     {
+        List<LockDown> botoesLockDown = objectManagerScript.listaAlarmes;
 
+        float menorDistancia = 10000;
+        Vector2 botaoMaisProximo = Vector2.zero;
+        int indice = 0;
+        for (int i = 0; i < botoesLockDown.Count; i++)
+        {
+            if (Vector2.Distance(transform.position, botoesLockDown[i].transform.position) < menorDistancia)
+            {
+                botaoMaisProximo = botoesLockDown[i].transform.position;
+                menorDistancia = Vector2.Distance(transform.position, botoesLockDown[i].transform.position);
+                indice = i;
+            }
+        }
+        return indice;
     }
+
+    #region Receber VariaveisExternas
+    public void ReceberLockDown(bool ativo)
+    {
+        emLockDown = ativo;
+        fazerRotinaLockDown = ativo;
+        //mudar Variaveis conforme LockDown
+    }
+    public void ReceberSom(Vector2 posicao,bool tiro)
+    {
+        if(tiro)
+        {
+            inimigoEstados = InimigoEstados.SomTiro;
+            posicaoTiroPlayer = posicao;
+        }
+        else
+        {
+            inimigoEstados = InimigoEstados.SomPassos;
+        }
+    }
+
+    #endregion
+
+    #region ResetarVariaveis/Respawn
+    public void Respawn()
+    {
+        ResetarVariaveis();
+    }
+    void ResetarContadores()
+    {
+        tempoVerificarAreaLockdown = 0;
+        tempoSeguirPlayerAposPerderDeVista = 0;
+        tempoParaEntrarEmCombateComPlayer = 0;
+        tempoVerificandoSomPassos = 0;
+        tempoVerificandoSomTiro = 0;
+        tempoVerificandoUltimaPosicaoPlayer = 0;
+    }
+    void ResetarVariaveis()
+    {
+        vendoPlayer = false;
+        playerAreaAtaque = false;
+        emLockDown = false;
+        fazerRotinaLockDown = false;
+        somPasso = false;
+        somTiro = false;
+        viuPlayerAlgumaVez = false;
+        controleParaAtualizarPlayerPosicao = false;
+        controleParaMudarEntreAlertaOuCombate = false;
+
+        indiceDoBotaoMaisPerto = 0;
+
+        posicaoTiroPlayer = Vector2.zero;
+        posicaoUltimoLugarVisto = Vector2.zero;
+        posicaoAtualPlayer = Vector2.zero;
+
+        ResetarContadores();
+    }
+
+    #endregion
 }

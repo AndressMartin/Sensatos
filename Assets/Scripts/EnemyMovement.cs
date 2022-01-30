@@ -5,7 +5,6 @@ using UnityEngine;
 public class EnemyMovement : MonoBehaviour
 {
     //Componentes
-    private LockDown lockDown;
     private Enemy enemy;
     private Rigidbody2D rb;
     private IA_Enemy iA_Enemy;
@@ -21,7 +20,7 @@ public class EnemyMovement : MonoBehaviour
 
     //Variaveis de controle
 
-    [SerializeField] private Vector2 ultimaposicaoOrigem;
+    [SerializeField] private Vector2 ultimaPosicaoEnquantoFaziaRota;
     private int randomSpot;
     private int lastMoveSpot;
    
@@ -31,12 +30,12 @@ public class EnemyMovement : MonoBehaviour
 
     //Getters
     public Rigidbody2D GetRb => rb;
-    public Vector2 GetUltimaPosicaoOrigem => ultimaposicaoOrigem;
+    public Vector2 GetUltimaPosicaoOrigem => ultimaPosicaoEnquantoFaziaRota;
 
 
     public void ResetarVariaveisDeControle()
     {
-        ultimaposicaoOrigem = Vector3.zero;
+        ultimaPosicaoEnquantoFaziaRota = Vector3.zero;
         randomSpot = 0;
         lastMoveSpot = 0;
         velocidade = 2;
@@ -47,9 +46,8 @@ public class EnemyMovement : MonoBehaviour
         iA_Enemy = GetComponent<IA_Enemy>();
         rb = GetComponent<Rigidbody2D>();
         enemy = GetComponent<Enemy>();
-        lockDown = FindObjectOfType<LockDown>();
 
-        ultimaposicaoOrigem = new Vector3(transform.position.x, transform.position.y, transform.position.z);
+        ultimaPosicaoEnquantoFaziaRota = new Vector3(transform.position.x, transform.position.y, transform.position.z);
         randomSpot = 0;
 
         //Variaveis de controle
@@ -70,8 +68,6 @@ public class EnemyMovement : MonoBehaviour
 
 
 
-    ///-----------------------------------------------------------------------
-    ///tem uso mas verificar se pode melhorar%
     private void CollisionDirection()
     {
         velX = rb.velocity.x;
@@ -133,7 +129,7 @@ public class EnemyMovement : MonoBehaviour
             if (randomSpot != lastMoveSpot)
             {
                 lastMoveSpot = randomSpot;
-                ultimaposicaoOrigem = moveSpots[lastMoveSpot].position;
+                ultimaPosicaoEnquantoFaziaRota = moveSpots[lastMoveSpot].position;
             }
             else
             {
@@ -143,16 +139,11 @@ public class EnemyMovement : MonoBehaviour
                 }
             }
         }
-        else
-        {
-            iA_Enemy.stance = IA_Enemy.Stances.Patrolling;
-        }
+
     }
     public void VarrerFase()
     {
-        iA_Enemy.fazerMovimentoAlerta = IA_Enemy.FazerMovimentoAlerta.AndandoAte_UltimaPosicaoPlayer;
-        iA_Enemy.estado = IA_Enemy.Estado.Alerta;
-        iA_Enemy.stance = IA_Enemy.Stances.Patrolling;
+
 
         //coisas
         //fim da funcao
