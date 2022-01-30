@@ -137,7 +137,11 @@ public class Enemy : EntityModel
             enemyVision.Main();
 
             CadenciaTiro();
-        } 
+        }
+        if(morto)
+        {
+            enemyMovement.ZerarVelocidade();
+        }
     }
 
     private void Animar()

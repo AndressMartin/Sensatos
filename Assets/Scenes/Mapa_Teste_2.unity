@@ -1955,7 +1955,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6297625325533714494, guid: 6712e26531f27d54d88d74c08c419556, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -2.07
+      value: -0.51
       objectReference: {fileID: 0}
     - target: {fileID: 6297625325533714494, guid: 6712e26531f27d54d88d74c08c419556, type: 3}
       propertyPath: m_LocalPosition.z
@@ -2007,6 +2007,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6885532772316150975, guid: 6712e26531f27d54d88d74c08c419556, type: 3}
       propertyPath: estadoDeteccaoPlayer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6885532772316150975, guid: 6712e26531f27d54d88d74c08c419556, type: 3}
+      propertyPath: tempoEsquecerPlayerMax
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6885532772316150975, guid: 6712e26531f27d54d88d74c08c419556, type: 3}
+      propertyPath: tempoEntrarEmModoAlertaMax
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6885532772316150975, guid: 6712e26531f27d54d88d74c08c419556, type: 3}

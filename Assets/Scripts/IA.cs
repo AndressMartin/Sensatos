@@ -182,7 +182,7 @@ public class IA : MonoBehaviour
                 if(VerificarAndarAteAlvo(objectManagerScript.listaAlarmes[indiceDoBotaoMaisPerto].transform.position))
                 {
                     objectManagerScript.listaAlarmes[indiceDoBotaoMaisPerto].AtivarLockDown();
-                    FindObjectOfType<LockDownManager>().VerPlayer(posicaoUltimoLugarVisto);
+                    FindObjectOfType<LockDownManager>().AtivarLockDown(posicaoUltimoLugarVisto);
                     fazerRotinaLockDown = true;
                 }
                 break;

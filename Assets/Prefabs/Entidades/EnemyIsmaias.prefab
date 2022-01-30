@@ -294,6 +294,7 @@ GameObject:
   - component: {fileID: 1338069367}
   - component: {fileID: 6297625325533714480}
   - component: {fileID: 1338069364}
+  - component: {fileID: 1937635996}
   m_Layer: 3
   m_Name: EnemyIsmaias
   m_TagString: Enemy
@@ -348,20 +349,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a525aa220bdd30468363ee4123cf30b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inimigoEstados: 0
+  inimigoEstados: 1
   estadoDeteccaoPlayer: 0
-  tempoVerificarAreaLockdown: 0
-  tempoVerificarAreaLockdownMax: 0
-  tempoSeguirPlayerAposPerderDeVista: 0
-  tempoSeguirPlayerAposPerderDeVistaMax: 0
-  tempoParaEntrarEmCombateComPlayer: 0
-  tempoParaEntrarEmCombateComPlayerMax: 0
-  tempoVerificandoSomPassos: 0
-  tempoVerificandoSomPassosMax: 0
-  tempoVerificandoSomTiro: 0
-  tempoVerificandoSomTiroMax: 0
-  tempoVerificandoUltimaPosicaoPlayer: 0
-  tempoVerificandoUltimaPosicaoPlayerMax: 0
+  tempoEntrarEmModoAlertaMax: 3
+  tempoEsquecerPlayerMax: 5
+  tempoVerificandoUltimaPosicaoPlayerMax: 2
+  tempoVerificandoSomTiroMax: 4
+  tempoVerificandoSomPassosMax: 2
 --- !u!114 &6297625325533714492
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -374,7 +368,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 655295f42ef173d4d814621630d386c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  velocidade: 0
+  velocidade: 2
   moveSpots:
   - {fileID: 0}
   - {fileID: 0}
@@ -393,7 +387,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2587169484bc8a459d4281161b7e112, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  armaSlotTemporario: {fileID: 0}
+  armaSlotTemporario: {fileID: 11400000, guid: d7b87461518b6154884ad3ae22a317f3, type: 2}
 --- !u!114 &1338069366
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -479,6 +473,32 @@ SortingGroup:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!114 &1937635996
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6297625325533714485}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 791ac7d47ff6bef459ec42dbe04a796d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inimigoEstados: 0
+  estadoDeteccaoPlayer: 0
+  tempoVerificarAreaLockdown: 0
+  tempoVerificarAreaLockdownMax: 0
+  tempoSeguirPlayerAposPerderDeVista: 0
+  tempoSeguirPlayerAposPerderDeVistaMax: 0
+  tempoParaEntrarEmCombateComPlayer: 0
+  tempoParaEntrarEmCombateComPlayerMax: 0
+  tempoVerificandoSomPassos: 0
+  tempoVerificandoSomPassosMax: 0
+  tempoVerificandoSomTiro: 0
+  tempoVerificandoSomTiroMax: 0
+  tempoVerificandoUltimaPosicaoPlayer: 0
+  tempoVerificandoUltimaPosicaoPlayerMax: 0
 --- !u!1 &6297625326220625053
 GameObject:
   m_ObjectHideFlags: 0
@@ -527,8 +547,8 @@ MonoBehaviour:
   mask:
     serializedVersion: 2
     m_Bits: 64
-  pontoX: 5
-  pontoY: 5
+  pontoX: 8
+  pontoY: 8
   vendoPlayer: 0
   vendoPlayerCircular: 0
 --- !u!60 &6297625326220625048

@@ -10,7 +10,7 @@ public class LockDownManager : MonoBehaviour
         objectManagerScript = FindObjectOfType<ObjectManagerScript>();
 
     }
-  public void VerPlayer(Vector2 posicaoDoPlayer)
+  public void AtivarLockDown(Vector2 posicaoDoPlayer)
     {
         foreach (Enemy enemy in objectManagerScript.listaInimigos)
         {

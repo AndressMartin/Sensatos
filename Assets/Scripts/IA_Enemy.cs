@@ -7,55 +7,49 @@ public class IA_Enemy : MonoBehaviour
 {
 
     //Componentes
-    private Player player;
     private EnemyMovement enemyMovement;
     private Enemy enemy;
     private EnemyVisionScript enemyVisionScript;
     private ObjectManagerScript objectManagerScript;
 
-
     //Enun
-    enum InimigoEstados { AndandoAtePlayer, Patrulhar, VerificandoArea, AtacarPlayer, SomPassos, SomTiro, AndandoUltimaPosicaoPlayerConhecida, IndoAtivarLockDown , FicarParado };
+    enum InimigoEstados { AndandoAtePlayer, Patrulhar, AtacarPlayer, SomPassos, SomTiro, AndandoUltimaPosicaoPlayerConhecida, IndoAtivarLockDown , FicarParado , FazerRotinaLockdow };
     [SerializeField] InimigoEstados inimigoEstados;
 
     enum EstadoDeteccaoPlayer { NaoToVendoPlayer, DetectandoPlayer, playerDetectado };
     [SerializeField] EstadoDeteccaoPlayer estadoDeteccaoPlayer;
 
     //Variaveis controle
-    [SerializeField] bool vendoPlayerCircular;
-    [SerializeField] bool vendoPlayer;
-    [SerializeField] bool playerAreaAtaque;
-    [SerializeField] bool emLockDown;
-    [SerializeField] bool fazerRotinaLockDown;
-    [SerializeField] bool somTiro;
-    [SerializeField] bool somPasso;
-    [SerializeField] bool controleParaAtualizarPlayerPosicao;
-    [SerializeField] bool viuPlayerAlgumaVez;
-    [SerializeField] bool controleParaMudarEntreAlertaOuCombate;
-    [SerializeField] bool controleParaSairEntreAlertaOuCombate;
-    //------------------------
-    bool controladorModoAlertaPlayerTerminou;
-    [SerializeField]float tempoEntrarEmModoAlerta, tempoEntrarEmModoAlertaMax;
+    bool vendoPlayerCircular; //se esta vendo player pela visao redonda
+    bool vendoPlayer;
+    bool playerAreaAtaque;
+    bool emLockDown;
+    bool somTiro;
+    bool somPasso;
+    bool viuPlayerAlgumaVez;
+    bool controlodarEsqueciPlayer; //controla o contador para esquecer o player
+    bool vouApertarBotao;          //caso tenha visto player alguma vez e o perdeu de vista
+    bool fazerRotinaLockDown;
+    bool verifiqueiUltimaPosicaoJogador;
+    int indiceDoBotaoMaisPerto;
 
-    bool controlodarEsqueciPlayer;
-    [SerializeField] float tempoEsquecerPlayer, tempoEsquecerPlayerMax;
-
-    bool vouApertarBotao = false;
-
-    //-----------------------
-    [SerializeField] int indiceDoBotaoMaisPerto;
-
-    [SerializeField] Vector2 posicaoTiroPlayer;
-    [SerializeField] Vector2 posicaoUltimoLugarVisto;
-    [SerializeField] Vector2 posicaoAtualPlayer;
+    Vector2 posicaoTiroPlayer;
+    Vector2 posicaoUltimoLugarVisto;
+    Vector2 posicaoAtualPlayer;
 
     //Controladores
-     float tempoVerificarAreaLockdown, tempoVerificarAreaLockdownMax;
-     float tempoSeguirPlayerAposPerderDeVista, tempoSeguirPlayerAposPerderDeVistaMax;
-     float tempoParaEntrarEmCombateComPlayer, tempoParaEntrarEmCombateComPlayerMax;
-     float tempoVerificandoSomPassos, tempoVerificandoSomPassosMax;
-     float tempoVerificandoSomTiro, tempoVerificandoSomTiroMax;
-     float tempoVerificandoUltimaPosicaoPlayer, tempoVerificandoUltimaPosicaoPlayerMax;
+    float tempoEntrarEmModoAlerta;
+    float tempoEsquecerPlayer;
+    float tempoVerificandoUltimaPosicaoPlayer;
+    float tempoVerificandoSomTiro;
+    float tempoVerificandoSomPassos;
+
+    //Controladores Max
+    [SerializeField] float tempoEntrarEmModoAlertaMax;
+    [SerializeField] float tempoEsquecerPlayerMax;
+    [SerializeField] float tempoVerificandoUltimaPosicaoPlayerMax;
+    [SerializeField] float tempoVerificandoSomTiroMax;
+    [SerializeField] float tempoVerificandoSomPassosMax;
 
 
     void Start()
@@ -66,18 +60,19 @@ public class IA_Enemy : MonoBehaviour
         objectManagerScript = FindObjectOfType<ObjectManagerScript>();
 
         inimigoEstados = InimigoEstados.Patrulhar;
+        estadoDeteccaoPlayer = EstadoDeteccaoPlayer.NaoToVendoPlayer;
 
+        vendoPlayerCircular =false; 
         vendoPlayer = false;
         playerAreaAtaque = false;
         emLockDown = false;
-        fazerRotinaLockDown = false;
-        somPasso = false;
         somTiro = false;
-        controleParaAtualizarPlayerPosicao = true;
+        somPasso = false;
         viuPlayerAlgumaVez = false;
-        controleParaMudarEntreAlertaOuCombate = false;
-        controleParaSairEntreAlertaOuCombate = false;
-
+        controlodarEsqueciPlayer = false;
+        vouApertarBotao = false;
+        fazerRotinaLockDown = false;
+        verifiqueiUltimaPosicaoJogador = false;
 
         indiceDoBotaoMaisPerto = 0;
 
@@ -94,135 +89,67 @@ public class IA_Enemy : MonoBehaviour
     {
         ReferenciaVariaveisExternas();
 
-        /*if (!vendoPlayer)
-        {
-            estadoDeteccaoPlayer = EstadoDeteccaoPlayer.NaoToVendoPlayer;
-        }
-
-        if (viuPlayerAlgumaVez && !emLockDown && //caso não tenha entrado em lockDown,esteja vendo o player e esteja mais perto do botão do que do player
-            Vector2.Distance(transform.position, objectManagerScript.listaAlarmes[indiceDoBotaoMaisPerto].transform.position) < Vector2.Distance(transform.position, enemy.GetPlayer.transform.position))
-        {
-            inimigoEstados = InimigoEstados.IndoAtivarLockDown;
-        }
-
-        if (!vendoPlayer && !controleParaAtualizarPlayerPosicao) //caso tenha perdido o player de vista, por quanto tempo vai atualizar sua posicao
-        {
-            controleParaAtualizarPlayerPosicao = Contador(ref tempoSeguirPlayerAposPerderDeVista, tempoSeguirPlayerAposPerderDeVistaMax);
-            posicaoUltimoLugarVisto = posicaoAtualPlayer;
-        }
-
-        if (controleParaMudarEntreAlertaOuCombate && !vendoPlayer)//caso nao estja vendo o player mas ja tenha visto alguma vez
-        {
-            if (Contador(ref tempoParaEntrarEmCombateComPlayer, tempoParaEntrarEmCombateComPlayerMax)) // tempo Para Entrar em alerta // 
-            {
-                controleParaMudarEntreAlertaOuCombate = false;
-                estadoDeteccaoPlayer = EstadoDeteccaoPlayer.playerDetectado;
-            }
-            else
-            {
-                estadoDeteccaoPlayer = EstadoDeteccaoPlayer.playerDetectado;
-            }
-        }
-
-        if (playerAreaAtaque && estadoDeteccaoPlayer == EstadoDeteccaoPlayer.playerDetectado) // se player esta no range de ataque
-        {
-            inimigoEstados = InimigoEstados.AtacarPlayer;
-        }
-        else if (vendoPlayer) // se esta vendo o player
-        {
-            viuPlayerAlgumaVez = true;
-            controleParaMudarEntreAlertaOuCombate = true;
-            switch (estadoDeteccaoPlayer)
-            {
-                case EstadoDeteccaoPlayer.playerDetectado:
-                    inimigoEstados = InimigoEstados.AndandoAtePlayer;
-                    controleParaAtualizarPlayerPosicao = false;
-                    break;
-
-                case EstadoDeteccaoPlayer.Detectando:
-                    break;
-
-                case EstadoDeteccaoPlayer.NaoToVendoPlayer:
-                    estadoDeteccaoPlayer = EstadoDeteccaoPlayer.Detectando;
-                    break;
-
-            }
-        }
-        else if (somTiro || somPasso) // se ouviu algum passo ou tiro
-        {
-            if (somTiro)
-            {
-                inimigoEstados = InimigoEstados.SomTiro;
-            }
-            else if (somPasso)
-            {
-                inimigoEstados = InimigoEstados.SomPassos;
-            }
-        }
-        else if (fazerRotinaLockDown) //se chamaram lockdown
-        {
-            if (Vector2.Distance(transform.position, posicaoUltimoLugarVisto) > 0.5)
-            {
-                inimigoEstados = InimigoEstados.AndandoUltimaPosicaoPlayerConhecida;
-            }
-            else //caso chegue na area em que o jogador estava
-            {
-                if (VerificandoArea(ref tempoVerificarAreaLockdown, tempoVerificarAreaLockdownMax))
-                {
-                    inimigoEstados = InimigoEstados.Patrulhar;
-                }
-            }
-        }*/
-
+        #region MaquinaDeEstados
         switch (estadoDeteccaoPlayer)
         {
 
             case EstadoDeteccaoPlayer.NaoToVendoPlayer://caso não saiba Onde O player esta
 
-                bool ouvindoAlgo = somTiro || somPasso ? true : false;
+                bool ouvindoSom = somTiro || somPasso ? true : false;
 
                 if (vendoPlayer)//Caso tenha visto o player
                 {
                     enemyMovement.ZerarVelocidade();
-                    controladorModoAlertaPlayerTerminou = false;
                     controlodarEsqueciPlayer = false;
                     estadoDeteccaoPlayer = EstadoDeteccaoPlayer.DetectandoPlayer;
                 }
                 else
                 {
-                    if (viuPlayerAlgumaVez && !emLockDown )    //caso tenha visto o player alguma vez, nao esteja em lockDown e esteja mais perto do botao de lockdown do que o player           
+                    if (viuPlayerAlgumaVez && !emLockDown && !vouApertarBotao )    //caso tenha visto o player alguma vez, nao esteja em lockDown e esteja mais perto do botao de lockdown do que o player           
                     {
                         vouApertarBotao = true;
                         inimigoEstados = InimigoEstados.IndoAtivarLockDown;
                     }
 
-                    else if(ouvindoAlgo && !vouApertarBotao)   //caso tenha ouvido algo
+                    else if(ouvindoSom && !vouApertarBotao)   //caso tenha ouvido algo
                     {
-                        if(somPasso)
-                        {
-                            inimigoEstados = InimigoEstados.SomPassos;
-                        }
-                        else if(somTiro)
+                        if(somTiro)
                         {
                             inimigoEstados = InimigoEstados.SomTiro;
                         }
+                        else if(somPasso)
+                        {
+                            inimigoEstados = InimigoEstados.SomPassos;
+                        }
                     }
-                    else if (!ouvindoAlgo && !vouApertarBotao)
+
+                    else if (!ouvindoSom && fazerRotinaLockDown) // caso receba que é pra fazer a rotina de lockdown
+                    {
+                        Debug.Log("entrei aqui");
+                        inimigoEstados = InimigoEstados.FazerRotinaLockdow;
+                    }
+
+                    else if (!ouvindoSom && !verifiqueiUltimaPosicaoJogador && viuPlayerAlgumaVez && !vouApertarBotao)
+                    {
+                        inimigoEstados = InimigoEstados.AndandoUltimaPosicaoPlayerConhecida;
+                    }
+
+                    else if (!ouvindoSom && !vouApertarBotao) // caso nao receba nada
                     {
                         inimigoEstados = InimigoEstados.Patrulhar;
                     }
                 }
                 break;
 
-            case EstadoDeteccaoPlayer.DetectandoPlayer:
+            case EstadoDeteccaoPlayer.DetectandoPlayer: 
                 if(vendoPlayer && !controlodarEsqueciPlayer) //se estiver no estado de detecao e ver o player e o contador for falso soma na detecao
                 {
                     if (Contador(ref tempoEntrarEmModoAlerta, tempoEntrarEmModoAlertaMax))
                     {
-                        controladorModoAlertaPlayerTerminou = true;
+                        verifiqueiUltimaPosicaoJogador = false;
                         viuPlayerAlgumaVez = true;
                         estadoDeteccaoPlayer = EstadoDeteccaoPlayer.playerDetectado;
-                        Debug.Log("playerDetectado");            
+                        //Debug.Log("playerDetectado");            
                     }
                     else
                     {
@@ -234,7 +161,7 @@ public class IA_Enemy : MonoBehaviour
                     if(ContadorInverso(ref tempoEntrarEmModoAlerta, tempoEntrarEmModoAlertaMax))
                     {
                         estadoDeteccaoPlayer = EstadoDeteccaoPlayer.NaoToVendoPlayer;
-                        Debug.Log("Achei ter visto um player,me enganei");
+                        //Debug.Log("Achei ter visto um player,me enganei");
                     }
                     else
                     {
@@ -254,92 +181,103 @@ public class IA_Enemy : MonoBehaviour
                         {
                             controlodarEsqueciPlayer = true;
                             estadoDeteccaoPlayer = EstadoDeteccaoPlayer.NaoToVendoPlayer;
-                            Debug.Log("Perdi o player De vista indo na sua ultima posicao");
+                            //Debug.Log("Perdi o player De vista indo na sua ultima posicao");
                         }
                     }
                     else // vendo player aumentar a detecao e verificar se esta na zona de ataque
                     {
+                        posicaoUltimoLugarVisto = posicaoAtualPlayer;
                         ContadorInverso(ref tempoEsquecerPlayer, tempoEsquecerPlayerMax);
 
                         if (playerAreaAtaque)
                         {
-                            Debug.Log("ele ta perto de min posso atirar");
+                            //Debug.Log("ele ta perto de min posso atirar");
                             inimigoEstados = InimigoEstados.AtacarPlayer;
                         }
                         else
                         {
-                            Debug.Log("Ele ta longe de min nao posso Atacar");
+                            //Debug.Log("Ele ta longe de min nao posso Atacar");
                             inimigoEstados = InimigoEstados.AndandoAtePlayer;
                         }
                     }
                 }
                 break;
         }
+        #endregion
 
         switch (inimigoEstados)
         {
-            case InimigoEstados.AtacarPlayer:
-
-                break;
-
             case InimigoEstados.AndandoAtePlayer:
+                Mover(posicaoAtualPlayer);
                 break;
+
             case InimigoEstados.Patrulhar:
+                enemyMovement.Patrulhar();
                 break;
-            case InimigoEstados.VerificandoArea:
-                break;       
+
+            case InimigoEstados.AtacarPlayer:
+                enemy.Atirar();
+                break;
+
             case InimigoEstados.SomPassos:
+                if(FuncVerificarArea(ref tempoVerificandoSomPassos,tempoVerificandoSomPassosMax))
+                {
+                    somPasso = false;
+                    //Debug.Log("ouvi alguns passos");
+                }
                 break;
+
             case InimigoEstados.SomTiro:
+                if (FuncaoIrAteLugarVerificarArea(posicaoTiroPlayer, ref tempoVerificandoSomTiro, tempoVerificandoSomTiroMax))
+                {
+                    somTiro = false;
+                    //Debug.Log("pronto ja fui e olhei o som do tiro,");
+                }
                 break;
+
             case InimigoEstados.AndandoUltimaPosicaoPlayerConhecida:
+                if(FuncaoIrAteLugarVerificarArea(posicaoUltimoLugarVisto,ref tempoVerificandoUltimaPosicaoPlayer, tempoVerificandoUltimaPosicaoPlayerMax))
+                {
+                    verifiqueiUltimaPosicaoJogador = true;
+                    //Debug.Log("pronto ja fui e olhei,");
+                }
                 break;
+
             case InimigoEstados.IndoAtivarLockDown:
+                if(VerificarChegouAteAlvo(objectManagerScript.listaAlarmes[indiceDoBotaoMaisPerto].transform.position))
+                {
+                    AtivarLockDown();
+                }
                 break;
+
+            case InimigoEstados.FicarParado:
+
+                enemyMovement.ZerarVelocidade();
+                break;
+
+            case InimigoEstados.FazerRotinaLockdow:
+                if(RotinaLockdow())
+                {
+                    fazerRotinaLockDown = false;
+                }
+                break;
+
             default:
                 break;
         }
+    }
+    void Estados()
+    {
 
-        /*switch (inimigoEstados)
+    }
+    bool RotinaLockdow()
+    {
+        if( VerificarChegouAteAlvo(posicaoUltimoLugarVisto))
         {
-            case InimigoEstados.AndandoAtePlayer:
-                VerificarAndarAteAlvo(posicaoAtualPlayer);
-
-                break;
-
-            case InimigoEstados.Patrulhar:
-                if(estadoDeteccaoPlayer == EstadoDeteccaoPlayer.NaoToVendoPlayer)
-                Patrulhar();
-
-                break;
-            case InimigoEstados.AtacarPlayer:
-                Atacar();
-                break;
-
-            case InimigoEstados.SomPassos:
-                FuncVerificarArea(ref tempoVerificandoSomPassos, tempoVerificandoSomPassosMax, InimigoEstados.Patrulhar);
-                break;
-
-            case InimigoEstados.SomTiro:
-                FuncaoIrAteLugarVerificarArea(posicaoTiroPlayer, tempoVerificandoSomTiro, tempoVerificandoSomTiroMax, InimigoEstados.Patrulhar);
-                break;
-
-            case InimigoEstados.AndandoUltimaPosicaoPlayerConhecida:
-                FuncaoIrAteLugarVerificarArea(posicaoUltimoLugarVisto, tempoVerificandoUltimaPosicaoPlayer, tempoVerificandoUltimaPosicaoPlayerMax, InimigoEstados.Patrulhar);
-                break;
-            case InimigoEstados.IndoAtivarLockDown:
-                if (VerificarAndarAteAlvo(objectManagerScript.listaAlarmes[indiceDoBotaoMaisPerto].transform.position))
-                {
-                    objectManagerScript.listaAlarmes[indiceDoBotaoMaisPerto].AtivarLockDown();
-                    FindObjectOfType<LockDownManager>().VerPlayer(posicaoUltimoLugarVisto);
-                    fazerRotinaLockDown = true;
-                }
-
-                break;
-
-            default:
-                break;
-        }*/
+            return true;
+        }
+        return false;
+        //fazer a rotina lockdown
     }
     void Patrulhar()
     {
@@ -353,54 +291,42 @@ public class IA_Enemy : MonoBehaviour
     {
         enemyMovement.Movimentar(enemyMovement.calcMovimemto(_alvo));
     }
-    void ReferenciaVariaveisExternas()
+    void AtivarLockDown()
     {
-        vendoPlayer = enemyVisionScript.GetVendoPlayer;
-        vendoPlayerCircular = enemyVisionScript.GetVendoPlayerCircular;
-        playerAreaAtaque = enemy.playerOnAttackRange;
-        posicaoAtualPlayer = enemy.GetPlayer.transform.position;
-        indiceDoBotaoMaisPerto = RetornarIndiceBotaoLockDownMaisPerto();
+        vouApertarBotao = false;
+        objectManagerScript.listaAlarmes[indiceDoBotaoMaisPerto].AtivarLockDown();
+        FindObjectOfType<LockDownManager>().AtivarLockDown(posicaoUltimoLugarVisto);
     }
-
+    
 
     #region IrAteLugarVerificarArea
-    void FuncaoIrAteLugarVerificarArea(Vector2 posicaoAlvo, float tempo, float tempoMax, InimigoEstados estadoQueVaiFicarNoFim)
+    bool FuncaoIrAteLugarVerificarArea(Vector2 posicaoAlvo,ref float tempo, float tempoMax) // func que verifica se chegou ate o ponto e retorna se ja verificou a area
     {
-        if (VerificarAndarAteAlvo(posicaoAlvo))
+        if (VerificarChegouAteAlvo(posicaoAlvo))
         {
-            FuncVerificarArea(ref tempo, tempoMax, estadoQueVaiFicarNoFim);
+            return FuncVerificarArea(ref tempo, tempoMax);            
         }
+        return false;
     }
-    void FuncVerificarArea(ref float tempo, float tempoMax, InimigoEstados estadoQueVaiFicarNoFim)
+    bool FuncVerificarArea(ref float tempo, float tempoMax) // func que retorna se terminou de verificar a area
     {
-        if (VerificandoArea(ref tempo, tempoMax))
-        {
-            inimigoEstados = estadoQueVaiFicarNoFim;
-        }
+        //Realmente Verificar a area
+        //enemyMovement.ZerarVelocidade();
+        return Contador(ref tempo, tempoMax);
     }
-    bool VerificarAndarAteAlvo(Vector2 alvo)
+
+    bool VerificarChegouAteAlvo(Vector2 alvo)
     {
         if (Vector2.Distance(transform.position, alvo) > 0.5)
         {
             Mover(alvo);
+            return false;//se chegou retorna Verdadeiro
+        }
+        else
+        {
             return true;
         }
-        return false;
     }
-    bool VerificandoArea(ref float tempo, float tempoMax)
-    {
-        inimigoEstados = InimigoEstados.VerificandoArea;
-        if(Contador(ref tempo, tempoMax))
-        {
-            inimigoEstados = InimigoEstados.Patrulhar;
-            Debug.Log("aqu2asi");
-            return Contador(ref tempo, tempoMax);
-        }
-        Debug.Log("Lá");
-
-        return false;
-    }
-
     #endregion
 
     bool Contador(ref float tempo, float tempoMax)
@@ -442,24 +368,33 @@ public class IA_Enemy : MonoBehaviour
         return indice;
     }
 
+
     #region Receber VariaveisExternas
+    void ReferenciaVariaveisExternas()//variaves de controle que tem que serem pegas a todo frame
+    {
+        vendoPlayer = enemyVisionScript.GetVendoPlayer;
+        vendoPlayerCircular = enemyVisionScript.GetVendoPlayerCircular;
+        playerAreaAtaque = enemy.playerOnAttackRange;
+        posicaoAtualPlayer = enemy.GetPlayer.transform.position;
+        indiceDoBotaoMaisPerto = RetornarIndiceBotaoLockDownMaisPerto();
+    }
     public void ReceberLockDown(Vector2 _posicaoPlayer)
     {
-        emLockDown = true;
+        Debug.Log("recebi o lockdown " + transform.position);
         fazerRotinaLockDown = true;
+        emLockDown = true;
         posicaoUltimoLugarVisto = _posicaoPlayer;
-        //mudar Variaveis conforme LockDown
     }
     public void ReceberSom(Vector2 posicao, bool tiro)
     {
         if (tiro)
         {
-            inimigoEstados = InimigoEstados.SomTiro;
+            somTiro = true;
             posicaoTiroPlayer = posicao;
         }
         else
         {
-            inimigoEstados = InimigoEstados.SomPassos;
+            somPasso = true;
         }
     }
 
@@ -470,30 +405,22 @@ public class IA_Enemy : MonoBehaviour
     {
         ResetarVariaveis();
     }
-    void ResetarContadores()
-    {
-        tempoVerificarAreaLockdown = 0;
-        tempoSeguirPlayerAposPerderDeVista = 0;
-        tempoParaEntrarEmCombateComPlayer = 0;
-        tempoVerificandoSomPassos = 0;
-        tempoVerificandoSomTiro = 0;
-        tempoVerificandoUltimaPosicaoPlayer = 0;
-    }
     void ResetarVariaveis()
     {
         inimigoEstados = InimigoEstados.Patrulhar;
+        estadoDeteccaoPlayer = EstadoDeteccaoPlayer.NaoToVendoPlayer;
 
+        vendoPlayerCircular = false;
         vendoPlayer = false;
         playerAreaAtaque = false;
         emLockDown = false;
-        fazerRotinaLockDown = false;
-        somPasso = false;
         somTiro = false;
+        somPasso = false;
         viuPlayerAlgumaVez = false;
-        controleParaAtualizarPlayerPosicao = false;
-        controleParaMudarEntreAlertaOuCombate = false;
-        controleParaSairEntreAlertaOuCombate = false;
-
+        controlodarEsqueciPlayer = false;
+        vouApertarBotao = false;
+        fazerRotinaLockDown = false;
+        verifiqueiUltimaPosicaoJogador = false;
 
         indiceDoBotaoMaisPerto = 0;
 
@@ -502,6 +429,14 @@ public class IA_Enemy : MonoBehaviour
         posicaoAtualPlayer = Vector2.zero;
 
         ResetarContadores();
+    }
+    void ResetarContadores()
+    {
+        tempoEntrarEmModoAlerta = 0;
+        tempoEsquecerPlayer = 0;
+        tempoVerificandoUltimaPosicaoPlayer = 0;
+        tempoVerificandoSomTiro = 0;
+        tempoVerificandoSomPassos = 0;
     }
 
     #endregion
