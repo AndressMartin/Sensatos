@@ -5,13 +5,28 @@ using UnityEngine;
 public class LockDownManager : MonoBehaviour
 {
     ObjectManagerScript objectManagerScript;
+    [SerializeField] float contadorTempoLockdown, contadorTempoLockdownMax;
     void Start()
     {
         objectManagerScript = FindObjectOfType<ObjectManagerScript>();
-
     }
-  public void AtivarLockDown(Vector2 posicaoDoPlayer)
+
+    public void ContadorLockdown()
     {
+        contadorTempoLockdown = contadorTempoLockdownMax;
+    }
+    public void ContadorLockdownInverso()
+    {
+        contadorTempoLockdown -= Time.deltaTime;
+        if (contadorTempoLockdown <= 0)
+        {
+            contadorTempoLockdown = 0;
+            DesativaLockDown();
+        }
+    }
+    public void AtivarLockDown(Vector2 posicaoDoPlayer)
+    {
+        contadorTempoLockdown = contadorTempoLockdownMax;
         foreach (Enemy enemy in objectManagerScript.listaInimigos)
         {
             enemy.GetComponent<IA_Enemy>().ReceberLockDown(posicaoDoPlayer);
@@ -24,6 +39,10 @@ public class LockDownManager : MonoBehaviour
     }
     public void DesativaLockDown()
     {
+        foreach (Enemy enemy in objectManagerScript.listaInimigos)
+        {
+            enemy.GetComponent<IA_Enemy>().DesativarLockDown();
+        }
         DestrancarPortas();
     }
 

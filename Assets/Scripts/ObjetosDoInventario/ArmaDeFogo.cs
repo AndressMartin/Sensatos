@@ -33,7 +33,7 @@ public class ArmaDeFogo : ScriptableObject
     public bool RapidFire => rapidFire;
     public float RaioDoSomDoTiro => raioDoSomDoTiro;
     public float MunicaoCartucho => municaoCartucho;
-    public float Municao => municao;
+    public int Municao => municao;
     public Status GetStatus => GetStatusMetodo();
     public List<Melhoria> Melhorias => melhorias;
 

@@ -17,6 +17,8 @@ public class EnemyVisionScript : MonoBehaviour
     //variaveis controle
     [SerializeField] bool vendoPlayer;
     [SerializeField] bool vendoPlayerCircular;
+    [SerializeField] float tempo;
+    [SerializeField] float DeQuantoEmQuantoSegundos;
 
     //componente
     private Enemy enemy;
@@ -34,6 +36,7 @@ public class EnemyVisionScript : MonoBehaviour
         pontoYMax = pontoY;
 
         visaoCircularEnemy = GetComponentInChildren<VisaoCircularEnemy>();
+        //Debug.Log("tenho "+visaoCircularEnemy);
         polygonCollider = GetComponent<PolygonCollider2D>();
         enemy = GetComponentInParent<Enemy>();
  
@@ -49,25 +52,31 @@ public class EnemyVisionScript : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        EntityModel entityModelTemp = collision.gameObject.GetComponent<EntityModel>();
+        Raycast(collision);
+    }
+    void Raycast(Collider2D collision)
+    {
+        tempo+=Time.deltaTime;
 
-        if (entityModelTemp != null)
+        if (tempo >= DeQuantoEmQuantoSegundos)
         {
-            //Debug.Log(entityModelTemp.transform.name);
-            float wDif = 0.0F;
-            RaycastHit2D hits;
-            hits = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y), new Vector2(entityModelTemp.transform.position.x - transform.position.x, entityModelTemp.transform.position.y - transform.position.y), 11000, mask.value);
-
-            if (hits)//caso tenha acertado algo
+            EntityModel entityModelTemp = collision.gameObject.GetComponent<EntityModel>();
+            if (entityModelTemp != null)
             {
-                Debug.DrawRay(new Vector2(transform.position.x, transform.position.y), new Vector2(hits.transform.position.x - transform.position.x, hits.transform.position.y - transform.position.y), Color.red);
+                RaycastHit2D hits;
+                hits = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y),
+                    new Vector2(entityModelTemp.transform.position.x - transform.position.x, entityModelTemp.transform.position.y - transform.position.y), pontoX, mask.value);
 
-                if (hits.transform.GetComponent<Player>() != null)//caso atinga o player o raio
+                if (hits)//caso tenha acertado algo
                 {
-                    vendoPlayer = true;
-                   
+                    if (hits.transform.GetComponent<Player>() != null)//caso atinga o player o raio
+                    {
+                        Debug.DrawRay(new Vector2(transform.position.x, transform.position.y), new Vector2(hits.transform.position.x - transform.position.x, hits.transform.position.y - transform.position.y), Color.red);
+                        vendoPlayer = true;
+                    }
                 }
             }
+            tempo = 0;
         }
     }
     private void OnTriggerExit2D(Collider2D collision)

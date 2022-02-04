@@ -8,6 +8,8 @@ public class Enemy : EntityModel
     private ObjectManagerScript objectManager;
     private PauseManagerScript pauseManager;
     private BulletManagerScript bulletManager;
+    private EnemyManager enemyManager;
+    private LockDownManager lockDownManager;
 
     //Componentes
     private PontaArmaScript pontaArma;
@@ -42,24 +44,40 @@ public class Enemy : EntityModel
     //Getters
     public Estado GetEstado => estado;
     public Player GetPlayer => player;
+    public EnemyManager GetEnemyManager => enemyManager;
+    public LockDownManager GetLockDownManager => lockDownManager; 
+    public InventarioEnemy GetInventarioEnemy => inventario;
+    public EnemyMovement GetEnemyMovement => enemyMovement;
 
+    bool fuiSpawnado;
+
+    private void Awake()
+    {
+        
+    }
     void Start()
     {
         //Managers
         objectManager = FindObjectOfType<ObjectManagerScript>();
         pauseManager = FindObjectOfType<PauseManagerScript>();
         bulletManager = FindObjectOfType<BulletManagerScript>();
+        enemyManager = FindObjectOfType<EnemyManager>();
+        lockDownManager = FindObjectOfType<LockDownManager>();
 
         //Se adicionar a lista de inimigos do ObjectManager
         objectManager.adicionarAosInimigos(this);
+        enemyManager.AddToLista(enemyManager.GetEnemies, this);
 
         //Componentes
-        enemyVision = GetComponentInChildren<EnemyVisionScript>();
-        enemyMovement = GetComponent<EnemyMovement>();
-        inventario = GetComponent<InventarioEnemy>();
+        if (!fuiSpawnado) 
+        {
+            enemyMovement = GetComponent<EnemyMovement>();
+            iA_Enemy = GetComponent<IA_Enemy>();
+        }
         pontaArma = GetComponentInChildren<PontaArmaScript>();
+        inventario = GetComponent<InventarioEnemy>();
+        enemyVision = GetComponentInChildren<EnemyVisionScript>();
         animacao = GetComponent<AnimacaoJogador>();
-        iA_Enemy=GetComponent<IA_Enemy>();
 
         player = FindObjectOfType<Player>();
 
@@ -75,6 +93,7 @@ public class Enemy : EntityModel
         knockBackTrigger = 0;
         knockBackTriggerMax = 10;
 
+
         SetRespawnInicial();
     }
 
@@ -84,6 +103,17 @@ public class Enemy : EntityModel
         {
             AllEnemySubClass();
         }
+    }
+
+    public void SerSpawnado(List<Transform> _movesSpots,ArmaDeFogo _armaDeFogo)
+    {
+        enemyMovement = GetComponent<EnemyMovement>();
+        iA_Enemy = GetComponent<IA_Enemy>();
+
+        enemyMovement.ReceberMoveSpots(_movesSpots);
+        iA_Enemy.SerSpawnado(_armaDeFogo.GetStatus.MunicaoMaxCartucho);
+
+        fuiSpawnado = true;
     }
    
 
@@ -173,7 +203,7 @@ public class Enemy : EntityModel
         estado = Estado.Normal;
     }
 
-    public void Atirar()
+    public bool Atirar()
     {
         TrocarDirecaoAtaque(player.transform.position);
 
@@ -183,7 +213,9 @@ public class Enemy : EntityModel
             animacao.AtualizarArmaBracos(inventario.ArmaSlot.NomeAnimacao);
 
             SetCadenciaTiro(inventario.ArmaSlot.GetStatus.CadenciaDosTiros);
+            return true;
         }   
+        return false;
     }
 
     private Vector2 DirecaoPlayer(Player player)
@@ -197,6 +229,8 @@ public class Enemy : EntityModel
 
     public void Die()
     {
+        enemyManager.RemoveToLista(enemyManager.GetEnemiesQueVemPlayer, this);
+
         morto = true;
         enemyMovement.ZerarVelocidade();
         Debug.Log("to morto");
@@ -229,6 +263,7 @@ public class Enemy : EntityModel
             else
             {
                 vida -= _dano;
+                iA_Enemy.ReceberDano();
 
                 knockBackTrigger += _knockBackTrigger;
 

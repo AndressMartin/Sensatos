@@ -14,7 +14,10 @@ public class VisaoCircularEnemy : MonoBehaviour
 
     private void Start()
     {
-        circleCollider2D = GetComponent<CircleCollider2D>();
+        if (circleCollider2D == null)
+        {
+            circleCollider2D = GetComponent<CircleCollider2D>();
+        }
     }
     private void OnTriggerStay2D(Collider2D collision)
     {
@@ -35,7 +38,9 @@ public class VisaoCircularEnemy : MonoBehaviour
     public void ValorRaioInicial(float _raio)
     {
         raioOg = _raio;
+        circleCollider2D = GetComponent<CircleCollider2D>();
         circleCollider2D.radius = raioOg;
+
     }
     public void MudarRaio()
     {

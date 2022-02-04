@@ -20,7 +20,7 @@ public class EnemyMovement : MonoBehaviour
 
     //Variaveis de controle
 
-    [SerializeField] private Vector2 ultimaPosicaoEnquantoFaziaRota;
+    private Vector2 ultimaPosicaoEnquantoFaziaRota;
     private int randomSpot;
     private int lastMoveSpot;
    
@@ -63,10 +63,6 @@ public class EnemyMovement : MonoBehaviour
             KnockBackContador();
         }
     }
-
-
-
-
 
     private void CollisionDirection()
     {
@@ -167,6 +163,11 @@ public class EnemyMovement : MonoBehaviour
     public void ZerarVelocidade()
     {
         rb.velocity = Vector2.zero;
+    }
+    public void ReceberMoveSpots(List<Transform> _moveSpots)
+    {
+        moveSpots.Clear();
+        moveSpots = _moveSpots;
     }
 
 }
