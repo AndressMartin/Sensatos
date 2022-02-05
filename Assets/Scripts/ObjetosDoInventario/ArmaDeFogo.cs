@@ -32,10 +32,11 @@ public class ArmaDeFogo : ScriptableObject
     public string Descricao => descricao;
     public bool RapidFire => rapidFire;
     public float RaioDoSomDoTiro => raioDoSomDoTiro;
-    public float MunicaoCartucho => municaoCartucho;
+    public int MunicaoCartucho => municaoCartucho;
     public int Municao => municao;
-    public Status GetStatus => GetStatusMetodo();
+    public int NivelMelhoria => nivelMelhoria;
     public List<Melhoria> Melhorias => melhorias;
+    public Status GetStatus => GetStatusMetodo();
 
     public void Atirar(EntityModel objQueChamou, BulletManagerScript bulletManager, Vector3 posicao, Vector2 direcao, EntityModel.Alvo alvo)
     {
