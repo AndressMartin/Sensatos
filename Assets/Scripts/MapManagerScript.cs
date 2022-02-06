@@ -6,12 +6,11 @@ public class MapManagerScript : MonoBehaviour
 {
     void Start()
     {
-        StartCoroutine(AtualizarPosicaoCercas());
+        AtualizarPosicaoCercas();
     }
 
-    private IEnumerator AtualizarPosicaoCercas()
+    private void AtualizarPosicaoCercas()
     {
-        yield return null; //Aguarda uma frame para todas as cercas poderem usar o metodo Start
         Cerca[] cercas = FindObjectsOfType<Cerca>(); //Pega todas as cercas na cena, e usado este metodo pois nao ha uma lista de cercas no ObjectManager
         
         foreach (Cerca cerca in cercas)

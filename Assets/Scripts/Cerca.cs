@@ -21,6 +21,8 @@ public class Cerca : ParedeModel
     public enum Posicao { Meio, Esquerda, Direita, Vertical}
 
     //Variaveis
+    private bool iniciado = false;
+
     [SerializeField] private string nome;
     [SerializeField] private Tipo tipo;
     [SerializeField] private Direcao direcao;
@@ -37,6 +39,16 @@ public class Cerca : ParedeModel
     // Start is called before the first frame update
     void Start()
     {
+        Iniciar();
+    }
+
+    private void Iniciar()
+    {
+        if(iniciado == true)
+        {
+            return;
+        }
+
         //Managers
         objectManager = FindObjectOfType<ObjectManagerScript>();
 
@@ -70,6 +82,8 @@ public class Cerca : ParedeModel
         }
 
         SetRespawn();
+
+        iniciado = true;
     }
 
     public override void SetRespawn()
@@ -167,6 +181,8 @@ public class Cerca : ParedeModel
 
     public void ArrumarPosicao(Cerca[] cercas)
     {
+        Iniciar();
+
         bool colisaoEsquerda, colisaoDireita;
         colisaoEsquerda = false;
         colisaoDireita = false;
