@@ -7,7 +7,7 @@ public class EnemyMovement : MonoBehaviour
     //Componentes
     private Enemy enemy;
     private Rigidbody2D rb;
-    private IA_Enemy iA_Enemy;
+    private IA_Enemy_Basico iA_Enemy;
 
     //Variaveis
     [SerializeField] private int velocidade;
@@ -43,7 +43,7 @@ public class EnemyMovement : MonoBehaviour
 
     private void Start()
     {
-        iA_Enemy = GetComponent<IA_Enemy>();
+        iA_Enemy = GetComponent<IA_Enemy_Basico>();
         rb = GetComponent<Rigidbody2D>();
         enemy = GetComponent<Enemy>();
 

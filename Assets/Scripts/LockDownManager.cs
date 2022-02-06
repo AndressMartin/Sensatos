@@ -29,7 +29,7 @@ public class LockDownManager : MonoBehaviour
         contadorTempoLockdown = contadorTempoLockdownMax;
         foreach (Enemy enemy in objectManagerScript.listaInimigos)
         {
-            enemy.GetComponent<IA_Enemy>().ReceberLockDown(posicaoDoPlayer);
+            enemy.GetComponent<IA_Enemy_Basico>().ReceberLockDown(posicaoDoPlayer);
         }
         TrancarPortas();
     }
@@ -41,7 +41,7 @@ public class LockDownManager : MonoBehaviour
     {
         foreach (Enemy enemy in objectManagerScript.listaInimigos)
         {
-            enemy.GetComponent<IA_Enemy>().DesativarLockDown();
+            enemy.GetComponent<IA_Enemy_Basico>().DesativarLockDown();
         }
         DestrancarPortas();
     }

@@ -17,7 +17,7 @@ public class Enemy : EntityModel
     private InventarioEnemy inventario;
     private EnemyMovement enemyMovement;
     private EnemyVisionScript enemyVision;
-    private IA_Enemy iA_Enemy;
+    private IA_Enemy_Basico iA_Enemy;
     private Player player;
 
     //Variaveis
@@ -72,7 +72,7 @@ public class Enemy : EntityModel
         if (!fuiSpawnado) 
         {
             enemyMovement = GetComponent<EnemyMovement>();
-            iA_Enemy = GetComponent<IA_Enemy>();
+            iA_Enemy = GetComponent<IA_Enemy_Basico>();
         }
         pontaArma = GetComponentInChildren<PontaArmaScript>();
         inventario = GetComponent<InventarioEnemy>();
@@ -108,7 +108,7 @@ public class Enemy : EntityModel
     public void SerSpawnado(List<Transform> _movesSpots,ArmaDeFogo _armaDeFogo)
     {
         enemyMovement = GetComponent<EnemyMovement>();
-        iA_Enemy = GetComponent<IA_Enemy>();
+        iA_Enemy = GetComponent<IA_Enemy_Basico>();
 
         enemyMovement.ReceberMoveSpots(_movesSpots);
         iA_Enemy.SerSpawnado(_armaDeFogo.GetStatus.MunicaoMaxCartucho);
