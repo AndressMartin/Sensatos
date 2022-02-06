@@ -17,6 +17,24 @@ public class ExplainPanel : MonoBehaviour
         nametxt.text = element.Nome;
         description.text = element.Descricao;
     }
+
+    public void CheckIfFlip(RectTransform optionsPanel)
+    {
+        var centerOfScreen = Screen.width * .5f;
+        var pos = GetComponent<RectTransform>().position;
+        //Está na parte esquerda da tela
+        if (optionsPanel.position.x <= centerOfScreen && pos.x <= centerOfScreen)
+        {
+            Debug.LogWarning("FLIP!!!");
+            GetComponent<RectTransform>().position = new Vector3(pos.x + centerOfScreen, pos.y, pos.z);
+        }
+        //Está na parte direita da tela
+        else if (optionsPanel.position.x > centerOfScreen && pos.x > centerOfScreen)
+        {
+            Debug.LogWarning("FLIP!!!");
+            GetComponent<RectTransform>().position = new Vector3(pos.x + centerOfScreen*-1, pos.y, pos.z);
+        }
+    }
 }
 
 public class melhoriaUI

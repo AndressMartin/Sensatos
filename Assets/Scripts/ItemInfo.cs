@@ -15,15 +15,15 @@ public class ItemInfo : InfoScreen
         base.OpenScreen();
         if (transform.GetChild(0).gameObject.activeSelf) UpdateExplainPanel(objectThatCalled);
         optionsPanel.ChangePositionRelativeToUIElement(objectThatCalled.GetComponent<RectTransform>());
+        explainPanel.CheckIfFlip(objectThatCalled.GetComponent<RectTransform>());
     }
     // Update is called once per frame
     void Update()
     {
         Debug.Log(transform.GetChild(0).gameObject.activeSelf);
-        if (transform.GetChild(0).gameObject.activeSelf)
-        {
-            UpdateExplainPanel(objectThatCalled);
-        }
+        if (!transform.GetChild(0).gameObject.activeSelf) return;
+        if (Input.GetAxisRaw("Vertical") == 0) return;
+        UpdateExplainPanel(objectThatCalled);
     }
 
     public void Usar()

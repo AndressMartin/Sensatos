@@ -4,11 +4,9 @@ using UnityEngine;
 
 public class OptionsPanel : MonoBehaviour
 {
-    [SerializeField] private Vector3 storedPos;
+    private Vector3 storedPos;
     [SerializeField] private Vector3 referencedFirstObj;
-    [SerializeField] private Vector3 currentPos;
-    [SerializeField] bool firstTime = true;
-    private
+    bool firstTime = true;
     // Start is called before the first frame update
     void Start()
     {
@@ -23,27 +21,22 @@ public class OptionsPanel : MonoBehaviour
 
     public void ChangePositionRelativeToUIElement(RectTransform UIElement)
     {
-        //Guardar o transform do original uma única vez
-        //Verificar a diferença de posicao do original para o UIElement
-        //Mudar a posicao de acordo com essa diferenca
-        RectTransform rectTransform = GetComponent<RectTransform>();
+        RectTransform ParentRectTransform = transform.parent.GetComponent<RectTransform>();
         if (firstTime) 
         {
             firstTime = false; 
-            storedPos = rectTransform.localPosition;
-            currentPos = rectTransform.localPosition;
+            storedPos = ParentRectTransform.position;
         }
         else
         {
-            rectTransform.localPosition = storedPos;
+            ParentRectTransform.position = storedPos;
         }
 
-        var diff = referencedFirstObj - UIElement.localPosition;
-        Debug.LogError($"{referencedFirstObj} - {UIElement.localPosition} = {diff}");
-        rectTransform.localPosition = new Vector3(
-            rectTransform.localPosition.x - diff.x,
-            rectTransform.localPosition.y - diff.y,
-            rectTransform.localPosition.z);
-        if (!firstTime) currentPos = rectTransform.localPosition;
+        var diff = referencedFirstObj - UIElement.position;
+        Debug.LogError($"{referencedFirstObj} - {UIElement.position} = {diff}");
+        ParentRectTransform.position = new Vector3(
+            ParentRectTransform.position.x - diff.x,
+            ParentRectTransform.position.y - diff.y,
+            ParentRectTransform.position.z);
     }
 }
