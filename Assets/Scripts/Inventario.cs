@@ -114,7 +114,7 @@ public class Inventario : MonoBehaviour
 
     public void TrocarArmaDoInventario(ArmaDeFogo arma, GameObject objectThatCalled)
     {
-        ArmaDeFogo weaponToBeBenched = objectThatCalled.GetComponent<WeaponFrame>().GetSavedWeapon();
+        ArmaDeFogo weaponToBeBenched = objectThatCalled.GetComponent<WeaponFrame>().GetSavedElement() as ArmaDeFogo;
         int temporaryIndex = arma.index; //E.g. temp = 7
         arma.index = weaponToBeBenched.index; //E.g. arma7 = 1
         weaponToBeBenched.index = temporaryIndex; //E.g. arma1 = 7

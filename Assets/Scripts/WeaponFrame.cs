@@ -4,38 +4,20 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class WeaponFrame : MonoBehaviour
+public class WeaponFrame : UIFrame
 {
     public TextMeshProUGUI nameTxt;
     public TextMeshProUGUI municaoTxt;
     public Image weaponImage;
     public Color equipedColor;
     public Color normalColor;
-    private ArmaDeFogo savedWeaponRef;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
+    public void Init(ArmaDeFogo usableRef)
     {
-        
-    }
-
-    public void Init(ArmaDeFogo armaRef)
-    {
-        savedWeaponRef = armaRef;
-        nameTxt.text = armaRef.Nome;
-        municaoTxt.text = $"{armaRef.MunicaoCartucho}/{armaRef.Municao}";
-        weaponImage.sprite = armaRef.ImagemInventario;
+        base.Init(usableRef);
+        nameTxt.text = usableRef.Nome;
+        municaoTxt.text = $"{usableRef.MunicaoCartucho}/{usableRef.Municao}";
         ResetColor();
-    }
-
-    public ArmaDeFogo GetSavedWeapon()
-    {
-        return savedWeaponRef;
     }
 
     public void EquipedColor()

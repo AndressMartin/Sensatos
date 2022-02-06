@@ -5,25 +5,11 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ItemFrame : MonoBehaviour
+public class ItemFrame : UIFrame
 {
-    public Image itemImage;
-    private Item savedItemRef;
 
-    // Start is called before the first frame update
-    void Start()
+    public void Init(Item usableRef)
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    public void Init(Item itemRef)
-    {
-        itemImage.sprite = itemRef.ImagemInventario;
+        base.Init(usableRef);
     }
 }

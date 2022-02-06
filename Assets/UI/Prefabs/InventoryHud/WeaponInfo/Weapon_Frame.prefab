@@ -287,9 +287,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 809f275d37aada843a83aa919c05b6c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  image: {fileID: 7855148748137590541}
   nameTxt: {fileID: 7855148749806895409}
   municaoTxt: {fileID: 7855148748549700723}
   weaponImage: {fileID: 7855148748137590541}
+  equipedColor: {r: 0, g: 0, b: 0, a: 0}
+  normalColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!1 &7855148748549365075
 GameObject:
   m_ObjectHideFlags: 0

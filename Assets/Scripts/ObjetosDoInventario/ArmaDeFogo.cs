@@ -5,13 +5,10 @@ using UnityEngine.UI;
 
 [CreateAssetMenu(menuName = "Inventario/Arma de Fogo")]
 
-public class ArmaDeFogo : ScriptableObject
+public class ArmaDeFogo : Usable
 {
     //Variaveis
-    [SerializeField] private Sprite imagemInventario;
-    [SerializeField] private string nome;
     [SerializeField] private string nomeAnimacao;
-    [SerializeField] private string descricao;
     [SerializeField] private float raioDoSomDoTiro;
     [SerializeField] private bool rapidFire;
 
@@ -26,10 +23,7 @@ public class ArmaDeFogo : ScriptableObject
     [HideInInspector] public int index;
 
     //Getters
-    public Sprite ImagemInventario => imagemInventario;
-    public string Nome => nome;
     public string NomeAnimacao => nomeAnimacao;
-    public string Descricao => descricao;
     public bool RapidFire => rapidFire;
     public float RaioDoSomDoTiro => raioDoSomDoTiro;
     public int MunicaoCartucho => municaoCartucho;

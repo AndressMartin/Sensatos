@@ -5,18 +5,17 @@ using UnityEngine;
 
 public class ExplainPanel : MonoBehaviour
 {
-    public TextMeshProUGUI weaponName;
+    public TextMeshProUGUI nametxt;
     public TextMeshProUGUI description;
 
     /*
-     *  List<melhoriaUI> ->> TODO: Primeiro implementar a lista de melhorias na própria arma. 
-     *
+     *  TODO: List<melhoriaUI>
      */
 
-    public void ChangeUI(ArmaDeFogo arma)
+    public void ChangeUI(Usable element)
     {
-        weaponName.text = arma.Nome;
-        description.text = arma.Descricao;
+        nametxt.text = element.Nome;
+        description.text = element.Descricao;
     }
 }
 
