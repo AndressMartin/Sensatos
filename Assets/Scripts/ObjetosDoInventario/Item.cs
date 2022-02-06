@@ -24,7 +24,7 @@ public class Item : Usable
         return "";
     }
 
-    public void ThrowAway()
+    public void JogarFora()
     {
 
     }
