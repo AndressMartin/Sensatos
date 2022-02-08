@@ -9,12 +9,12 @@ public class Inventario : MonoBehaviour
     private Player player;
 
     //Variaveis
-    private List<Item> itens = new List<Item>();
+    [SerializeField] private List<Item> itens = new List<Item>();
     private List<Item> itensEmAtalhos = new List<Item>();
-    private List<ArmaDeFogo> armas = new List<ArmaDeFogo>();
+    [SerializeField] private List<ArmaDeFogo> armas = new List<ArmaDeFogo>();
 
-    private ArmaDeFogo armaSlot1;
-    private ArmaDeFogo armaSlot2;
+    [SerializeField] private ArmaDeFogo armaSlot1;
+    [SerializeField] private ArmaDeFogo armaSlot2;
     private Item itemAtual;
 
     [HideInInspector] public UnityEvent hasSortedWeapons;

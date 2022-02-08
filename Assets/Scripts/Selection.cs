@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,11 +16,12 @@ public class Selection : SingletonInstance<Selection>
     public bool onSubScreen;
     void Start()
     {
-        foreach (var screen in ScreensToOpen)
+        foreach (var screenHandles in ScreensToOpen)
         {
-            foreach (var button in screen.buttonsThatOpenIt)
+            foreach (var button in screenHandles.buttonsThatOpenIt)
             {
-                button.onClick.AddListener(delegate { OpenNextScreen(screen.ScreenToOpen, button); });
+                button.onClick.AddListener(delegate { OpenNextScreen(screenHandles.screenToOpen, button); });
+                screenHandles.screenToOpen.buttonsThatOpenMe.Add(button);
             }
         }
     }
@@ -33,6 +35,17 @@ public class Selection : SingletonInstance<Selection>
             SetEventSysFirstButton(FirstSelection.gameObject);
         }
         CloseNextScreen();
+        CheckCurrentlySelected();
+    }
+
+    private void CheckCurrentlySelected()
+    {
+#if UNITY_EDITOR
+        if (Input.GetKeyDown(KeyCode.U))
+        {
+            Debug.LogWarning(EventSystem.current.currentSelectedGameObject.name);
+        }
+#endif
     }
 
     public void SetEventSysFirstButton(GameObject obj)
@@ -45,7 +58,7 @@ public class Selection : SingletonInstance<Selection>
     {
         foreach (var screen in ScreensToOpen)
         {
-            if (screen.ScreenToOpen != null) screen.ScreenToOpen.CloseScreen();
+            if (screen.screenToOpen != null) screen.screenToOpen.CloseScreen();
         }
         openedScreen = screenToOpen;
         screenToOpen.objectThatCalled = button.gameObject;
@@ -79,7 +92,7 @@ public class Selection : SingletonInstance<Selection>
 [System.Serializable]
 public class ScreenOpeningHandle
 {
-    public UIScreen ScreenToOpen;
+    public UIScreen screenToOpen;
     public List<Button> buttonsThatOpenIt;
 }
 

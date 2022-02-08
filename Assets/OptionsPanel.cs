@@ -33,7 +33,6 @@ public class OptionsPanel : MonoBehaviour
         }
 
         var diff = referencedFirstObj - UIElement.position;
-        Debug.LogError($"{referencedFirstObj} - {UIElement.position} = {diff}");
         ParentRectTransform.position = new Vector3(
             ParentRectTransform.position.x - diff.x,
             ParentRectTransform.position.y - diff.y,

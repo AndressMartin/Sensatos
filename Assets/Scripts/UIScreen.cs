@@ -7,6 +7,7 @@ public class UIScreen : MonoBehaviour
 {
     public Button FirstSelection;
     public GameObject objectThatCalled;
+    public List<Button> buttonsThatOpenMe;
     // Start is called before the first frame update
     void Start()
     {
@@ -27,12 +28,14 @@ public class UIScreen : MonoBehaviour
             InventoryHudController.invClose.AddListener(screen.CloseScreen);
         }
     }
+    //TODO: Make this return a boolean, so you can return false whenever you want to negate open
     public virtual void OpenScreen()
     {
         Debug.LogWarning($"OPEN {name} + {gameObject.name}");
         transform.GetChild(0).gameObject.SetActive(true);
     }
 
+    //TODO: Make this return a boolean, so you can return false whenever you want to negate close
     public virtual void CloseScreen()
     {
         //Debug.LogWarning($"CLOSE {name} + {gameObject.name}");

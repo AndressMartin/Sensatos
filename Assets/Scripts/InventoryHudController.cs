@@ -30,7 +30,6 @@ public class InventoryHudController : UIScreen, IInventory
 
         if (Input.GetKeyDown(KeyCode.I))
         {
-            Debug.Log("T");
             if (!inventoryOpen) OpenScreen();
             else CloseScreen();
             invClose.RemoveListener(CloseScreen);
