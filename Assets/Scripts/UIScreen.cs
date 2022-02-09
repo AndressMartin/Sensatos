@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class UIScreen : MonoBehaviour
 {
+    public UIScreenState screenState = UIScreenState.Functional;
     public Button FirstSelection;
     public GameObject objectThatCalled;
     public List<Button> buttonsThatOpenMe;
@@ -42,4 +43,11 @@ public class UIScreen : MonoBehaviour
         transform.GetChild(0).gameObject.SetActive(false);
         if (objectThatCalled) Selection.GetInstance().SetEventSysFirstButton(objectThatCalled);
     }
+}
+
+public enum UIScreenState
+{
+    Functional,
+    OnPause,
+    NonFunctional
 }
