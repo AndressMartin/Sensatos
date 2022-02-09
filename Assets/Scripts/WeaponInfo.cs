@@ -31,7 +31,6 @@ public class WeaponInfo : InfoScreen
             weaponsPanel.transform.GetChild(0).GetComponent<RectTransform>().rect.height 
             * elementsButtons.Count 
             + weaponsPanel.GetComponent<VerticalLayoutGroup>().spacing * elementsButtons.Count-1);
-
     }
 
     public override void OpenScreen()

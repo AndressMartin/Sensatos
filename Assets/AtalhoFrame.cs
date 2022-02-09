@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class AtalhoFrame : ItemFrame
 {
     ItemFrame referencia;
+    public ItemFrame Referencia => referencia;
     internal void GuardarReferencia(ItemFrame itemFrame)
     {
         if (!image) image = GetComponent<Image>();

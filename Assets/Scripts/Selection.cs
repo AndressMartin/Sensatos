@@ -34,7 +34,10 @@ public class Selection : SingletonInstance<Selection>
             Debug.Log(beganSelection);
             SetEventSysFirstButton(FirstSelection.gameObject);
         }
-        CloseNextScreen();
+        if (Input.GetButtonDown("Cancel"))
+        {
+            CloseNextScreen();
+        }
         CheckCurrentlySelected();
     }
 
@@ -63,28 +66,41 @@ public class Selection : SingletonInstance<Selection>
         openedScreen = screenToOpen;
         screenToOpen.objectThatCalled = button.gameObject;
         screenToOpen.OpenScreen();
+        if (screenToOpen.screenState != UIScreenState.Functional) return;
         onSubScreen = true;
         SetEventSysFirstButton(openedScreen.FirstSelection.gameObject);
         Debug.LogWarning($"ScreenToOpen: {screenToOpen}, ObjectThatCalled: {screenToOpen.objectThatCalled}, Button: {button}");
 
     }
 
-    void CloseNextScreen()
-    {
-        if (Input.GetButtonDown("Cancel"))
+    public void CloseNextScreen()
+    {       
+        if (openedScreen && onSubScreen)
         {
-            if (openedScreen && onSubScreen)
-            {
-                if(openedScreen.objectThatCalled) SetEventSysFirstButton(openedScreen.objectThatCalled);
-                else SetEventSysFirstButton(FirstSelection.gameObject);
-                onSubScreen = false;
-                openedScreen.transform.GetChild(0).gameObject.SetActive(false);
-            }
-            else if (!onSubScreen)
-            {
-                FindObjectOfType<InventoryHudController>().CloseScreen();
-                beganSelection = false;
-            }
+            if(openedScreen.objectThatCalled) SetEventSysFirstButton(openedScreen.objectThatCalled);
+            else SetEventSysFirstButton(FirstSelection.gameObject);
+            onSubScreen = false;
+            openedScreen.transform.GetChild(0).gameObject.SetActive(false);
+        }
+        else if (!onSubScreen)
+        {
+            FindObjectOfType<InventoryHudController>().CloseScreen();
+            beganSelection = false;
+        }
+    }
+
+    public void EnableInfoScreens()
+    {
+        foreach (var infoScreen in ScreensToOpen)
+        {
+            infoScreen.screenToOpen.gameObject.SetActive(true);
+        }
+    }
+    public void DisableInfoScreens()
+    {
+        foreach (var infoScreen in ScreensToOpen)
+        {
+            infoScreen.screenToOpen.gameObject.SetActive(false);
         }
     }
 }

@@ -30,8 +30,16 @@ public class InventoryHudController : UIScreen, IInventory
 
         if (Input.GetKeyDown(KeyCode.I))
         {
-            if (!inventoryOpen) OpenScreen();
-            else CloseScreen();
+            if (!inventoryOpen)
+            {
+                OpenScreen();
+                selection.EnableInfoScreens();
+            }
+            else
+            {
+                CloseScreen();
+                selection.DisableInfoScreens();
+            }
             invClose.RemoveListener(CloseScreen);
         }
     }

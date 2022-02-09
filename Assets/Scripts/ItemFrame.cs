@@ -12,7 +12,8 @@ public class ItemFrame : UIFrame
     {
         get
         {
-            return atalhoFrame;
+            if (atalhoFrame) return atalhoFrame;
+            else return null;
         }
         set
         {

@@ -19,10 +19,19 @@ public class ItemInfo : InfoScreen
     public override void OpenScreen()
     {
         //Don't allow opening the screen if there isn't any item in the ItemFrame
-        if (EventSystem.current.currentSelectedGameObject.GetComponent<ItemFrame>().GetSavedElement() == null)
+        if (objectThatCalled.GetComponent<ItemFrame>()?.GetSavedElement())
+        {
+            screenState = UIScreenState.Functional;
+        }
+        else if (objectThatCalled.GetComponent<AtalhoFrame>()?.Referencia)
+        {
+            screenState = UIScreenState.Functional;
+            //Do Stuff for Atalho
+        }
+        else
         {
             CloseScreen();
-            Selection.GetInstance().SetEventSysFirstButton(objectThatCalled);
+            screenState = UIScreenState.NonFunctional;
             return;
         }
         if (state != ItemInfoState.Normal) return;
@@ -53,9 +62,9 @@ public class ItemInfo : InfoScreen
         Debug.Log("AdicionarAosAtalhos.");
         state = ItemInfoState.SetandoAtalho;
         transform.GetChild(0).gameObject.SetActive(false);
-        Selection.GetInstance().SetEventSysFirstButton(atalhosController.atalhos[0].gameObject);
+        Selection.GetInstance().SetEventSysFirstButton(atalhosController.elements[0].gameObject);
         atalhosController.AlterNavigation();
-        foreach (Button atalho in atalhosController.atalhos)
+        foreach (Button atalho in atalhosController.elements)
         {
             //TODO: You removed the important listeners. Now you need to restore it.
             atalho.onClick.RemoveAllListeners();
@@ -72,7 +81,14 @@ public class ItemInfo : InfoScreen
 
     public void SetarItemFrame(Button btn)
     {
+        Debug.Log(objectThatCalled.GetComponent<AtalhoFrame>());
         Debug.LogWarning("SetarItemFrame for " + btn.name);
+        //Está na parte de inventário
+        //if (!objectThatCalled.GetComponent<AtalhoFrame>())
+        //{
+            //TODO: 
+        //}
+        //Está na parte de atalhos
         //Item frame sets a reference to its shortcut, and warns the shortcut to store a reference to the itemFrame
         objectThatCalled.GetComponent<ItemFrame>().AtalhoFrame = btn.GetComponent<AtalhoFrame>();
         //btn.GetComponent<AtalhoFrame>().Init(objectThatCalled.GetComponent<ItemFrame>().GetSavedElement());
@@ -87,8 +103,18 @@ public class ItemInfo : InfoScreen
 
     public void AlterarPosicao()
     {
-        Debug.Log("AlterarPosicao.");
-        CloseScreen();
+        //Debug.Log("AlterarPosicao.");
+        //state = ItemInfoState.AlterandoPos;
+        //transform.GetChild(0).gameObject.SetActive(false);
+        //var item = objectThatCalled.GetComponent<ItemFrame>();
+        //Selection.GetInstance().SetEventSysFirstButton(item.gameObject);
+        //atalhosController.AlterNavigation();
+        //foreach (Button atalho in atalhosController.atalhos)
+        //{
+        //    //TODO: You removed the important listeners. Now you need to restore it.
+        //    atalho.onClick.RemoveAllListeners();
+        //    atalho.onClick.AddListener(delegate { SetarItemFrame(atalho); });
+        //}
     }
 
     public void JogarFora()

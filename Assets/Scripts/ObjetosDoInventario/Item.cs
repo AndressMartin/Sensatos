@@ -14,6 +14,11 @@ public class Item : Usable
         //Nada.
     }
 
+    virtual public void UsarNoInventario(Player player)
+    {
+        //Nada.
+    }
+
     virtual public void UsarNaGameplay(Player player)
     {
         //Nada.

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InventoryHUD : UIScreen
+public class InventoryHUD : MonoBehaviour
 {
     [Header("Lista de apenas dois elementos")]
     [SerializeField] private List<WeaponFrame> equipedWeaponFrames = new List<WeaponFrame>();
