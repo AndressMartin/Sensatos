@@ -34,4 +34,10 @@ public class ItemFrame : UIFrame
     {
         base.Init(usableRef);
     }
+
+    public override void RemoveElement()
+    {
+        base.RemoveElement();
+        atalhoFrame?.PerderReferencia();
+    }
 }

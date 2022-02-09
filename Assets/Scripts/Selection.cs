@@ -22,6 +22,8 @@ public class Selection : SingletonInstance<Selection>
             {
                 button.onClick.AddListener(delegate { OpenNextScreen(screenHandles.screenToOpen, button); });
                 screenHandles.screenToOpen.buttonsThatOpenMe.Add(button);
+                if(button.GetComponent<UIFrame>()) 
+                    button.GetComponent<UIFrame>().screenThatIOpen = screenHandles.screenToOpen;
             }
         }
     }
@@ -39,6 +41,12 @@ public class Selection : SingletonInstance<Selection>
             CloseNextScreen();
         }
         CheckCurrentlySelected();
+    }
+
+    public void ReturnToDefaultButtonFunc(UIFrame frame)
+    {
+        frame.GetComponent<Button>().onClick.AddListener(
+            delegate { OpenNextScreen(frame.screenThatIOpen, frame.GetComponent<Button>()); });
     }
 
     private void CheckCurrentlySelected()

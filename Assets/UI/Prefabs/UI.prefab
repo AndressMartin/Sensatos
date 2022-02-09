@@ -1656,6 +1656,61 @@ MonoBehaviour:
   elements: []
   elementsNavigation: []
   state: 0
+  closedNavigation:
+  - m_Mode: 4
+    m_WrapAround: 0
+    m_SelectOnUp: {fileID: 982024568612565106}
+    m_SelectOnDown: {fileID: 3541189892977710781}
+    m_SelectOnLeft: {fileID: 25399427803397315}
+    m_SelectOnRight: {fileID: 8068700112674649532}
+  - m_Mode: 4
+    m_WrapAround: 0
+    m_SelectOnUp: {fileID: 8139200388322782601}
+    m_SelectOnDown: {fileID: 5461146875517176442}
+    m_SelectOnLeft: {fileID: 4364176344286658503}
+    m_SelectOnRight: {fileID: 25399427803397315}
+  - m_Mode: 4
+    m_WrapAround: 0
+    m_SelectOnUp: {fileID: 4165119847682414790}
+    m_SelectOnDown: {fileID: 392895559583169921}
+    m_SelectOnLeft: {fileID: 8068700112674649532}
+    m_SelectOnRight: {fileID: 4364176344286658503}
+  - m_Mode: 4
+    m_WrapAround: 0
+    m_SelectOnUp: {fileID: 4364176344286658503}
+    m_SelectOnDown: {fileID: 982024568612565106}
+    m_SelectOnLeft: {fileID: 392895559583169921}
+    m_SelectOnRight: {fileID: 5461146875517176442}
+  - m_Mode: 4
+    m_WrapAround: 0
+    m_SelectOnUp: {fileID: 8068700112674649532}
+    m_SelectOnDown: {fileID: 8139200388322782601}
+    m_SelectOnLeft: {fileID: 3541189892977710781}
+    m_SelectOnRight: {fileID: 392895559583169921}
+  - m_Mode: 4
+    m_WrapAround: 0
+    m_SelectOnUp: {fileID: 25399427803397315}
+    m_SelectOnDown: {fileID: 4165119847682414790}
+    m_SelectOnLeft: {fileID: 5461146875517176442}
+    m_SelectOnRight: {fileID: 3541189892977710781}
+  - m_Mode: 4
+    m_WrapAround: 0
+    m_SelectOnUp: {fileID: 3541189892977710781}
+    m_SelectOnDown: {fileID: 4364176344286658503}
+    m_SelectOnLeft: {fileID: 4165119847682414790}
+    m_SelectOnRight: {fileID: 8139200388322782601}
+  - m_Mode: 4
+    m_WrapAround: 0
+    m_SelectOnUp: {fileID: 5461146875517176442}
+    m_SelectOnDown: {fileID: 8068700112674649532}
+    m_SelectOnLeft: {fileID: 982024568612565106}
+    m_SelectOnRight: {fileID: 4165119847682414790}
+  - m_Mode: 4
+    m_WrapAround: 0
+    m_SelectOnUp: {fileID: 392895559583169921}
+    m_SelectOnDown: {fileID: 25399427803397315}
+    m_SelectOnLeft: {fileID: 8139200388322782601}
+    m_SelectOnRight: {fileID: 982024568612565106}
 --- !u!1 &700864800350451265
 GameObject:
   m_ObjectHideFlags: 0
@@ -2298,7 +2353,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &700864800502311090
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2492,10 +2547,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2b5f16064fd5d64c842c66f90aaa4cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  screenState: 0
-  FirstSelection: {fileID: 0}
-  objectThatCalled: {fileID: 0}
-  buttonsThatOpenMe: []
   equipedWeaponFrames:
   - {fileID: 700864800581704000}
   - {fileID: 7258361113408264260}
@@ -3887,7 +3938,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &700864800715330213
 RectTransform:
   m_ObjectHideFlags: 0
@@ -12793,7 +12844,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1850565360753035557
 RectTransform:
   m_ObjectHideFlags: 0
@@ -12844,6 +12895,7 @@ MonoBehaviour:
   inventario: {fileID: 0}
   optionsPanel: {fileID: 2522323181483021922}
   atalhosController: {fileID: 6464691712051431838}
+  itensController: {fileID: 3820135357288163129}
   state: 0
 --- !u!1 &7921805190919500577
 GameObject:

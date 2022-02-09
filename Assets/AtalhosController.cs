@@ -47,16 +47,4 @@ public class AtalhosController : UIElementsController
         }
         state = UiNavigationState.Altered;
     }
-
-    public void NormalizeNavigation()
-    {
-        Debug.Log("normalize");
-        if (state == UiNavigationState.Normal) return;
-        for (int i = 0; i < elements.Count; i++)
-        {
-            elements[i].navigation = elementsNavigation[i];
-        }
-        state = UiNavigationState.Normal;
-        Debug.Log("finished normalize");
-    }
 }
