@@ -4,6 +4,17 @@ using UnityEngine;
 
 public class IA_Enemy_inmigoDeLockdown : IA_Enemy_Basico
 {
+    [SerializeField] Vector2 SalaSegurança;
+    [SerializeField] Vector2 PosicaoDeSpawn;
+
+    //[SerializeField]new bool emLockDown;
+    public override void Start()
+    {
+        base.Start();
+        transform.position = SalaSegurança;
+        PosicaoDeSpawn = transform.position;
+    }
+
     protected override void StateMachine()
     {
         switch (estadoDeteccaoPlayer)
@@ -20,7 +31,7 @@ public class IA_Enemy_inmigoDeLockdown : IA_Enemy_Basico
                         inimigoEstados = InimigoEstados.Patrulhar;
                     }
                 }
-                else
+                else//voltar pro spawn
                 {
                     inimigoEstados = InimigoEstados.FazerRotinaLockdow;
                 }
@@ -45,13 +56,36 @@ public class IA_Enemy_inmigoDeLockdown : IA_Enemy_Basico
 
         }
     }
+    public override void Respawn()
+    {
+        base.Respawn();
+        transform.position = PosicaoDeSpawn;
+    }
+    public override void ReceberLockDown(Vector2 _posicaoPlayer)
+    {
+        emLockDown = true;
+        posicaoUltimoLugarVisto = _posicaoPlayer;
+    }
+    public override void DesativarLockDown()
+    {
+        emLockDown = false;
+    }
+    public override void SerSpawnado(Vector2 _pontoSpawn)
+    {
+        SalaSegurança = _pontoSpawn;
+    }
     protected override void Patrulhar()
     {
         base.Patrulhar();
     }
     protected override void FazerRotinaLockdown()
     {
-        base.FazerRotinaLockdown();
+        if(VerificarChegouAteAlvo(SalaSegurança))
+        {
+            gameObject.SetActive(false);
+        }
+        //Debug.Log("indo pra origem");
+       // base.FazerRotinaLockdown();
     }
    
 }

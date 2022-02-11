@@ -7,7 +7,6 @@ public class LockDown : ObjetoInteragivel
     //Managers
     private ObjectManagerScript objectManagerScript;
     private PauseManagerScript pauseManager;
-    private LockDownManager lockDownManager;
 
     //Componentes
     SpriteRenderer spriteRenderer;
@@ -18,7 +17,6 @@ public class LockDown : ObjetoInteragivel
     private void Start()
     {
         //Managers
-        lockDownManager = FindObjectOfType<LockDownManager>();
         pauseManager = FindObjectOfType<PauseManagerScript>();
         objectManagerScript = FindObjectOfType<ObjectManagerScript>();
 
@@ -42,7 +40,7 @@ public class LockDown : ObjetoInteragivel
         lockDownAtivo = true;
         CorBotao();
     }
-    private void DesativarLockDown()
+    public void DesativarLockDown()
     {
         lockDownAtivo = false;
         CorBotao();

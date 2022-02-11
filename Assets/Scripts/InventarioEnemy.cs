@@ -9,7 +9,7 @@ public class InventarioEnemy : MonoBehaviour
 
     public ArmaDeFogo ArmaSlot => armaSlot;
 
-    private void Start()
+    public void Iniciar()
     {
         SetArma(armaSlotTemporario);
     }

@@ -66,16 +66,15 @@ public class Enemy : EntityModel
 
         //Se adicionar a lista de inimigos do ObjectManager
         objectManager.adicionarAosInimigos(this);
-        enemyManager.AddToLista(enemyManager.GetEnemies, this);
 
         //Componentes
         if (!fuiSpawnado) 
         {
             enemyMovement = GetComponent<EnemyMovement>();
             iA_Enemy = GetComponent<IA_Enemy_Basico>();
+            inventario = GetComponent<InventarioEnemy>();
         }
         pontaArma = GetComponentInChildren<PontaArmaScript>();
-        inventario = GetComponent<InventarioEnemy>();
         enemyVision = GetComponentInChildren<EnemyVisionScript>();
         animacao = GetComponent<AnimacaoJogador>();
 
@@ -105,13 +104,14 @@ public class Enemy : EntityModel
         }
     }
 
-    public void SerSpawnado(List<Transform> _movesSpots,ArmaDeFogo _armaDeFogo)
+    public void SerSpawnado(List<Transform> _movesSpots,Vector2 _pontoSpawn)
     {
         enemyMovement = GetComponent<EnemyMovement>();
         iA_Enemy = GetComponent<IA_Enemy_Basico>();
+        inventario = GetComponent<InventarioEnemy>();
 
         enemyMovement.ReceberMoveSpots(_movesSpots);
-        iA_Enemy.SerSpawnado(_armaDeFogo.GetStatus.MunicaoMaxCartucho);
+        iA_Enemy.SerSpawnado(_pontoSpawn);
 
         fuiSpawnado = true;
     }
@@ -229,8 +229,7 @@ public class Enemy : EntityModel
 
     public void Die()
     {
-        enemyManager.RemoveToLista(enemyManager.GetEnemiesQueVemPlayer, this);
-
+        enemyManager.PerdiVisaoInimigo();
         morto = true;
         enemyMovement.ZerarVelocidade();
         Debug.Log("to morto");

@@ -4,32 +4,56 @@ using UnityEngine;
 
 public class EnemyManager : MonoBehaviour
 {
-    [SerializeField]private List<Enemy> enemies = new List<Enemy>();
-    [SerializeField]private List<Enemy> enemiesQueVemPlayer = new List<Enemy>();
-    public List<Enemy> GetEnemies => enemies;
-    public List<Enemy> GetEnemiesQueVemPlayer => enemiesQueVemPlayer;
+    LockDownManager lockDownManager;
+    [SerializeField] private int quantidadeInimigosVendoPlayer;
+    public int GetQuantidadeInimigosVendoPlayer => quantidadeInimigosVendoPlayer;
 
-    public void AddToLista(List<Enemy> lista,Enemy valor)
+    private void Start()
     {
-        if(!lista.Contains(valor))
+        lockDownManager = transform.parent.GetComponentInChildren<LockDownManager>();
+    }
+    private void Update()
+    {
+        if (lockDownManager.EmLockdow)
         {
-            lista.Add(valor);
+            if (quantidadeInimigosVendoPlayer > 0)
+            {
+                lockDownManager.Contador();
+            }
+            else
+            {
+                lockDownManager.ContadorLockdownInverso();
+            }
         }
     }
-    public void RemoveToLista(List<Enemy> lista, Enemy valor)
+    public void Respawn()
     {
-        if (lista.Contains(valor))
-        {
-            lista.Remove(valor);
-        }
-    }
-    public bool VerficiarSeUltimoIntegranteDaLista(List<Enemy> lista,Enemy enemy)
-    {
-        if(lista[lista.Count -1] == enemy && lista.Count > 1)
-        {
-            return true;
-        }
-        return false;
+        quantidadeInimigosVendoPlayer=0;
     }
 
+    public void PerdiVisaoInimigo()
+    {
+        quantidadeInimigosVendoPlayer--;
+    }
+    public int AddicionarAlguemVendoPlayer()
+    {
+        quantidadeInimigosVendoPlayer++;
+        return quantidadeInimigosVendoPlayer;
+    }
+    public bool VerificarUltimoVerPlayer(int indice)
+    {
+        if (quantidadeInimigosVendoPlayer == 1) // caso so tenha um inimigo vendo o player ele sempre vai receber que tem de lutar
+        {
+            return false;
+        }
+        else
+        {
+            if (indice < quantidadeInimigosVendoPlayer)
+            {
+                return false;
+            }
+            else
+                return true;
+        }
+    }
 }

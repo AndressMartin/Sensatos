@@ -394,7 +394,8 @@ public class Player : EntityModel
     {
         if (!imune && estado != Estado.Morto)
         {
-            if(dialogueUI.IsOpen == true)
+            
+            if (dialogueUI.IsOpen == true)
             {
                 dialogueUI.ForcedCloseDialogueBox();
             }

@@ -103,6 +103,9 @@ public class ProjetilScript : MonoBehaviour
     {
         EntityModel temp;
         temp = alvoAcertado.transform.parent.GetComponent<EntityModel>();
+        Debug.Log(temp);
+        Debug.Log(temp.gameObject.name);
+
         temp.TomarDano(dano, knockBack, knockBackTrigger, direcao);
         AnimacaoSeDestruir();
     }
@@ -151,11 +154,13 @@ public class ProjetilScript : MonoBehaviour
         {
             if (alvoAcertado.transform.parent.gameObject != objQueChamou.gameObject)
             {
+                Debug.Log("Kelvin trocha "+alvoAcertado.transform.parent.tag);
                 switch (alvo)
                 {
                     case EntityModel.Alvo.Player:
                         if (alvoAcertado.transform.parent.CompareTag("Player"))
                         {
+                            
                             HitTarget(alvoAcertado);
                         }
                         break;

@@ -8,6 +8,7 @@ public class RespawnManagerScript : MonoBehaviour
     private ObjectManagerScript objectManager;
     private BulletManagerScript bulletManager;
     private LockDownManager lockDownManager;
+    private EnemyManager enemyManager;
 
     private Player player;
 
@@ -17,7 +18,7 @@ public class RespawnManagerScript : MonoBehaviour
         objectManager = FindObjectOfType<ObjectManagerScript>();
         bulletManager = FindObjectOfType<BulletManagerScript>();
         lockDownManager = FindObjectOfType<LockDownManager>();
-
+        enemyManager = transform.parent.GetComponentInChildren<EnemyManager>();
         player = FindObjectOfType<Player>();
     }
 
@@ -81,5 +82,6 @@ public class RespawnManagerScript : MonoBehaviour
         }
         lockDownManager.Respawn();
         bulletManager.DeletarProjeteis();
+        enemyManager.Respawn();
     }
 }

@@ -7,7 +7,7 @@ public class DebugModeManagerScript : MonoBehaviour
 {
     //Managers
     private RespawnManagerScript respawnManager;
-
+    private LockDownManager lockDownManager;
     //Componentes
     private DebugModeUIScript debugModeUI;
     private Player player;
@@ -23,6 +23,7 @@ public class DebugModeManagerScript : MonoBehaviour
     {
         //Managers
         respawnManager = FindObjectOfType<RespawnManagerScript>();
+        lockDownManager = FindObjectOfType<LockDownManager>();
 
         //Componentes
         debugModeUI = FindObjectOfType<DebugModeUIScript>();
@@ -67,6 +68,18 @@ public class DebugModeManagerScript : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.J))
         {
             respawnManager.Respawn();
+        }
+
+        //Ativar Lockdown
+        if (Input.GetKeyUp(KeyCode.P))
+        {
+            lockDownManager.AtivarLockDown(player.transform.position);
+        }
+
+        //Desativar Lockdown
+        if (Input.GetKeyUp(KeyCode.V))
+        {
+            lockDownManager.DesativaLockDown();
         }
     }
 

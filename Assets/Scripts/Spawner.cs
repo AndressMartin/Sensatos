@@ -7,21 +7,35 @@ public class Spawner : MonoBehaviour
     [SerializeField] GameObject pontoDeSpawn;
     [SerializeField] Enemy prefabInimigo;
     [SerializeField] List<Transform> moveSpots;
-    [SerializeField] bool i = false;
-    [SerializeField] ArmaDeFogo armaDeFogo;
-    // Start is called before the first frame update
+    [SerializeField] int quantidadeInimigos;
 
-
-    // Update is called once per frame
-    void Update()
+    [SerializeField] List<Enemy> enemyList;
+    public List<Enemy> EnemyList => enemyList;
+    private void Start()
     {
-        if(i)
+        enemyList = new List<Enemy>();
+        InstanciarInimigos();
+        FindObjectOfType<EnemySpawnManager>().AddToLista(this);
+    }
+    public void InstanciarInimigos()
+    {
+        for (int i = 0; i < quantidadeInimigos; i++)
         {
-            i=false;
             Enemy enemy;
             enemy = Instantiate(prefabInimigo);
-            enemy.name = "carlos";
-            enemy.SerSpawnado(moveSpots,armaDeFogo);
+            enemy.name = "carlos "+i;
+            enemy.SerSpawnado(moveSpots,pontoDeSpawn.transform.position);
+            enemyList.Add(enemy);
+           //enemy.transform.position = pontoDeSpawn.transform.position;
+            enemy.gameObject.SetActive(false);
         }
     }
+    public void AtivarDesativarInimigos(bool Valor)
+    {
+        foreach (Enemy enemy in enemyList)
+        {
+            enemy.gameObject.SetActive(true);
+        }
+    }
+    
 }

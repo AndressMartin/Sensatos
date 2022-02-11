@@ -33,7 +33,10 @@ public class ObjectManagerScript : MonoBehaviour
 
     public void adicionarAosInimigos(Enemy inimigo)
     {
-        listaInimigos.Add(inimigo);
+        if (!listaInimigos.Contains(inimigo))
+        {
+            listaInimigos.Add(inimigo);
+        }
     }
 
     public void removerDosInimigos(Enemy inimigo)
