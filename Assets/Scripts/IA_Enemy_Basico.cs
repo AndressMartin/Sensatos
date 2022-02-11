@@ -14,9 +14,7 @@ public class IA_Enemy_Basico : MonoBehaviour
     private ObjectManagerScript objectManagerScript;
     private InventarioEnemy inventarioEnemy;
 
-    private GameObject destino;
     private AILerp aILerp;
-    private AIDestinationSetter aiDestinationSetter;
     //Enun
     protected enum InimigoEstados { AndandoAtePlayer, Patrulhar, AtacarPlayer, SomPassos, SomTiro, AndandoUltimaPosicaoPlayerConhecida, IndoAtivarLockDown , FicarParado , FazerRotinaLockdow , TomeiDano };
     [SerializeField] protected InimigoEstados inimigoEstados;
@@ -82,12 +80,6 @@ public class IA_Enemy_Basico : MonoBehaviour
         objectManagerScript = FindObjectOfType<ObjectManagerScript>();
         inventarioEnemy = GetComponent<InventarioEnemy>();
         aILerp = GetComponent<AILerp>();
-        aiDestinationSetter = GetComponent<AIDestinationSetter>();
-
-        destino = new GameObject();
-        destino.name = "Destino "+gameObject.name;
-
-        aiDestinationSetter.target = destino.transform;
 
         inimigoEstados = InimigoEstados.Patrulhar;
         estadoDeteccaoPlayer = EstadoDeteccaoPlayer.NaoToVendoPlayer;
@@ -251,7 +243,7 @@ public class IA_Enemy_Basico : MonoBehaviour
                         posicaoUltimoLugarVisto = posicaoAtualPlayer;
                         ContadorInverso(ref tempoEsquecerPlayer, tempoEsquecerPlayerMax);
 
-                        Debug.Log("to entrando aqui "+gameObject.name+"sas");
+                        //Debug.Log("to entrando aqui "+gameObject.name+"sas");
                         if (enemy.GetEnemyManager.VerificarUltimoVerPlayer(posicaoListaIndiceDeteccao) && !emLockDown) //terPrioridade para AtivarAlarme
                         {
                             inimigoEstados = InimigoEstados.IndoAtivarLockDown;
@@ -439,10 +431,9 @@ public class IA_Enemy_Basico : MonoBehaviour
     }
     public void Mover(Vector2 _alvo)
     {
-        destino.transform.position = _alvo;
         aILerp.canMove = true;
         aILerp.speed = enemyMovement.GetVelocidade;
-
+        aILerp.destination = _alvo;
         //enemyMovement.Movimentar(enemyMovement.CalcMovimemto(destino.transform.position));
     }
     void AtivarLockDown()
