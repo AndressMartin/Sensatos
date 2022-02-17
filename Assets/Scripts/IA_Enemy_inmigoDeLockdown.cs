@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Pathfinding;
 
 public class IA_Enemy_inmigoDeLockdown : IA_Enemy_Basico
 {
@@ -28,15 +29,16 @@ public class IA_Enemy_inmigoDeLockdown : IA_Enemy_Basico
                     }
                     else
                     {
-                        inimigoEstados = InimigoEstados.Patrulhar;
+                        inimigoEstados = InimigoEstados.FazerRotinaLockdow;
                     }
                 }
                 else//voltar pro spawn
                 {
-                    inimigoEstados = InimigoEstados.FazerRotinaLockdow;
+                    inimigoEstados = InimigoEstados.Patrulhar;
                 }
                 break;
             case EstadoDeteccaoPlayer.playerDetectado:
+                vendoPlayer = vendoPlayerCircular;
                 if(vendoPlayer)
                 {
                     if(playerAreaAtaque)
@@ -50,7 +52,16 @@ public class IA_Enemy_inmigoDeLockdown : IA_Enemy_Basico
                 }
                 else
                 {
-                    estadoDeteccaoPlayer = EstadoDeteccaoPlayer.NaoToVendoPlayer;
+                    if (Contador(ref tempoEsquecerPlayer, tempoEsquecerPlayerMax)) //caso nao o veja chamar contador para perder o inimigo de vista
+                    {
+                        controlodarEsqueciPlayer = true;
+                        estadoDeteccaoPlayer = EstadoDeteccaoPlayer.NaoToVendoPlayer;
+                        Debug.Log("Perdi o player De vista, indo na sua ultima posicao");
+                    }
+                    else
+                    {
+                        inimigoEstados = InimigoEstados.AndandoUltimaPosicaoPlayerConhecida;
+                    }
                 }
                 break;
 
@@ -70,22 +81,17 @@ public class IA_Enemy_inmigoDeLockdown : IA_Enemy_Basico
     {
         emLockDown = false;
     }
-    public override void SerSpawnado(Vector2 _pontoSpawn)
+    public override void SerSpawnado(Vector2 _pontoSpawn,AILerp lerp)
     {
+        base.SerSpawnado(_pontoSpawn,lerp);
         SalaSegurança = _pontoSpawn;
     }
     protected override void Patrulhar()
     {
-        base.Patrulhar();
-    }
-    protected override void FazerRotinaLockdown()
-    {
-        if(VerificarChegouAteAlvo(SalaSegurança))
+        if (VerificarChegouAteAlvo(SalaSegurança))
         {
             gameObject.SetActive(false);
         }
-        //Debug.Log("indo pra origem");
-       // base.FazerRotinaLockdown();
     }
-   
+
 }

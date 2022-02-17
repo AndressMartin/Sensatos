@@ -295,7 +295,7 @@ GameObject:
   - component: {fileID: 1338069364}
   - component: {fileID: 2478677569781594311}
   - component: {fileID: 5104925972558586314}
-  m_Layer: 3
+  m_Layer: 6
   m_Name: EnemyIsmaias
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -351,10 +351,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inimigoEstados: 1
   estadoDeteccaoPlayer: 0
-  vendoPlayer: 0
-  playerAreaAtaque: 0
-  emLockDown: 0
-  posicaoUltimoLugarVisto: {x: 0, y: 0}
+  posicaoInicial: {x: 0, y: 0}
   tempoEntrarEmModoAlertaMax: 3
   tempoEsquecerPlayerMax: 5
   tempoVerificandoUltimaPosicaoPlayerMax: 2
@@ -373,13 +370,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 655295f42ef173d4d814621630d386c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rotaIdaVolta: 0
   velocidade: 2
-  moveSpots:
+  PontosRotaNaoLockdow:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  moveSpotsLockdown:
+  PontosRotaLockdow:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
@@ -571,9 +569,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mask:
     serializedVersion: 2
-    m_Bits: 64
-  pontoX: 4
-  pontoY: 4
+    m_Bits: 128
+  larguraVisao: 4
+  alturaVisao: 4
   vendoPlayer: 0
   vendoPlayerCircular: 0
   tempo: 0
@@ -676,7 +674,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6297625327472927379}
   - component: {fileID: 1805900731}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: HitboxDano
   m_TagString: HitboxDano
   m_Icon: {fileID: 0}

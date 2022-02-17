@@ -23,6 +23,7 @@ public class Porta : ObjetoInteragivel
 
     //Variaveis de respawn
     private bool trancadoRespawn;
+    private bool abertoRespawn;
 
     [SerializeField] public TipoPorta tipoPorta;
     [SerializeField]private Estado estado = Estado.NaoLockdown;
@@ -58,11 +59,12 @@ public class Porta : ObjetoInteragivel
     public override void SetRespawn()
     {
         trancadoRespawn = trancado;
+        abertoRespawn = aberto;
     }
 
     public override void Respawn()
     {
-        aberto = false;
+        aberto = abertoRespawn;
         trancado = trancadoRespawn;
         ForceFecharPorta();
 
@@ -173,7 +175,6 @@ public class Porta : ObjetoInteragivel
     {
         if (tipoPorta != TipoPorta.Simples)
         {
-            Debug.Log("Estado de lockDown,... Trancando");
             estado = Estado.Lockdown;
             trancado = true;
             ForceFecharPorta();
@@ -184,7 +185,6 @@ public class Porta : ObjetoInteragivel
     {
         if (tipoPorta != TipoPorta.Simples)
         {
-            Debug.Log("Estado de lockDown,... Desativando");
             estado = Estado.NaoLockdown;
             trancado = false;
 

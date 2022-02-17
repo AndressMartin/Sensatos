@@ -7,6 +7,8 @@ public class Spawner : MonoBehaviour
     [SerializeField] GameObject pontoDeSpawn;
     [SerializeField] Enemy prefabInimigo;
     [SerializeField] List<Transform> moveSpots;
+    [SerializeField] List<Transform> moveSpotsNaoLockdown;
+
     [SerializeField] int quantidadeInimigos;
 
     [SerializeField] List<Enemy> enemyList;
@@ -24,7 +26,7 @@ public class Spawner : MonoBehaviour
             Enemy enemy;
             enemy = Instantiate(prefabInimigo);
             enemy.name = "carlos "+i;
-            enemy.SerSpawnado(moveSpots,pontoDeSpawn.transform.position);
+            enemy.SerSpawnado(moveSpots,moveSpotsNaoLockdown,pontoDeSpawn.transform.position);
             enemyList.Add(enemy);
            //enemy.transform.position = pontoDeSpawn.transform.position;
             enemy.gameObject.SetActive(false);

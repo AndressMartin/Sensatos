@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Pathfinding;
 
 public class Enemy : EntityModel
 {
@@ -19,6 +20,7 @@ public class Enemy : EntityModel
     private EnemyVisionScript enemyVision;
     private IA_Enemy_Basico iA_Enemy;
     private Player player;
+    private AILerp lerp;
 
     //Variaveis
     public override int vida { get; protected set; }
@@ -48,6 +50,7 @@ public class Enemy : EntityModel
     public LockDownManager GetLockDownManager => lockDownManager; 
     public InventarioEnemy GetInventarioEnemy => inventario;
     public EnemyMovement GetEnemyMovement => enemyMovement;
+    public IA_Enemy_Basico GetIA_Enemy_Basico => iA_Enemy;
 
     bool fuiSpawnado;
 
@@ -73,6 +76,7 @@ public class Enemy : EntityModel
             enemyMovement = GetComponent<EnemyMovement>();
             iA_Enemy = GetComponent<IA_Enemy_Basico>();
             inventario = GetComponent<InventarioEnemy>();
+            lerp = GetComponent<AILerp>();
         }
         pontaArma = GetComponentInChildren<PontaArmaScript>();
         enemyVision = GetComponentInChildren<EnemyVisionScript>();
@@ -104,14 +108,15 @@ public class Enemy : EntityModel
         }
     }
 
-    public void SerSpawnado(List<Transform> _movesSpots,Vector2 _pontoSpawn)
+    public void SerSpawnado(List<Transform> _movesSpots, List<Transform> _movesSpotsLockdown, Vector2 _pontoSpawn)
     {
         enemyMovement = GetComponent<EnemyMovement>();
         iA_Enemy = GetComponent<IA_Enemy_Basico>();
         inventario = GetComponent<InventarioEnemy>();
+        lerp = GetComponent<AILerp>();
 
-        enemyMovement.ReceberMoveSpots(_movesSpots);
-        iA_Enemy.SerSpawnado(_pontoSpawn);
+        enemyMovement.ReceberMoveSpots(_movesSpots, _movesSpotsLockdown);
+        iA_Enemy.SerSpawnado(_pontoSpawn,lerp);
 
         fuiSpawnado = true;
     }
@@ -139,7 +144,7 @@ public class Enemy : EntityModel
             ChangeDirection(direcaoRespawn);
 
             iA_Enemy.Respawn();
-            enemyMovement.ZerarVelocidade();
+            enemyMovement.ZerarVelocidade(lerp);
 
 
             ResetarVariaveisDeControle();
@@ -170,7 +175,7 @@ public class Enemy : EntityModel
         }
         if(morto)
         {
-            enemyMovement.ZerarVelocidade();
+            enemyMovement.ZerarVelocidade(lerp);
         }
     }
 
@@ -231,7 +236,7 @@ public class Enemy : EntityModel
     {
         enemyManager.PerdiVisaoInimigo();
         morto = true;
-        enemyMovement.ZerarVelocidade();
+        enemyMovement.ZerarVelocidade(lerp);
         Debug.Log("to morto");
     }
     public void stealthKill()

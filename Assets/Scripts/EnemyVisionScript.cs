@@ -8,7 +8,7 @@ public class EnemyVisionScript : MonoBehaviour
 
     //variaveis
     [SerializeField] LayerMask mask;
-    [SerializeField] private float pontoX, pontoY;
+    [SerializeField] private float larguraVisao, alturaVisao;
     private float larguraConeVisao, alturaConeVisao;
     private float pontoXMax, pontoYMax;
     EntityModel.Direcao direcao;
@@ -32,15 +32,15 @@ public class EnemyVisionScript : MonoBehaviour
 
     void Start()
     {
-        pontoXMax = pontoX;
-        pontoYMax = pontoY;
+        pontoXMax = larguraVisao;
+        pontoYMax = alturaVisao;
 
         visaoCircularEnemy = GetComponentInChildren<VisaoCircularEnemy>();
         //Debug.Log("tenho "+visaoCircularEnemy);
         polygonCollider = GetComponent<PolygonCollider2D>();
         enemy = GetComponentInParent<Enemy>();
  
-        visaoCircularEnemy.ValorRaioInicial(Mathf.Sqrt((larguraConeVisao - pontoX) * (larguraConeVisao - pontoX) + (alturaConeVisao - pontoY) * (alturaConeVisao - pontoY)));
+        visaoCircularEnemy.ValorRaioInicial(Mathf.Sqrt((larguraConeVisao - larguraVisao) * (larguraConeVisao - larguraVisao) + (alturaConeVisao - alturaVisao) * (alturaConeVisao - alturaVisao)));
         v1 = new Vector2(larguraConeVisao, alturaConeVisao);
     }
     public void Main()
@@ -52,28 +52,33 @@ public class EnemyVisionScript : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        Raycast(collision);
-    }
-    void Raycast(Collider2D collision)
-    {
-        tempo+=Time.deltaTime;
+        tempo += Time.deltaTime;
 
         if (tempo >= DeQuantoEmQuantoSegundos)
         {
             EntityModel entityModelTemp = collision.gameObject.GetComponent<EntityModel>();
+
             if (entityModelTemp != null)
             {
                 RaycastHit2D hits;
                 hits = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y),
-                    new Vector2(entityModelTemp.transform.position.x - transform.position.x, entityModelTemp.transform.position.y - transform.position.y), pontoX, mask.value);
+                    new Vector2(entityModelTemp.transform.position.x - transform.position.x, entityModelTemp.transform.position.y - transform.position.y), larguraVisao, mask.value);
 
-                if (hits)//caso tenha acertado algo
+                if (!hits)
                 {
-                    if (hits.transform.GetComponent<Player>() != null)//caso atinga o player o raio
+                    if (entityModelTemp is Enemy)
                     {
-                        Debug.DrawRay(new Vector2(transform.position.x, transform.position.y), new Vector2(hits.transform.position.x - transform.position.x, hits.transform.position.y - transform.position.y), Color.red);
+                        enemy.GetIA_Enemy_Basico.VendoOutroInimigo((Enemy)entityModelTemp);
+                    }
+
+                    if (entityModelTemp is Player)
+                    {
                         vendoPlayer = true;
                     }
+                }
+                if(hits)
+                {
+                    Debug.DrawRay(new Vector2(transform.position.x, transform.position.y), new Vector2(hits.transform.position.x - transform.position.x, hits.transform.position.y - transform.position.y), Color.red);
                 }
             }
             tempo = 0;
@@ -98,14 +103,14 @@ public class EnemyVisionScript : MonoBehaviour
 
     public void ResetarVariaveisDeControle()
     {
-        pontoX = pontoXMax;
-        pontoY = pontoYMax;
+        larguraVisao = pontoXMax;
+        alturaVisao = pontoYMax;
         vendoPlayer = false;
     }
     public void EntrarModoPatrulha()
     {
-        pontoX += 2;
-        pontoY += 2;
+        larguraVisao += 2;
+        alturaVisao += 2;
         visaoCircularEnemy.MudarRaio();
 
     }
@@ -119,23 +124,23 @@ public class EnemyVisionScript : MonoBehaviour
         {
             //rodar plano cartesiano
             case EntityModel.Direcao.Esquerda:
-                v2 = new Vector2(-(pontoX - larguraConeVisao), (pontoY + alturaConeVisao));
-                v3 = new Vector2(-(pontoX - larguraConeVisao), -(pontoY - alturaConeVisao));
+                v2 = new Vector2(-(larguraVisao - larguraConeVisao), (alturaVisao + alturaConeVisao));
+                v3 = new Vector2(-(larguraVisao - larguraConeVisao), -(alturaVisao - alturaConeVisao));
                 break;
 
             case EntityModel.Direcao.Direita:
-                v2 = new Vector2((pontoX + larguraConeVisao), (pontoY + alturaConeVisao));
-                v3 = new Vector2((pontoX + larguraConeVisao), -(pontoY - alturaConeVisao));
+                v2 = new Vector2((larguraVisao + larguraConeVisao), (alturaVisao + alturaConeVisao));
+                v3 = new Vector2((larguraVisao + larguraConeVisao), -(alturaVisao - alturaConeVisao));
                 break;
 
             case EntityModel.Direcao.Cima:
-                v2 = new Vector2(-(pontoY - larguraConeVisao), (pontoX + alturaConeVisao));
-                v3 = new Vector2(+(pontoY + larguraConeVisao), (pontoX + alturaConeVisao));
+                v2 = new Vector2(-(alturaVisao - larguraConeVisao), (larguraVisao + alturaConeVisao));
+                v3 = new Vector2(+(alturaVisao + larguraConeVisao), (larguraVisao + alturaConeVisao));
                 break;
 
             case EntityModel.Direcao.Baixo:
-                v2 = new Vector2((pontoY + larguraConeVisao), -(pontoX - alturaConeVisao));
-                v3 = new Vector2(-(pontoY - larguraConeVisao), -(pontoX - alturaConeVisao));
+                v2 = new Vector2((alturaVisao + larguraConeVisao), -(larguraVisao - alturaConeVisao));
+                v3 = new Vector2(-(alturaVisao - larguraConeVisao), -(larguraVisao - alturaConeVisao));
                 break;
 
         }

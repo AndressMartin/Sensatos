@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Pathfinding;
 
 public class EnemyMovement : MonoBehaviour
 {
@@ -10,9 +11,10 @@ public class EnemyMovement : MonoBehaviour
     private IA_Enemy_Basico iA_Enemy_Basico;
 
     //Variaveis
+    [SerializeField] bool rotaIdaVolta;
     [SerializeField] private int velocidade;
-    [SerializeField] private List<Transform> moveSpots = new List<Transform>();
-    [SerializeField] private List<Transform> moveSpotsLockdown = new List<Transform>();
+    [SerializeField] private List<Transform> PontosRotaNaoLockdow = new List<Transform>();
+    [SerializeField] private List<Transform> PontosRotaLockdow = new List<Transform>();
 
     private float velX;
     private float velY;
@@ -22,11 +24,11 @@ public class EnemyMovement : MonoBehaviour
     //Variaveis de controle
 
     private Vector2 ultimaPosicaoEnquantoFaziaRota;
-    private int randomSpot;
-    private int randomSpotLockdow;
+    private int indiceListaNaoLockdown;
+    private int indiceListaLockdown;
 
-    private int lastMoveSpot;
-    private int lastMoveSpotLockdow;
+    private int indiceUltimoPontoListaNaoLockdonw;
+    private int indiceUltimoPontoListaLockdonw;
 
     //Contadores
     private float timeKnockBack;
@@ -35,16 +37,42 @@ public class EnemyMovement : MonoBehaviour
     //Getters
     public Rigidbody2D GetRb => rb;
     public Vector2 GetUltimaPosicaoOrigem => ultimaPosicaoEnquantoFaziaRota;
+    public Vector2 GetPontosRotaNaoLockdow => PontosRotaNaoLockdow[indiceListaNaoLockdown].position;
+    public Vector2 GetPontosRotaLockdow => PontosRotaLockdow[indiceListaLockdown].position;
+
+
     public int GetVelocidade => velocidade;
 
-    public void ResetarVariaveisDeControle()
+    void VerificarPontoPatrulhaMaisPerto()
     {
-        ultimaPosicaoEnquantoFaziaRota = Vector3.zero;
-        randomSpot = 0;
-        randomSpotLockdow = 0;
-        lastMoveSpot = 0;
-        lastMoveSpotLockdow = 0;
-        velocidade = 2;
+        int ponto0 = 0;
+        float menorPonto = 5;
+
+        for (int i = 0; i < PontosRotaNaoLockdow.Count; i++)
+        {
+            float distancia = Vector2.Distance(transform.position, PontosRotaNaoLockdow[i].transform.position);
+            if (distancia <= menorPonto)
+            {
+                ponto0 = i;
+                menorPonto = distancia;
+            }
+        }
+        indiceListaNaoLockdown = ponto0;
+    }
+    
+    void RotaIdaVolta()
+    {
+        if(rotaIdaVolta)
+        {
+            int valor = PontosRotaNaoLockdow.Count;
+            for (int i = 0; i < valor; i++)
+            {
+                if (i != valor + 1)
+                {
+                    PontosRotaNaoLockdow.Add(PontosRotaNaoLockdow[valor - i - 1]);
+                }
+            }
+        }
     }
 
     private void Start()
@@ -54,14 +82,17 @@ public class EnemyMovement : MonoBehaviour
         iA_Enemy_Basico = GetComponent<IA_Enemy_Basico>();
 
         ultimaPosicaoEnquantoFaziaRota = new Vector3(transform.position.x, transform.position.y, transform.position.z);
-        randomSpot = 0;
-        randomSpotLockdow = 0;
-        lastMoveSpotLockdow =0;
-        lastMoveSpot = 0;
+        indiceListaNaoLockdown = 0;
+        indiceListaLockdown = 0;
+        indiceUltimoPontoListaLockdonw =0;
+        indiceUltimoPontoListaNaoLockdonw = 0;
 
         //Variaveis de controle
         timeKnockBack = 0;
         timeKnockBackMax = 0.5f;
+
+        VerificarPontoPatrulhaMaisPerto();
+        RotaIdaVolta();
     }
 
 
@@ -101,85 +132,69 @@ public class EnemyMovement : MonoBehaviour
         }
     }
 
-    public void KnockBack(float _knockBack, Vector2 _direcaoKnockBack)
+    
+    public void GerarNovoPonto(bool pontoAleatorio)
     {
-        vetorKnockBack = _direcaoKnockBack * _knockBack;
-        timeKnockBack = 0;
+        if (pontoAleatorio)
+            GerarPontoAleatorio();
+        else
+            GerarPontoSequencial();
     }
-
-    void KnockBackContador()
+    void GerarPontoSequencial()
     {
-        timeKnockBack += Time.deltaTime;
-        if (timeKnockBack > timeKnockBackMax)
+        GeradorDePontos(ref indiceListaNaoLockdown,ref indiceUltimoPontoListaNaoLockdonw, PontosRotaNaoLockdow);
+    }
+    void GerarPontoAleatorio()
+    {
+        indiceListaLockdown = Random.Range(0, PontosRotaLockdow.Count);
+    }
+    void GeradorDePontos(ref int _pontoIndiceLista,ref int _ultimoPontoQueFui, List<Transform> _ListaDePontosUtilizada)
+    {
+        if (_pontoIndiceLista >= _ListaDePontosUtilizada.Count - 1)
+            _pontoIndiceLista = 0;
+        else
+            _pontoIndiceLista++;
+
+        if (_pontoIndiceLista != _ultimoPontoQueFui)
         {
-            timeKnockBack = 0;
-            vetorKnockBack = Vector2.zero;
-            enemy.FinalizarAnimacao();
+            _ultimoPontoQueFui = _pontoIndiceLista;
+            ultimaPosicaoEnquantoFaziaRota = _ListaDePontosUtilizada[_ultimoPontoQueFui].position;
         }
-    }
-    public void Patrulhar()
-    {
-        Vector2 directionTemp = moveSpots[randomSpot].position - transform.position;
-        Vector2 direction = directionTemp.normalized * velocidade;
-        iA_Enemy_Basico.Mover(moveSpots[randomSpot].position);
-        //Movimentar(direction);
-
-        if (Vector2.Distance(transform.position, moveSpots[randomSpot].position) < 0.2f)
+        else
         {
-            //gera um novo lugar de waypoint
-            if (randomSpot >= moveSpots.Count - 1)
-                randomSpot = 0;
-            else
-                randomSpot++;
-
-            if (randomSpot != lastMoveSpot)
+            while (_pontoIndiceLista == _ultimoPontoQueFui)
             {
-                lastMoveSpot = randomSpot;
-                ultimaPosicaoEnquantoFaziaRota = moveSpots[lastMoveSpot].position;
-            }
-            else
-            {
-                while (randomSpot == lastMoveSpot)
-                {
-                    randomSpot = Random.Range(0, moveSpots.Count);
-                }
+                _pontoIndiceLista = Random.Range(0, _ListaDePontosUtilizada.Count);
             }
         }
-
     }
     public void VarrerFase()
     {
-        Vector2 directionTemp = moveSpotsLockdown[randomSpotLockdow].position - transform.position;
-        Vector2 direction = directionTemp.normalized * velocidade;
-        iA_Enemy_Basico.Mover(moveSpotsLockdown[randomSpotLockdow].position);
 
-        //Movimentar(direction);
-
-        if (Vector2.Distance(transform.position, moveSpotsLockdown[randomSpotLockdow].position) < 0.2f)
-        {
+        iA_Enemy_Basico.Mover(PontosRotaLockdow[indiceListaLockdown].position);
+    
             //gera um novo lugar de waypoint
-            if (randomSpotLockdow >= moveSpotsLockdown.Count - 1)
-                randomSpotLockdow = 0;
+            if (indiceListaLockdown >= PontosRotaLockdow.Count - 1)
+                indiceListaLockdown = 0;
             else
-                randomSpotLockdow++;
+                indiceListaLockdown++;
 
-
-            randomSpotLockdow = Random.Range(0, moveSpotsLockdown.Count);//para aleatorizar o proximo destino que ele vai
-            if (randomSpotLockdow != lastMoveSpotLockdow)
+            indiceListaLockdown = Random.Range(0, PontosRotaLockdow.Count);//para aleatorizar o proximo destino que ele vai
+            if (indiceListaLockdown != indiceUltimoPontoListaLockdonw)
             {
                 
-                lastMoveSpotLockdow = randomSpotLockdow;
-                ultimaPosicaoEnquantoFaziaRota = moveSpotsLockdown[lastMoveSpotLockdow].position;
+                indiceUltimoPontoListaLockdonw = indiceListaLockdown;
+                ultimaPosicaoEnquantoFaziaRota = PontosRotaLockdow[indiceUltimoPontoListaLockdonw].position;
             }
             else
             {
-                while (randomSpotLockdow == lastMoveSpotLockdow)
+                while (indiceListaLockdown == indiceUltimoPontoListaLockdonw)
                 {
                    
-                    randomSpotLockdow = Random.Range(0, moveSpotsLockdown.Count);
+                    indiceListaLockdown = Random.Range(0, PontosRotaLockdow.Count);
                 }
             }
-        }
+        
 
         //coisas
         //fim da funcao
@@ -200,14 +215,45 @@ public class EnemyMovement : MonoBehaviour
         rb.velocity = posicao;//andando ate a o posica passada
         DefinirDirecao();
     }
-    public void ZerarVelocidade()
+
+    public void KnockBack(float _knockBack, Vector2 _direcaoKnockBack)
     {
-        rb.velocity = Vector2.zero;
+        vetorKnockBack = _direcaoKnockBack * _knockBack;
+        timeKnockBack = 0;
     }
-    public void ReceberMoveSpots(List<Transform> _moveSpots)
+
+    void KnockBackContador()
     {
-        moveSpots.Clear();
-        moveSpots = _moveSpots;
+        timeKnockBack += Time.deltaTime;
+        if (timeKnockBack > timeKnockBackMax)
+        {
+            timeKnockBack = 0;
+            vetorKnockBack = Vector2.zero;
+            enemy.FinalizarAnimacao();
+        }
+    }
+
+    public void ZerarVelocidade(AILerp aILerp)
+    {
+        aILerp.canMove = false;
+        aILerp.speed = 0;
+        aILerp.destination = transform.position;
+    }
+    public void ReceberMoveSpots(List<Transform> _moveSpots, List<Transform> _moveSpotsLockdown)
+    {
+        PontosRotaNaoLockdow.Clear();
+        PontosRotaLockdow.Clear();
+        PontosRotaNaoLockdow = _moveSpots;
+        PontosRotaLockdow = _moveSpotsLockdown;
+    }
+    public void ResetarVariaveisDeControle()
+    {
+        ultimaPosicaoEnquantoFaziaRota = Vector3.zero;
+        indiceListaNaoLockdown = 0;
+        indiceListaLockdown = 0;
+        indiceUltimoPontoListaNaoLockdonw = 0;
+        indiceUltimoPontoListaLockdonw = 0;
+        velocidade = 2;
     }
 
 }

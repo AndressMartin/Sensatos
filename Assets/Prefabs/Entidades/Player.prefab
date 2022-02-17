@@ -252,7 +252,7 @@ GameObject:
   - component: {fileID: 7187578302697251405}
   - component: {fileID: 8916929928765734730}
   - component: {fileID: 8916929928765734733}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -386,8 +386,6 @@ MonoBehaviour:
   - {fileID: 81589876889633317, guid: b35e4543861f8ab49bb9b2505f0e2867, type: 3}
   armaSlot1: {fileID: 0}
   armaSlot2: {fileID: 0}
-  itemAtual: {fileID: 8604403824981294011, guid: b2737c33e52db5c4e9ef5bbc75a56c9c, type: 3}
-  itensEmAtalhos: []
   hasSortedWeapons:
     m_PersistentCalls:
       m_Calls: []
@@ -403,8 +401,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 564973669b60f464382fca84970cab8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itens:
-  - {fileID: 0}
 --- !u!114 &8916929928765734730
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -793,7 +789,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8916929929206015124}
   - component: {fileID: 8916929929206015127}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: HitboxDano
   m_TagString: HitboxDano
   m_Icon: {fileID: 0}
