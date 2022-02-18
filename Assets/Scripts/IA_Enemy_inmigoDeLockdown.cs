@@ -26,6 +26,8 @@ public class IA_Enemy_inmigoDeLockdown : IA_Enemy_Basico
                     if(vendoPlayer)
                     {
                         estadoDeteccaoPlayer = EstadoDeteccaoPlayer.playerDetectado;
+                        verifiqueiUltimaPosicaoJogador = false;
+
                     }
                     else
                     {
@@ -41,7 +43,9 @@ public class IA_Enemy_inmigoDeLockdown : IA_Enemy_Basico
                 vendoPlayer = vendoPlayerCircular;
                 if(vendoPlayer)
                 {
-                    if(playerAreaAtaque)
+                    posicaoUltimoLugarVisto = posicaoAtualPlayer;
+
+                    if (playerAreaAtaque)
                     {
                         inimigoEstados = InimigoEstados.AtacarPlayer;
                     }
@@ -54,9 +58,11 @@ public class IA_Enemy_inmigoDeLockdown : IA_Enemy_Basico
                 {
                     if (Contador(ref tempoEsquecerPlayer, tempoEsquecerPlayerMax)) //caso nao o veja chamar contador para perder o inimigo de vista
                     {
-                        controlodarEsqueciPlayer = true;
-                        estadoDeteccaoPlayer = EstadoDeteccaoPlayer.NaoToVendoPlayer;
-                        Debug.Log("Perdi o player De vista, indo na sua ultima posicao");
+                        if (verifiqueiUltimaPosicaoJogador)
+                        {
+                            estadoDeteccaoPlayer = EstadoDeteccaoPlayer.NaoToVendoPlayer;
+                        }
+
                     }
                     else
                     {
@@ -66,6 +72,11 @@ public class IA_Enemy_inmigoDeLockdown : IA_Enemy_Basico
                 break;
 
         }
+    }
+    protected override void AndandoUltimaPosicaoPlayerConhecida()
+    {
+        base.AndandoUltimaPosicaoPlayerConhecida();
+
     }
     public override void Respawn()
     {

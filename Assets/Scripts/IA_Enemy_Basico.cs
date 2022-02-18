@@ -170,7 +170,7 @@ public class IA_Enemy_Basico : MonoBehaviour
                         }
                     }
 
-                    else if (!ouvindoSom && fazerRotinaLockDown) // caso receba que é pra fazer a rotina de lockdown(varrer a fase)
+                    else if (!ouvindoSom && fazerRotinaLockDown && !vouApertarBotao) // caso receba que é pra fazer a rotina de lockdown(varrer a fase)
                     {
                         inimigoEstados = InimigoEstados.FazerRotinaLockdow;
                     }
@@ -188,14 +188,15 @@ public class IA_Enemy_Basico : MonoBehaviour
                 break;
 
             case EstadoDeteccaoPlayer.DetectandoPlayer:
-                if (emLockDown && vendoPlayer)
+                if (emLockDown && vendoPlayer) // vendo player em lockdown
                 {
                     verifiqueiUltimaPosicaoJogador = false;
                     viuPlayerAlgumaVez = true;
                     estadoDeteccaoPlayer = EstadoDeteccaoPlayer.playerDetectado;
+                    inimigoEstados = InimigoEstados.AndandoAtePlayer;
                 }
 
-                else if (vendoPlayer && !controlodarEsqueciPlayer) //se estiver no estado de detecao e ver o player e o contador for falso soma na detecao
+                else if (vendoPlayer && !controlodarEsqueciPlayer) //se ver o player sem estar em lockdown
                 {
                     if (Contador(ref tempoEntrarEmModoAlerta, tempoEntrarEmModoAlertaMax))
                     {
@@ -239,7 +240,7 @@ public class IA_Enemy_Basico : MonoBehaviour
                         {
                             controlodarEsqueciPlayer = true;
                             estadoDeteccaoPlayer = EstadoDeteccaoPlayer.NaoToVendoPlayer;
-                            //Debug.Log("Perdi o player De vista, indo na sua ultima posicao");
+                            Debug.Log("Perdi o player De vista, indo na sua ultima posicao");
                         }
                     }
                     else // vendo player aumentar a detecao e verificar se esta na zona de ataque
@@ -247,8 +248,13 @@ public class IA_Enemy_Basico : MonoBehaviour
                         posicaoUltimoLugarVisto = posicaoAtualPlayer;
                         ContadorInverso(ref tempoEsquecerPlayer, tempoEsquecerPlayerMax);
 
-                       // Debug.Log("to entrando aqui "+gameObject.name+"sas");
-                        if (enemy.GetEnemyManager.VerificarUltimoVerPlayer(posicaoListaIndiceDeteccao) && !emLockDown) //terPrioridade para AtivarAlarme
+                        if(inimigoEstados == InimigoEstados.FazerRotinaLockdow)
+                        {
+                            Debug.LogError("o inimigo ta pra fazer lockdown mesmo vendo o player");
+                        }
+
+                        // Debug.Log("to entrando aqui "+gameObject.name+"sas");
+                        if (enemy.GetEnemyManager.VerificarUltimoVerPlayer(posicaoListaIndiceDeteccao) && !emLockDown) //o ultimo inimigo a ver o player deve ativar o lockdown isso tem prioridade sobre atacar ou mover
                         {
                             inimigoEstados = InimigoEstados.IndoAtivarLockDown;
                         }
@@ -551,7 +557,7 @@ public class IA_Enemy_Basico : MonoBehaviour
     {
         if (_enemy.GetIA_Enemy_Basico.inimigoEstados == InimigoEstados.AndandoAtePlayer || _enemy.GetIA_Enemy_Basico.inimigoEstados == InimigoEstados.AtacarPlayer)
         {
-            Debug.Log("recebi player");
+            //Debug.Log("recebi player");
             estadoDeteccaoPlayer = EstadoDeteccaoPlayer.playerDetectado;
         }
         else if (!emLockDown)
