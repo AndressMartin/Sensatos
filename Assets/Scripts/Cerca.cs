@@ -101,7 +101,7 @@ public class Cerca : ParedeModel
 
         if(ativo == true)
         {
-            AtivarHitBox();
+            HitBoxAtiva(true);
         }
     }
 
@@ -148,26 +148,28 @@ public class Cerca : ParedeModel
     {
         spriteAtual = "Destruida";
         TrocarSprite(spriteAtual);
-        DesativarHitBox();
+        HitBoxAtiva(false);
         ativo = false;
     }
 
-    private void DesativarHitBox()
+    private void HitBoxAtiva(bool ativo)
     {
-        boxCollider2D.isTrigger = true;
-        generalManager.PathfinderManager.EscanearPathfinder(boxCollider2D);
+        if(ativo == true)
+        {
+            boxCollider2D.enabled = true;
+            hitBoxTiro.enabled = true;
 
-        boxCollider2D.enabled = false;
-        hitBoxTiro.enabled = false;
-    }
+            boxCollider2D.isTrigger = false;
+            generalManager.PathfinderManager.EscanearPathfinder(boxCollider2D);
+        }
+        else
+        {
+            boxCollider2D.isTrigger = true;
+            generalManager.PathfinderManager.EscanearPathfinder(boxCollider2D);
 
-    private void AtivarHitBox()
-    {
-        boxCollider2D.enabled = true;
-        hitBoxTiro.enabled = true;
-
-        boxCollider2D.isTrigger = false;
-        generalManager.PathfinderManager.EscanearPathfinder(boxCollider2D);
+            boxCollider2D.enabled = false;
+            hitBoxTiro.enabled = false;
+        }
     }
 
     private void TrocarSprite(string spriteName)

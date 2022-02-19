@@ -19,20 +19,26 @@ public class VisaoCircularEnemy : MonoBehaviour
             circleCollider2D = GetComponent<CircleCollider2D>();
         }
     }
-    private void OnTriggerStay2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        Player player = collision.GetComponent<Player>();
-        if (player != null)
+        if (collision.CompareTag("HitboxDano"))
         {
-            vendoPlayer = true;
+            Player player = collision.transform.parent.GetComponent<Player>();
+            if (player != null)
+            {
+                vendoPlayer = true;
+            }
         }
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
-        Player player = collision.GetComponent<Player>();
-        if (player != null)
+        if(collision.CompareTag("HitboxDano"))
         {
-            vendoPlayer = false;
+            Player player = collision.transform.parent.GetComponent<Player>();
+            if (player != null)
+            {
+                vendoPlayer = false;
+            }
         }
     }
     public void ValorRaioInicial(float _raio)

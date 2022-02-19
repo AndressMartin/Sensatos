@@ -14,9 +14,9 @@ public class Enemy : EntityModel
     private InventarioEnemy inventario;
     private EnemyMovement enemyMovement;
     private EnemyVisionScript enemyVision;
+    private BoxCollider2D colisao;
     private IAEnemy iA_Enemy;
     private Player player;
-    private AIPath aiPath;
 
     //Variaveis
     public override int vida { get; protected set; }
@@ -28,11 +28,14 @@ public class Enemy : EntityModel
     public bool morto;
     public bool playerOnAttackRange;
 
-
     float tempoTiro;
 
     private float knockBackTrigger;
     private float knockBackTriggerMax;
+    private float knockBackTempo;
+
+    private Vector2 vetorVelocidade;
+    private Vector2 posAnterior;
 
     //Variaveis de respawn
     private bool mortoRespawn;
@@ -48,11 +51,8 @@ public class Enemy : EntityModel
     public InventarioEnemy GetInventarioEnemy => inventario;
     public EnemyMovement GetEnemyMovement => enemyMovement;
     public IAEnemy GetIA_Enemy_Basico => iA_Enemy;
+    public Vector2 VetorVelocidade => vetorVelocidade;
 
-    private void Awake()
-    {
-        
-    }
     void Start()
     {
         Iniciar();
@@ -75,10 +75,10 @@ public class Enemy : EntityModel
         enemyMovement = GetComponent<EnemyMovement>();
         iA_Enemy = GetComponent<IAEnemy>();
         inventario = GetComponent<InventarioEnemy>();
-        aiPath = GetComponent<AIPath>();
         pontaArma = GetComponentInChildren<PontaArmaScript>();
         enemyVision = GetComponentInChildren<EnemyVisionScript>();
         animacao = GetComponent<AnimacaoJogador>();
+        colisao = GetComponent<BoxCollider2D>();
 
         player = FindObjectOfType<Player>();
 
@@ -93,8 +93,13 @@ public class Enemy : EntityModel
 
         knockBackTrigger = 0;
         knockBackTriggerMax = 10;
+        knockBackTempo = 0;
+
+        vetorVelocidade = Vector2.zero;
+        posAnterior = transform.position;
 
         iA_Enemy.Iniciar();
+        enemyMovement.Iniciar();
 
         SetRespawnInicial();
 
@@ -112,8 +117,19 @@ public class Enemy : EntityModel
     { 
         if(generalManager.PauseManager.JogoPausado == false)
         {
-            AllEnemySubClass();
+            RotinasDoInimigo();
         }
+    }
+
+    private void FixedUpdate()
+    {
+        if((Vector2)transform.position != posAnterior)
+        {
+            generalManager.PathfinderManager.EscanearPathfinder(colisao);
+        }
+
+        vetorVelocidade = (Vector2)transform.position - posAnterior;
+        posAnterior = transform.position;
     }
 
     private void SetRespawnInicial()
@@ -138,7 +154,7 @@ public class Enemy : EntityModel
             ChangeDirection(direcaoRespawn);
 
             iA_Enemy.Respawn();
-            enemyMovement.ZerarVelocidade(aiPath);
+            enemyMovement.ZerarVelocidade();
 
 
             ResetarVariaveisDeControle();
@@ -154,22 +170,25 @@ public class Enemy : EntityModel
         enemyVision.ResetarVariaveisDeControle();
     }
 
-    void AllEnemySubClass()
+    void RotinasDoInimigo()
     {
         if (!morto)
         {
             //Debug.Log("Inimigo Vel X: " + enemyMove.velX + ", Vel Y: " + enemyMove.velY);
             animacao.AtualizarDirecao(direcao, direcao);
             Animar();
-            iA_Enemy.Main();
+
+            if(estado == Estado.Normal)
+            {
+                iA_Enemy.Main();
+            }
+
             enemyMovement.Main();
             enemyVision.Main();
 
+            KnockBackTriggerTempo();
+
             CadenciaTiro();
-        }
-        if(morto)
-        {
-            enemyMovement.ZerarVelocidade(aiPath);
         }
     }
 
@@ -178,11 +197,11 @@ public class Enemy : EntityModel
         switch (estado)
         {
             case Estado.Normal:
-                if ((enemyMovement.GetRb.velocity.x == 0 && enemyMovement.GetRb.velocity.y == 0) && animacao.GetAnimacaoAtual() != "Idle")
+                if ((vetorVelocidade.x == 0 && vetorVelocidade.y == 0) && animacao.GetAnimacaoAtual() != "Idle")
                 {
                     animacao.TrocarAnimacao("Idle");
                 }
-                else if ((enemyMovement.GetRb.velocity.x != 0 || enemyMovement.GetRb.velocity.y != 0) && animacao.GetAnimacaoAtual() != "Andando")
+                else if ((vetorVelocidade.x != 0 || vetorVelocidade.y != 0) && animacao.GetAnimacaoAtual() != "Andando")
                 {
                     animacao.TrocarAnimacao("Andando");
                 }
@@ -230,7 +249,7 @@ public class Enemy : EntityModel
     {
         generalManager.EnemyManager.PerdiVisaoInimigo();
         morto = true;
-        enemyMovement.ZerarVelocidade(aiPath);
+        enemyMovement.ZerarVelocidade();
         Debug.Log("to morto");
     }
     public void stealthKill()
@@ -264,9 +283,11 @@ public class Enemy : EntityModel
                 iA_Enemy.ReceberDano();
 
                 knockBackTrigger += _knockBackTrigger;
+                knockBackTempo = 6;
 
                 if (knockBackTrigger >= knockBackTriggerMax)
                 {
+                    knockBackTrigger = 0;
                     estado = Estado.TomandoDano;
                     KnockBack(_knockBack, _direcaoKnockBack);
                 }
@@ -277,6 +298,20 @@ public class Enemy : EntityModel
     public override void KnockBack(float _knockBack, Vector2 _direcaoKnockBack)
     {
         enemyMovement.KnockBack(_knockBack, _direcaoKnockBack);
+    }
+
+    private void KnockBackTriggerTempo()
+    {
+        if(knockBackTempo > 0)
+        {
+            knockBackTempo -= Time.deltaTime;
+
+            if(knockBackTempo <= 0)
+            {
+                knockBackTempo = 0;
+                knockBackTrigger = 0;
+            }
+        }
     }
 
     public void ChangeDirection(Direcao _direction)

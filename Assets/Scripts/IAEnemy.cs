@@ -14,7 +14,6 @@ public class IAEnemy : MonoBehaviour
     protected Enemy enemy;
     protected EnemyVisionScript enemyVisionScript;
     protected InventarioEnemy inventarioEnemy;
-
     protected AIPath aiPath;
     
     //Enuns
@@ -32,8 +31,8 @@ public class IAEnemy : MonoBehaviour
 
     //Variaveis controle
 
-    protected bool vendoPlayerCircular; //se esta vendo player pela visao redonda
-    protected bool vendoPlayer;
+    public bool vendoPlayerCircular; //se esta vendo player pela visao redonda
+    public bool vendoPlayer;
     protected bool playerAreaAtaque;
     protected bool emLockDown;
     protected bool somTiro;
@@ -158,7 +157,7 @@ public class IAEnemy : MonoBehaviour
 
                 if (vendoPlayer)//Caso tenha visto o player
                 {
-                    enemyMovement.ZerarVelocidade(aiPath);
+                    enemyMovement.ZerarVelocidade();
                     controlodarEsqueciPlayer = false;
                     estadoDeteccaoPlayer = EstadoDeteccaoPlayer.DetectandoPlayer;
                 }
@@ -293,7 +292,7 @@ public class IAEnemy : MonoBehaviour
 
     protected virtual void AndarAtePlayer()
     {
-        Mover(posicaoAtualPlayer);
+        enemyMovement.Mover(posicaoAtualPlayer);
     }
     protected virtual void Patrulhar()
     {
@@ -320,7 +319,7 @@ public class IAEnemy : MonoBehaviour
         }
         else
         {
-            enemyMovement.ZerarVelocidade(aiPath);
+            enemyMovement.ZerarVelocidade();
         }
     }
     protected virtual void SomTiro()
@@ -348,8 +347,7 @@ public class IAEnemy : MonoBehaviour
     }
     protected virtual void FicarParado()
     {
-        enemyMovement.ZerarVelocidade(aiPath);
-        aiPath.canMove = false;
+        enemyMovement.ZerarVelocidade();
     }
     protected virtual void FazerRotinaLockdown()
     {
@@ -451,7 +449,7 @@ public class IAEnemy : MonoBehaviour
 
     void Atacar()
     {
-        enemyMovement.ZerarVelocidade(aiPath);
+        enemyMovement.ZerarVelocidade();
         if (municaoNoCarregador > 0)
         {
             if (enemy.Atirar()) //Reload
@@ -460,13 +458,7 @@ public class IAEnemy : MonoBehaviour
             }
         }
     }
-    public void Mover(Vector2 _alvo)
-    {
-        aiPath.canMove = true;
-        aiPath.maxSpeed = enemyMovement.GetVelocidade;
-        aiPath.destination = _alvo;
-        //enemyMovement.Movimentar(enemyMovement.CalcMovimemto(destino.transform.position));
-    }
+    
     void AtivarLockDown()
     {
         vouApertarBotao = false;
@@ -504,7 +496,7 @@ public class IAEnemy : MonoBehaviour
         {
             enemy.ChangeDirection(EntityModel.Direcao.Baixo);
         }
-        enemyMovement.ZerarVelocidade(aiPath);
+        enemyMovement.ZerarVelocidade();
 
         return Contador(ref tempo, tempoMax);
     }
@@ -514,8 +506,7 @@ public class IAEnemy : MonoBehaviour
 
         if (Vector2.Distance(transform.position, alvo) > 0.5)
         {
-            aiPath.canMove = true;
-            Mover(alvo);
+            enemyMovement.Mover(alvo);
             return false;//se chegou retorna Verdadeiro
         }
         else
@@ -656,7 +647,7 @@ public class IAEnemy : MonoBehaviour
         posicaoAtualPlayer = Vector2.zero;
 
         transform.position = posicaoInicial;
-        Mover(transform.position);
+        enemyMovement.Mover(transform.position);
 
         ResetarContadores();
 

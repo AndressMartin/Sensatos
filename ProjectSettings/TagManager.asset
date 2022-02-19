@@ -4,28 +4,18 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - porta
   - Enemy
-  - ItemChave
-  - Item
-  - cerca
-  - FishingSpot
-  - FishingSite
-  - MinigameTrigger
-  - HitboxTile
-  - EnemyHitboxTile
-  - Wall
-  - parede
   - HitboxDano
-  - paredeTiro
+  - ParedeTiro
+  - BloqueiaVisao
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - EnemyCollision
+  - 
   - Water
   - UI
-  - Not Ignore Raycast
+  - ColidirComORaycast
   - GridsComColisao
   - 
   - 

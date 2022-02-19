@@ -15,10 +15,10 @@ public class EnemyVisionScript : MonoBehaviour
     Vector2 v1, v2 = new Vector2(0, 0), v3 = new Vector2(0, 0);
 
     //variaveis controle
-    [SerializeField] bool vendoPlayer;
-    [SerializeField] bool vendoPlayerCircular;
-    [SerializeField] float tempo;
-    [SerializeField] float DeQuantoEmQuantoSegundos;
+    [SerializeField] private bool vendoPlayer;
+    [SerializeField] private bool vendoPlayerCircular;
+    [SerializeField] private float tempo;
+    [SerializeField] private float intervaloDeTempo;
 
     //componente
     private Enemy enemy;
@@ -49,57 +49,6 @@ public class EnemyVisionScript : MonoBehaviour
         direcao = enemy.GetDirecao;
         MudarDirecaoConeVisao();
     }
-
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        tempo += Time.deltaTime;
-
-        if (tempo >= DeQuantoEmQuantoSegundos)
-        {
-            EntityModel entityModelTemp = collision.gameObject.GetComponent<EntityModel>();
-
-            if (entityModelTemp != null)
-            {
-                RaycastHit2D hits;
-                hits = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y),
-                    new Vector2(entityModelTemp.transform.position.x - transform.position.x, entityModelTemp.transform.position.y - transform.position.y), larguraVisao, mask.value);
-
-                if (!hits)
-                {
-                    if (entityModelTemp is Enemy)
-                    {
-                        enemy.GetIA_Enemy_Basico.VendoOutroInimigo((Enemy)entityModelTemp);
-                    }
-
-                    if (entityModelTemp is Player)
-                    {
-                        vendoPlayer = true;
-                    }
-                }
-                if(hits)
-                {
-                    Debug.DrawRay(new Vector2(transform.position.x, transform.position.y), new Vector2(hits.transform.position.x - transform.position.x, hits.transform.position.y - transform.position.y), Color.red);
-                }
-            }
-            tempo = 0;
-        }
-    }
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-
-        if (collision.gameObject.tag == "Player")
-        {
-            ZerarVariaveis();
-        }
-
-        else if (collision.gameObject.tag == "Player")
-        {
-            vendoPlayer=false;
-            ZerarVariaveis();
-        }
-       
-    }
-
 
     public void ResetarVariaveisDeControle()
     {
@@ -146,6 +95,58 @@ public class EnemyVisionScript : MonoBehaviour
         }
         polygonCollider.points = new[] { v1, v2, v3 };
         //float h2 = (larguraConeVisao - pontoX) * (larguraConeVisao - pontoX) + (alturaConeVisao - pontoY) * (alturaConeVisao - pontoY);
+
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        tempo += Time.deltaTime;
+
+        if (tempo >= intervaloDeTempo)
+        {
+            if (collision.CompareTag("HitboxDano"))
+            {
+                EntityModel entityModelTemp = collision.transform.parent.gameObject.GetComponent<EntityModel>();
+
+                if (entityModelTemp != null)
+                {
+                    RaycastHit2D hits;
+                    hits = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y),
+                        new Vector2(entityModelTemp.transform.position.x - transform.position.x, entityModelTemp.transform.position.y - transform.position.y), larguraVisao, mask.value);
+
+                    if (!hits)
+                    {
+                        if (entityModelTemp is Enemy)
+                        {
+                            enemy.GetIA_Enemy_Basico.VendoOutroInimigo((Enemy)entityModelTemp);
+                        }
+
+                        if (entityModelTemp is Player)
+                        {
+                            vendoPlayer = true;
+                        }
+                    }
+                    if (hits)
+                    {
+                        Debug.DrawRay(new Vector2(transform.position.x, transform.position.y), new Vector2(hits.transform.position.x - transform.position.x, hits.transform.position.y - transform.position.y), Color.red);
+                    }
+                }
+                tempo = 0;
+            }
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+
+        if (collision.gameObject.CompareTag("HitboxDano"))
+        {
+            Player player = collision.transform.parent.GetComponent<Player>();
+            if (player != null)
+            {
+                ZerarVariaveis();
+            }
+        }
 
     }
 }

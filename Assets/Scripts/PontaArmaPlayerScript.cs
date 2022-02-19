@@ -16,7 +16,7 @@ public class PontaArmaPlayerScript : PontaArmaScript
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("paredeTiro"))
+        if (collision.gameObject.CompareTag("ParedeTiro"))
         {
             colidindoComParedes++;
         }
@@ -24,7 +24,7 @@ public class PontaArmaPlayerScript : PontaArmaScript
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("paredeTiro"))
+        if (collision.gameObject.CompareTag("ParedeTiro"))
         {
             colidindoComParedes--;
         }

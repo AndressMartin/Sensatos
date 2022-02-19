@@ -11,6 +11,7 @@ public class Porta : ObjetoInteragivel
     private AnimacaoPorta animacao;
     private BoxCollider2D colisao;
     private BoxCollider2D hitBoxTiro;
+    private BoxCollider2D hitBoxVisao;
 
     //Enums
     public enum TipoPorta { Simples, Normal, Contencao }
@@ -37,6 +38,7 @@ public class Porta : ObjetoInteragivel
         animacao = GetComponent<AnimacaoPorta>();
         colisao = GetComponent<BoxCollider2D>();
         hitBoxTiro = transform.Find("HitBoxTiro").GetComponent<BoxCollider2D>();
+        hitBoxVisao = transform.Find("HitBoxVisao").GetComponent<BoxCollider2D>();
 
         //Variaveis
         ativo = true;
@@ -53,6 +55,12 @@ public class Porta : ObjetoInteragivel
         else
         {
             trancado = false;
+        }
+
+        //Definir se a porta vai influenciar o pathfinder
+        if (tipoPorta == TipoPorta.Contencao)
+        {
+            gameObject.layer = LayerMask.NameToLayer("GridsComColisao");
         }
 
         SetRespawn();
@@ -157,7 +165,7 @@ public class Porta : ObjetoInteragivel
         {
             animacao.TrocarAnimacao("Aberta");
         }
-        Door(aberto);
+        PortaAberta(aberto);
     }
 
     void ForceFecharPorta()
@@ -167,14 +175,37 @@ public class Porta : ObjetoInteragivel
         {
             animacao.TrocarAnimacao("Fechada");
         }
-        Door(aberto);
+        PortaAberta(aberto);
     }
 
-    void Door(bool portaAberta)
+    void PortaAberta(bool portaAberta)
     {
-        colisao.isTrigger = portaAberta;
-        hitBoxTiro.enabled = !portaAberta;
-        generalManager.PathfinderManager.EscanearPathfinder(colisao);
+        if(portaAberta == true)
+        {
+            colisao.isTrigger = portaAberta;
+
+            if (tipoPorta == TipoPorta.Contencao)
+            {
+                generalManager.PathfinderManager.EscanearPathfinder(colisao);
+            }
+
+            colisao.enabled = !portaAberta;
+            hitBoxTiro.enabled = !portaAberta;
+            hitBoxVisao.enabled = !portaAberta;
+        }
+        else
+        {
+            colisao.enabled = !portaAberta;
+            hitBoxTiro.enabled = !portaAberta;
+            hitBoxVisao.enabled = !portaAberta;
+
+            colisao.isTrigger = portaAberta;
+
+            if (tipoPorta == TipoPorta.Contencao)
+            {
+                generalManager.PathfinderManager.EscanearPathfinder(colisao);
+            }
+        }
     }
 
     public void AtivarLockDown()

@@ -7,6 +7,7 @@ public class MapManagerScript : MonoBehaviour
     void Start()
     {
         AtualizarPosicaoCercas();
+        CriarParedesQueBloqueiamVisao();
     }
 
     private void AtualizarPosicaoCercas()
@@ -16,6 +17,16 @@ public class MapManagerScript : MonoBehaviour
         foreach (Cerca cerca in cercas)
         {
             cerca.ArrumarPosicao(cercas);
+        }
+    }
+
+    private void CriarParedesQueBloqueiamVisao()
+    {
+        DuplicadorDeTileMapsQueBloqueiamVisao[] novasParedes = FindObjectsOfType<DuplicadorDeTileMapsQueBloqueiamVisao>();
+
+        foreach (DuplicadorDeTileMapsQueBloqueiamVisao novasParede in novasParedes)
+        {
+            novasParede.Duplicar();
         }
     }
 }

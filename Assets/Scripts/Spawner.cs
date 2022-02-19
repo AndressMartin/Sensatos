@@ -22,7 +22,7 @@ public class Spawner : MonoBehaviour
         for (int i = 0; i < quantidadeInimigos; i++)
         {
             Enemy enemy;
-            enemy = Instantiate(prefabInimigo);
+            enemy = Instantiate(prefabInimigo, transform.position, Quaternion.identity);
             enemy.name = "carlos "+i;
             enemy.SerSpawnado(pontoDeSpawn.transform.position);
             enemyList.Add(enemy);
