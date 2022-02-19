@@ -4,35 +4,31 @@ using UnityEngine;
 
 public class Patrol : MonoBehaviour
 {
+    //Componentes
+    private Rigidbody2D rb;
+
+    //Variaveis
     public enum Stances { idle, patrolling };
     public Stances stance = Stances.idle;
-    public float speed;
 
+    public float speed;
     public float waitTime;
     public float startWaitTime;
 
     public List<Transform> moveSpots = new List<Transform>();
     private int lastMoveSpot;
     private int randomSpot;
-    private Animator myAnim;
-    private Sprite defaultSprite;
-    private SpriteRenderer spriteRend;
-    private Rigidbody2D rigidbody2D;
-    // Start is called before the first frame update
+
     void Start()
     {
-        rigidbody2D = GetComponent<Rigidbody2D>();
+        rb = GetComponent<Rigidbody2D>();
         waitTime = startWaitTime;
-        myAnim = GetComponent<Animator>();
-        spriteRend = GetComponent<SpriteRenderer>();
-        defaultSprite = spriteRend.sprite;
         stance = Stances.patrolling;
         randomSpot = 0;
     }
 
-    // Update is called once per frame
     void Update()
-    {        
+    {
         transform.position = Vector2.MoveTowards(transform.position, moveSpots[randomSpot].position, speed * Time.deltaTime);
 
         //rigidbody2D.MovePosition(transform.position+(moveSpots[randomSpot].position-transform.position) * speed * Time.deltaTime);

@@ -38,6 +38,9 @@ public class Porta : ObjetoInteragivel
         colisao = GetComponent<BoxCollider2D>();
         hitBoxTiro = transform.Find("HitBoxTiro").GetComponent<BoxCollider2D>();
 
+        //Variaveis
+        ativo = true;
+
         //Se adicionar a lista de objetos interagiveis do ObjectManager
         generalManager.ObjectManager.AdicionarAosObjetosInteragiveis(this);
         generalManager.ObjectManager.AdicionarAsPortas(this);
@@ -66,16 +69,24 @@ public class Porta : ObjetoInteragivel
     {
         aberto = abertoRespawn;
         trancado = trancadoRespawn;
-        ForceFecharPorta();
 
         if (tipoPorta == TipoPorta.Contencao)
         {
             AbrirPorta();
         }
+        else
+        {
+            ForceFecharPorta();
+        }
     }
 
     public override void Interagir(Player player)
     {
+        if(tipoPorta == TipoPorta.Contencao)
+        {
+            return;
+        }
+
         if(trancado)
         {
             //Verifica se ha uma chave nos itens do jogador e se alguma delas tem o id igual ao da chave que destranca a porta
@@ -94,8 +105,21 @@ public class Porta : ObjetoInteragivel
         }
         else
         {
-            //Debug.Log("abriur porta");
-            AbrirPorta();
+            switch (tipoPorta)
+            {
+                case TipoPorta.Simples:
+                    AbrirPorta();
+                    break;
+
+                case TipoPorta.Normal:
+                    switch (estado)
+                    {
+                        case Estado.NaoLockdown:
+                            AbrirPorta();
+                            break;
+                    }
+                    break;
+            }
         }
     }
 
@@ -104,14 +128,7 @@ public class Porta : ObjetoInteragivel
         switch (tipoPorta)
         {
             case TipoPorta.Simples:
-                switch (estado)
-                {
-                    case Estado.NaoLockdown:
-                        trancado = false;
-                        break;
-                    case Estado.Lockdown:
-                        break;
-                }
+                trancado = false;
                 break;
 
             case TipoPorta.Normal:
@@ -120,21 +137,8 @@ public class Porta : ObjetoInteragivel
                     case Estado.NaoLockdown:
                         trancado = false;
                         break;
-                    case Estado.Lockdown:
-                        break;
                 }
                 break;
-
-            case TipoPorta.Contencao:
-                switch (estado)
-                {
-                    case Estado.NaoLockdown:
-                        break;
-                    case Estado.Lockdown:
-                        break;
-                }
-                break;
-
         }
     }
 
@@ -145,10 +149,11 @@ public class Porta : ObjetoInteragivel
             ForceFecharPorta();
         }
     }
+
     void AbrirPorta()
     {
         aberto = true;
-        if (animacao.GetAnimacaoAtual() != "Aberta")
+        if (animacao.AnimacaoAtual != "Aberta")
         {
             animacao.TrocarAnimacao("Aberta");
         }
@@ -158,7 +163,7 @@ public class Porta : ObjetoInteragivel
     void ForceFecharPorta()
     {
         aberto = false;
-        if (animacao.GetAnimacaoAtual() != "Fechada")
+        if (animacao.AnimacaoAtual != "Fechada")
         {
             animacao.TrocarAnimacao("Fechada");
         }
@@ -169,6 +174,7 @@ public class Porta : ObjetoInteragivel
     {
         colisao.isTrigger = portaAberta;
         hitBoxTiro.enabled = !portaAberta;
+        generalManager.PathfinderManager.EscanearPathfinder(colisao);
     }
 
     public void AtivarLockDown()

@@ -94,6 +94,8 @@ public class Enemy : EntityModel
         knockBackTrigger = 0;
         knockBackTriggerMax = 10;
 
+        iA_Enemy.Iniciar();
+
         SetRespawnInicial();
 
         iniciado = true;

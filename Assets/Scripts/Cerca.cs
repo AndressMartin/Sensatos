@@ -91,12 +91,6 @@ public class Cerca : ParedeModel
         vidaRespawn = vida;
         ativoRespawn = ativo;
         spriteAtualRespawn = spriteAtual;
-
-        if(ativo == true)
-        {
-            boxCollider2D.enabled = true;
-            hitBoxTiro.enabled = true;
-        }
     }
 
     public override void Respawn()
@@ -104,6 +98,11 @@ public class Cerca : ParedeModel
         vida = vidaRespawn;
         ativo = ativoRespawn;
         TrocarSprite(spriteAtualRespawn);
+
+        if(ativo == true)
+        {
+            AtivarHitBox();
+        }
     }
 
     public override void Interagir(Player player)
@@ -149,9 +148,26 @@ public class Cerca : ParedeModel
     {
         spriteAtual = "Destruida";
         TrocarSprite(spriteAtual);
+        DesativarHitBox();
+        ativo = false;
+    }
+
+    private void DesativarHitBox()
+    {
+        boxCollider2D.isTrigger = true;
+        generalManager.PathfinderManager.EscanearPathfinder(boxCollider2D);
+
         boxCollider2D.enabled = false;
         hitBoxTiro.enabled = false;
-        ativo = false;
+    }
+
+    private void AtivarHitBox()
+    {
+        boxCollider2D.enabled = true;
+        hitBoxTiro.enabled = true;
+
+        boxCollider2D.isTrigger = false;
+        generalManager.PathfinderManager.EscanearPathfinder(boxCollider2D);
     }
 
     private void TrocarSprite(string spriteName)

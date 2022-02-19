@@ -25,8 +25,10 @@ public class IAEnemy : MonoBehaviour
     [SerializeField] protected EstadoDeteccaoPlayer estadoDeteccaoPlayer;
 
     //Variaveis
-     protected int municaoNoCarregador;
-     protected int municaoNoCarregadorMax;
+    protected int municaoNoCarregador;
+    protected int municaoNoCarregadorMax;
+
+    protected bool iniciado = false;
 
     //Variaveis controle
 
@@ -74,6 +76,16 @@ public class IAEnemy : MonoBehaviour
 
     public virtual void Start()
     {
+        Iniciar();
+    }
+
+    public virtual void Iniciar()
+    {
+        if (iniciado == true)
+        {
+            return;
+        }
+
         //Managers
         generalManager = FindObjectOfType<GeneralManagerScript>();
 
@@ -93,7 +105,7 @@ public class IAEnemy : MonoBehaviour
         municaoNoCarregador = municaoNoCarregadorMax;
         tempoRecarregarArmaMax = inventarioEnemy.ArmaSlot.GetStatus.TempoParaRecarregar;
 
-        vendoPlayerCircular = false; 
+        vendoPlayerCircular = false;
         vendoPlayer = false;
         playerAreaAtaque = false;
         somTiro = false;
@@ -115,6 +127,8 @@ public class IAEnemy : MonoBehaviour
         posicaoInicial = transform.position;
 
         ResetarContadores();
+
+        iniciado = true;
     }
 
     // Update is called once per frame

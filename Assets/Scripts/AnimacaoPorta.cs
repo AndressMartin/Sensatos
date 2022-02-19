@@ -8,7 +8,9 @@ public class AnimacaoPorta : MonoBehaviour
     private SpriteRenderer portaSprite; //SpriteRenderer da porta
     private string animacaoAtual; //Guarda a animacao atual
 
-    // Start is called before the first frame update
+    //Getters
+    public string AnimacaoAtual => animacaoAtual;
+
     void Start()
     {
         porta = GetComponent<Animator>();
@@ -21,10 +23,5 @@ public class AnimacaoPorta : MonoBehaviour
     {
         animacaoAtual = animacao;
         porta.Play(animacaoAtual);
-    }
-
-    public string GetAnimacaoAtual()
-    {
-        return animacaoAtual;
     }
 }

@@ -7,10 +7,19 @@ public class IAEnemyLockdown : IAEnemy
 {
     [SerializeField] Vector2 salaSegurança;
 
-    //[SerializeField]new bool emLockDown;
     public override void Start()
     {
-        base.Start();
+        Iniciar();
+    }
+
+    public override void Iniciar()
+    {
+        if (iniciado == true)
+        {
+            return;
+        }
+
+        base.Iniciar();
         salaSegurança = transform.position;
     }
 

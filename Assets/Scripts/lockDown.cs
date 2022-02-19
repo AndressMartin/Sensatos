@@ -21,6 +21,9 @@ public class LockDown : ObjetoInteragivel
         //Componentes
         spriteRenderer = GetComponent<SpriteRenderer>();
 
+        //Variaveis
+        ativo = true;
+
         //Se adicionar a lista de objetos interagiveis do ObjectManager
         generalManager.ObjectManager.AdicionarAosObjetosInteragiveis(this);
         generalManager.ObjectManager.AdicionarAosAlarmes(this);

@@ -26,8 +26,13 @@ public class ItemColetavel : ObjetoInteragivel
         spriteRenderer = GetComponent<SpriteRenderer>();
         boxCollider2D = GetComponent<BoxCollider2D>();
 
+        //Variaveis
+        ativo = true;
+
         //Se adicionar a lista de objetos interagiveis do ObjectManager
         generalManager.ObjectManager.AdicionarAosObjetosInteragiveis(this);
+
+        SetRespawn();
     }
 
     public override void SetRespawn()
