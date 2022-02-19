@@ -17,7 +17,7 @@ public class IAEnemy : MonoBehaviour
     protected AIPath aiPath;
     
     //Enuns
-    protected enum InimigoEstados { AndandoAtePlayer, Patrulhar, AtacarPlayer, SomPassos, SomTiro, AndandoUltimaPosicaoPlayerConhecida, IndoAtivarLockDown , FicarParado , FazerRotinaLockdow , TomeiDano };
+    protected enum InimigoEstados { AndandoAtePlayer, Patrulhar, AtacarPlayer, SomPassos, SomTiro, AndandoUltimaPosicaoPlayerConhecida, IndoAtivarLockDown , FicarParado , FazerRotinaLockdow , TomeiDano  };
     [SerializeField] protected InimigoEstados inimigoEstados;
 
     protected enum EstadoDeteccaoPlayer { NaoToVendoPlayer, DetectandoPlayer, playerDetectado };
@@ -42,7 +42,7 @@ public class IAEnemy : MonoBehaviour
     protected bool vouApertarBotao;          //caso tenha visto player alguma vez e o perdeu de vista
     protected bool fazerRotinaLockDown;
     protected bool verifiqueiUltimaPosicaoJogador;
-    protected bool tomeiDano;
+    [SerializeField]protected bool tomeiDano;
     protected bool primeiraVezTomeiDano;
     protected int indiceDoBotaoMaisPerto;
 
@@ -164,8 +164,13 @@ public class IAEnemy : MonoBehaviour
                 else
                 {
                     bool ouvindoSom = somTiro || somPasso ? true : false;
+                    
+                    if(tomeiDano)
+                    {
+                        inimigoEstados = InimigoEstados.TomeiDano;
+                    }
 
-                    if (viuPlayerAlgumaVez && !emLockDown && !vouApertarBotao)    //caso tenha visto o player alguma vez, nao esteja em lockDown e esteja mais perto do botao de lockdown do que o player           
+                    else if (viuPlayerAlgumaVez && !emLockDown && !vouApertarBotao)    //caso tenha visto o player alguma vez, nao esteja em lockDown e esteja mais perto do botao de lockdown do que o player           
                     {
                         vouApertarBotao = true;
                         inimigoEstados = InimigoEstados.IndoAtivarLockDown;
@@ -201,6 +206,14 @@ public class IAEnemy : MonoBehaviour
                 break;
 
             case EstadoDeteccaoPlayer.DetectandoPlayer:
+                if (tomeiDano)
+                {
+                    verifiqueiUltimaPosicaoJogador = false;
+                    viuPlayerAlgumaVez = true;
+                    estadoDeteccaoPlayer = EstadoDeteccaoPlayer.playerDetectado;
+                    inimigoEstados = InimigoEstados.AndandoAtePlayer;
+                }
+
                 if (emLockDown && vendoPlayer) // vendo player em lockdown
                 {
                     verifiqueiUltimaPosicaoJogador = false;
@@ -235,16 +248,19 @@ public class IAEnemy : MonoBehaviour
                         inimigoEstados = InimigoEstados.FicarParado;
                     }
                 }
+                
                 break;
 
             case EstadoDeteccaoPlayer.playerDetectado://enquanto estou sabendo onde o player esta
+                vendoPlayer = vendoPlayerCircular;
+                somTiro = false;
+                somPasso = false;
                 if (!presenteNaListaDeDeteccao) //sistema para ultimo integrante ter que apertar o botao, sempre ´e a ultimo inimigo a ver o player quem vai ativar
                 {
                     posicaoListaIndiceDeteccao = enemy.GeneralManager.EnemyManager.AdicionarAlguemVendoPlayer();
                     presenteNaListaDeDeteccao = true;
                 }
 
-                vendoPlayer = vendoPlayerCircular;
                 if (!controlodarEsqueciPlayer)
                 {
                     if (!vendoPlayer)
@@ -255,9 +271,17 @@ public class IAEnemy : MonoBehaviour
                             estadoDeteccaoPlayer = EstadoDeteccaoPlayer.NaoToVendoPlayer;
                             Debug.Log("Perdi o player De vista, indo na sua ultima posicao");
                         }
+                        else
+                        {
+                            tomeiDano = false;
+                            Debug.Log("tempo " +tempoEsquecerPlayer);
+                            inimigoEstados = InimigoEstados.AndandoUltimaPosicaoPlayerConhecida;
+                        }
                     }
                     else // vendo player aumentar a detecao e verificar se esta na zona de ataque
                     {
+                        Debug.Log("entrando aqui");
+                        tomeiDano = false;
                         posicaoUltimoLugarVisto = posicaoAtualPlayer;
                         ContadorInverso(ref tempoEsquecerPlayer, tempoEsquecerPlayerMax);
 
@@ -277,6 +301,12 @@ public class IAEnemy : MonoBehaviour
                             //Debug.Log("ele ta perto de min posso atirar");
                             inimigoEstados = InimigoEstados.AtacarPlayer;
                         }
+
+                        else if (tomeiDano)
+                        {
+                            inimigoEstados = InimigoEstados.AndandoAtePlayer;
+                        }
+
                         else
                         {
                             //Debug.Log("Ele ta longe de min nao posso Atacar");
@@ -284,6 +314,10 @@ public class IAEnemy : MonoBehaviour
                         }
 
                     }
+                }
+                else
+                {
+                    estadoDeteccaoPlayer = EstadoDeteccaoPlayer.NaoToVendoPlayer;
                 }
                 break;
         }
@@ -302,11 +336,13 @@ public class IAEnemy : MonoBehaviour
         }
 
     }
-    protected virtual void  TomarDano()
+    protected virtual void  TomeiDanoSemVerJogador()
     {
         if (FuncaoIrAteLugarVerificarArea(posicaoUltimoLugarVisto, ref tempoVerificandoTomeiTiro, tempoVerificandoTomeiTiroMax))
         {
             estadoDeteccaoPlayer = EstadoDeteccaoPlayer.NaoToVendoPlayer;
+            somPasso = false;
+            somTiro = false;
             tomeiDano = false;
         }
     }
@@ -373,7 +409,7 @@ public class IAEnemy : MonoBehaviour
                 Atacar();
                 break;
             case InimigoEstados.TomeiDano:
-                TomarDano();
+                TomeiDanoSemVerJogador();
                 break;
 
             case InimigoEstados.SomPassos:
@@ -417,7 +453,6 @@ public class IAEnemy : MonoBehaviour
 
         if (tomeiDano)
         {
-            estadoDeteccaoPlayer = EstadoDeteccaoPlayer.playerDetectado;
 
             if (primeiraVezTomeiDano)
             {
@@ -605,13 +640,14 @@ public class IAEnemy : MonoBehaviour
         else
         {
             somPasso = true;
-        }
+        }      
     }
 
     public void ReceberDano()
     {
         primeiraVezTomeiDano = true;
         tomeiDano = true;
+        Debug.Log("recebi dano");
     }
     #endregion
 

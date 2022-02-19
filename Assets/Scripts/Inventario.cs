@@ -129,7 +129,7 @@ public class Inventario : MonoBehaviour
         List<ArmaDeFogo> armasTemp = new List<ArmaDeFogo>();
         foreach (var arma in armas)
         {
-            Debug.Log(arma.index);
+            //Debug.Log(arma.index);
             if (armasTemp.Count >= arma.index) armasTemp.Insert(arma.index, arma);
             else armasTemp.Add(arma);
         }
