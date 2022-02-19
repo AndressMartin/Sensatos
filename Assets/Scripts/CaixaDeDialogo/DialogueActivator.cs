@@ -9,23 +9,23 @@ public class DialogueActivator : MonoBehaviour
         this.dialogueObject = dialogueObject;
     }
 
-    public void ShowDialogue(Player player)
+    public void ShowDialogue(GeneralManagerScript generalManager)
     {
-        if(player.DialogueUI.IsOpen == false)
+        if(generalManager.DialogueUI.IsOpen == false)
         {
-            UpdateResponseEvents(player, this.dialogueObject);
-            player.DialogueUI.UpdateDialogueActivator(this);
-            player.DialogueUI.ShowDialogue(dialogueObject);
+            UpdateResponseEvents(generalManager, this.dialogueObject);
+            generalManager.DialogueUI.UpdateDialogueActivator(this);
+            generalManager.DialogueUI.ShowDialogue(dialogueObject);
         }
     }
 
-    public void UpdateResponseEvents(Player player, DialogueObject dialogueObject)
+    public void UpdateResponseEvents(GeneralManagerScript generalManager, DialogueObject dialogueObject)
     {
         foreach (DialogueResponseEvents responseEvents in GetComponents<DialogueResponseEvents>())
         {
             if (responseEvents.DialogueObject == dialogueObject)
             {
-                player.DialogueUI.AddResponseEvents(responseEvents.Events);
+                generalManager.DialogueUI.AddResponseEvents(responseEvents.Events);
                 break;
             }
         }
@@ -34,7 +34,7 @@ public class DialogueActivator : MonoBehaviour
         {
             if (dialogueEndEvents.DialogueObject == dialogueObject)
             {
-                player.DialogueUI.AddDialogueEndEvents(dialogueEndEvents.Events);
+                generalManager.DialogueUI.AddDialogueEndEvents(dialogueEndEvents.Events);
                 break;
             }
         }

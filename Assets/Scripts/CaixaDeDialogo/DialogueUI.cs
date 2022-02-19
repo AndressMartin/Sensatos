@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class DialogueUI : MonoBehaviour
 {
     //Managers
-    private PauseManagerScript pauseManager;
+    private GeneralManagerScript generalManager;
 
     //Componentes
     [SerializeField] private GameObject dialogueBox; //Guarda toda a caixa de dialogo
@@ -15,32 +15,27 @@ public class DialogueUI : MonoBehaviour
     private DialogueActivator dialogueActivator;
 
     private ResponseEvent dialogueEndEvents;
-    private Player player;
 
     public bool IsOpen { get; private set; }
 
     private ResponseHandler responseHandler;
     private TypewriterEffect typewriterEffect;
 
-    private float textLabelLeftBorder;
-
     void Start()
     {
         //Managers
-        pauseManager = FindObjectOfType<PauseManagerScript>();
+        generalManager = FindObjectOfType<GeneralManagerScript>();
 
         //Componentes
         typewriterEffect = GetComponent<TypewriterEffect>();
         responseHandler = GetComponent<ResponseHandler>();
-
-        player = FindObjectOfType<Player>();
 
         CloseDialogueBox();
     }
 
     public void ShowDialogue(DialogueObject dialogueObject)
     {
-        pauseManager.SetPermitirInput(false);
+        generalManager.PauseManager.SetPermitirInput(false);
 
         IsOpen = true;
         dialogueBox.SetActive(true);
@@ -49,7 +44,7 @@ public class DialogueUI : MonoBehaviour
 
     public void CloseDialogueBox()
     {
-        pauseManager.SetPermitirInput(true);
+        generalManager.PauseManager.SetPermitirInput(true);
 
         IsOpen = false;
         portrait.gameObject.SetActive(false);
@@ -84,7 +79,7 @@ public class DialogueUI : MonoBehaviour
 
     public void CallUpdateResponseEvents(DialogueObject dialogueObject)
     {
-        dialogueActivator.UpdateResponseEvents(player, dialogueObject);
+        dialogueActivator.UpdateResponseEvents(generalManager, dialogueObject);
     }
 
     //Atualiza a imagem do retrato e a borda esquerda da caixa de texto

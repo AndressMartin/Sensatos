@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerInput : MonoBehaviour
 {
     //Managers
-    private PauseManagerScript pauseManager;
+    private GeneralManagerScript generalManager;
 
     private Player player;
     private PlayerMovement movement;
@@ -15,7 +15,7 @@ public class PlayerInput : MonoBehaviour
     void Start()
     {
         //Managers
-        pauseManager = FindObjectOfType<PauseManagerScript>();
+        generalManager = FindObjectOfType<GeneralManagerScript>();
 
         inventario = GetComponent<Inventario>();
         movement = GetComponent<PlayerMovement>();
@@ -25,10 +25,10 @@ public class PlayerInput : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (pauseManager.PermitirInput == true)
+        if (generalManager.PauseManager.PermitirInput == true)
         {
             ComandosMenu();
-            if (pauseManager.JogoPausado == false)
+            if (generalManager.PauseManager.JogoPausado == false)
             {
                 ComandosGameplay();
             }
@@ -46,7 +46,7 @@ public class PlayerInput : MonoBehaviour
         //Pausar o jogo
         if (Input.GetKeyDown(KeyCode.Backspace))
         {
-            pauseManager.Pausar();
+            generalManager.PauseManager.Pausar();
         }
     }
 

@@ -5,48 +5,39 @@ using UnityEngine;
 public class RespawnManagerScript : MonoBehaviour
 {
     //Managers
-    private ObjectManagerScript objectManager;
-    private BulletManagerScript bulletManager;
-    private LockDownManager lockDownManager;
-    private EnemyManager enemyManager;
-
-    private Player player;
+    private GeneralManagerScript generalManager;
 
     void Start()
     {
         //Managers
-        objectManager = FindObjectOfType<ObjectManagerScript>();
-        bulletManager = FindObjectOfType<BulletManagerScript>();
-        lockDownManager = FindObjectOfType<LockDownManager>();
-        enemyManager = transform.parent.GetComponentInChildren<EnemyManager>();
-        player = FindObjectOfType<Player>();
+        generalManager = FindObjectOfType<GeneralManagerScript>();
     }
 
     public void SetCheckpoint(Vector2 posicao, Player.Direcao direcao)
     {
-        player.SetRespawn(posicao, direcao);
+        generalManager.Player.SetRespawn(posicao, direcao);
 
-        foreach (ObjetoInteragivel objetoInteragivel in objectManager.listaObjetosInteragiveis)
+        foreach (ObjetoInteragivel objetoInteragivel in generalManager.ObjectManager.ListaObjetosInteragiveis)
         {
             objetoInteragivel.SetRespawn();
         }
 
-        foreach (ParedeModel paredeQuebravel in objectManager.listaParedesQuebraveis)
+        foreach (ParedeModel paredeQuebravel in generalManager.ObjectManager.ListaParedesQuebraveis)
         {
             paredeQuebravel.SetRespawn();
         }
 
-        foreach (Enemy inimigo in objectManager.listaInimigos)
+        foreach (Enemy inimigo in generalManager.ObjectManager.ListaInimigos)
         {
             inimigo.SetRespawn();
         }
 
-        foreach (LockDown alarme in objectManager.listaAlarmes)
+        foreach (LockDown alarme in generalManager.ObjectManager.ListaAlarmes)
         {
             alarme.SetRespawn();
         }
 
-        foreach (Porta porta in objectManager.listaPortas)
+        foreach (Porta porta in generalManager.ObjectManager.ListaPortas)
         {
             porta.SetRespawn();
         }
@@ -54,34 +45,35 @@ public class RespawnManagerScript : MonoBehaviour
 
     public void Respawn()
     {
-        player.Respawn();
+        generalManager.Player.Respawn();
 
-        foreach (ObjetoInteragivel objetoInteragivel in objectManager.listaObjetosInteragiveis)
+        foreach (ObjetoInteragivel objetoInteragivel in generalManager.ObjectManager.ListaObjetosInteragiveis)
         {
             objetoInteragivel.Respawn();
         }
 
-        foreach (ParedeModel paredeQuebravel in objectManager.listaParedesQuebraveis)
+        foreach (ParedeModel paredeQuebravel in generalManager.ObjectManager.ListaParedesQuebraveis)
         {
             paredeQuebravel.Respawn();
         }
 
-        foreach (Enemy inimigo in objectManager.listaInimigos)
+        foreach (Enemy inimigo in generalManager.ObjectManager.ListaInimigos)
         {
             inimigo.Respawn();
         }
 
-        foreach (LockDown alarme in objectManager.listaAlarmes)
+        foreach (LockDown alarme in generalManager.ObjectManager.ListaAlarmes)
         {
             alarme.Respawn();
         }
 
-        foreach (Porta porta in objectManager.listaPortas)
+        foreach (Porta porta in generalManager.ObjectManager.ListaPortas)
         {
             porta.Respawn();
         }
-        lockDownManager.Respawn();
-        bulletManager.DeletarProjeteis();
-        enemyManager.Respawn();
+
+        generalManager.LockDownManager.Respawn();
+        generalManager.BulletManager.DeletarProjeteis();
+        generalManager.EnemyManager.Respawn();
     }
 }

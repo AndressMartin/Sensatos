@@ -13,7 +13,7 @@ public class ProjetilEscopeta : ProjetilScript
     protected override void Start()
     {
         //Managers
-        pauseManager = FindObjectOfType<PauseManagerScript>();
+        generalManager = FindObjectOfType<GeneralManagerScript>();
 
         //Componentes
         boxCollider2D = GetComponent<BoxCollider2D>();

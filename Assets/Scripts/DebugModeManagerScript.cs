@@ -6,8 +6,8 @@ using System;
 public class DebugModeManagerScript : MonoBehaviour
 {
     //Managers
-    private RespawnManagerScript respawnManager;
-    private LockDownManager lockDownManager;
+    private GeneralManagerScript generalManager;
+
     //Componentes
     private DebugModeUIScript debugModeUI;
     private Player player;
@@ -22,8 +22,7 @@ public class DebugModeManagerScript : MonoBehaviour
     void Start()
     {
         //Managers
-        respawnManager = FindObjectOfType<RespawnManagerScript>();
-        lockDownManager = FindObjectOfType<LockDownManager>();
+        generalManager = FindObjectOfType<GeneralManagerScript>();
 
         //Componentes
         debugModeUI = FindObjectOfType<DebugModeUIScript>();
@@ -61,25 +60,25 @@ public class DebugModeManagerScript : MonoBehaviour
         //Fazer um checkpoint
         if (Input.GetKeyDown(KeyCode.H))
         {
-            respawnManager.SetCheckpoint(player.transform.position, player.GetDirecao);
+            generalManager.RespawnManager.SetCheckpoint(player.transform.position, player.GetDirecao);
         }
 
         //Respawnar
         if (Input.GetKeyDown(KeyCode.J))
         {
-            respawnManager.Respawn();
+            generalManager.RespawnManager.Respawn();
         }
 
         //Ativar Lockdown
         if (Input.GetKeyUp(KeyCode.P))
         {
-            lockDownManager.AtivarLockDown(player.transform.position);
+            generalManager.LockDownManager.AtivarLockDown(player.transform.position);
         }
 
         //Desativar Lockdown
         if (Input.GetKeyUp(KeyCode.V))
         {
-            lockDownManager.DesativaLockDown();
+            generalManager.LockDownManager.DesativaLockDown();
         }
     }
 

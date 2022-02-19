@@ -8,7 +8,7 @@ public class Chave : Item
 {
     public override Tipo tipo { get; protected set; } = Tipo.ItemChave;
 
-    [SerializeField] private int id;
+    [SerializeField] private int idChave;
 
-    public int ID => id;
+    public int IDChave => idChave;
 }

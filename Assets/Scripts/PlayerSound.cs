@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerSound : MonoBehaviour
 {
     //Managers
-    private ObjectManagerScript objectManager;
+    private GeneralManagerScript generalManager;
 
     //Componentes
     CircleCollider2D circleCollider2D;
@@ -14,7 +14,7 @@ public class PlayerSound : MonoBehaviour
     void Start()
     {
         //Managers
-        objectManager = FindObjectOfType<ObjectManagerScript>();
+        generalManager = FindObjectOfType<GeneralManagerScript>();
 
         //Componentes
         circleCollider2D = GetComponent<CircleCollider2D>();
@@ -36,7 +36,7 @@ public class PlayerSound : MonoBehaviour
     private void ProcurarInimigos(Player player, bool somTiro)
     {
         circleCollider2D.enabled = true;
-        foreach (Enemy inimigo in objectManager.listaInimigos)
+        foreach (Enemy inimigo in generalManager.ObjectManager.ListaInimigos)
         {
             if (Colisao.HitTest(inimigo.transform.position.x, inimigo.transform.position.y, circleCollider2D))
             {

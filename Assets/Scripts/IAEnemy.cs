@@ -4,18 +4,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class IA_Enemy_Basico : MonoBehaviour
+public class IAEnemy : MonoBehaviour
 {
+    //Managers
+    private GeneralManagerScript generalManager;
 
     //Componentes
     protected EnemyMovement enemyMovement;
     protected Enemy enemy;
     protected EnemyVisionScript enemyVisionScript;
-    protected ObjectManagerScript objectManagerScript;
     protected InventarioEnemy inventarioEnemy;
 
-    protected AILerp aILerp;
-    //Enun
+    protected AIPath aiPath;
+    
+    //Enuns
     protected enum InimigoEstados { AndandoAtePlayer, Patrulhar, AtacarPlayer, SomPassos, SomTiro, AndandoUltimaPosicaoPlayerConhecida, IndoAtivarLockDown , FicarParado , FazerRotinaLockdow , TomeiDano };
     [SerializeField] protected InimigoEstados inimigoEstados;
 
@@ -70,19 +72,17 @@ public class IA_Enemy_Basico : MonoBehaviour
     [SerializeField] protected float tempoVerificandoTomeiTiroMax;
     protected float tempoRecarregarArmaMax;
 
-
-    public virtual void SerSpawnado(Vector2 _pontoSpawn,AILerp lerp)
-    {
-        aILerp = lerp;
-    }
     public virtual void Start()
     {
+        //Managers
+        generalManager = FindObjectOfType<GeneralManagerScript>();
+
+        //Componentes
         enemyMovement = GetComponent<EnemyMovement>();
         enemy = GetComponent<Enemy>();
         enemyVisionScript = GetComponentInChildren<EnemyVisionScript>();
-        objectManagerScript = FindObjectOfType<ObjectManagerScript>();
         inventarioEnemy = GetComponent<InventarioEnemy>();
-        aILerp = GetComponent<AILerp>();
+        aiPath = GetComponent<AIPath>();
 
         inimigoEstados = InimigoEstados.Patrulhar;
         estadoDeteccaoPlayer = EstadoDeteccaoPlayer.NaoToVendoPlayer;
@@ -137,14 +137,14 @@ public class IA_Enemy_Basico : MonoBehaviour
             case EstadoDeteccaoPlayer.NaoToVendoPlayer://caso não saiba Onde O player esta
                 if (presenteNaListaDeDeteccao)
                 {
-                    enemy.GetEnemyManager.PerdiVisaoInimigo();
+                    enemy.GeneralManager.EnemyManager.PerdiVisaoInimigo();
                     presenteNaListaDeDeteccao = false;
                     posicaoListaIndiceDeteccao = 0;
                 }
 
                 if (vendoPlayer)//Caso tenha visto o player
                 {
-                    enemyMovement.ZerarVelocidade(aILerp);
+                    enemyMovement.ZerarVelocidade(aiPath);
                     controlodarEsqueciPlayer = false;
                     estadoDeteccaoPlayer = EstadoDeteccaoPlayer.DetectandoPlayer;
                 }
@@ -227,7 +227,7 @@ public class IA_Enemy_Basico : MonoBehaviour
             case EstadoDeteccaoPlayer.playerDetectado://enquanto estou sabendo onde o player esta
                 if (!presenteNaListaDeDeteccao) //sistema para ultimo integrante ter que apertar o botao, sempre ´e a ultimo inimigo a ver o player quem vai ativar
                 {
-                    posicaoListaIndiceDeteccao = enemy.GetEnemyManager.AddicionarAlguemVendoPlayer();
+                    posicaoListaIndiceDeteccao = enemy.GeneralManager.EnemyManager.AdicionarAlguemVendoPlayer();
                     presenteNaListaDeDeteccao = true;
                 }
 
@@ -254,7 +254,7 @@ public class IA_Enemy_Basico : MonoBehaviour
                         }
 
                         // Debug.Log("to entrando aqui "+gameObject.name+"sas");
-                        if (enemy.GetEnemyManager.VerificarUltimoVerPlayer(posicaoListaIndiceDeteccao) && !emLockDown) //o ultimo inimigo a ver o player deve ativar o lockdown isso tem prioridade sobre atacar ou mover
+                        if (enemy.GeneralManager.EnemyManager.VerificarUltimoVerPlayer(posicaoListaIndiceDeteccao) && !emLockDown) //o ultimo inimigo a ver o player deve ativar o lockdown isso tem prioridade sobre atacar ou mover
                         {
                             inimigoEstados = InimigoEstados.IndoAtivarLockDown;
                         }
@@ -283,7 +283,7 @@ public class IA_Enemy_Basico : MonoBehaviour
     }
     protected virtual void Patrulhar()
     {
-        if(VerificarChegouAteAlvo(enemyMovement.GetPontosRotaNaoLockdow))
+        if(VerificarChegouAteAlvo(enemyMovement.PontosDeRota))
         {
             enemyMovement.GerarNovoPonto(false);
         }
@@ -306,7 +306,7 @@ public class IA_Enemy_Basico : MonoBehaviour
         }
         else
         {
-            enemyMovement.ZerarVelocidade(aILerp);
+            enemyMovement.ZerarVelocidade(aiPath);
         }
     }
     protected virtual void SomTiro()
@@ -327,15 +327,15 @@ public class IA_Enemy_Basico : MonoBehaviour
     }
     protected virtual void IndoAtivarLockdown()
     {
-        if (VerificarChegouAteAlvo(objectManagerScript.listaAlarmes[indiceDoBotaoMaisPerto].transform.position))
+        if (VerificarChegouAteAlvo(generalManager.ObjectManager.ListaAlarmes[indiceDoBotaoMaisPerto].transform.position))
         {
             AtivarLockDown();
         }
     }
     protected virtual void FicarParado()
     {
-        enemyMovement.ZerarVelocidade(aILerp);
-        aILerp.canMove = false;
+        enemyMovement.ZerarVelocidade(aiPath);
+        aiPath.canMove = false;
     }
     protected virtual void FazerRotinaLockdown()
     {
@@ -420,7 +420,7 @@ public class IA_Enemy_Basico : MonoBehaviour
         //to fazendo a rotina do lockdow
         if(emLockDown)
         {
-            if (VerificarChegouAteAlvo(enemyMovement.GetPontosRotaLockdow))
+            if (VerificarChegouAteAlvo(enemyMovement.PontoDeProcura))
             {
                 enemyMovement.GerarNovoPonto(true);
             }
@@ -437,7 +437,7 @@ public class IA_Enemy_Basico : MonoBehaviour
 
     void Atacar()
     {
-        enemyMovement.ZerarVelocidade(aILerp);
+        enemyMovement.ZerarVelocidade(aiPath);
         if (municaoNoCarregador > 0)
         {
             if (enemy.Atirar()) //Reload
@@ -448,16 +448,16 @@ public class IA_Enemy_Basico : MonoBehaviour
     }
     public void Mover(Vector2 _alvo)
     {
-        aILerp.canMove = true;
-        aILerp.speed = enemyMovement.GetVelocidade;
-        aILerp.destination = _alvo;
+        aiPath.canMove = true;
+        aiPath.maxSpeed = enemyMovement.GetVelocidade;
+        aiPath.destination = _alvo;
         //enemyMovement.Movimentar(enemyMovement.CalcMovimemto(destino.transform.position));
     }
     void AtivarLockDown()
     {
         vouApertarBotao = false;
-        objectManagerScript.listaAlarmes[indiceDoBotaoMaisPerto].AtivarLockDown();
-        enemy.GetLockDownManager.AtivarLockDown(posicaoUltimoLugarVisto);
+        generalManager.ObjectManager.ListaAlarmes[indiceDoBotaoMaisPerto].AtivarLockDown();
+        enemy.GeneralManager.LockDownManager.AtivarLockDown(posicaoUltimoLugarVisto);
         inimigoEstados = InimigoEstados.AndandoUltimaPosicaoPlayerConhecida;
     }
 
@@ -490,7 +490,7 @@ public class IA_Enemy_Basico : MonoBehaviour
         {
             enemy.ChangeDirection(EntityModel.Direcao.Baixo);
         }
-        enemyMovement.ZerarVelocidade(aILerp);
+        enemyMovement.ZerarVelocidade(aiPath);
 
         return Contador(ref tempo, tempoMax);
     }
@@ -500,7 +500,7 @@ public class IA_Enemy_Basico : MonoBehaviour
 
         if (Vector2.Distance(transform.position, alvo) > 0.5)
         {
-            aILerp.canMove = true;
+            aiPath.canMove = true;
             Mover(alvo);
             return false;//se chegou retorna Verdadeiro
         }
@@ -533,7 +533,7 @@ public class IA_Enemy_Basico : MonoBehaviour
     }
     private int RetornarIndiceBotaoLockDownMaisPerto()
     {
-        List<LockDown> botoesLockDown = objectManagerScript.listaAlarmes;
+        List<LockDown> botoesLockDown = generalManager.ObjectManager.ListaAlarmes;
 
         float menorDistancia = 10000;
         Vector2 botaoMaisProximo = Vector2.zero;

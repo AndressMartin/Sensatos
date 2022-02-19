@@ -2,20 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LockDownManager : MonoBehaviour
+public class LockDownManagerScript : MonoBehaviour
 {
-    ObjectManagerScript objectManagerScript;
-    EnemySpawnManager enemySpawnManager;
+    //Managers
+    private GeneralManagerScript generalManager;
 
-
-    [SerializeField]bool emLockdow;
-    public bool EmLockdow => emLockdow;
+    [SerializeField] bool emLockdown;
+    public bool EmLockdow => emLockdown;
 
     [SerializeField] float contadorTempoLockdown, contadorTempoLockdownMax;
+
     void Start()
     {
-        objectManagerScript = transform.parent.GetComponentInChildren<ObjectManagerScript>();
-        enemySpawnManager = transform.parent.GetComponentInChildren<EnemySpawnManager>();
+        generalManager = FindObjectOfType<GeneralManagerScript>();
     }
 
     public void Contador()
@@ -35,13 +34,13 @@ public class LockDownManager : MonoBehaviour
 
     public void AtivarLockDown(Vector2 posicaoDoPlayer)
     {
-        emLockdow = true;
+        emLockdown = true;
         contadorTempoLockdown = contadorTempoLockdownMax;
-        enemySpawnManager.AtivarInimigos();
+        generalManager.EnemySpawnManager.AtivarInimigos();
 
-        foreach (Enemy enemy in objectManagerScript.listaInimigos)
+        foreach (Enemy enemy in generalManager.ObjectManager.ListaInimigos)
         {
-            enemy.GetComponent<IA_Enemy_Basico>().ReceberLockDown(posicaoDoPlayer);
+            enemy.GetComponent<IAEnemy>().ReceberLockDown(posicaoDoPlayer);
         }
 
         TrancarPortas();
@@ -53,29 +52,29 @@ public class LockDownManager : MonoBehaviour
     public void DesativaLockDown()
     {
         contadorTempoLockdown = 0;
-        emLockdow = false;
-        foreach (LockDown lockDown in objectManagerScript.listaAlarmes)
+        emLockdown = false;
+        foreach (LockDown lockDown in generalManager.ObjectManager.ListaAlarmes)
         {
             lockDown.DesativarLockDown();
         }
 
-        foreach (Enemy enemy in objectManagerScript.listaInimigos)
+        foreach (Enemy enemy in generalManager.ObjectManager.ListaInimigos)
         {
-            enemy.GetComponent<IA_Enemy_Basico>().DesativarLockDown();
+            enemy.GetComponent<IAEnemy>().DesativarLockDown();
         }
         DestrancarPortas();
     }
 
     private void TrancarPortas()
     {
-        foreach (Porta porta in objectManagerScript.listaPortas)
+        foreach (Porta porta in generalManager.ObjectManager.ListaPortas)
         {
             porta.AtivarLockDown();
         }     
     }
     private void DestrancarPortas()
     {
-        foreach (Porta porta in objectManagerScript.listaPortas)
+        foreach (Porta porta in generalManager.ObjectManager.ListaPortas)
         {
             porta.DesativarLockDown();
         }  

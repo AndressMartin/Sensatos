@@ -3,17 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using Pathfinding;
 
-public class IA_Enemy_inmigoDeLockdown : IA_Enemy_Basico
+public class IAEnemyLockdown : IAEnemy
 {
-    [SerializeField] Vector2 SalaSegurança;
-    [SerializeField] Vector2 PosicaoDeSpawn;
+    [SerializeField] Vector2 salaSegurança;
 
     //[SerializeField]new bool emLockDown;
     public override void Start()
     {
         base.Start();
-        transform.position = SalaSegurança;
-        PosicaoDeSpawn = transform.position;
+        salaSegurança = transform.position;
     }
 
     protected override void StateMachine()
@@ -78,11 +76,6 @@ public class IA_Enemy_inmigoDeLockdown : IA_Enemy_Basico
         base.AndandoUltimaPosicaoPlayerConhecida();
 
     }
-    public override void Respawn()
-    {
-        base.Respawn();
-        transform.position = PosicaoDeSpawn;
-    }
     public override void ReceberLockDown(Vector2 _posicaoPlayer)
     {
         emLockDown = true;
@@ -92,14 +85,9 @@ public class IA_Enemy_inmigoDeLockdown : IA_Enemy_Basico
     {
         emLockDown = false;
     }
-    public override void SerSpawnado(Vector2 _pontoSpawn,AILerp lerp)
-    {
-        base.SerSpawnado(_pontoSpawn,lerp);
-        SalaSegurança = _pontoSpawn;
-    }
     protected override void Patrulhar()
     {
-        if (VerificarChegouAteAlvo(SalaSegurança))
+        if (VerificarChegouAteAlvo(salaSegurança))
         {
             gameObject.SetActive(false);
         }

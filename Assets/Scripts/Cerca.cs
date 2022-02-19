@@ -6,7 +6,7 @@ using UnityEngine;
 public class Cerca : ParedeModel
 {
     //Managers
-    private ObjectManagerScript objectManager;
+    private GeneralManagerScript generalManager;
 
     //Componentes
     private SpriteRenderer spriteRenderer;
@@ -50,7 +50,7 @@ public class Cerca : ParedeModel
         }
 
         //Managers
-        objectManager = FindObjectOfType<ObjectManagerScript>();
+        generalManager = FindObjectOfType<GeneralManagerScript>();
 
         //Componentes
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -65,8 +65,8 @@ public class Cerca : ParedeModel
         spriteAtual = "Quebravel";
 
         //Se adicionar a lista de objetos interagiveis do ObjectManager
-        objectManager.adicionarAosObjetosInteragiveis(this);
-        objectManager.adicionarAsParedesQuebraveis(this);
+        generalManager.ObjectManager.AdicionarAosObjetosInteragiveis(this);
+        generalManager.ObjectManager.AdicionarAsParedesQuebraveis(this);
 
         AtualizarHitBox();
 
@@ -112,11 +112,11 @@ public class Cerca : ParedeModel
         {
             case Tipo.Quebravel:
                 dialogo.UpdateDialogueObject(listaDeDialogos.GetDialogueObject("CercaQuebravel"));
-                dialogo.ShowDialogue(player);
+                dialogo.ShowDialogue(player.GeneralManager);
                 break;
             case Tipo.Indestrutivel:
                 dialogo.UpdateDialogueObject(listaDeDialogos.GetDialogueObject("CercaIndestrutivel"));
-                dialogo.ShowDialogue(player);
+                dialogo.ShowDialogue(player.GeneralManager);
                 break;
         }
     }

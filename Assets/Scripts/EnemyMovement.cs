@@ -8,13 +8,12 @@ public class EnemyMovement : MonoBehaviour
     //Componentes
     private Enemy enemy;
     private Rigidbody2D rb;
-    private IA_Enemy_Basico iA_Enemy_Basico;
+    private IAEnemy iA_Enemy_Basico;
 
     //Variaveis
     [SerializeField] bool rotaIdaVolta;
     [SerializeField] private int velocidade;
-    [SerializeField] private List<Transform> PontosRotaNaoLockdow = new List<Transform>();
-    [SerializeField] private List<Transform> PontosRotaLockdow = new List<Transform>();
+    [SerializeField] private List<Transform> pontosDeRota = new List<Transform>();
 
     private float velX;
     private float velY;
@@ -27,8 +26,8 @@ public class EnemyMovement : MonoBehaviour
     private int indiceListaNaoLockdown;
     private int indiceListaLockdown;
 
-    private int indiceUltimoPontoListaNaoLockdonw;
-    private int indiceUltimoPontoListaLockdonw;
+    private int indiceUltimoPontoListaNaoLockdown;
+    private int indiceUltimoPontoListaLockdown;
 
     //Contadores
     private float timeKnockBack;
@@ -37,10 +36,8 @@ public class EnemyMovement : MonoBehaviour
     //Getters
     public Rigidbody2D GetRb => rb;
     public Vector2 GetUltimaPosicaoOrigem => ultimaPosicaoEnquantoFaziaRota;
-    public Vector2 GetPontosRotaNaoLockdow => PontosRotaNaoLockdow[indiceListaNaoLockdown].position;
-    public Vector2 GetPontosRotaLockdow => PontosRotaLockdow[indiceListaLockdown].position;
-
-
+    public Vector2 PontosDeRota => pontosDeRota[indiceListaNaoLockdown].position;
+    public Vector2 PontoDeProcura => enemy.GeneralManager.EnemyManager.PontosDeProcura[indiceListaLockdown].position;
     public int GetVelocidade => velocidade;
 
     void VerificarPontoPatrulhaMaisPerto()
@@ -48,9 +45,9 @@ public class EnemyMovement : MonoBehaviour
         int ponto0 = 0;
         float menorPonto = 5;
 
-        for (int i = 0; i < PontosRotaNaoLockdow.Count; i++)
+        for (int i = 0; i < pontosDeRota.Count; i++)
         {
-            float distancia = Vector2.Distance(transform.position, PontosRotaNaoLockdow[i].transform.position);
+            float distancia = Vector2.Distance(transform.position, pontosDeRota[i].transform.position);
             if (distancia <= menorPonto)
             {
                 ponto0 = i;
@@ -64,12 +61,12 @@ public class EnemyMovement : MonoBehaviour
     {
         if(rotaIdaVolta)
         {
-            int valor = PontosRotaNaoLockdow.Count;
+            int valor = pontosDeRota.Count;
             for (int i = 0; i < valor; i++)
             {
                 if (i != valor + 1)
                 {
-                    PontosRotaNaoLockdow.Add(PontosRotaNaoLockdow[valor - i - 1]);
+                    pontosDeRota.Add(pontosDeRota[valor - i - 1]);
                 }
             }
         }
@@ -79,13 +76,13 @@ public class EnemyMovement : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         enemy = GetComponent<Enemy>();
-        iA_Enemy_Basico = GetComponent<IA_Enemy_Basico>();
+        iA_Enemy_Basico = GetComponent<IAEnemy>();
 
         ultimaPosicaoEnquantoFaziaRota = new Vector3(transform.position.x, transform.position.y, transform.position.z);
         indiceListaNaoLockdown = 0;
         indiceListaLockdown = 0;
-        indiceUltimoPontoListaLockdonw =0;
-        indiceUltimoPontoListaNaoLockdonw = 0;
+        indiceUltimoPontoListaLockdown =0;
+        indiceUltimoPontoListaNaoLockdown = 0;
 
         //Variaveis de controle
         timeKnockBack = 0;
@@ -142,11 +139,11 @@ public class EnemyMovement : MonoBehaviour
     }
     void GerarPontoSequencial()
     {
-        GeradorDePontos(ref indiceListaNaoLockdown,ref indiceUltimoPontoListaNaoLockdonw, PontosRotaNaoLockdow);
+        GeradorDePontos(ref indiceListaNaoLockdown,ref indiceUltimoPontoListaNaoLockdown, pontosDeRota);
     }
     void GerarPontoAleatorio()
     {
-        indiceListaLockdown = Random.Range(0, PontosRotaLockdow.Count);
+        indiceListaLockdown = Random.Range(0, enemy.GeneralManager.EnemyManager.PontosDeProcura.Count);
     }
     void GeradorDePontos(ref int _pontoIndiceLista,ref int _ultimoPontoQueFui, List<Transform> _ListaDePontosUtilizada)
     {
@@ -171,27 +168,27 @@ public class EnemyMovement : MonoBehaviour
     public void VarrerFase()
     {
 
-        iA_Enemy_Basico.Mover(PontosRotaLockdow[indiceListaLockdown].position);
+        iA_Enemy_Basico.Mover(enemy.GeneralManager.EnemyManager.PontosDeProcura[indiceListaLockdown].position);
     
             //gera um novo lugar de waypoint
-            if (indiceListaLockdown >= PontosRotaLockdow.Count - 1)
+            if (indiceListaLockdown >= enemy.GeneralManager.EnemyManager.PontosDeProcura.Count - 1)
                 indiceListaLockdown = 0;
             else
                 indiceListaLockdown++;
 
-            indiceListaLockdown = Random.Range(0, PontosRotaLockdow.Count);//para aleatorizar o proximo destino que ele vai
-            if (indiceListaLockdown != indiceUltimoPontoListaLockdonw)
+            indiceListaLockdown = Random.Range(0, enemy.GeneralManager.EnemyManager.PontosDeProcura.Count);//para aleatorizar o proximo destino que ele vai
+            if (indiceListaLockdown != indiceUltimoPontoListaLockdown)
             {
                 
-                indiceUltimoPontoListaLockdonw = indiceListaLockdown;
-                ultimaPosicaoEnquantoFaziaRota = PontosRotaLockdow[indiceUltimoPontoListaLockdonw].position;
+                indiceUltimoPontoListaLockdown = indiceListaLockdown;
+                ultimaPosicaoEnquantoFaziaRota = enemy.GeneralManager.EnemyManager.PontosDeProcura[indiceUltimoPontoListaLockdown].position;
             }
             else
             {
-                while (indiceListaLockdown == indiceUltimoPontoListaLockdonw)
+                while (indiceListaLockdown == indiceUltimoPontoListaLockdown)
                 {
                    
-                    indiceListaLockdown = Random.Range(0, PontosRotaLockdow.Count);
+                    indiceListaLockdown = Random.Range(0, enemy.GeneralManager.EnemyManager.PontosDeProcura.Count);
                 }
             }
         
@@ -233,26 +230,19 @@ public class EnemyMovement : MonoBehaviour
         }
     }
 
-    public void ZerarVelocidade(AILerp aILerp)
+    public void ZerarVelocidade(AIPath aiPath)
     {
-        aILerp.canMove = false;
-        aILerp.speed = 0;
-        aILerp.destination = transform.position;
-    }
-    public void ReceberMoveSpots(List<Transform> _moveSpots, List<Transform> _moveSpotsLockdown)
-    {
-        PontosRotaNaoLockdow.Clear();
-        PontosRotaLockdow.Clear();
-        PontosRotaNaoLockdow = _moveSpots;
-        PontosRotaLockdow = _moveSpotsLockdown;
+        aiPath.canMove = false;
+        aiPath.maxSpeed = 0;
+        aiPath.destination = transform.position;
     }
     public void ResetarVariaveisDeControle()
     {
         ultimaPosicaoEnquantoFaziaRota = Vector3.zero;
         indiceListaNaoLockdown = 0;
         indiceListaLockdown = 0;
-        indiceUltimoPontoListaNaoLockdonw = 0;
-        indiceUltimoPontoListaLockdonw = 0;
+        indiceUltimoPontoListaNaoLockdown = 0;
+        indiceUltimoPontoListaLockdown = 0;
         velocidade = 2;
     }
 

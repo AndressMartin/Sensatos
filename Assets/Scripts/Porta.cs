@@ -5,7 +5,7 @@ using UnityEngine;
 public class Porta : ObjetoInteragivel
 {
     //Managers
-    private ObjectManagerScript objectManager;
+    private GeneralManagerScript generalManager;
 
     //Componentes
     private AnimacaoPorta animacao;
@@ -31,7 +31,7 @@ public class Porta : ObjetoInteragivel
     void Start()
     {
         //Managers
-        objectManager = FindObjectOfType<ObjectManagerScript>();
+        generalManager = FindObjectOfType<GeneralManagerScript>();
 
         //Componentes
         animacao = GetComponent<AnimacaoPorta>();
@@ -39,8 +39,8 @@ public class Porta : ObjetoInteragivel
         hitBoxTiro = transform.Find("HitBoxTiro").GetComponent<BoxCollider2D>();
 
         //Se adicionar a lista de objetos interagiveis do ObjectManager
-        objectManager.adicionarAosObjetosInteragiveis(this);
-        objectManager.adicionarAsPortas(this);
+        generalManager.ObjectManager.AdicionarAosObjetosInteragiveis(this);
+        generalManager.ObjectManager.AdicionarAsPortas(this);
 
         //Verificar se tem chave para estar trancada
         if (chave != null)
@@ -79,13 +79,13 @@ public class Porta : ObjetoInteragivel
         if(trancado)
         {
             //Verifica se ha uma chave nos itens do jogador e se alguma delas tem o id igual ao da chave que destranca a porta
-            List<Item> listaItens = player.GetComponent<InventarioMissao>().Itens;
+            List<Item> listaItens = player.InventarioMissao.Itens;
             foreach(Item item in listaItens)
             {
                 if(item is Chave)
                 {
                     Chave chave = (Chave)item;
-                    if(chave.ID == this.chave.ID)
+                    if(chave.IDChave == this.chave.IDChave)
                     {
                         Destrancar();
                     }

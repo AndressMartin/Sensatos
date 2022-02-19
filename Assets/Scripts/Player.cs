@@ -5,12 +5,7 @@ using UnityEngine;
 public class Player : EntityModel
 {
     //Managers
-    private ObjectManagerScript objectManager;
-    private PauseManagerScript pauseManager;
-    private BulletManagerScript bulletManager;
-
-    private HUDScript hud;
-    private DialogueUI dialogueUI;
+    private GeneralManagerScript generalManager;
 
     //Componentes
     private Rigidbody2D rb;
@@ -61,8 +56,7 @@ public class Player : EntityModel
     private Direcao direcaoRespawn;
 
     //Getters
-    public ObjectManagerScript GetObjectManager => objectManager;
-    public DialogueUI DialogueUI => dialogueUI;
+    public GeneralManagerScript GeneralManager => generalManager;
     public Inventario Inventario => inventario;
     public InventarioMissao InventarioMissao => inventarioMissao;
     public bool ModoDeCombate => modoDeCombate;
@@ -74,11 +68,7 @@ public class Player : EntityModel
     void Start()
     {
         //Managers
-        objectManager = FindObjectOfType<ObjectManagerScript>();
-        pauseManager = FindObjectOfType<PauseManagerScript>();
-        bulletManager = FindObjectOfType<BulletManagerScript>();
-        hud = FindObjectOfType<HUDScript>();
-        dialogueUI = FindObjectOfType<DialogueUI>();
+        generalManager = FindObjectOfType<GeneralManagerScript>();
 
         //Componentes
         rb = GetComponent<Rigidbody2D>();
@@ -124,7 +114,7 @@ public class Player : EntityModel
 
     void Update()
     {
-        if (pauseManager.JogoPausado == false && estado != Estado.Morto)
+        if (generalManager.PauseManager.JogoPausado == false && estado != Estado.Morto)
         {
             if (imune)
             {
@@ -132,7 +122,7 @@ public class Player : EntityModel
             }
             else if (collisionState)
             {
-                foreach (Enemy inimigo in objectManager.listaInimigos)
+                foreach (Enemy inimigo in generalManager.ObjectManager.ListaInimigos)
                 {
                     Physics2D.IgnoreCollision(inimigo.gameObject.GetComponent<Collider2D>(), GetComponent<Collider2D>(), false);
                 }
@@ -144,7 +134,7 @@ public class Player : EntityModel
             if(recarregando == true)
             {
                 RecarregarContador();
-                hud.AtualizarBarraDeRecarregamento(tempoRecarregar, tempoRecarregarMax);
+                generalManager.Hud.AtualizarBarraDeRecarregamento(tempoRecarregar, tempoRecarregarMax);
             }
 
             animacao.AtualizarDirecao(direcao, direcaoMovimento);
@@ -160,8 +150,8 @@ public class Player : EntityModel
         posAnterior = transform.position;
         if(recarregando == true)
         {
-            hud.AtualizarPosicaoDaBarraDeRecarregamento(this);
-            hud.BarraDeRecarregamentoAtiva(true);
+            generalManager.Hud.AtualizarPosicaoDaBarraDeRecarregamento(this);
+            generalManager.Hud.BarraDeRecarregamentoAtiva(true);
         }
     }
 
@@ -300,7 +290,7 @@ public class Player : EntityModel
                 if (recarregando == false)
                 {
                     GerarSom(inventario.ArmaSlot1.RaioDoSomDoTiro, true);
-                    inventario.ArmaSlot1.Atirar(this, bulletManager, pontaArma.transform.position, VetorDirecao(direcao), Alvo.Enemy);
+                    inventario.ArmaSlot1.Atirar(this, generalManager.BulletManager, pontaArma.transform.position, VetorDirecao(direcao), Alvo.Enemy);
                     animacao.AtualizarArmaBracos(inventario.ArmaSlot1.NomeAnimacao);
                 }
             }
@@ -331,7 +321,7 @@ public class Player : EntityModel
     private void FinalizarRecarregamento()
     {
         recarregando = false;
-        hud.BarraDeRecarregamentoAtiva(false);
+        generalManager.Hud.BarraDeRecarregamentoAtiva(false);
     }
 
     public void SemMunicao()
@@ -395,9 +385,9 @@ public class Player : EntityModel
         if (!imune && estado != Estado.Morto)
         {
             
-            if (dialogueUI.IsOpen == true)
+            if (generalManager.DialogueUI.IsOpen == true)
             {
-                dialogueUI.ForcedCloseDialogueBox();
+                generalManager.DialogueUI.ForcedCloseDialogueBox();
             }
 
             if (recarregando == true)

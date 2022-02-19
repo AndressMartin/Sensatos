@@ -19,15 +19,15 @@ public class Alicate : Item
         if(player.GetEstado == Player.Estado.Normal && quantidadeDeUsos > 0)
         {
             BoxCollider2D boxCollider2D = player.GetHitBoxInteracao();
-            ObjectManagerScript objectManager = player.GetObjectManager;
-            ProcurarCerca(player, boxCollider2D, objectManager);
+            GeneralManagerScript generalManager = player.GeneralManager;
+            ProcurarCerca(player, boxCollider2D, generalManager);
         }
     }
 
-    private void ProcurarCerca(Player player, BoxCollider2D boxCollider2D, ObjectManagerScript objectManager)
+    private void ProcurarCerca(Player player, BoxCollider2D boxCollider2D, GeneralManagerScript generalManager)
     {
         boxCollider2D.enabled = true;
-        foreach (ParedeModel paredeQuebravel in objectManager.listaParedesQuebraveis)
+        foreach (ParedeModel paredeQuebravel in generalManager.ObjectManager.ListaParedesQuebraveis)
         {
             if (Colisao.HitTest(boxCollider2D, paredeQuebravel.transform.GetComponent<BoxCollider2D>()))
             {

@@ -5,33 +5,40 @@ using UnityEngine;
 public class ObjectManagerScript : MonoBehaviour
 {
     //Listas
-    [SerializeField] public List<ObjetoInteragivel> listaObjetosInteragiveis;
-    [SerializeField] public List<ParedeModel> listaParedesQuebraveis;
-    [SerializeField] public List<Enemy> listaInimigos;
-    [SerializeField] public List<LockDown> listaAlarmes;
-    [SerializeField] public List<Porta> listaPortas;
+    [SerializeField] private List<ObjetoInteragivel> listaObjetosInteragiveis;
+    [SerializeField] private List<ParedeModel> listaParedesQuebraveis;
+    [SerializeField] private List<Enemy> listaInimigos;
+    [SerializeField] private List<LockDown> listaAlarmes;
+    [SerializeField] private List<Porta> listaPortas;
 
-    public void adicionarAosObjetosInteragiveis(ObjetoInteragivel objetoInteragivel)
+    //Getters
+    [SerializeField] public List<ObjetoInteragivel> ListaObjetosInteragiveis => listaObjetosInteragiveis;
+    [SerializeField] public List<ParedeModel> ListaParedesQuebraveis => listaParedesQuebraveis;
+    [SerializeField] public List<Enemy> ListaInimigos => listaInimigos;
+    [SerializeField] public List<LockDown> ListaAlarmes => listaAlarmes;
+    [SerializeField] public List<Porta> ListaPortas => listaPortas;
+
+    public void AdicionarAosObjetosInteragiveis(ObjetoInteragivel objetoInteragivel)
     {
         listaObjetosInteragiveis.Add(objetoInteragivel);
     }
 
-    public void removerDosObjetosInteragiveis(ObjetoInteragivel objetoInteragivel)
+    public void RemoverDosObjetosInteragiveis(ObjetoInteragivel objetoInteragivel)
     {
         listaObjetosInteragiveis.Remove(objetoInteragivel);
     }
 
-    public void adicionarAsParedesQuebraveis(ParedeModel paredeQuebravel)
+    public void AdicionarAsParedesQuebraveis(ParedeModel paredeQuebravel)
     {
         listaParedesQuebraveis.Add(paredeQuebravel);
     }
 
-    public void removerDasParedesQuebraveis(ParedeModel paredeQuebravel)
+    public void RemoverDasParedesQuebraveis(ParedeModel paredeQuebravel)
     {
         listaParedesQuebraveis.Remove(paredeQuebravel);
     }
 
-    public void adicionarAosInimigos(Enemy inimigo)
+    public void AdicionarAosInimigos(Enemy inimigo)
     {
         if (!listaInimigos.Contains(inimigo))
         {
@@ -39,27 +46,27 @@ public class ObjectManagerScript : MonoBehaviour
         }
     }
 
-    public void removerDosInimigos(Enemy inimigo)
+    public void RemoverDosInimigos(Enemy inimigo)
     {
         listaInimigos.Remove(inimigo);
     }
 
-    public void adicionarAosAlarmes(LockDown alarme)
+    public void AdicionarAosAlarmes(LockDown alarme)
     {
         listaAlarmes.Add(alarme);
     }
 
-    public void removerDosAlarmes(LockDown alarme)
+    public void RemoverDosAlarmes(LockDown alarme)
     {
         listaAlarmes.Remove(alarme);
     }
 
-    public void adicionarAsPortas(Porta porta)
+    public void AdicionarAsPortas(Porta porta)
     {
         listaPortas.Add(porta);
     }
 
-    public void removerDasPortas(Porta porta)
+    public void RemoverDasPortas(Porta porta)
     {
         listaPortas.Remove(porta);
     }

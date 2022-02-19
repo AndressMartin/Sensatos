@@ -2,27 +2,35 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyManager : MonoBehaviour
+public class EnemyManagerScript : MonoBehaviour
 {
-    LockDownManager lockDownManager;
+    //Managers
+    private GeneralManagerScript generalManager;
+
+    //Variaveis
     [SerializeField] private int quantidadeInimigosVendoPlayer;
     public int GetQuantidadeInimigosVendoPlayer => quantidadeInimigosVendoPlayer;
+    [SerializeField] private List<Transform> pontosDeProcura;
+
+    //Getters
+    public List<Transform> PontosDeProcura => pontosDeProcura;
 
     private void Start()
     {
-        lockDownManager = transform.parent.GetComponentInChildren<LockDownManager>();
+        generalManager = FindObjectOfType<GeneralManagerScript>();
     }
+
     private void Update()
     {
-        if (lockDownManager.EmLockdow)
+        if (generalManager.LockDownManager.EmLockdow)
         {
             if (quantidadeInimigosVendoPlayer > 0)
             {
-                lockDownManager.Contador();
+                generalManager.LockDownManager.Contador();
             }
             else
             {
-                lockDownManager.ContadorLockdownInverso();
+                generalManager.LockDownManager.ContadorLockdownInverso();
             }
         }
     }
@@ -35,7 +43,7 @@ public class EnemyManager : MonoBehaviour
     {
         quantidadeInimigosVendoPlayer--;
     }
-    public int AddicionarAlguemVendoPlayer()
+    public int AdicionarAlguemVendoPlayer()
     {
         quantidadeInimigosVendoPlayer++;
         return quantidadeInimigosVendoPlayer;

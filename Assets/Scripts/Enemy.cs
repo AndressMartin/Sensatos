@@ -6,11 +6,7 @@ using Pathfinding;
 public class Enemy : EntityModel
 {
     //Managers
-    private ObjectManagerScript objectManager;
-    private PauseManagerScript pauseManager;
-    private BulletManagerScript bulletManager;
-    private EnemyManager enemyManager;
-    private LockDownManager lockDownManager;
+    private GeneralManagerScript generalManager;
 
     //Componentes
     private PontaArmaScript pontaArma;
@@ -18,9 +14,9 @@ public class Enemy : EntityModel
     private InventarioEnemy inventario;
     private EnemyMovement enemyMovement;
     private EnemyVisionScript enemyVision;
-    private IA_Enemy_Basico iA_Enemy;
+    private IAEnemy iA_Enemy;
     private Player player;
-    private AILerp lerp;
+    private AIPath aiPath;
 
     //Variaveis
     public override int vida { get; protected set; }
@@ -43,16 +39,15 @@ public class Enemy : EntityModel
     private Vector2 posicaoRespawn;
     private Direcao direcaoRespawn;
 
+    bool iniciado = false;
+
     //Getters
+    public GeneralManagerScript GeneralManager => generalManager;
     public Estado GetEstado => estado;
     public Player GetPlayer => player;
-    public EnemyManager GetEnemyManager => enemyManager;
-    public LockDownManager GetLockDownManager => lockDownManager; 
     public InventarioEnemy GetInventarioEnemy => inventario;
     public EnemyMovement GetEnemyMovement => enemyMovement;
-    public IA_Enemy_Basico GetIA_Enemy_Basico => iA_Enemy;
-
-    bool fuiSpawnado;
+    public IAEnemy GetIA_Enemy_Basico => iA_Enemy;
 
     private void Awake()
     {
@@ -60,24 +55,27 @@ public class Enemy : EntityModel
     }
     void Start()
     {
+        Iniciar();
+    }
+
+    private void Iniciar()
+    {
+        if (iniciado == true)
+        {
+            return;
+        }
+
         //Managers
-        objectManager = FindObjectOfType<ObjectManagerScript>();
-        pauseManager = FindObjectOfType<PauseManagerScript>();
-        bulletManager = FindObjectOfType<BulletManagerScript>();
-        enemyManager = FindObjectOfType<EnemyManager>();
-        lockDownManager = FindObjectOfType<LockDownManager>();
+        generalManager = FindObjectOfType<GeneralManagerScript>();
 
         //Se adicionar a lista de inimigos do ObjectManager
-        objectManager.adicionarAosInimigos(this);
+        generalManager.ObjectManager.AdicionarAosInimigos(this);
 
         //Componentes
-        if (!fuiSpawnado) 
-        {
-            enemyMovement = GetComponent<EnemyMovement>();
-            iA_Enemy = GetComponent<IA_Enemy_Basico>();
-            inventario = GetComponent<InventarioEnemy>();
-            lerp = GetComponent<AILerp>();
-        }
+        enemyMovement = GetComponent<EnemyMovement>();
+        iA_Enemy = GetComponent<IAEnemy>();
+        inventario = GetComponent<InventarioEnemy>();
+        aiPath = GetComponent<AIPath>();
         pontaArma = GetComponentInChildren<PontaArmaScript>();
         enemyVision = GetComponentInChildren<EnemyVisionScript>();
         animacao = GetComponent<AnimacaoJogador>();
@@ -96,31 +94,25 @@ public class Enemy : EntityModel
         knockBackTrigger = 0;
         knockBackTriggerMax = 10;
 
-
         SetRespawnInicial();
+
+        iniciado = true;
+    }
+
+    public void SerSpawnado(Vector2 _pontoSpawn)
+    {
+        Iniciar();
+
+        this.gameObject.SetActive(false);
     }
 
     void Update()
     { 
-        if(pauseManager.JogoPausado == false)
+        if(generalManager.PauseManager.JogoPausado == false)
         {
             AllEnemySubClass();
         }
     }
-
-    public void SerSpawnado(List<Transform> _movesSpots, List<Transform> _movesSpotsLockdown, Vector2 _pontoSpawn)
-    {
-        enemyMovement = GetComponent<EnemyMovement>();
-        iA_Enemy = GetComponent<IA_Enemy_Basico>();
-        inventario = GetComponent<InventarioEnemy>();
-        lerp = GetComponent<AILerp>();
-
-        enemyMovement.ReceberMoveSpots(_movesSpots, _movesSpotsLockdown);
-        iA_Enemy.SerSpawnado(_pontoSpawn,lerp);
-
-        fuiSpawnado = true;
-    }
-   
 
     private void SetRespawnInicial()
     {
@@ -144,7 +136,7 @@ public class Enemy : EntityModel
             ChangeDirection(direcaoRespawn);
 
             iA_Enemy.Respawn();
-            enemyMovement.ZerarVelocidade(lerp);
+            enemyMovement.ZerarVelocidade(aiPath);
 
 
             ResetarVariaveisDeControle();
@@ -175,7 +167,7 @@ public class Enemy : EntityModel
         }
         if(morto)
         {
-            enemyMovement.ZerarVelocidade(lerp);
+            enemyMovement.ZerarVelocidade(aiPath);
         }
     }
 
@@ -214,7 +206,7 @@ public class Enemy : EntityModel
 
         if (tempoTiro <= 0)
         {
-            inventario.ArmaSlot.Atirar(this, bulletManager, pontaArma.transform.position, DirecaoPlayer(player), Alvo.Player);
+            inventario.ArmaSlot.Atirar(this, generalManager.BulletManager, pontaArma.transform.position, DirecaoPlayer(player), Alvo.Player);
             animacao.AtualizarArmaBracos(inventario.ArmaSlot.NomeAnimacao);
 
             SetCadenciaTiro(inventario.ArmaSlot.GetStatus.CadenciaDosTiros);
@@ -234,9 +226,9 @@ public class Enemy : EntityModel
 
     public void Die()
     {
-        enemyManager.PerdiVisaoInimigo();
+        generalManager.EnemyManager.PerdiVisaoInimigo();
         morto = true;
-        enemyMovement.ZerarVelocidade(lerp);
+        enemyMovement.ZerarVelocidade(aiPath);
         Debug.Log("to morto");
     }
     public void stealthKill()

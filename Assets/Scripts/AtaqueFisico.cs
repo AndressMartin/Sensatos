@@ -5,7 +5,7 @@ using UnityEngine;
 public class AtaqueFisico : MonoBehaviour
 {
     //Managers
-    private ObjectManagerScript objectManager;
+    private GeneralManagerScript generalManager;
 
     //Componentes
     private BoxCollider2D boxCollider2D;
@@ -21,7 +21,7 @@ public class AtaqueFisico : MonoBehaviour
     void Start()
     {
         //Managers
-        objectManager = FindObjectOfType<ObjectManagerScript>();
+        generalManager = FindObjectOfType<GeneralManagerScript>();
 
         //Componentes
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -96,7 +96,7 @@ public class AtaqueFisico : MonoBehaviour
     private void AtacarInimigos(EntityModel.Direcao _direcao)
     {
         boxCollider2D.enabled = true;
-        foreach (Enemy inimigo in objectManager.listaInimigos)
+        foreach (Enemy inimigo in generalManager.ObjectManager.ListaInimigos)
         {
             if (Colisao.HitTest(boxCollider2D, inimigo.transform.Find("HitboxDano").GetComponent<BoxCollider2D>()))
             {

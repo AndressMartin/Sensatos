@@ -4,26 +4,30 @@ using UnityEngine;
 
 public class ItemColetavel : ObjetoInteragivel
 {
-    [SerializeField] private Item item;
+    //Managers
+    private GeneralManagerScript generalManager;
 
     //Componentes
     private SpriteRenderer spriteRenderer;
     private BoxCollider2D boxCollider2D;
 
-    private ObjectManagerScript objectManager;
+    //Variaveis
+    [SerializeField] private Item item;
 
     //Variaveis de respawn
     private bool ativoRespawn;
 
     void Start()
     {
+        //Managers
+        generalManager = FindObjectOfType<GeneralManagerScript>();
+
         //Componentes
         spriteRenderer = GetComponent<SpriteRenderer>();
         boxCollider2D = GetComponent<BoxCollider2D>();
 
         //Se adicionar a lista de objetos interagiveis do ObjectManager
-        objectManager = FindObjectOfType<ObjectManagerScript>();
-        objectManager.adicionarAosObjetosInteragiveis(this);
+        generalManager.ObjectManager.AdicionarAosObjetosInteragiveis(this);
     }
 
     public override void SetRespawn()

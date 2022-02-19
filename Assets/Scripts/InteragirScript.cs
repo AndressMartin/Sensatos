@@ -5,7 +5,7 @@ using UnityEngine;
 public class InteragirScript : MonoBehaviour
 {
     //Managers
-    private ObjectManagerScript objectManager;
+    private GeneralManagerScript generalManager;
 
     //Variaveis
     private BoxCollider2D boxCollider2D;
@@ -20,7 +20,7 @@ public class InteragirScript : MonoBehaviour
     void Start()
     {
         //Managers
-        objectManager = FindObjectOfType<ObjectManagerScript>();
+        generalManager = FindObjectOfType<GeneralManagerScript>();
 
         //Componentes
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -69,7 +69,7 @@ public class InteragirScript : MonoBehaviour
     private void ProcurarInteragivel(Player player)
     {
         boxCollider2D.enabled = true;
-        foreach (ObjetoInteragivel objetoInteragivel in objectManager.listaObjetosInteragiveis)
+        foreach (ObjetoInteragivel objetoInteragivel in generalManager.ObjectManager.ListaObjetosInteragiveis)
         {
             if (Colisao.HitTest(boxCollider2D, objetoInteragivel.transform.GetComponent<BoxCollider2D>()))
             {

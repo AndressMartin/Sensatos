@@ -5,7 +5,7 @@ using UnityEngine;
 public class ProjetilScript : MonoBehaviour
 {
     //Managers
-    protected PauseManagerScript pauseManager;
+    protected GeneralManagerScript generalManager;
     protected BulletManagerScript bulletManager;
 
     //Componentes
@@ -31,7 +31,7 @@ public class ProjetilScript : MonoBehaviour
     protected virtual void Start()
     {
         //Managers
-        pauseManager = FindObjectOfType<PauseManagerScript>();
+        generalManager = FindObjectOfType<GeneralManagerScript>();
 
         //Componentes
         boxCollider2D = GetComponent<BoxCollider2D>();
@@ -61,7 +61,7 @@ public class ProjetilScript : MonoBehaviour
 
     protected virtual void Update()
     {
-        if (pauseManager.JogoPausado == false)
+        if (generalManager.PauseManager.JogoPausado == false)
         {
             if (ativo == true)
             {

@@ -2,23 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemySpawnManager : MonoBehaviour
+public class EnemySpawnManagerScript : MonoBehaviour
 {
-    [SerializeField] List<Spawner> salasSeguranca;
-    List<Spawner> SalasSeguranca => salasSeguranca;
+    [SerializeField] private List<Spawner> salasSeguranca;
+    public List<Spawner> SalasSeguranca => salasSeguranca;
 
     public void AddToLista(Spawner spawner)
     {
         salasSeguranca.Add(spawner);
 
-        ObjectManagerScript objectManagerScript;
-        objectManagerScript = FindObjectOfType<ObjectManagerScript>();
+        GeneralManagerScript generalManager = FindObjectOfType<GeneralManagerScript>();
 
         foreach (Enemy item in spawner.EnemyList)
         {
-            objectManagerScript.adicionarAosInimigos(item);
+            generalManager.ObjectManager.AdicionarAosInimigos(item);
         }
     }
+
     public void AtivarInimigos()
     {
         foreach (Spawner spawner in salasSeguranca)

@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Usable : ScriptableObject
 {
-
     [SerializeField] protected Sprite imagemInventario;
     [SerializeField] protected string nome;
     [SerializeField] protected string descricao;

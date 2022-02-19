@@ -5,8 +5,7 @@ using UnityEngine;
 public class LockDown : ObjetoInteragivel
 {
     //Managers
-    private ObjectManagerScript objectManagerScript;
-    private PauseManagerScript pauseManager;
+    private GeneralManagerScript generalManager;
 
     //Componentes
     SpriteRenderer spriteRenderer;
@@ -17,15 +16,14 @@ public class LockDown : ObjetoInteragivel
     private void Start()
     {
         //Managers
-        pauseManager = FindObjectOfType<PauseManagerScript>();
-        objectManagerScript = FindObjectOfType<ObjectManagerScript>();
+        generalManager = FindObjectOfType<GeneralManagerScript>();
 
         //Componentes
         spriteRenderer = GetComponent<SpriteRenderer>();
 
         //Se adicionar a lista de objetos interagiveis do ObjectManager
-        objectManagerScript.adicionarAosObjetosInteragiveis(this);
-        objectManagerScript.adicionarAosAlarmes(this);
+        generalManager.ObjectManager.AdicionarAosObjetosInteragiveis(this);
+        generalManager.ObjectManager.AdicionarAosAlarmes(this);
 
         //Variaveis
         lockDownAtivo = false;
