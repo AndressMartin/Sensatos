@@ -35,7 +35,9 @@ public class TypewriterEffect : MonoBehaviour
     private IEnumerator TypeText(string textTotype, TMP_Text textLabel)
     {
         IsRunning = true;
-        textLabel.text = string.Empty;
+
+        textLabel.text = textTotype;
+        textLabel.maxVisibleCharacters = 0;
 
         float t = 0; //Guarda o tempo que se passa para escrever o tempo
         int charIndex = 0; //Guarda o numero de caracteres que devem aparecer com base no tempo passado
@@ -49,22 +51,23 @@ public class TypewriterEffect : MonoBehaviour
             charIndex = Mathf.FloorToInt(t);
             charIndex = Mathf.Clamp(charIndex, 0, textTotype.Length); //Limita a variavel entre 0 e o numero de caracteres do texto atual
 
+            //Caso a variavel de index das letras some mais de 1 desde a ultima frame, escreve todos os caracteres extras na tela, ainda com um intervalo caso tenha alguma pontuacao
             for(int i = lastCharIndex; i < charIndex; i++)
             {
                 bool isLast = i >= textTotype.Length - 1;
 
-                textLabel.text = textTotype.Substring(0, i + 1);
+                textLabel.maxVisibleCharacters = i + 1; //Atualiza os caracteres visiveis no texto
 
-                if(IsPunctuation(textTotype[i], out float waitTime) && !isLast && !IsPunctuation(textTotype[i + 1], out _)) //O _ e um descarte, uma variavel nao usada em sem valor e endereco na memoria
+                if (IsPunctuation(textTotype[i], out float waitTime) && !isLast && !IsPunctuation(textTotype[i + 1], out _)) //O _ e um descarte, uma variavel nao usada em sem valor e endereco na memoria
                 {
                     yield return new WaitForSeconds(waitTime);
                 }
             }
 
-            textLabel.text = textTotype.Substring(0, charIndex); //Atualiza o texto
-
             yield return null;
         }
+
+        textLabel.maxVisibleCharacters = textTotype.Length; //Atualiza os caracteres visiveis no texto
 
         IsRunning = false;
     }
