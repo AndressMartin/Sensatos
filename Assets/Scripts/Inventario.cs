@@ -11,10 +11,13 @@ public class Inventario : MonoBehaviour
     //Variaveis
     [SerializeField] private List<Item> itens = new List<Item>();
     private List<Item> itensEmAtalhos = new List<Item>();
+
     [SerializeField] private List<ArmaDeFogo> armas = new List<ArmaDeFogo>();
+    [SerializeField] private List<RoupaDeCamuflagem> roupasDeCamuflagem = new List<RoupaDeCamuflagem>();
 
     [SerializeField] private ArmaDeFogo armaSlot1;
     [SerializeField] private ArmaDeFogo armaSlot2;
+    private RoupaDeCamuflagem roupaAtual;
     private Item itemAtual;
 
     [HideInInspector] public UnityEvent hasSortedWeapons;
@@ -25,6 +28,7 @@ public class Inventario : MonoBehaviour
     public List<ArmaDeFogo> Armas => armas;
     public ArmaDeFogo ArmaSlot1 => armaSlot1;
     public ArmaDeFogo ArmaSlot2 => armaSlot2;
+    public RoupaDeCamuflagem RoupaAtual => roupaAtual;
     public Item ItemAtual => itemAtual;
 
     void Start()

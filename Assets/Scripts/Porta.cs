@@ -15,19 +15,24 @@ public class Porta : ObjetoInteragivel
 
     //Enums
     public enum TipoPorta { Simples, Normal, Contencao }
-    private enum Estado { NaoLockdown, Lockdown }
+    public enum Estado { NaoLockdown, Lockdown }
 
     //Variaveis
-    public Chave chave;
+    [SerializeField] private Chave chave;
     private bool aberto;
-    public bool trancado;
+    private bool trancado;
 
     //Variaveis de respawn
     private bool trancadoRespawn;
     private bool abertoRespawn;
 
-    [SerializeField] public TipoPorta tipoPorta;
-    [SerializeField]private Estado estado = Estado.NaoLockdown;
+    [SerializeField] private TipoPorta tipoPorta;
+    [SerializeField] private Estado estado;
+
+    //Getters
+    public bool Trancado => trancado;
+    public TipoPorta GetTipoPorta => tipoPorta;
+    public Estado GetEstado => estado;
 
     void Start()
     {
@@ -41,7 +46,7 @@ public class Porta : ObjetoInteragivel
         hitBoxVisao = transform.Find("HitBoxVisao").GetComponent<BoxCollider2D>();
 
         //Variaveis
-        ativo = true;
+        estado = Estado.NaoLockdown;
 
         //Se adicionar a lista de objetos interagiveis do ObjectManager
         generalManager.ObjectManager.AdicionarAosObjetosInteragiveis(this);
@@ -131,7 +136,7 @@ public class Porta : ObjetoInteragivel
         }
     }
 
-    void Destrancar()
+    private void Destrancar()
     {
         switch (tipoPorta)
         {
@@ -158,7 +163,7 @@ public class Porta : ObjetoInteragivel
         }
     }
 
-    void AbrirPorta()
+    public void AbrirPorta()
     {
         aberto = true;
         if (animacao.AnimacaoAtual != "Aberta")
@@ -168,7 +173,7 @@ public class Porta : ObjetoInteragivel
         PortaAberta(aberto);
     }
 
-    void ForceFecharPorta()
+    private void ForceFecharPorta()
     {
         aberto = false;
         if (animacao.AnimacaoAtual != "Fechada")
@@ -178,7 +183,7 @@ public class Porta : ObjetoInteragivel
         PortaAberta(aberto);
     }
 
-    void PortaAberta(bool portaAberta)
+    private void PortaAberta(bool portaAberta)
     {
         if(portaAberta == true)
         {
