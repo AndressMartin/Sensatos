@@ -5,9 +5,10 @@ using UnityEngine;
 public class Item : Usable
 {
     //Variaveis
-    public enum Tipo { Consumivel, Ferramenta, ItemChave };
+    //
+    public enum TipoItem { Consumivel, Ferramenta, ItemChave };
 
-    [HideInInspector] public virtual Tipo tipo { get; protected set; }
+    public virtual TipoItem Tipo => TipoItem.Consumivel;
 
     virtual public void Usar(Player player)
     {

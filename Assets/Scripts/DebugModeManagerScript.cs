@@ -110,17 +110,17 @@ public class DebugModeManagerScript : MonoBehaviour
 
         foreach (Item item in itensIniciais)
         {
-            switch (item.tipo)
+            switch (item.Tipo)
             {
-                case Item.Tipo.Consumivel:
+                case Item.TipoItem.Consumivel:
                     player.Inventario.AddItem(item);
                     break;
 
-                case Item.Tipo.Ferramenta:
+                case Item.TipoItem.Ferramenta:
                     player.Inventario.AddItem(item);
                     break;
 
-                case Item.Tipo.ItemChave:
+                case Item.TipoItem.ItemChave:
                     player.InventarioMissao.Add(item);
                     break;
             }

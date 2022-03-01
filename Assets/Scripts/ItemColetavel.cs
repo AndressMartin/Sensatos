@@ -55,19 +55,19 @@ public class ItemColetavel : ObjetoInteragivel
     {
         if(item != null)
         {
-            switch(item.tipo)
+            switch(item.Tipo)
             {
-                case Item.Tipo.Consumivel:
+                case Item.TipoItem.Consumivel:
                     AdicionarAoInventario(player);
                     Desativar();
                     break;
 
-                case Item.Tipo.Ferramenta:
+                case Item.TipoItem.Ferramenta:
                     AdicionarAoInventario(player);
                     Desativar();
                     break;
 
-                case Item.Tipo.ItemChave:
+                case Item.TipoItem.ItemChave:
                     AdicionarAoInventarioMissao(player);
                     Desativar();
                     break;

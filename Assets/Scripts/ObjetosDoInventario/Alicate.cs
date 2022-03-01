@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class Alicate : Item
 {
-    public override Tipo tipo { get; protected set; } = Tipo.Ferramenta;
+    public override TipoItem Tipo => TipoItem.Ferramenta;
 
     [SerializeField] private int dano;
     [SerializeField] private int quantidadeDeUsos;

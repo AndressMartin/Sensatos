@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class Chave : Item
 {
-    public override Tipo tipo { get; protected set; } = Tipo.ItemChave;
+    public override TipoItem Tipo => TipoItem.ItemChave;
 
     [SerializeField] private int idChave;
 
