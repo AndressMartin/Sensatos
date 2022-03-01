@@ -245,13 +245,13 @@ GameObject:
   - component: {fileID: 8916929928718140114}
   - component: {fileID: 3898492100488833683}
   - component: {fileID: 8656145591946789100}
+  - component: {fileID: 8916929928765734733}
   - component: {fileID: 5082819183783505518}
   - component: {fileID: 8003618298857930454}
   - component: {fileID: 8603944095133171121}
   - component: {fileID: 2150433992448801304}
   - component: {fileID: 7187578302697251405}
   - component: {fileID: 8916929928765734730}
-  - component: {fileID: 8916929928765734733}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -327,6 +327,17 @@ Rigidbody2D:
   m_SleepingMode: 0
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!210 &8916929928765734733
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4091040286682307908}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
 --- !u!114 &5082819183783505518
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -413,17 +424,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38f45d8e473a2474092e48f9e48536e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!210 &8916929928765734733
-SortingGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4091040286682307908}
-  m_Enabled: 1
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
 --- !u!1 &7035996260120561340
 GameObject:
   m_ObjectHideFlags: 0
