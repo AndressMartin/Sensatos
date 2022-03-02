@@ -380,6 +380,7 @@ public class IAEnemy : MonoBehaviour
             somPasso = false;
             somTiro = false;
             tomeiDano = false;
+            viuPlayerAlgumaVez = true;
         }
     }
     protected virtual void SomPassos()
