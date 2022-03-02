@@ -5,14 +5,19 @@ using static EntityModel;
 
 public class AnimacaoJogador : MonoBehaviour
 {
+    //Componentes
     private Animator corpo; //Animator do corpo
     private Animator braco; //Animator dos bracos
     private SpriteRenderer corpoSprite; //SpriteRenderer do corpo
     private SpriteRenderer bracoSprite; //SpriteRenderer dos bracos
+
+    //Variaveis
     private string armaEquipadaVisual; //Guarda a arma equipada
     private string animacaoAtual; //Guarda a animacao atual
 
-    // Start is called before the first frame update
+    //Getters
+    public SpriteRenderer CorpoSprite => corpoSprite;
+
     void Start()
     {
         corpo = transform.Find("Corpo").GetComponent<Animator>();

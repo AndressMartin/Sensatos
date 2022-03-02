@@ -9,7 +9,7 @@ public class EntityModel : MonoBehaviour
     public enum Alvo { Player, Enemy };
 
     //Variaveis
-    public virtual int vida { get; protected set; }
+    protected int vida;
     protected Direcao direcao;
 
     //Getters

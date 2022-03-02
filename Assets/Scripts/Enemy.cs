@@ -19,7 +19,6 @@ public class Enemy : EntityModel
     private Player player;
 
     //Variaveis
-    public override int vida { get; protected set; }
     [SerializeField] private int vidaInicial;
 
     public enum Estado { Normal, TomandoDano };

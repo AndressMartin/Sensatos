@@ -23,7 +23,6 @@ public class Player : EntityModel
     public enum Estado { Normal, TomandoDano, Atacando, UsandoItem, Morto };
 
     //Variaveis
-    public override int vida { get; protected set; }
     [SerializeField] private int vidaInicial;
 
     public Direcao direcaoMovimento;
@@ -148,6 +147,7 @@ public class Player : EntityModel
     private void FixedUpdate()
     {
         posAnterior = transform.position;
+
         if(recarregando == true)
         {
             generalManager.Hud.AtualizarPosicaoDaBarraDeRecarregamento(this);

@@ -8,6 +8,7 @@ public class HUDScript : MonoBehaviour
     private Canvas canvas;
     [SerializeField] private Camera cameraAtiva;
     [SerializeField] private PlayerUIScript playerUI;
+    [SerializeField] private BarraDeVisaoDoInimigo barraDeVisaoDoInimigo;
 
     private void Start()
     {
