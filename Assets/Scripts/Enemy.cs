@@ -45,6 +45,7 @@ public class Enemy : EntityModel
 
     //Getters
     public GeneralManagerScript GeneralManager => generalManager;
+    public AnimacaoJogador Animacao => animacao;
     public Estado GetEstado => estado;
     public Player GetPlayer => player;
     public InventarioEnemy GetInventarioEnemy => inventario;

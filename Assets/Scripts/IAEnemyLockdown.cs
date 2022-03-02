@@ -32,7 +32,7 @@ public class IAEnemyLockdown : IAEnemy
                 {
                     if(vendoPlayer)
                     {
-                        estadoDeteccaoPlayer = EstadoDeteccaoPlayer.playerDetectado;
+                        estadoDeteccaoPlayer = EstadoDeteccaoPlayer.PlayerDetectado;
                         verifiqueiUltimaPosicaoJogador = false;
 
                     }
@@ -46,7 +46,7 @@ public class IAEnemyLockdown : IAEnemy
                     inimigoEstados = InimigoEstados.Patrulhar;
                 }
                 break;
-            case EstadoDeteccaoPlayer.playerDetectado:
+            case EstadoDeteccaoPlayer.PlayerDetectado:
                 vendoPlayer = vendoPlayerCircular;
                 if(vendoPlayer)
                 {

@@ -10,6 +10,9 @@ public class HUDScript : MonoBehaviour
     [SerializeField] private PlayerUIScript playerUI;
     [SerializeField] private BarraDeVisaoDoInimigo barraDeVisaoDoInimigo;
 
+    //Getters
+    public BarraDeVisaoDoInimigo BarraDeVisaoDoInimigo => barraDeVisaoDoInimigo;
+
     private void Start()
     {
         BarraDeRecarregamentoAtiva(false);
@@ -28,5 +31,10 @@ public class HUDScript : MonoBehaviour
     public void AtualizarPosicaoDaBarraDeRecarregamento(Player player)
     {
         playerUI.AtualizarPosicaoDaBarraDeRecarregamento(cameraAtiva, player);
+    }
+
+    public void AtualizarBarraDeVisao(Enemy enemy, BarraDeVisaoDoInimigo barraDeVisaoDoInimigo, SpriteRenderer sprite)
+    {
+        barraDeVisaoDoInimigo.AtualizarPosicao(cameraAtiva, enemy, sprite);
     }
 }

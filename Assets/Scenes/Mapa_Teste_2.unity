@@ -14305,6 +14305,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -215
       objectReference: {fileID: 0}
+    - target: {fileID: 9198023442311561849, guid: 6d63f8b028557034bbfc590405d0f4e6, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6d63f8b028557034bbfc590405d0f4e6, type: 3}
 --- !u!1 &1702063282
@@ -14805,6 +14809,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 854754850}
     m_Modifications:
+    - target: {fileID: 1872403719, guid: 6712e26531f27d54d88d74c08c419556, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6297625325533714485, guid: 6712e26531f27d54d88d74c08c419556, type: 3}
       propertyPath: m_Name
       value: EnemyIsmaias

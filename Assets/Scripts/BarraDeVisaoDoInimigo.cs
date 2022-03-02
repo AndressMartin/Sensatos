@@ -13,10 +13,10 @@ public class BarraDeVisaoDoInimigo : MonoBehaviour
     //Variaveis
     private bool iconeAtivo = false;
     private float tempoAlertaAtivo;
-    private float tempoAlertaAtivoMax = 1f;
+    private float tempoAlertaAtivoMax = 2f;
 
     //Getters
-    private bool IconeAtivo => iconeAtivo;
+    public bool IconeAtivo => iconeAtivo;
 
     private void AtualizarIconeAtivo()
     {
@@ -57,7 +57,7 @@ public class BarraDeVisaoDoInimigo : MonoBehaviour
     public void AtualizarPosicao(Camera camera, Enemy enemy, SpriteRenderer sprite)
     {
         float diferencaY = 0.2f;
-        Vector2 diferenca = new Vector2(0, sprite.bounds.size.y + diferencaY);
+        Vector2 diferenca = new Vector2(0, sprite.bounds.extents.y + diferencaY);
 
         transform.position = (Vector2)enemy.transform.position + diferenca;
     }
