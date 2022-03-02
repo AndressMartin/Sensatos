@@ -216,6 +216,66 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!1 &1872403718
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1872403719}
+  - component: {fileID: 1872403721}
+  - component: {fileID: 1872403720}
+  m_Layer: 0
+  m_Name: SubAtackRange
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1872403719
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1872403718}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 6297625326670532827}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1872403721
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1872403718}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 115563d89a397a348b9a31d324a4d803, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!58 &1872403720
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1872403718}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 4
 --- !u!1 &4051575243111830711
 GameObject:
   m_ObjectHideFlags: 0
@@ -411,14 +471,12 @@ MonoBehaviour:
   estadoDeteccaoPlayer: 0
   vendoPlayerCircular: 0
   vendoPlayer: 0
-  tomeiDano: 0
-  posicaoInicial: {x: 0, y: 0}
-  tempoEntrarEmModoAlertaMax: 3
-  tempoEsquecerPlayerMax: 5
-  tempoVerificandoUltimaPosicaoPlayerMax: 2
-  tempoVerificandoSomTiroMax: 4
+  tempoEntrarEmModoAlertaMax: 1
+  tempoEsquecerPlayerMax: 3
+  tempoVerificandoUltimaPosicaoPlayerMax: 5
+  tempoVerificandoSomTiroMax: 2
   tempoVerificandoSomPassosMax: 2
-  tempoVerificandoTomeiTiroMax: 3
+  tempoVerificandoTomeiTiroMax: 2
 --- !u!114 &6297625325533714492
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -639,7 +697,8 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 1872403719}
   m_Father: {fileID: 6297625325533714494}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -655,6 +714,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb6b2103a329167409756f77064b043f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  vendoSubVisao: 0
+  vendo: 0
 --- !u!58 &6297625326670532824
 CircleCollider2D:
   m_ObjectHideFlags: 0

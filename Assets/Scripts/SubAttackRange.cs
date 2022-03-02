@@ -2,33 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyAttackRange : MonoBehaviour
+public class SubAttackRange : MonoBehaviour
 {
-    private Enemy enemy;
-    public bool vendoSubVisao;
-    [SerializeField]bool vendo;
+    EnemyAttackRange enemyAttack;
     void Start()
     {
-        enemy = GetComponentInParent<Enemy>();
+        enemyAttack = GetComponentInParent<EnemyAttackRange>();
     }
-    private void Update()
-    {
-        if(vendo || vendoSubVisao)
-        {
-            enemy.playerOnAttackRange = vendoSubVisao;
-        }
-    }
-    
-
-    
     private void OnTriggerStay2D(Collider2D collision)
     {
         Player temp = collision.gameObject.GetComponent<Player>();
 
         if (temp != null)
         {
-            vendo = true;
-            //enemy.playerOnAttackRange= true;         
+            enemyAttack.vendoSubVisao = true;
         }
     }
 
@@ -38,10 +25,11 @@ public class EnemyAttackRange : MonoBehaviour
 
         if (temp != null)
         {
-            vendo = false;
-            //enemy.playerOnAttackRange = false;
+            enemyAttack.vendoSubVisao = false;
             //enemyMovement.playerOnAttackRange = false;
         }
 
     }
 }
+
+

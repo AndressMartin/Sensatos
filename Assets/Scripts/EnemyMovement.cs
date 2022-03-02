@@ -222,6 +222,7 @@ public class EnemyMovement : MonoBehaviour
 
     public void Mover(Vector2 _alvo)
     {
+        aiPath.enabled = true;
         aiPath.canMove = true;
         aiPath.maxSpeed = velocidade;
         aiPath.destination = _alvo;
@@ -254,6 +255,7 @@ public class EnemyMovement : MonoBehaviour
 
     public void ZerarVelocidade()
     {
+        aiPath.enabled = false;
         aiPath.canMove = false;
         aiPath.maxSpeed = 0;
         aiPath.destination = transform.position;

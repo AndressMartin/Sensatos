@@ -14,7 +14,6 @@ public class IAEnemy : MonoBehaviour
     protected Enemy enemy;
     protected EnemyVisionScript enemyVisionScript;
     protected InventarioEnemy inventarioEnemy;
-    protected AIPath aiPath;
     
     //Enuns
     protected enum InimigoEstados { AndandoAtePlayer, Patrulhar, AtacarPlayer, SomPassos, SomTiro, AndandoUltimaPosicaoPlayerConhecida, IndoAtivarLockDown , FicarParado , FazerRotinaLockdow , TomeiDano  };
@@ -42,7 +41,7 @@ public class IAEnemy : MonoBehaviour
     protected bool vouApertarBotao;          //caso tenha visto player alguma vez e o perdeu de vista
     protected bool fazerRotinaLockDown;
     protected bool verifiqueiUltimaPosicaoJogador;
-    [SerializeField]protected bool tomeiDano;
+    protected bool tomeiDano;
     protected bool primeiraVezTomeiDano;
     protected int indiceDoBotaoMaisPerto;
 
@@ -52,7 +51,7 @@ public class IAEnemy : MonoBehaviour
     protected Vector2 posicaoTiroPlayer;
     protected Vector2 posicaoUltimoLugarVisto;
     protected Vector2 posicaoAtualPlayer;
-    [SerializeField]protected Vector2 posicaoInicial;
+    protected Vector2 posicaoInicial;
 
     //Controladores
     protected float tempoEntrarEmModoAlerta;
@@ -65,12 +64,19 @@ public class IAEnemy : MonoBehaviour
 
 
     //Controladores Max
+    [Tooltip("Tempo para o inimigo detectar o jogador e entrar em modo combate")]
     [SerializeField] protected float tempoEntrarEmModoAlertaMax;
+    [Tooltip("Tempo que vai demorar pro inimigo 'perder' o player, so chama quando não esta vendo o player")]
     [SerializeField] protected float tempoEsquecerPlayerMax;
+    [Tooltip("Tempo que o inimigo vai demorar olhando a ultima posicao conhecida do player")]
     [SerializeField] protected float tempoVerificandoUltimaPosicaoPlayerMax;
+    [Tooltip("Tempo que o inimigo vai ficar verificando a posicao do tiro que ele ouviu")]
     [SerializeField] protected float tempoVerificandoSomTiroMax;
+    [Tooltip("Tempo que o inimigo vai ficar verificando a posicao do tiro que ele ouviu")]
     [SerializeField] protected float tempoVerificandoSomPassosMax;
+    [Tooltip("Tempo que o inimigo vai ficar verificando o lugar de onde ele levou o tiro, so ocorre se ele não ver o jogador")]
     [SerializeField] protected float tempoVerificandoTomeiTiroMax;
+
     protected float tempoRecarregarArmaMax;
 
     public virtual void Start()
@@ -93,7 +99,6 @@ public class IAEnemy : MonoBehaviour
         enemy = GetComponent<Enemy>();
         enemyVisionScript = GetComponentInChildren<EnemyVisionScript>();
         inventarioEnemy = GetComponent<InventarioEnemy>();
-        aiPath = GetComponent<AIPath>();
 
         inimigoEstados = InimigoEstados.Patrulhar;
         estadoDeteccaoPlayer = EstadoDeteccaoPlayer.NaoToVendoPlayer;
