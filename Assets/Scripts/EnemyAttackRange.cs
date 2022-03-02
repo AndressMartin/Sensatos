@@ -4,22 +4,35 @@ using UnityEngine;
 
 public class EnemyAttackRange : MonoBehaviour
 {
+    //Managers
+    private GeneralManagerScript generalManager;
+
+    //Variaveis
     private Enemy enemy;
-    public bool vendoSubVisao;
-    [SerializeField]bool vendo;
+    private bool vendoSubVisao;
+    [SerializeField] private bool vendo;
+
+    //Setters
+    public void SetVendoSubVisao(bool ativo)
+    {
+        vendoSubVisao = ativo;
+    }
+
     void Start()
     {
+        generalManager = FindObjectOfType<GeneralManagerScript>();
         enemy = GetComponentInParent<Enemy>();
     }
     private void Update()
     {
-        if(vendo || vendoSubVisao)
+        if(generalManager.PauseManager.JogoPausado == false)
         {
-            enemy.SetPlayerOnAttackRange(vendoSubVisao);
+            if (vendo || vendoSubVisao)
+            {
+                enemy.SetPlayerOnAttackRange(vendoSubVisao);
+            }
         }
     }
-    
-
     
     private void OnTriggerStay2D(Collider2D collision)
     {

@@ -15,7 +15,7 @@ public class SubAttackRange : MonoBehaviour
 
         if (temp != null)
         {
-            enemyAttack.vendoSubVisao = true;
+            enemyAttack.SetVendoSubVisao(true);
         }
     }
 
@@ -25,7 +25,7 @@ public class SubAttackRange : MonoBehaviour
 
         if (temp != null)
         {
-            enemyAttack.vendoSubVisao = false;
+            enemyAttack.SetVendoSubVisao(false);
             //enemyMovement.playerOnAttackRange = false;
         }
 

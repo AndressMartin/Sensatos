@@ -40,7 +40,7 @@ public class LockDownManagerScript : MonoBehaviour
 
         foreach (Enemy enemy in generalManager.ObjectManager.ListaInimigos)
         {
-            enemy.GetComponent<IAEnemy>().ReceberLockDown(posicaoDoPlayer);
+            enemy.GetIAEnemy.ReceberLockDown(posicaoDoPlayer);
         }
 
         TrancarPortas();

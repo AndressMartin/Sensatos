@@ -14,7 +14,9 @@ public class Enemy : EntityModel
     private InventarioEnemy inventario;
     private EnemyMovement enemyMovement;
     private EnemyVisionScript enemyVision;
+    private EnemyAttackRange enemyAttackRange;
     private BoxCollider2D colisao;
+    private BoxCollider2D hitboxDano;
     private Rigidbody2D rb;
     private IAEnemy ia_Enemy;
     private Player player;
@@ -53,7 +55,7 @@ public class Enemy : EntityModel
     public Player GetPlayer => player;
     public InventarioEnemy GetInventarioEnemy => inventario;
     public EnemyMovement GetEnemyMovement => enemyMovement;
-    public IAEnemy GetIA_Enemy_Basico => ia_Enemy;
+    public IAEnemy GetIAEnemy => ia_Enemy;
     public Vector2 VetorVelocidade => vetorVelocidade;
 
     //Setters
@@ -90,8 +92,10 @@ public class Enemy : EntityModel
         inventario = GetComponent<InventarioEnemy>();
         pontaArma = GetComponentInChildren<PontaArmaScript>();
         enemyVision = GetComponentInChildren<EnemyVisionScript>();
+        enemyAttackRange = GetComponentInChildren<EnemyAttackRange>();
         animacao = GetComponent<AnimacaoJogador>();
         colisao = GetComponent<BoxCollider2D>();
+        hitboxDano = transform.Find("HitboxDano").GetComponent<BoxCollider2D>();
         rb = GetComponent<Rigidbody2D>();
 
         player = FindObjectOfType<Player>();
@@ -170,9 +174,18 @@ public class Enemy : EntityModel
             ia_Enemy.Respawn();
             enemyMovement.ZerarVelocidade();
 
+            enemyVision.gameObject.SetActive(true);
+            enemyAttackRange.gameObject.SetActive(true);
+
+            colisao.enabled = true;
+            hitboxDano.enabled = true;
             rb.bodyType = RigidbodyType2D.Dynamic;
 
             ResetarVariaveisDeControle();
+        }
+        else
+        {
+            Desaparecer();
         }
     }
 
@@ -194,7 +207,6 @@ public class Enemy : EntityModel
         if (!morto)
         {
             //Debug.Log("Inimigo Vel X: " + enemyMove.velX + ", Vel Y: " + enemyMove.velY);
-            animacao.AtualizarDirecao(direcao, direcao);
             Animar();
 
             if(estado == Estado.Normal)
@@ -213,21 +225,23 @@ public class Enemy : EntityModel
 
     private void Animar()
     {
+        animacao.AtualizarDirecao(direcao, direcao);
+
         switch (estado)
         {
             case Estado.Normal:
-                if ((vetorVelocidade.x == 0 && vetorVelocidade.y == 0) && animacao.GetAnimacaoAtual() != "Idle")
+                if ((vetorVelocidade.x == 0 && vetorVelocidade.y == 0) && animacao.AnimacaoAtual != "Idle")
                 {
                     animacao.TrocarAnimacao("Idle");
                 }
-                else if ((vetorVelocidade.x != 0 || vetorVelocidade.y != 0) && animacao.GetAnimacaoAtual() != "Andando")
+                else if ((vetorVelocidade.x != 0 || vetorVelocidade.y != 0) && animacao.AnimacaoAtual != "Andando")
                 {
                     animacao.TrocarAnimacao("Andando");
                 }
                 break;
 
             case Estado.TomandoDano:
-                if (animacao.GetAnimacaoAtual() != "TomandoDano")
+                if (animacao.AnimacaoAtual != "TomandoDano")
                 {
                     animacao.TrocarAnimacao("TomandoDano");
                 }
@@ -264,31 +278,16 @@ public class Enemy : EntityModel
         return direcaoPlayer;
     }
 
-    public void Morrer()
-    {
-        morto = true;
-        generalManager.EnemyManager.PerdiVisaoInimigo();
-        enemyMovement.ZerarVelocidade();
-        ia_Enemy.DesativarIconeDeVisao();
-
-        rb.bodyType = RigidbodyType2D.Kinematic;
-
-        Debug.Log("to morto");
-    }
-    public void StealthKill()
-    {
-        Morrer();
-    }
-
-    public void TomarDanoFisico(int _dano, float _knockBack, Vector2 _direcaoKnockBack)
+    public void TomarDanoFisico(int _dano, float _knockBack, float _knockBackTrigger, Direcao _direcao)
     {
         if (ia_Enemy.GetEstadoDeteccaoPlayer != IAEnemy.EstadoDeteccaoPlayer.PlayerDetectado)
         {
-            StealthKill();
+            StealthKill(_direcao);
         }
         else
         {
-            TomarDano(_dano, _knockBack, 0, _direcaoKnockBack);
+            Debug.Log("Entrei");
+            TomarDano(_dano, _knockBack, _knockBackTrigger, VetorDirecao(_direcao));
         }
     }
 
@@ -298,6 +297,8 @@ public class Enemy : EntityModel
         {
             if (vida <= 0)
             {
+                animacao.AtualizarArmaBracos("");
+                animacao.TrocarAnimacao("Morto");
                 Morrer();
             }
             else
@@ -325,16 +326,72 @@ public class Enemy : EntityModel
 
     private void KnockBackTriggerTempo()
     {
-        if(knockBackTempo > 0)
+        if (knockBackTempo > 0)
         {
             knockBackTempo -= Time.deltaTime;
 
-            if(knockBackTempo <= 0)
+            if (knockBackTempo <= 0)
             {
                 knockBackTempo = 0;
                 knockBackTrigger = 0;
             }
         }
+    }
+
+    public void Morrer()
+    {
+        morto = true;
+        generalManager.EnemyManager.PerdiVisaoInimigo();
+        enemyMovement.ZerarVelocidade();
+        ia_Enemy.DesativarIconeDeVisao();
+
+        enemyVision.gameObject.SetActive(false);
+        enemyAttackRange.gameObject.SetActive(false);
+
+        rb.bodyType = RigidbodyType2D.Kinematic;
+
+        animacao.AtualizarDirecao(direcao, direcao);
+    }
+
+    public void AnimacaoDesaparecendo()
+    {
+        animacao.AtualizarArmaBracos("");
+        animacao.TrocarAnimacao("Desaparecendo");
+    }
+
+    public void Desaparecer()
+    {
+        animacao.AtualizarArmaBracos("");
+        animacao.TrocarAnimacao("Vazio");
+
+        colisao.enabled = false;
+        hitboxDano.enabled = false;
+    }
+
+    public void StealthKill(Direcao direcao)
+    {
+        switch (direcao)
+        {
+            case Direcao.Baixo:
+                ChangeDirection(Direcao.Cima);
+                break;
+
+            case Direcao.Esquerda:
+                ChangeDirection(Direcao.Direita);
+                break;
+
+            case Direcao.Direita:
+                ChangeDirection(Direcao.Esquerda);
+                break;
+
+            case Direcao.Cima:
+                ChangeDirection(Direcao.Baixo);
+                break;
+        }
+
+        animacao.AtualizarArmaBracos("");
+        animacao.TrocarAnimacao("MortoSorrateiramente");
+        Morrer();
     }
 
     public void ChangeDirection(Direcao _direction)

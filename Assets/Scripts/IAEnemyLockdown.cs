@@ -35,6 +35,7 @@ public class IAEnemyLockdown : IAEnemy
                         estadoDeteccaoPlayer = EstadoDeteccaoPlayer.PlayerDetectado;
                         verifiqueiUltimaPosicaoJogador = false;
 
+                        barraDeVisao.AtivarIconeDeAlerta();
                     }
                     else
                     {
