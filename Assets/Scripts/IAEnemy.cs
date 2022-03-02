@@ -20,7 +20,7 @@ public class IAEnemy : MonoBehaviour
     protected enum InimigoEstados { AndandoAtePlayer, Patrulhar, AtacarPlayer, SomPassos, SomTiro, AndandoUltimaPosicaoPlayerConhecida, IndoAtivarLockDown , FicarParado , FazerRotinaLockdow , TomeiDano  };
     [SerializeField] protected InimigoEstados inimigoEstados;
 
-    protected enum EstadoDeteccaoPlayer { NaoToVendoPlayer, DetectandoPlayer, PlayerDetectado };
+    public enum EstadoDeteccaoPlayer { NaoToVendoPlayer, DetectandoPlayer, PlayerDetectado };
     [SerializeField] protected EstadoDeteccaoPlayer estadoDeteccaoPlayer;
 
     //Variaveis
@@ -78,6 +78,9 @@ public class IAEnemy : MonoBehaviour
     [SerializeField] protected float tempoVerificandoTomeiTiroMax;
 
     protected float tempoRecarregarArmaMax;
+
+    //Getters
+    public EstadoDeteccaoPlayer GetEstadoDeteccaoPlayer => estadoDeteccaoPlayer;
 
     public virtual void Start()
     {
@@ -143,6 +146,11 @@ public class IAEnemy : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if(enemy.Morto == true)
+        {
+            return;
+        }
+
         if(estadoDeteccaoPlayer == EstadoDeteccaoPlayer.DetectandoPlayer)
         {
             if (vendoPlayer && !controladarEsqueciPlayer)
@@ -173,6 +181,12 @@ public class IAEnemy : MonoBehaviour
         funcoesBasicas();
         Acoes();
 
+    }
+
+    public void DesativarIconeDeVisao()
+    {
+        barraDeVisao.BarraDeVisaoAtiva(false);
+        barraDeVisao.IconeDeAlertaAtivo(false);
     }
 
     protected virtual void StateMachine()
@@ -246,6 +260,8 @@ public class IAEnemy : MonoBehaviour
                     viuPlayerAlgumaVez = true;
                     estadoDeteccaoPlayer = EstadoDeteccaoPlayer.PlayerDetectado;
                     inimigoEstados = InimigoEstados.AndandoAtePlayer;
+
+                    barraDeVisao.AtivarIconeDeAlerta();
                 }
 
                 if (emLockDown && vendoPlayer) // vendo player em lockdown
@@ -254,11 +270,13 @@ public class IAEnemy : MonoBehaviour
                     viuPlayerAlgumaVez = true;
                     estadoDeteccaoPlayer = EstadoDeteccaoPlayer.PlayerDetectado;
                     inimigoEstados = InimigoEstados.AndandoAtePlayer;
+
+                    barraDeVisao.AtivarIconeDeAlerta();
                 }
 
                 else if (vendoPlayer && !controladarEsqueciPlayer) //se ver o player sem estar em lockdown
                 {
-                    if (Contador(ref tempoEntrarEmModoAlerta, tempoEntrarEmModoAlertaMax))
+                    if (ContadorVisao(ref tempoEntrarEmModoAlerta, tempoEntrarEmModoAlertaMax))
                     {
                         verifiqueiUltimaPosicaoJogador = false;
                         viuPlayerAlgumaVez = true;
@@ -598,6 +616,18 @@ public class IAEnemy : MonoBehaviour
         }
         return false;
     }
+
+    protected bool ContadorVisao(ref float tempo, float tempoMax)
+    {
+        tempo += Time.deltaTime * generalManager.Player.Inventario.RoupaAtual.FatorDePercepcao;
+        if (tempo > tempoMax)
+        {
+            tempo = 0;
+            return true;
+        }
+        return false;
+    }
+
     protected bool ContadorInverso(ref float tempo, float tempoMax)
     {
         tempo -= Time.deltaTime;
@@ -640,7 +670,7 @@ public class IAEnemy : MonoBehaviour
         else if (!emLockDown)
         {
             //caso veja um morto
-            if(_enemy.morto)
+            if(_enemy.Morto)
             {
                 //ativar lockdown e fazer algo return true
             }        
@@ -651,7 +681,7 @@ public class IAEnemy : MonoBehaviour
     {
         vendoPlayer = enemyVisionScript.GetVendoPlayer;
         vendoPlayerCircular = enemyVisionScript.GetVendoPlayerCircular;
-        playerAreaAtaque = enemy.playerOnAttackRange;
+        playerAreaAtaque = enemy.PlayerOnAttackRange;
         posicaoAtualPlayer = enemy.GetPlayer.transform.position;
         indiceDoBotaoMaisPerto = RetornarIndiceBotaoLockDownMaisPerto();
     }

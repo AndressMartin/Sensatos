@@ -82,6 +82,18 @@ public class Inventario : MonoBehaviour
         //Needs resorting indexes?
     }
 
+    public void AddRoupa(RoupaDeCamuflagem roupa)
+    {
+        //Cria uma nova instancia do scriptable object e a adiciona no inventario
+        RoupaDeCamuflagem novaRoupa = ScriptableObject.Instantiate(roupa);
+        roupasDeCamuflagem.Add(novaRoupa);
+
+        if (roupasDeCamuflagem.Count <= 1)
+        {
+            roupaAtual = roupasDeCamuflagem[0];
+        }
+    }
+
     public void SetarItemAtual(Item item)
     {
         itemAtual = item;

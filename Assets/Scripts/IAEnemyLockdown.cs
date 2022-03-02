@@ -41,7 +41,7 @@ public class IAEnemyLockdown : IAEnemy
                         inimigoEstados = InimigoEstados.FazerRotinaLockdow;
                     }
                 }
-                else//voltar pro spawn
+                else //voltar pro spawn
                 {
                     inimigoEstados = InimigoEstados.Patrulhar;
                 }

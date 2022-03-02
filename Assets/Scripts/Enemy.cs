@@ -15,7 +15,8 @@ public class Enemy : EntityModel
     private EnemyMovement enemyMovement;
     private EnemyVisionScript enemyVision;
     private BoxCollider2D colisao;
-    private IAEnemy iA_Enemy;
+    private Rigidbody2D rb;
+    private IAEnemy ia_Enemy;
     private Player player;
 
     //Variaveis
@@ -24,8 +25,8 @@ public class Enemy : EntityModel
     public enum Estado { Normal, TomandoDano };
     private Estado estado;
 
-    public bool morto;
-    public bool playerOnAttackRange;
+    private bool morto;
+    private bool playerOnAttackRange;
 
     float tempoTiro;
 
@@ -47,11 +48,23 @@ public class Enemy : EntityModel
     public GeneralManagerScript GeneralManager => generalManager;
     public AnimacaoJogador Animacao => animacao;
     public Estado GetEstado => estado;
+    public bool Morto => morto;
+    public bool PlayerOnAttackRange => playerOnAttackRange;
     public Player GetPlayer => player;
     public InventarioEnemy GetInventarioEnemy => inventario;
     public EnemyMovement GetEnemyMovement => enemyMovement;
-    public IAEnemy GetIA_Enemy_Basico => iA_Enemy;
+    public IAEnemy GetIA_Enemy_Basico => ia_Enemy;
     public Vector2 VetorVelocidade => vetorVelocidade;
+
+    //Setters
+    public void SetMortoRespawn(bool morto)
+    {
+        mortoRespawn = morto;
+    }
+    public void SetPlayerOnAttackRange(bool ativo)
+    {
+        playerOnAttackRange = ativo;
+    }
 
     void Start()
     {
@@ -73,12 +86,13 @@ public class Enemy : EntityModel
 
         //Componentes
         enemyMovement = GetComponent<EnemyMovement>();
-        iA_Enemy = GetComponent<IAEnemy>();
+        ia_Enemy = GetComponent<IAEnemy>();
         inventario = GetComponent<InventarioEnemy>();
         pontaArma = GetComponentInChildren<PontaArmaScript>();
         enemyVision = GetComponentInChildren<EnemyVisionScript>();
         animacao = GetComponent<AnimacaoJogador>();
         colisao = GetComponent<BoxCollider2D>();
+        rb = GetComponent<Rigidbody2D>();
 
         player = FindObjectOfType<Player>();
 
@@ -98,7 +112,7 @@ public class Enemy : EntityModel
         vetorVelocidade = Vector2.zero;
         posAnterior = transform.position;
 
-        iA_Enemy.Iniciar();
+        ia_Enemy.Iniciar();
         enemyMovement.Iniciar();
 
         SetRespawnInicial();
@@ -153,9 +167,10 @@ public class Enemy : EntityModel
             transform.position = posicaoRespawn;
             ChangeDirection(direcaoRespawn);
 
-            iA_Enemy.Respawn();
+            ia_Enemy.Respawn();
             enemyMovement.ZerarVelocidade();
 
+            rb.bodyType = RigidbodyType2D.Dynamic;
 
             ResetarVariaveisDeControle();
         }
@@ -166,6 +181,10 @@ public class Enemy : EntityModel
         estado = Estado.Normal;
         playerOnAttackRange = false;
         tempoTiro = 0;
+
+        vetorVelocidade = Vector2.zero;
+        posAnterior = transform.position;
+
         enemyMovement.ResetarVariaveisDeControle();
         enemyVision.ResetarVariaveisDeControle();
     }
@@ -180,7 +199,7 @@ public class Enemy : EntityModel
 
             if(estado == Estado.Normal)
             {
-                iA_Enemy.Main();
+                ia_Enemy.Main();
             }
 
             enemyMovement.Main();
@@ -245,23 +264,27 @@ public class Enemy : EntityModel
         return direcaoPlayer;
     }
 
-    public void Die()
+    public void Morrer()
     {
-        generalManager.EnemyManager.PerdiVisaoInimigo();
         morto = true;
+        generalManager.EnemyManager.PerdiVisaoInimigo();
         enemyMovement.ZerarVelocidade();
+        ia_Enemy.DesativarIconeDeVisao();
+
+        rb.bodyType = RigidbodyType2D.Kinematic;
+
         Debug.Log("to morto");
     }
-    public void stealthKill()
+    public void StealthKill()
     {
-        Die();
+        Morrer();
     }
 
     public void TomarDanoFisico(int _dano, float _knockBack, Vector2 _direcaoKnockBack)
     {
-        if (!enemyVision.GetVendoPlayer)
+        if (ia_Enemy.GetEstadoDeteccaoPlayer != IAEnemy.EstadoDeteccaoPlayer.PlayerDetectado)
         {
-            stealthKill();
+            StealthKill();
         }
         else
         {
@@ -275,12 +298,12 @@ public class Enemy : EntityModel
         {
             if (vida <= 0)
             {
-                Die();
+                Morrer();
             }
             else
             {
                 vida -= _dano;
-                iA_Enemy.ReceberDano();
+                ia_Enemy.ReceberDano();
 
                 knockBackTrigger += _knockBackTrigger;
                 knockBackTempo = 6;
@@ -410,6 +433,6 @@ public class Enemy : EntityModel
 
     public void EscutarSom(Player player, bool somTiro)
     {
-        iA_Enemy.ReceberSom(player.transform.position, somTiro);
+        ia_Enemy.ReceberSom(player.transform.position, somTiro);
     }
 }

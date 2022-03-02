@@ -8,9 +8,9 @@ public class EnemyVisionScript : MonoBehaviour
 
     //variaveis
     [SerializeField] LayerMask mask;
-    [SerializeField] private float larguraVisao, alturaVisao;
+    [SerializeField] private float larguraVisaoInicial, alturaVisaoInicial;
+    private float larguraVisao, alturaVisao;
     private float larguraConeVisao, alturaConeVisao;
-    private float pontoXMax, pontoYMax;
     EntityModel.Direcao direcao;
     Vector2 v1, v2 = new Vector2(0, 0), v3 = new Vector2(0, 0);
 
@@ -32,8 +32,8 @@ public class EnemyVisionScript : MonoBehaviour
 
     void Start()
     {
-        pontoXMax = larguraVisao;
-        pontoYMax = alturaVisao;
+        larguraVisao = larguraVisaoInicial;
+        alturaVisao = alturaVisaoInicial;
 
         visaoCircularEnemy = GetComponentInChildren<VisaoCircularEnemy>();
         //Debug.Log("tenho "+visaoCircularEnemy);
@@ -52,8 +52,8 @@ public class EnemyVisionScript : MonoBehaviour
 
     public void ResetarVariaveisDeControle()
     {
-        larguraVisao = pontoXMax;
-        alturaVisao = pontoYMax;
+        larguraVisao = larguraVisaoInicial;
+        alturaVisao = alturaVisaoInicial;
         vendoPlayer = false;
     }
     public void EntrarModoPatrulha()

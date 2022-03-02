@@ -28,11 +28,13 @@ public class Spawner : MonoBehaviour
             enemyList.Add(enemy);
         }
     }
-    public void AtivarDesativarInimigos(bool valor)
+    public void AtivarDesativarInimigos()
     {
         foreach (Enemy enemy in enemyList)
         {
             enemy.gameObject.SetActive(true);
+            enemy.SetMortoRespawn(false);
+            enemy.Respawn();
         }
     }
     

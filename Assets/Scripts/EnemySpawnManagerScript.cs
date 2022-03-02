@@ -10,20 +10,13 @@ public class EnemySpawnManagerScript : MonoBehaviour
     public void AddToLista(Spawner spawner)
     {
         salasSeguranca.Add(spawner);
-
-        GeneralManagerScript generalManager = FindObjectOfType<GeneralManagerScript>();
-
-        foreach (Enemy item in spawner.EnemyList)
-        {
-            generalManager.ObjectManager.AdicionarAosInimigos(item);
-        }
     }
 
     public void AtivarInimigos()
     {
         foreach (Spawner spawner in salasSeguranca)
         {
-            spawner.AtivarDesativarInimigos(true);
+            spawner.AtivarDesativarInimigos();
         }
     }
 }

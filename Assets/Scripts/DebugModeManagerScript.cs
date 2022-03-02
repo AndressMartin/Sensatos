@@ -14,6 +14,7 @@ public class DebugModeManagerScript : MonoBehaviour
 
     //Variaveis
     [SerializeField] private List<ArmaDeFogo> armasIniciais;
+    [SerializeField] private List<RoupaDeCamuflagem> roupasIniciais;
     [SerializeField] private List<Item> itensIniciais;
 
     private float fps;
@@ -106,6 +107,11 @@ public class DebugModeManagerScript : MonoBehaviour
 
             ArmaDeFogo novaArma = player.Inventario.Armas[player.Inventario.Armas.Count - 1];
             novaArma.AdicionarMunicao(novaArma.GetStatus.MunicaoMax + novaArma.GetStatus.MunicaoMaxCartucho);
+        }
+
+        foreach (RoupaDeCamuflagem roupa in roupasIniciais)
+        {
+            player.Inventario.AddRoupa(roupa);
         }
 
         foreach (Item item in itensIniciais)

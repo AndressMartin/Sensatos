@@ -453,8 +453,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   vidaInicial: 10
-  morto: 0
-  playerOnAttackRange: 0
 --- !u!114 &6885532772316150975
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -635,8 +633,8 @@ MonoBehaviour:
   mask:
     serializedVersion: 2
     m_Bits: 64
-  larguraVisao: 4
-  alturaVisao: 4
+  larguraVisaoInicial: 4
+  alturaVisaoInicial: 4
   vendoPlayer: 0
   vendoPlayerCircular: 0
   tempo: 0

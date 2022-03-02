@@ -15,7 +15,7 @@ public class EnemyAttackRange : MonoBehaviour
     {
         if(vendo || vendoSubVisao)
         {
-            enemy.playerOnAttackRange = vendoSubVisao;
+            enemy.SetPlayerOnAttackRange(vendoSubVisao);
         }
     }
     
