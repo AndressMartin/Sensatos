@@ -502,8 +502,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotaIdaVolta: 0
-  velocidade: 2
   pontosDeRota: []
+  velocidadeModoNormal: 2
+  velocidadeModoLockdown: 4
 --- !u!114 &3401984727565017810
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -649,6 +650,7 @@ MonoBehaviour:
     m_Bits: 64
   larguraVisaoInicial: 4
   alturaVisaoInicial: 4
+  taxaAumentoVisao: 0
   vendoPlayer: 0
   vendoPlayerCircular: 0
   tempo: 0

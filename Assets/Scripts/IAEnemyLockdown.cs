@@ -38,9 +38,10 @@ public class IAEnemyLockdown : IAEnemy
                 {
                     if(vendoPlayer)
                     {
-                        barraDeVisao.AtivarIconeDeAlerta();
                         estadoDeteccaoPlayer = EstadoDeteccaoPlayer.PlayerDetectado;
                         verifiqueiUltimaPosicaoJogador = false;
+
+                        AtivarIconeDeAlerta();
                     }
                     else
                     {
@@ -55,9 +56,10 @@ public class IAEnemyLockdown : IAEnemy
                     }
                     else
                     {
-                        barraDeVisao.AtivarIconeDeAlerta();
                         estadoDeteccaoPlayer = EstadoDeteccaoPlayer.PlayerDetectado;
                         verifiqueiUltimaPosicaoJogador = false;
+
+                        AtivarIconeDeAlerta();
                     }
                 }
                 break;

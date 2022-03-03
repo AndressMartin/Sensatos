@@ -13,11 +13,13 @@ public class EnemyMovement : MonoBehaviour
 
     //Variaveis
     [SerializeField] bool rotaIdaVolta;
-    [SerializeField] private int velocidade;
+    private float velocidade;
     [SerializeField] private List<Transform> pontosDeRota = new List<Transform>();
 
     private float velX;
     private float velY;
+    [SerializeField] private float velocidadeModoNormal;
+    [SerializeField] private float velocidadeModoLockdown;
 
     private Vector2 vetorKnockBack;
 
@@ -40,7 +42,7 @@ public class EnemyMovement : MonoBehaviour
     public Vector2 GetUltimaPosicaoOrigem => ultimaPosicaoEnquantoFaziaRota;
     public Vector2 PontosDeRota => pontosDeRota[indiceListaNaoLockdown].position;
     public Vector2 PontoDeProcura => enemy.GeneralManager.EnemyManager.PontosDeProcura[indiceListaLockdown].position;
-    public int GetVelocidade => velocidade;
+    public float GetVelocidade => velocidade;
 
     private void Start()
     {
@@ -227,16 +229,16 @@ public class EnemyMovement : MonoBehaviour
         aiPath.enabled = true;
         aiPath.canMove = true;
 
-        if (ia_Enemy.GetLockdown)
+        if (ia_Enemy.GetEstadoDeteccaoPlayer == IAEnemy.EstadoDeteccaoPlayer.PlayerDetectado)
         {
-            aiPath.maxSpeed = velocidade+2;
+            velocidade = velocidadeModoLockdown;
         }
         else
         {
-            aiPath.maxSpeed = velocidade;
+            velocidade = velocidadeModoNormal;
         }
 
-
+        aiPath.maxSpeed = velocidade;
 
         aiPath.destination = _alvo;
 
