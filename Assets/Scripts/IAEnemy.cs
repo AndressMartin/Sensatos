@@ -44,6 +44,7 @@ public class IAEnemy : MonoBehaviour
     protected bool tomeiDano;
     protected bool primeiraVezTomeiDano;
     protected int indiceDoBotaoMaisPerto;
+    protected bool vendoMorto;
 
     protected bool presenteNaListaDeDeteccao;
     protected int posicaoListaIndiceDeteccao;
@@ -61,7 +62,7 @@ public class IAEnemy : MonoBehaviour
     protected float tempoVerificandoSomPassos;
     protected float tempoVerificandoTomeiTiro;
     protected float tempoRecarregarArma;
-
+    protected float tempoVerificarMorto;
 
     //Controladores Max
     [Tooltip("Tempo para o inimigo detectar o jogador e entrar em modo combate")]
@@ -76,6 +77,9 @@ public class IAEnemy : MonoBehaviour
     [SerializeField] protected float tempoVerificandoSomPassosMax;
     [Tooltip("Tempo que o inimigo vai ficar verificando o lugar de onde ele levou o tiro, so ocorre se ele não ver o jogador")]
     [SerializeField] protected float tempoVerificandoTomeiTiroMax;
+    [Tooltip("Tempo que o inimigo vai ficar verificando o morto antes de ativar o lockdown")]
+    [SerializeField] protected float tempoVerificarMortoMax;
+
 
     protected float tempoRecarregarArmaMax;
 
@@ -223,6 +227,19 @@ public class IAEnemy : MonoBehaviour
                     {
                         inimigoEstados = InimigoEstados.TomeiDano;
                     }
+                    else if(vendoMorto)
+                    {
+                        if (Contador(ref tempoVerificarMorto, tempoVerificarMortoMax))
+                        {
+                            inimigoEstados = InimigoEstados.IndoAtivarLockDown;
+                            Debug.Log("mudei aqui");
+                        }
+                        else
+                        {
+                            Debug.Log("to no if");
+
+                        }
+                    }
 
                     else if (viuPlayerAlgumaVez && !emLockDown && inimigoEstados != InimigoEstados.IndoAtivarLockDown)    //caso tenha visto o player alguma vez, nao esteja em lockDown e esteja mais perto do botao de lockdown do que o player           
                     {
@@ -312,10 +329,12 @@ public class IAEnemy : MonoBehaviour
                 break;
 
             case EstadoDeteccaoPlayer.PlayerDetectado://enquanto estou sabendo onde o player esta
+                vendoMorto = false;
                 tomeiDano = false;
                 vendoPlayer = vendoPlayerCircular;
                 somTiro = false;
                 somPasso = false;
+
                 if (!presenteNaListaDeDeteccao) //sistema para ultimo integrante ter que apertar o botao, sempre ´e a ultimo inimigo a ver o player quem vai ativar
                 {
                     posicaoListaIndiceDeteccao = enemy.GeneralManager.EnemyManager.AdicionarAlguemVendoPlayer();
@@ -693,6 +712,13 @@ public class IAEnemy : MonoBehaviour
         }
         else if (!emLockDown)
         {
+            if (estadoDeteccaoPlayer != EstadoDeteccaoPlayer.PlayerDetectado)
+            {
+                if (inimigoEstados != InimigoEstados.IndoAtivarLockDown)
+                {
+                    vendoMorto = true;
+                }
+            }
             //caso veja um morto
             //ativar lockdown e fazer algo return true      
         }
@@ -710,6 +736,7 @@ public class IAEnemy : MonoBehaviour
     {
         if(enemy.Morto == false)
         {
+            vendoMorto = false;
             enemyVisionScript.MudarVisao(true);
             fazerRotinaLockDown = true;
             emLockDown = true;
