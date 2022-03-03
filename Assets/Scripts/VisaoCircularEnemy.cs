@@ -53,9 +53,4 @@ public class VisaoCircularEnemy : MonoBehaviour
         circleCollider2D.radius = raioOg + taxaAumentoVisao;
 
     }
-    public void DiminuirRaio(float taxaAumentoVisao)
-    {
-        circleCollider2D.radius = raioOg - taxaAumentoVisao;
-
-    }
 }

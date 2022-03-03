@@ -83,6 +83,9 @@ public class IAEnemy : MonoBehaviour
 
     protected float tempoRecarregarArmaMax;
 
+    //Variaveis de respawn
+    protected bool viuPlayerAlgumaVezRespawn;
+
     //Getters
     public EstadoDeteccaoPlayer GetEstadoDeteccaoPlayer => estadoDeteccaoPlayer;
     public bool GetLockdown => emLockDown;
@@ -145,8 +148,72 @@ public class IAEnemy : MonoBehaviour
 
         ResetarContadores();
 
+        SetRespawn();
+
         iniciado = true;
     }
+
+    #region ResetarVariaveis/Respawn
+    public void SetRespawn()
+    {
+        viuPlayerAlgumaVezRespawn = viuPlayerAlgumaVez;
+    }
+
+    public virtual void Respawn()
+    {
+        viuPlayerAlgumaVez = viuPlayerAlgumaVezRespawn;
+        enemyVisionScript.MudarVisao(viuPlayerAlgumaVez);
+
+        ResetarVariaveis();
+    }
+
+    void ResetarVariaveis()
+    {
+        inimigoEstados = InimigoEstados.Patrulhar;
+        estadoDeteccaoPlayer = EstadoDeteccaoPlayer.NaoToVendoPlayer;
+
+        vendoPlayerCircular = false;
+        vendoPlayer = false;
+        playerAreaAtaque = false;
+        emLockDown = false;
+        somTiro = false;
+        somPasso = false;
+        viuPlayerAlgumaVez = false;
+        controladarEsqueciPlayer = false;
+        vouApertarBotao = false;
+        fazerRotinaLockDown = false;
+        verifiqueiUltimaPosicaoJogador = false;
+        tomeiDano = false;
+        primeiraVezTomeiDano = false;
+
+        municaoNoCarregador = municaoNoCarregadorMax;
+        indiceDoBotaoMaisPerto = 0;
+
+        posicaoTiroPlayer = Vector2.zero;
+        posicaoUltimoLugarVisto = Vector2.zero;
+        posicaoAtualPlayer = Vector2.zero;
+
+        transform.position = posicaoInicial;
+        enemyMovement.Mover(transform.position);
+
+        ResetarContadores();
+
+        indiceDoBotaoMaisPerto = 0;
+
+        presenteNaListaDeDeteccao = false;
+
+    }
+    void ResetarContadores()
+    {
+        tempoEntrarEmModoAlerta = 0;
+        tempoEsquecerPlayer = 0;
+        tempoVerificandoUltimaPosicaoPlayer = 0;
+        tempoVerificandoSomTiro = 0;
+        tempoVerificandoSomPassos = 0;
+        tempoVerificandoTomeiTiro = 0;
+    }
+
+    #endregion
 
     public virtual void FixedUpdate()
     {
@@ -281,6 +348,7 @@ public class IAEnemy : MonoBehaviour
                 {
                     verifiqueiUltimaPosicaoJogador = false;
                     viuPlayerAlgumaVez = true;
+                    enemyVisionScript.MudarVisao(true);
                     estadoDeteccaoPlayer = EstadoDeteccaoPlayer.PlayerDetectado;
                     inimigoEstados = InimigoEstados.AndandoAtePlayer;
 
@@ -291,6 +359,7 @@ public class IAEnemy : MonoBehaviour
                 {
                     verifiqueiUltimaPosicaoJogador = false;
                     viuPlayerAlgumaVez = true;
+                    enemyVisionScript.MudarVisao(true);
                     estadoDeteccaoPlayer = EstadoDeteccaoPlayer.PlayerDetectado;
                     inimigoEstados = InimigoEstados.AndandoAtePlayer;
 
@@ -303,6 +372,7 @@ public class IAEnemy : MonoBehaviour
                     {
                         verifiqueiUltimaPosicaoJogador = false;
                         viuPlayerAlgumaVez = true;
+                        enemyVisionScript.MudarVisao(true);
                         estadoDeteccaoPlayer = EstadoDeteccaoPlayer.PlayerDetectado;
 
                         AtivarIconeDeAlerta();
@@ -435,6 +505,7 @@ public class IAEnemy : MonoBehaviour
             somTiro = false;
             tomeiDano = false;
             viuPlayerAlgumaVez = true;
+            enemyVisionScript.MudarVisao(true);
         }
     }
     protected virtual void SomPassos()
@@ -751,7 +822,6 @@ public class IAEnemy : MonoBehaviour
     {
         emLockDown = false;
         fazerRotinaLockDown = false;
-        viuPlayerAlgumaVez = false;
     }
     public void ReceberSom(Vector2 posicao, bool tiro)
     {
@@ -771,61 +841,6 @@ public class IAEnemy : MonoBehaviour
         primeiraVezTomeiDano = true;
         tomeiDano = true;
     }
-    #endregion
-
-    #region ResetarVariaveis/Respawn
-    public virtual void Respawn()
-    {
-        ResetarVariaveis();
-    }
-    void ResetarVariaveis()
-    {
-        inimigoEstados = InimigoEstados.Patrulhar;
-        estadoDeteccaoPlayer = EstadoDeteccaoPlayer.NaoToVendoPlayer;
-
-        vendoPlayerCircular = false;
-        vendoPlayer = false;
-        playerAreaAtaque = false;
-        emLockDown = false;
-        somTiro = false;
-        somPasso = false;
-        viuPlayerAlgumaVez = false;
-        controladarEsqueciPlayer = false;
-        vouApertarBotao = false;
-        fazerRotinaLockDown = false;
-        verifiqueiUltimaPosicaoJogador = false;
-        tomeiDano = false;
-        primeiraVezTomeiDano = false;
-
-        municaoNoCarregador = municaoNoCarregadorMax; 
-        indiceDoBotaoMaisPerto = 0;
-
-        posicaoTiroPlayer = Vector2.zero;
-        posicaoUltimoLugarVisto = Vector2.zero;
-        posicaoAtualPlayer = Vector2.zero;
-
-        transform.position = posicaoInicial;
-        enemyMovement.Mover(transform.position);
-        enemyVisionScript.MudarVisao(false);
-
-
-        ResetarContadores();
-
-        indiceDoBotaoMaisPerto = 0;
-
-        presenteNaListaDeDeteccao = false;
-
-    }
-    void ResetarContadores()
-    {
-        tempoEntrarEmModoAlerta = 0;
-        tempoEsquecerPlayer = 0;
-        tempoVerificandoUltimaPosicaoPlayer = 0;
-        tempoVerificandoSomTiro = 0;
-        tempoVerificandoSomPassos = 0;
-        tempoVerificandoTomeiTiro =0;
-    }
-
     #endregion
 }
 

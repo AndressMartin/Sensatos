@@ -14744,10 +14744,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 854754850}
     m_Modifications:
-    - target: {fileID: 1872403719, guid: 6712e26531f27d54d88d74c08c419556, type: 3}
-      propertyPath: m_RootOrder
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 6297625325533714485, guid: 6712e26531f27d54d88d74c08c419556, type: 3}
       propertyPath: m_Name
       value: EnemyIsmaias
@@ -14770,6 +14766,22 @@ PrefabInstance:
       objectReference: {fileID: 96459773}
     - target: {fileID: 6297625325533714492, guid: 6712e26531f27d54d88d74c08c419556, type: 3}
       propertyPath: pontosDeRota.Array.data[3]
+      value: 
+      objectReference: {fileID: 1299732340}
+    - target: {fileID: 6297625325533714492, guid: 6712e26531f27d54d88d74c08c419556, type: 3}
+      propertyPath: pontosDeRota.Array.data[4]
+      value: 
+      objectReference: {fileID: 1517438062}
+    - target: {fileID: 6297625325533714492, guid: 6712e26531f27d54d88d74c08c419556, type: 3}
+      propertyPath: pontosDeRota.Array.data[5]
+      value: 
+      objectReference: {fileID: 1013689897}
+    - target: {fileID: 6297625325533714492, guid: 6712e26531f27d54d88d74c08c419556, type: 3}
+      propertyPath: pontosDeRota.Array.data[6]
+      value: 
+      objectReference: {fileID: 96459773}
+    - target: {fileID: 6297625325533714492, guid: 6712e26531f27d54d88d74c08c419556, type: 3}
+      propertyPath: pontosDeRota.Array.data[7]
       value: 
       objectReference: {fileID: 1299732340}
     - target: {fileID: 6297625325533714494, guid: 6712e26531f27d54d88d74c08c419556, type: 3}
@@ -14815,30 +14827,6 @@ PrefabInstance:
     - target: {fileID: 6297625325533714494, guid: 6712e26531f27d54d88d74c08c419556, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6297625325533714495, guid: 6712e26531f27d54d88d74c08c419556, type: 3}
-      propertyPath: vidaInicial
-      value: 50
-      objectReference: {fileID: 0}
-    - target: {fileID: 6885532772316150975, guid: 6712e26531f27d54d88d74c08c419556, type: 3}
-      propertyPath: tempoEsquecerPlayerMax
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 6885532772316150975, guid: 6712e26531f27d54d88d74c08c419556, type: 3}
-      propertyPath: tempoEntrarEmModoAlertaMax
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6885532772316150975, guid: 6712e26531f27d54d88d74c08c419556, type: 3}
-      propertyPath: tempoVerificandoSomTiroMax
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 6885532772316150975, guid: 6712e26531f27d54d88d74c08c419556, type: 3}
-      propertyPath: tempoVerificandoTomeiTiroMax
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 6885532772316150975, guid: 6712e26531f27d54d88d74c08c419556, type: 3}
-      propertyPath: tempoVerificandoUltimaPosicaoPlayerMax
-      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6712e26531f27d54d88d74c08c419556, type: 3}

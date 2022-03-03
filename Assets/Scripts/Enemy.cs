@@ -159,6 +159,7 @@ public class Enemy : EntityModel
     public void SetRespawn()
     {
         mortoRespawn = morto;
+        ia_Enemy.SetRespawn();
     }
 
     public void Respawn()
@@ -308,13 +309,13 @@ public class Enemy : EntityModel
 
                 knockBackTrigger += _knockBackTrigger;
                 knockBackTempo = 6;
-                KnockBack(_knockBack, _direcaoKnockBack);
 
-                /*if (knockBackTrigger >= knockBackTriggerMax)
+                if (knockBackTrigger >= knockBackTriggerMax)
                 {
                     knockBackTrigger = 0;
                     estado = Estado.TomandoDano;
-                }*/
+                    KnockBack(_knockBack, _direcaoKnockBack);
+                }
             }
         } 
     }
