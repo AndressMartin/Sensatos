@@ -507,6 +507,10 @@ public class IAEnemy : MonoBehaviour
             viuPlayerAlgumaVez = true;
             enemyVisionScript.MudarVisao(true);
         }
+        else
+        {
+            enemyVisionScript.MudarVisao(true);
+        }
     }
     protected virtual void SomPassos()
     {

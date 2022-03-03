@@ -123,7 +123,7 @@ public class EnemyVisionScript : MonoBehaviour
     }
     public void MudarVisao(bool estado)
     {
-        if(estado && !controle)
+        if (estado && !controle)
         {
             EntrarModoPatrulha();
             controle = true;

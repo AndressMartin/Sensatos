@@ -36,47 +36,66 @@ public class IAEnemyLockdown : IAEnemy
                 }
                 if (emLockDown)
                 {
-                    if(vendoPlayer)
+                    viuPlayerAlgumaVez = false;
+
+                    if (vendoPlayer)
                     {
                         estadoDeteccaoPlayer = EstadoDeteccaoPlayer.PlayerDetectado;
                         verifiqueiUltimaPosicaoJogador = false;
 
                         AtivarIconeDeAlerta();
                     }
-                    else
+                    else if (tomeiDano && inimigoEstados != InimigoEstados.TomeiDano)
+                    {
+                        inimigoEstados = InimigoEstados.TomeiDano;
+                        verifiqueiUltimaPosicaoJogador = false;
+                        posicaoUltimoLugarVisto = posicaoAtualPlayer;
+                    }
+                    else if (!vendoPlayer && !tomeiDano)
                     {
                         inimigoEstados = InimigoEstados.FazerRotinaLockdow;
                     }
                 }
                 else //voltar pro spawn
                 {
-                    if (inimigoEstados != InimigoEstados.IndoAtivarLockDown)
+                    if (tomeiDano && inimigoEstados != InimigoEstados.TomeiDano)
                     {
-                        if (!vendoPlayer)
-                        {
-                            inimigoEstados = InimigoEstados.Patrulhar;
-                        }
-                        else if (vendoPlayer)
+                        inimigoEstados = InimigoEstados.TomeiDano;
+                        verifiqueiUltimaPosicaoJogador = false;
+                        posicaoUltimoLugarVisto = posicaoAtualPlayer;
+                    }
+                    else if (inimigoEstados != InimigoEstados.IndoAtivarLockDown)
+                    {               
+                        if (vendoPlayer)
                         {
                             estadoDeteccaoPlayer = EstadoDeteccaoPlayer.PlayerDetectado;
                             verifiqueiUltimaPosicaoJogador = false;
 
                             AtivarIconeDeAlerta();
                         }
-                        else if (tomeiDano)
+                        else if(viuPlayerAlgumaVez && !tomeiDano)
                         {
-                            inimigoEstados = InimigoEstados.TomeiDano;
-                            verifiqueiUltimaPosicaoJogador = false;
+                            inimigoEstados = InimigoEstados.IndoAtivarLockDown;
+                        }
+                        else if (!vendoPlayer && !tomeiDano && viuPlayerAlgumaVez)
+                        {
+                            inimigoEstados = InimigoEstados.IndoAtivarLockDown;
+                        }
+                        else if (!vendoPlayer && !tomeiDano && !viuPlayerAlgumaVez)
+                        {
+                            inimigoEstados = InimigoEstados.Patrulhar;
                         }
                     }
                 }
                 break;
             case EstadoDeteccaoPlayer.PlayerDetectado:
+
                 vendoMorto = false;
                 tomeiDano = false;
                 vendoPlayer = vendoPlayerCircular;
                 somTiro = false;
                 somPasso = false;
+                viuPlayerAlgumaVez = true;
 
                 if (!presenteNaListaDeDeteccao) //sistema para ultimo integrante ter que apertar o botao, sempre ´e a ultimo inimigo a ver o player quem vai ativar
                 {
