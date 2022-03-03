@@ -17,6 +17,7 @@ public class AnimacaoJogador : MonoBehaviour
 
     //Getters
     public SpriteRenderer CorpoSprite => corpoSprite;
+    public string AnimacaoAtual => animacaoAtual;
 
     void Start()
     {
@@ -50,11 +51,6 @@ public class AnimacaoJogador : MonoBehaviour
     {
         armaEquipadaVisual = armaEquipada;
         braco.Play(armaEquipadaVisual + animacaoAtual, 0, corpo.GetCurrentAnimatorStateInfo(0).normalizedTime);
-    }
-
-    public string GetAnimacaoAtual()
-    {
-        return animacaoAtual;
     }
 
     public void Piscar()

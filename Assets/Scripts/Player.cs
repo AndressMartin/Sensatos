@@ -136,7 +136,6 @@ public class Player : EntityModel
                 generalManager.Hud.AtualizarBarraDeRecarregamento(tempoRecarregar, tempoRecarregarMax);
             }
 
-            animacao.AtualizarDirecao(direcao, direcaoMovimento);
             Animar();
             playerMovement.Mover();
 
@@ -199,10 +198,12 @@ public class Player : EntityModel
 
     private void Animar()
     {
-        switch(estado)
+        animacao.AtualizarDirecao(direcao, direcaoMovimento);
+
+        switch (estado)
         {
             case Estado.Normal:
-                if (((rb.velocity.x == 0 && rb.velocity.y == 0) || !(PosicaoDiferente(posAnterior, transform.position))) && animacao.GetAnimacaoAtual() != "Idle")
+                if (((rb.velocity.x == 0 && rb.velocity.y == 0) || !(PosicaoDiferente(posAnterior, transform.position))) && animacao.AnimacaoAtual != "Idle")
                 {
                     animacao.TrocarAnimacao("Idle");
                 }
@@ -210,12 +211,12 @@ public class Player : EntityModel
                 {
                     if (modoMovimento == ModoMovimento.AndandoSorrateiramente)
                     {
-                        if (animacao.GetAnimacaoAtual() != "AndandoSorrateiramente")
+                        if (animacao.AnimacaoAtual != "AndandoSorrateiramente")
                         {
                             animacao.TrocarAnimacao("AndandoSorrateiramente");
                         }
                     }
-                    else if (animacao.GetAnimacaoAtual() != "Andando")
+                    else if (animacao.AnimacaoAtual != "Andando")
                     {
                         animacao.TrocarAnimacao("Andando");
                     }
@@ -223,21 +224,21 @@ public class Player : EntityModel
                 break;
 
             case Estado.TomandoDano:
-                if (animacao.GetAnimacaoAtual() != "TomandoDano")
+                if (animacao.AnimacaoAtual != "TomandoDano")
                 {
                     animacao.TrocarAnimacao("TomandoDano");
                 }
                 break;
 
             case Estado.Atacando:
-                if (animacao.GetAnimacaoAtual() != "Atacando")
+                if (animacao.AnimacaoAtual != "Atacando")
                 {
                     animacao.TrocarAnimacao("Atacando");
                 }
                 break;
 
             case Estado.UsandoItem:
-                if (animacao.GetAnimacaoAtual() != inventario.ItemAtual.GetNomeAnimacao() + "Usando")
+                if (animacao.AnimacaoAtual != inventario.ItemAtual.GetNomeAnimacao() + "Usando")
                 {
                     animacao.AtualizarArmaBracos("");
                     animacao.TrocarAnimacao(inventario.ItemAtual.GetNomeAnimacao() + "Usando");
@@ -276,7 +277,7 @@ public class Player : EntityModel
 
     public void AtaqueHitBox()
     {
-        ataqueHitBox.Atacar(direcao, 1, 0.8f, 1.1f, 0.87f);
+        ataqueHitBox.Atacar(direcao, 3, 5, 0.8f, 1.1f, 0.87f);
     }
 
     public void Atirar()
@@ -422,6 +423,8 @@ public class Player : EntityModel
         playerMovement.ZerarVelocidade();
         animacao.AtualizarArmaBracos("");
         animacao.TrocarAnimacao("Morto");
+
+        animacao.AtualizarDirecao(direcao, direcaoMovimento);
 
         FinalizarRecarregamento();
     }

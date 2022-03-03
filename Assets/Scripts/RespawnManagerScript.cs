@@ -75,5 +75,7 @@ public class RespawnManagerScript : MonoBehaviour
         generalManager.LockDownManager.Respawn();
         generalManager.BulletManager.DeletarProjeteis();
         generalManager.EnemyManager.Respawn();
+
+        generalManager.PathfinderManager.EscanearPathfinder();
     }
 }

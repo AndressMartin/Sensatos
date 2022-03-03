@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 180495875}
+  - component: {fileID: 3033503626992282101}
   - component: {fileID: 180495879}
   - component: {fileID: 180495878}
   - component: {fileID: 180495877}
@@ -33,6 +34,18 @@ Transform:
   m_Father: {fileID: 6297625325533714494}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3033503626992282101
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 180495874}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ae75d6a7734729439bd56bac5fbf7dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!212 &180495879
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -94,7 +107,7 @@ Animator:
   m_GameObject: {fileID: 180495874}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: e253df470ac1a3b4893db603c9c89bda, type: 2}
+  m_Controller: {fileID: 9100000, guid: 086b0203114b78843bfb29740f2157f8, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -207,7 +220,7 @@ Animator:
   m_GameObject: {fileID: 380813994}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: aca8b9f8efaafd14d9dc186045419a2e, type: 2}
+  m_Controller: {fileID: 9100000, guid: 905bde5070bd6b64183c74b6d4900f8b, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -452,6 +465,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df579fa12e6a574458c64b26b6ec49f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  direcao: 0
   vidaInicial: 10
 --- !u!114 &6885532772316150975
 MonoBehaviour:
@@ -712,7 +726,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb6b2103a329167409756f77064b043f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  vendoSubVisao: 0
   vendo: 0
 --- !u!58 &6297625326670532824
 CircleCollider2D:

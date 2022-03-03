@@ -10,7 +10,7 @@ public class EntityModel : MonoBehaviour
 
     //Variaveis
     protected int vida;
-    protected Direcao direcao;
+    public Direcao direcao;
 
     //Getters
     public Direcao GetDirecao => direcao;

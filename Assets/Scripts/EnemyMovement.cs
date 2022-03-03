@@ -67,7 +67,7 @@ public class EnemyMovement : MonoBehaviour
 
         //Variaveis de controle
         timeKnockBack = 0;
-        timeKnockBackMax = 1f;
+        timeKnockBackMax = 0.5f;
 
         VerificarPontoPatrulhaMaisPerto();
         RotaIdaVolta();
@@ -268,6 +268,7 @@ public class EnemyMovement : MonoBehaviour
 
     public void ZerarVelocidade()
     {
+        rb.velocity = Vector2.zero;
         aiPath.enabled = false;
         aiPath.canMove = false;
         aiPath.maxSpeed = 0;

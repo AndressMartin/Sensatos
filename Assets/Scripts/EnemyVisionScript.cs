@@ -38,6 +38,8 @@ public class EnemyVisionScript : MonoBehaviour
         larguraVisao = larguraVisaoInicial;
         alturaVisao = alturaVisaoInicial;
 
+        tempo = 0;
+
         visaoCircularEnemy = GetComponentInChildren<VisaoCircularEnemy>();
         //Debug.Log("tenho "+visaoCircularEnemy);
         polygonCollider = GetComponent<PolygonCollider2D>();
@@ -124,38 +126,41 @@ public class EnemyVisionScript : MonoBehaviour
     {
         tempo += Time.deltaTime;
 
-        if (tempo >= intervaloDeTempo)
+        if (tempo < intervaloDeTempo)
         {
-            if (collision.CompareTag("HitboxDano"))
+            return;
+        }
+
+        if (collision.CompareTag("HitboxDano"))
+        {
+            EntityModel entityModelTemp = collision.transform.parent.gameObject.GetComponent<EntityModel>();
+
+            if (entityModelTemp != null)
             {
-                EntityModel entityModelTemp = collision.transform.parent.gameObject.GetComponent<EntityModel>();
+                RaycastHit2D hits;
+                hits = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y),
+                    new Vector2(entityModelTemp.transform.position.x - transform.position.x, entityModelTemp.transform.position.y - transform.position.y), larguraVisao, mask.value);
 
-                if (entityModelTemp != null)
+                if (!hits)
                 {
-                    RaycastHit2D hits;
-                    hits = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y),
-                        new Vector2(entityModelTemp.transform.position.x - transform.position.x, entityModelTemp.transform.position.y - transform.position.y), larguraVisao, mask.value);
-
-                    if (!hits)
+                    if (entityModelTemp is Enemy)
                     {
-                        if (entityModelTemp is Enemy)
-                        {
-                            enemy.GetIA_Enemy_Basico.VendoOutroInimigo((Enemy)entityModelTemp);
-                        }
-
-                        if (entityModelTemp is Player)
-                        {
-                            vendoPlayer = true;
-                        }
+                        enemy.GetIAEnemy.VendoOutroInimigo((Enemy)entityModelTemp);
                     }
-                    if (hits)
+
+                    if (entityModelTemp is Player)
                     {
-                        Debug.DrawRay(new Vector2(transform.position.x, transform.position.y), new Vector2(hits.transform.position.x - transform.position.x, hits.transform.position.y - transform.position.y), Color.red);
+                        vendoPlayer = true;
                     }
                 }
-                tempo = 0;
+                if (hits)
+                {
+                    Debug.DrawRay(new Vector2(transform.position.x, transform.position.y), new Vector2(hits.transform.position.x - transform.position.x, hits.transform.position.y - transform.position.y), Color.red);
+                }
             }
         }
+
+        tempo = 0;
     }
 
     private void OnTriggerExit2D(Collider2D collision)
