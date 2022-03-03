@@ -11,6 +11,7 @@ public class EnemyVisionScript : MonoBehaviour
     [SerializeField] private float larguraVisaoInicial, alturaVisaoInicial;
     private float larguraVisao, alturaVisao;
     private float larguraConeVisao, alturaConeVisao;
+    [SerializeField] private float taxaAumentoVisao;
     EntityModel.Direcao direcao;
     Vector2 v1, v2 = new Vector2(0, 0), v3 = new Vector2(0, 0);
 
@@ -29,6 +30,8 @@ public class EnemyVisionScript : MonoBehaviour
     public bool GetVendoPlayer => vendoPlayer;
     public bool GetVendoPlayerCircular => vendoPlayerCircular;
 
+    //
+    bool controle;
 
     void Start()
     {
@@ -43,6 +46,7 @@ public class EnemyVisionScript : MonoBehaviour
         visaoCircularEnemy.ValorRaioInicial(Mathf.Sqrt((larguraConeVisao - larguraVisao) * (larguraConeVisao - larguraVisao) + (alturaConeVisao - alturaVisao) * (alturaConeVisao - alturaVisao)));
         v1 = new Vector2(larguraConeVisao, alturaConeVisao);
     }
+
     public void Main()
     {
         vendoPlayerCircular=visaoCircularEnemy.VendoPlayer;
@@ -58,10 +62,15 @@ public class EnemyVisionScript : MonoBehaviour
     }
     public void EntrarModoPatrulha()
     {
-        larguraVisao += 2;
-        alturaVisao += 2;
-        visaoCircularEnemy.MudarRaio();
-
+        larguraVisao += taxaAumentoVisao;
+        alturaVisao += taxaAumentoVisao;
+        visaoCircularEnemy.AumentarRaio(taxaAumentoVisao);
+    }
+    public void SairModoPatrulha()
+    {
+        larguraVisao -= taxaAumentoVisao;
+        alturaVisao -= taxaAumentoVisao;
+        visaoCircularEnemy?.DiminuirRaio(-taxaAumentoVisao);
     }
     void ZerarVariaveis()
     {
@@ -96,6 +105,19 @@ public class EnemyVisionScript : MonoBehaviour
         polygonCollider.points = new[] { v1, v2, v3 };
         //float h2 = (larguraConeVisao - pontoX) * (larguraConeVisao - pontoX) + (alturaConeVisao - pontoY) * (alturaConeVisao - pontoY);
 
+    }
+    public void MudarVisao(bool estado)
+    {
+        if(estado && !controle)
+        {
+            EntrarModoPatrulha();
+            controle = true;
+        }
+        else if (!estado)
+        {
+            SairModoPatrulha();
+            controle = false;
+        }
     }
 
     private void OnTriggerStay2D(Collider2D collision)

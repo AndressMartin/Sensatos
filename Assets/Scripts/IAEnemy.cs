@@ -45,8 +45,8 @@ public class IAEnemy : MonoBehaviour
     protected bool primeiraVezTomeiDano;
     protected int indiceDoBotaoMaisPerto;
 
-    bool presenteNaListaDeDeteccao;
-    int posicaoListaIndiceDeteccao;
+    protected bool presenteNaListaDeDeteccao;
+    protected int posicaoListaIndiceDeteccao;
 
     protected Vector2 posicaoTiroPlayer;
     protected Vector2 posicaoUltimoLugarVisto;
@@ -81,7 +81,7 @@ public class IAEnemy : MonoBehaviour
 
     //Getters
     public EstadoDeteccaoPlayer GetEstadoDeteccaoPlayer => estadoDeteccaoPlayer;
-
+    public bool GetLockdown => emLockDown;
     public virtual void Start()
     {
         Iniciar();
@@ -144,7 +144,7 @@ public class IAEnemy : MonoBehaviour
         iniciado = true;
     }
 
-    private void FixedUpdate()
+    public virtual void FixedUpdate()
     {
         if(enemy.Morto == true)
         {
@@ -687,6 +687,7 @@ public class IAEnemy : MonoBehaviour
     }
     public virtual void ReceberLockDown(Vector2 _posicaoPlayer)
     {
+        enemyVisionScript.MudarVisao(true);
         fazerRotinaLockDown = true;
         emLockDown = true;
         posicaoUltimoLugarVisto = _posicaoPlayer;
@@ -751,6 +752,8 @@ public class IAEnemy : MonoBehaviour
 
         transform.position = posicaoInicial;
         enemyMovement.Mover(transform.position);
+        enemyVisionScript.MudarVisao(false);
+
 
         ResetarContadores();
 

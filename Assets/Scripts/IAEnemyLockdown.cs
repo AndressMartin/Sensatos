@@ -28,13 +28,19 @@ public class IAEnemyLockdown : IAEnemy
         switch (estadoDeteccaoPlayer)
         {
             case EstadoDeteccaoPlayer.NaoToVendoPlayer:
-                if(emLockDown)
+                if (presenteNaListaDeDeteccao)
+                {
+                    enemy.GeneralManager.EnemyManager.PerdiVisaoInimigo();
+                    presenteNaListaDeDeteccao = false;
+                    posicaoListaIndiceDeteccao = 0;
+                }
+                if (emLockDown)
                 {
                     if(vendoPlayer)
                     {
+                        barraDeVisao.AtivarIconeDeAlerta();
                         estadoDeteccaoPlayer = EstadoDeteccaoPlayer.PlayerDetectado;
                         verifiqueiUltimaPosicaoJogador = false;
-
                     }
                     else
                     {
@@ -43,16 +49,35 @@ public class IAEnemyLockdown : IAEnemy
                 }
                 else //voltar pro spawn
                 {
-                    inimigoEstados = InimigoEstados.Patrulhar;
+                    if (!vendoPlayer)
+                    {
+                        inimigoEstados = InimigoEstados.Patrulhar;
+                    }
+                    else
+                    {
+                        barraDeVisao.AtivarIconeDeAlerta();
+                        estadoDeteccaoPlayer = EstadoDeteccaoPlayer.PlayerDetectado;
+                        verifiqueiUltimaPosicaoJogador = false;
+                    }
                 }
                 break;
             case EstadoDeteccaoPlayer.PlayerDetectado:
                 vendoPlayer = vendoPlayerCircular;
-                if(vendoPlayer)
+                if (!presenteNaListaDeDeteccao) //sistema para ultimo integrante ter que apertar o botao, sempre ´e a ultimo inimigo a ver o player quem vai ativar
+                {
+                    posicaoListaIndiceDeteccao = enemy.GeneralManager.EnemyManager.AdicionarAlguemVendoPlayer();
+                    presenteNaListaDeDeteccao = true;
+                }
+
+                if (vendoPlayer)
                 {
                     posicaoUltimoLugarVisto = posicaoAtualPlayer;
 
-                    if (playerAreaAtaque)
+                    if (enemy.GeneralManager.EnemyManager.VerificarUltimoVerPlayer(posicaoListaIndiceDeteccao) && !emLockDown) //o ultimo inimigo a ver o player deve ativar o lockdown isso tem prioridade sobre atacar ou mover
+                    {
+                        inimigoEstados = InimigoEstados.IndoAtivarLockDown;
+                    }
+                    else if (playerAreaAtaque)
                     {
                         inimigoEstados = InimigoEstados.AtacarPlayer;
                     }
@@ -77,6 +102,7 @@ public class IAEnemyLockdown : IAEnemy
                     }
                 }
                 break;
+
 
         }
     }

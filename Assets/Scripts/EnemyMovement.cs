@@ -9,6 +9,7 @@ public class EnemyMovement : MonoBehaviour
     private Enemy enemy;
     private Rigidbody2D rb;
     private AIPath aiPath;
+    private IAEnemy ia_Enemy;
 
     //Variaveis
     [SerializeField] bool rotaIdaVolta;
@@ -56,6 +57,7 @@ public class EnemyMovement : MonoBehaviour
         enemy = GetComponent<Enemy>();
         rb = GetComponent<Rigidbody2D>();
         aiPath = GetComponent<AIPath>();
+        ia_Enemy = GetComponent<IAEnemy>();
 
         ultimaPosicaoEnquantoFaziaRota = new Vector3(transform.position.x, transform.position.y, transform.position.z);
         indiceListaNaoLockdown = 0;
@@ -224,7 +226,18 @@ public class EnemyMovement : MonoBehaviour
     {
         aiPath.enabled = true;
         aiPath.canMove = true;
-        aiPath.maxSpeed = velocidade;
+
+        if (ia_Enemy.GetLockdown)
+        {
+            aiPath.maxSpeed = velocidade+2;
+        }
+        else
+        {
+            aiPath.maxSpeed = velocidade;
+        }
+
+
+
         aiPath.destination = _alvo;
 
         DefinirDirecao();

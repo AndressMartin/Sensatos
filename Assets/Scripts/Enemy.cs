@@ -307,13 +307,13 @@ public class Enemy : EntityModel
 
                 knockBackTrigger += _knockBackTrigger;
                 knockBackTempo = 6;
+                KnockBack(_knockBack, _direcaoKnockBack);
 
-                if (knockBackTrigger >= knockBackTriggerMax)
+                /*if (knockBackTrigger >= knockBackTriggerMax)
                 {
                     knockBackTrigger = 0;
                     estado = Estado.TomandoDano;
-                    KnockBack(_knockBack, _direcaoKnockBack);
-                }
+                }*/
             }
         } 
     }
@@ -321,6 +321,7 @@ public class Enemy : EntityModel
     public override void KnockBack(float _knockBack, Vector2 _direcaoKnockBack)
     {
         enemyMovement.KnockBack(_knockBack, _direcaoKnockBack);
+        Debug.Log("toamndo knock "+_knockBack+" Vetor "+_direcaoKnockBack);
     }
 
     private void KnockBackTriggerTempo()
