@@ -4,39 +4,18 @@ using UnityEngine;
 
 public class EnemyManagerScript : MonoBehaviour
 {
-    //Managers
-    private GeneralManagerScript generalManager;
-
     //Variaveis
     [SerializeField] private int quantidadeInimigosVendoPlayer;
     public int GetQuantidadeInimigosVendoPlayer => quantidadeInimigosVendoPlayer;
     [SerializeField] private List<Transform> pontosDeProcura;
 
     //Getters
+    public int QuantidadeInimigosVendoPlayer => quantidadeInimigosVendoPlayer;
     public List<Transform> PontosDeProcura => pontosDeProcura;
 
-    private void Start()
-    {
-        generalManager = FindObjectOfType<GeneralManagerScript>();
-    }
-
-    private void Update()
-    {
-        if (generalManager.LockDownManager.EmLockdow)
-        {
-            if (quantidadeInimigosVendoPlayer > 0)
-            {
-                generalManager.LockDownManager.Contador();
-            }
-            else
-            {
-                generalManager.LockDownManager.ContadorLockdownInverso();
-            }
-        }
-    }
     public void Respawn()
     {
-        quantidadeInimigosVendoPlayer=0;
+        quantidadeInimigosVendoPlayer = 0;
     }
 
     public void PerdiVisaoInimigo()

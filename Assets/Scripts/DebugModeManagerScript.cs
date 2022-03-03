@@ -79,7 +79,7 @@ public class DebugModeManagerScript : MonoBehaviour
         //Desativar Lockdown
         if (Input.GetKeyUp(KeyCode.V))
         {
-            generalManager.LockDownManager.DesativaLockDown();
+            generalManager.LockDownManager.DesativarLockDown();
         }
     }
 

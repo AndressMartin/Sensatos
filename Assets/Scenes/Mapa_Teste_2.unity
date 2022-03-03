@@ -2128,7 +2128,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pontoDeSpawn: {fileID: 922122754}
   prefabInimigo: {fileID: 3075779585821178482, guid: 5708dc1f5b5019b41852e0eb24cf69d2, type: 3}
-  quantidadeInimigos: 3
+  quantidadeInimigos: 1
   enemyList: []
 --- !u!4 &922122756
 Transform:
@@ -17490,7 +17490,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8092945610503558097, guid: dc3a116f3859f244b9426692e00a3497, type: 3}
       propertyPath: contadorTempoLockdownMax
-      value: 30
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 8092945610503558099, guid: dc3a116f3859f244b9426692e00a3497, type: 3}
       propertyPath: m_Name

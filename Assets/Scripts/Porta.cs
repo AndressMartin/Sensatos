@@ -157,7 +157,7 @@ public class Porta : ObjetoInteragivel
 
     public void FecharPorta()
     {
-        if (!trancado && aberto)
+        if (aberto)
         {
             ForceFecharPorta();
         }

@@ -803,7 +803,7 @@ public class IAEnemy : MonoBehaviour
         posicaoAtualPlayer = enemy.GetPlayer.transform.position;
         indiceDoBotaoMaisPerto = RetornarIndiceBotaoLockDownMaisPerto();
     }
-    public virtual void ReceberLockDown(Vector2 _posicaoPlayer)
+    public void ReceberLockDown(Vector2 _posicaoPlayer)
     {
         if(enemy.Morto == false)
         {
@@ -818,10 +818,17 @@ public class IAEnemy : MonoBehaviour
             enemy.AnimacaoDesaparecendo();
         }
     }
-    public virtual void DesativarLockDown()
+    public void DesativarLockDown()
     {
-        emLockDown = false;
-        fazerRotinaLockDown = false;
+        if (enemy.Morto == false)
+        {
+            emLockDown = false;
+            fazerRotinaLockDown = false;
+        }
+        else if (enemy.Animacao.AnimacaoAtual != "Vazio")
+        {
+            enemy.AnimacaoDesaparecendo();
+        }
     }
     public void ReceberSom(Vector2 posicao, bool tiro)
     {

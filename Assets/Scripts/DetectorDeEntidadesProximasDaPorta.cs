@@ -27,23 +27,20 @@ public class DetectorDeEntidadesProximasDaPorta : MonoBehaviour
 
             if(entidadesColidindo > 0)
             {
-                if(porta.Trancado == false)
+                switch (porta.GetTipoPorta)
                 {
-                    switch (porta.GetTipoPorta)
-                    {
-                        case Porta.TipoPorta.Simples:
-                            porta.AbrirPorta();
-                            break;
+                    case Porta.TipoPorta.Simples:
+                        porta.AbrirPorta();
+                        break;
 
-                        case Porta.TipoPorta.Normal:
-                            switch (porta.GetEstado)
-                            {
-                                case Porta.Estado.NaoLockdown:
-                                    porta.AbrirPorta();
-                                    break;
-                            }
-                            break;
-                    }
+                    case Porta.TipoPorta.Normal:
+                        switch (porta.GetEstado)
+                        {
+                            case Porta.Estado.NaoLockdown:
+                                porta.AbrirPorta();
+                                break;
+                        }
+                        break;
                 }
             }
         }

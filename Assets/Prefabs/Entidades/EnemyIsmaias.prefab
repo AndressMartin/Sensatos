@@ -489,6 +489,7 @@ MonoBehaviour:
   tempoVerificandoSomTiroMax: 2
   tempoVerificandoSomPassosMax: 2
   tempoVerificandoTomeiTiroMax: 2
+  tempoVerificarMortoMax: 0
 --- !u!114 &6297625325533714492
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -650,8 +651,8 @@ MonoBehaviour:
     m_Bits: 64
   larguraVisaoNormal: 4
   alturaVisaoNormal: 4
-  larguraVisaoAlerta: 8
-  alturaVisaoAlerta: 8
+  larguraVisaoAlerta: 5
+  alturaVisaoAlerta: 5
   raioVisaoCircular: 8
   offSet: 0.75
   vendoPlayer: 0

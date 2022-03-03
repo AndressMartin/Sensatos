@@ -8,13 +8,29 @@ public class LockDownManagerScript : MonoBehaviour
     private GeneralManagerScript generalManager;
 
     [SerializeField] bool emLockdown;
-    public bool EmLockdow => emLockdown;
 
     [SerializeField] float contadorTempoLockdown, contadorTempoLockdownMax;
 
     void Start()
     {
         generalManager = FindObjectOfType<GeneralManagerScript>();
+    }
+
+    private void Update()
+    {
+        if (emLockdown)
+        {
+            if (generalManager.EnemyManager.QuantidadeInimigosVendoPlayer > 0)
+            {
+                Contador();
+            }
+            else
+            {
+                ContadorLockdownInverso();
+            }
+
+            generalManager.Hud.AtualizarTempoLockDown(contadorTempoLockdown);
+        }
     }
 
     public void Contador()
@@ -28,7 +44,7 @@ public class LockDownManagerScript : MonoBehaviour
         if (contadorTempoLockdown <= 0)
         {
             contadorTempoLockdown = 0;
-            DesativaLockDown();
+            DesativarLockDown();
         }
     }
 
@@ -44,12 +60,14 @@ public class LockDownManagerScript : MonoBehaviour
         }
 
         TrancarPortas();
+
+        generalManager.Hud.LockDownUIAtiva(true);
     }
     public void Respawn()
     {
-        DesativaLockDown();
+        DesativarLockDown();
     }
-    public void DesativaLockDown()
+    public void DesativarLockDown()
     {
         contadorTempoLockdown = 0;
         emLockdown = false;
@@ -60,9 +78,12 @@ public class LockDownManagerScript : MonoBehaviour
 
         foreach (Enemy enemy in generalManager.ObjectManager.ListaInimigos)
         {
-            enemy.GetComponent<IAEnemy>().DesativarLockDown();
+            enemy.GetIAEnemy.DesativarLockDown();
         }
+
         DestrancarPortas();
+
+        generalManager.Hud.LockDownUIAtiva(false);
     }
 
     private void TrancarPortas()
@@ -72,6 +93,7 @@ public class LockDownManagerScript : MonoBehaviour
             porta.AtivarLockDown();
         }     
     }
+
     private void DestrancarPortas()
     {
         foreach (Porta porta in generalManager.ObjectManager.ListaPortas)

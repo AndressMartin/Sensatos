@@ -32,7 +32,7 @@ public class Spawner : MonoBehaviour
     {
         foreach (Enemy enemy in enemyList)
         {
-            if (!enemy.gameObject.activeSelf)
+            if (!enemy.gameObject.activeSelf || enemy.Morto == true)
             {
                 enemy.gameObject.SetActive(true);
                 enemy.SetMortoRespawn(false);

@@ -129,15 +129,6 @@ public class IAEnemyLockdown : IAEnemy
         base.AndandoUltimaPosicaoPlayerConhecida();
 
     }
-    public override void ReceberLockDown(Vector2 _posicaoPlayer)
-    {
-        emLockDown = true;
-        posicaoUltimoLugarVisto = _posicaoPlayer;
-    }
-    public override void DesativarLockDown()
-    {
-        emLockDown = false;
-    }
     protected override void Patrulhar()
     {
         if (VerificarChegouAteAlvo(salaSegurança))

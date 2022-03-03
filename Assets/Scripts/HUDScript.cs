@@ -7,6 +7,7 @@ public class HUDScript : MonoBehaviour
     //Componentes
     private Canvas canvas;
     [SerializeField] private Camera cameraAtiva;
+    [SerializeField] private LockDownUI lockDownUI;
     [SerializeField] private PlayerUIScript playerUI;
     [SerializeField] private BarraDeVisaoDoInimigo barraDeVisaoDoInimigo;
 
@@ -15,6 +16,7 @@ public class HUDScript : MonoBehaviour
 
     private void Start()
     {
+        LockDownUIAtiva(false);
         BarraDeRecarregamentoAtiva(false);
     }
 
@@ -36,5 +38,55 @@ public class HUDScript : MonoBehaviour
     public void AtualizarBarraDeVisao(Enemy enemy, BarraDeVisaoDoInimigo barraDeVisaoDoInimigo, SpriteRenderer sprite)
     {
         barraDeVisaoDoInimigo.AtualizarPosicao(cameraAtiva, enemy, sprite);
+    }
+
+    public void LockDownUIAtiva(bool ativa)
+    {
+        lockDownUI.gameObject.SetActive(ativa);
+    }
+
+    public void AtualizarTempoLockDown(float tempo)
+    {
+        int tempoTemp = (int)(tempo * 100.0f);
+        char[] tempoString = tempoTemp.ToString().ToCharArray();
+
+        string textoFinal = "";
+
+        for(int i = 0; i < tempoString.Length; i++)
+        {
+            if(tempoString.Length < 4 && i == 0)
+            {
+                textoFinal += "0";
+            }
+
+            if (tempoString.Length < 3 && i == 0)
+            {
+                textoFinal += "0";
+            }
+
+            if (i == 0 && tempoString.Length <= 2)
+            {
+                textoFinal += ":";
+            }
+
+            if(i == 0 && tempoString.Length <= 1)
+            {
+                textoFinal += "0";
+            }
+
+            textoFinal += tempoString[i];
+
+            if(i == 1 && tempoString.Length >= 4)
+            {
+                textoFinal += ":";
+            }
+
+            if (i == 0 && tempoString.Length == 3)
+            {
+                textoFinal += ":";
+            }
+        }
+
+        lockDownUI.AtualizarTempo(textoFinal);
     }
 }
