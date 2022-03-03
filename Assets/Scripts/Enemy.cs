@@ -23,6 +23,7 @@ public class Enemy : EntityModel
 
     //Variaveis
     [SerializeField] private int vidaInicial;
+    [SerializeField] private float velocidadeAnimacaoCorrendo;
 
     public enum Estado { Normal, TomandoDano };
     private Estado estado;
@@ -30,7 +31,7 @@ public class Enemy : EntityModel
     private bool morto;
     private bool playerOnAttackRange;
 
-    float tempoTiro;
+    private float tempoTiro;
 
     private float knockBackTrigger;
     private float knockBackTriggerMax;
@@ -44,7 +45,7 @@ public class Enemy : EntityModel
     private Vector2 posicaoRespawn;
     private Direcao direcaoRespawn;
 
-    bool iniciado = false;
+    private bool iniciado = false;
 
     //Getters
     public GeneralManagerScript GeneralManager => generalManager;
@@ -182,6 +183,8 @@ public class Enemy : EntityModel
             hitboxDano.enabled = true;
             rb.bodyType = RigidbodyType2D.Dynamic;
 
+            animacao.SetVelocidade(1);
+
             ResetarVariaveisDeControle();
         }
         else
@@ -230,7 +233,7 @@ public class Enemy : EntityModel
 
         if(animacao.AnimacaoAtual == "Andando" && enemyMovement.GetVelocidade > enemyMovement.GetVelocidadeModoNormal)
         {
-            animacao.SetVelocidade(1.5f);
+            animacao.SetVelocidade(velocidadeAnimacaoCorrendo);
         }
         else
         {
@@ -307,6 +310,7 @@ public class Enemy : EntityModel
         {
             if (vida <= 0)
             {
+                animacao.SetVelocidade(1);
                 animacao.AtualizarArmaBracos("");
                 animacao.TrocarAnimacao("Morto");
                 Morrer();
@@ -366,12 +370,14 @@ public class Enemy : EntityModel
 
     public void AnimacaoDesaparecendo()
     {
+        animacao.SetVelocidade(1);
         animacao.AtualizarArmaBracos("");
         animacao.TrocarAnimacao("Desaparecendo");
     }
 
     public void Desaparecer()
     {
+        animacao.SetVelocidade(1);
         animacao.AtualizarArmaBracos("");
         animacao.TrocarAnimacao("Vazio");
 
@@ -400,6 +406,7 @@ public class Enemy : EntityModel
                 break;
         }
 
+        animacao.SetVelocidade(1);
         animacao.AtualizarArmaBracos("");
         animacao.TrocarAnimacao("MortoSorrateiramente");
         Morrer();
