@@ -224,7 +224,7 @@ public class IAEnemy : MonoBehaviour
                         inimigoEstados = InimigoEstados.TomeiDano;
                     }
 
-                    else if (viuPlayerAlgumaVez && !emLockDown && !vouApertarBotao)    //caso tenha visto o player alguma vez, nao esteja em lockDown e esteja mais perto do botao de lockdown do que o player           
+                    else if (viuPlayerAlgumaVez && !emLockDown && inimigoEstados != InimigoEstados.IndoAtivarLockDown)    //caso tenha visto o player alguma vez, nao esteja em lockDown e esteja mais perto do botao de lockdown do que o player           
                     {
                         vouApertarBotao = true;
                         inimigoEstados = InimigoEstados.IndoAtivarLockDown;
@@ -312,6 +312,7 @@ public class IAEnemy : MonoBehaviour
                 break;
 
             case EstadoDeteccaoPlayer.PlayerDetectado://enquanto estou sabendo onde o player esta
+                tomeiDano = false;
                 vendoPlayer = vendoPlayerCircular;
                 somTiro = false;
                 somPasso = false;
@@ -329,8 +330,17 @@ public class IAEnemy : MonoBehaviour
                         {
                             controladarEsqueciPlayer = true;
                             estadoDeteccaoPlayer = EstadoDeteccaoPlayer.NaoToVendoPlayer;
+
+                            if(emLockDown == true)
+                            {
+                                inimigoEstados = InimigoEstados.FazerRotinaLockdow;
+                            }
+                            else
+                            {
+                                inimigoEstados = InimigoEstados.IndoAtivarLockDown;
+                            }
                             Debug.Log("Perdi o player De vista, indo na sua ultima posicao");
-                            //O inimigo pode ficar preso procurando a ultima posicao do jogador nesta parte do codigo!!!
+                            //O inimigo pode ficar preso procurando a ultima posicao do jogador nesta parte do codigo!!! ****
                         }
                         else
                         {
