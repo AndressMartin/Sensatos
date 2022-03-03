@@ -43,6 +43,8 @@ public class EnemyMovement : MonoBehaviour
     public Vector2 PontosDeRota => pontosDeRota[indiceListaNaoLockdown].position;
     public Vector2 PontoDeProcura => enemy.GeneralManager.EnemyManager.PontosDeProcura[indiceListaLockdown].position;
     public float GetVelocidade => velocidade;
+    public float GetVelocidadeModoNormal => velocidadeModoNormal;
+    public float GetVelocidadeModoLockdown => velocidadeModoLockdown;
 
     private void Start()
     {

@@ -228,6 +228,15 @@ public class Enemy : EntityModel
     {
         animacao.AtualizarDirecao(direcao, direcao);
 
+        if(animacao.AnimacaoAtual == "Andando" && enemyMovement.GetVelocidade > enemyMovement.GetVelocidadeModoNormal)
+        {
+            animacao.SetVelocidade(1.5f);
+        }
+        else
+        {
+            animacao.SetVelocidade(1);
+        }
+
         switch (estado)
         {
             case Estado.Normal:

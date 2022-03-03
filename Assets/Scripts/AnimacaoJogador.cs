@@ -64,4 +64,10 @@ public class AnimacaoJogador : MonoBehaviour
         corpoSprite.enabled = visivel;
         bracoSprite.enabled = visivel;
     }
+
+    public void SetVelocidade(float velocidade)
+    {
+        corpo.speed = velocidade;
+        braco.speed = velocidade;
+    }
 }
