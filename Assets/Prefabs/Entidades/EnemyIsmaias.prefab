@@ -648,9 +648,12 @@ MonoBehaviour:
   mask:
     serializedVersion: 2
     m_Bits: 64
-  larguraVisaoInicial: 4
-  alturaVisaoInicial: 4
-  taxaAumentoVisao: 0
+  larguraVisaoNormal: 4
+  alturaVisaoNormal: 4
+  larguraVisaoAlerta: 8
+  alturaVisaoAlerta: 8
+  raioVisaoCircular: 8
+  offSet: 0.75
   vendoPlayer: 0
   vendoPlayerCircular: 0
   tempo: 0

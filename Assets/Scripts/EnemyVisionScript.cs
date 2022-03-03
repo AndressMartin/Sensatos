@@ -8,35 +8,41 @@ public class EnemyVisionScript : MonoBehaviour
 
     //variaveis
     [SerializeField] LayerMask mask;
-    [SerializeField] private float larguraVisaoInicial, alturaVisaoInicial;
-    private float larguraVisao, alturaVisao;
-    private float larguraConeVisao, alturaConeVisao;
-    [SerializeField] private float taxaAumentoVisao;
-    EntityModel.Direcao direcao;
-    Vector2 v1, v2 = new Vector2(0, 0), v3 = new Vector2(0, 0);
+    [SerializeField] private float larguraVisaoNormal, alturaVisaoNormal;
+    [SerializeField] private float larguraVisaoAlerta, alturaVisaoAlerta;
+    [SerializeField] private float raioVisaoCircular;
+    [SerializeField] private float offSet;
+    private float offSetOrigemX, offSetOrigemY;
 
-    //variaveis controle
+    private float larguraVisao, alturaVisao;
+
+    Vector2 v1, v2 = new Vector2(0, 0), v3 = new Vector2(0, 0);
+    EntityModel.Direcao direcao;
+
+    //Variaveis de controle
     [SerializeField] private bool vendoPlayer;
     [SerializeField] private bool vendoPlayerCircular;
     [SerializeField] private float tempo;
     [SerializeField] private float intervaloDeTempo;
 
-    //componente
+    bool controle;
+
+    //Componentes
     private Enemy enemy;
     private VisaoCircularEnemy visaoCircularEnemy;
     private PolygonCollider2D polygonCollider;
 
-    //Getter
+    //Getters
     public bool GetVendoPlayer => vendoPlayer;
     public bool GetVendoPlayerCircular => vendoPlayerCircular;
 
-    //
-    bool controle;
-
     void Start()
     {
-        larguraVisao = larguraVisaoInicial;
-        alturaVisao = alturaVisaoInicial;
+        larguraVisao = larguraVisaoNormal;
+        alturaVisao = alturaVisaoNormal;
+
+        offSetOrigemX = 0;
+        offSetOrigemY = 0;
 
         tempo = 0;
 
@@ -44,9 +50,14 @@ public class EnemyVisionScript : MonoBehaviour
         //Debug.Log("tenho "+visaoCircularEnemy);
         polygonCollider = GetComponent<PolygonCollider2D>();
         enemy = GetComponentInParent<Enemy>();
- 
-        visaoCircularEnemy.ValorRaioInicial(Mathf.Sqrt((larguraConeVisao - larguraVisao) * (larguraConeVisao - larguraVisao) + (alturaConeVisao - alturaVisao) * (alturaConeVisao - alturaVisao)));
-        v1 = new Vector2(larguraConeVisao, alturaConeVisao);
+
+        visaoCircularEnemy.ValorRaioInicial(raioVisaoCircular);
+
+        //visaoCircularEnemy.ValorRaioInicial(Mathf.Sqrt((larguraConeVisao - larguraVisao) * (larguraConeVisao - larguraVisao) + (alturaConeVisao - alturaVisao) * (alturaConeVisao - alturaVisao)));
+        
+        v1 = new Vector2(offSetOrigemX, offSetOrigemY);
+
+        MudarVisao(false);
     }
 
     public void Main()
@@ -58,21 +69,19 @@ public class EnemyVisionScript : MonoBehaviour
 
     public void ResetarVariaveisDeControle()
     {
-        larguraVisao = larguraVisaoInicial;
-        alturaVisao = alturaVisaoInicial;
+        larguraVisao = larguraVisaoNormal;
+        alturaVisao = alturaVisaoNormal;
         vendoPlayer = false;
     }
     public void EntrarModoPatrulha()
     {
-        larguraVisao += taxaAumentoVisao;
-        alturaVisao += taxaAumentoVisao;
-        visaoCircularEnemy.AumentarRaio(taxaAumentoVisao);
+        larguraVisao = larguraVisaoAlerta;
+        alturaVisao = alturaVisaoAlerta;
     }
     public void SairModoPatrulha()
     {
-        larguraVisao -= taxaAumentoVisao;
-        alturaVisao -= taxaAumentoVisao;
-        visaoCircularEnemy?.DiminuirRaio(-taxaAumentoVisao);
+        larguraVisao = larguraVisaoNormal;
+        alturaVisao = alturaVisaoNormal;
     }
     void ZerarVariaveis()
     {
@@ -84,23 +93,27 @@ public class EnemyVisionScript : MonoBehaviour
         {
             //rodar plano cartesiano
             case EntityModel.Direcao.Esquerda:
-                v2 = new Vector2(-(larguraVisao - larguraConeVisao), (alturaVisao + alturaConeVisao));
-                v3 = new Vector2(-(larguraVisao - larguraConeVisao), -(alturaVisao - alturaConeVisao));
+                v1 = new Vector2(offSetOrigemX - offSet, offSetOrigemY);
+                v2 = new Vector2((offSetOrigemX - offSet - larguraVisao), (offSetOrigemY + alturaVisao));
+                v3 = new Vector2((offSetOrigemX - offSet - larguraVisao), (offSetOrigemY - alturaVisao));
                 break;
 
             case EntityModel.Direcao.Direita:
-                v2 = new Vector2((larguraVisao + larguraConeVisao), (alturaVisao + alturaConeVisao));
-                v3 = new Vector2((larguraVisao + larguraConeVisao), -(alturaVisao - alturaConeVisao));
+                v1 = new Vector2(offSetOrigemX + offSet, offSetOrigemY);
+                v2 = new Vector2((offSetOrigemX + offSet + larguraVisao), (offSetOrigemY + alturaVisao));
+                v3 = new Vector2((offSetOrigemX + offSet + larguraVisao), (offSetOrigemY - alturaVisao));
                 break;
 
             case EntityModel.Direcao.Cima:
-                v2 = new Vector2(-(alturaVisao - larguraConeVisao), (larguraVisao + alturaConeVisao));
-                v3 = new Vector2(+(alturaVisao + larguraConeVisao), (larguraVisao + alturaConeVisao));
+                v1 = new Vector2(offSetOrigemX, offSetOrigemY + offSet);
+                v2 = new Vector2((offSetOrigemX - alturaVisao), (offSetOrigemY + offSet + larguraVisao));
+                v3 = new Vector2((offSetOrigemX + alturaVisao), (offSetOrigemY + offSet + larguraVisao));
                 break;
 
             case EntityModel.Direcao.Baixo:
-                v2 = new Vector2((alturaVisao + larguraConeVisao), -(larguraVisao - alturaConeVisao));
-                v3 = new Vector2(-(alturaVisao - larguraConeVisao), -(larguraVisao - alturaConeVisao));
+                v1 = new Vector2(offSetOrigemX, offSetOrigemY - offSet);
+                v2 = new Vector2((offSetOrigemX + alturaVisao), (offSetOrigemY - offSet - larguraVisao));
+                v3 = new Vector2((offSetOrigemX - alturaVisao), (offSetOrigemY - offSet - larguraVisao));
                 break;
 
         }
