@@ -308,7 +308,7 @@ public class IAEnemy : MonoBehaviour
                         }
                     }
 
-                    else if (viuPlayerAlgumaVez && !emLockDown && inimigoEstados != InimigoEstados.IndoAtivarLockDown)    //caso tenha visto o player alguma vez, nao esteja em lockDown e esteja mais perto do botao de lockdown do que o player           
+                    else if (viuPlayerAlgumaVez && !emLockDown && inimigoEstados != InimigoEstados.IndoAtivarLockDown && !vouApertarBotao)    //caso tenha visto o player alguma vez, nao esteja em lockDown e esteja mais perto do botao de lockdown do que o player           
                     {
                         vouApertarBotao = true;
                         inimigoEstados = InimigoEstados.IndoAtivarLockDown;

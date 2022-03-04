@@ -73,7 +73,7 @@ public class IAEnemyLockdown : IAEnemy
 
                             AtivarIconeDeAlerta();
                         }
-                        else if(viuPlayerAlgumaVez && !tomeiDano)
+                        else if(!vendoPlayer  && !tomeiDano && viuPlayerAlgumaVez)
                         {
                             inimigoEstados = InimigoEstados.IndoAtivarLockDown;
                         }
