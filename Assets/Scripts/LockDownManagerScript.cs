@@ -63,10 +63,12 @@ public class LockDownManagerScript : MonoBehaviour
 
         generalManager.Hud.LockDownUIAtiva(true);
     }
+
     public void Respawn()
     {
         DesativarLockDown();
     }
+
     public void DesativarLockDown()
     {
         contadorTempoLockdown = 0;

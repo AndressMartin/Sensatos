@@ -119,17 +119,11 @@ public class Enemy : EntityModel
 
         ia_Enemy.Iniciar();
         enemyMovement.Iniciar();
+        animacao.Iniciar();
 
         SetRespawnInicial();
 
         iniciado = true;
-    }
-
-    public void SerSpawnado(Vector2 _pontoSpawn)
-    {
-        Iniciar();
-
-        this.gameObject.SetActive(false);
     }
 
     void Update()
@@ -204,6 +198,13 @@ public class Enemy : EntityModel
 
         enemyMovement.ResetarVariaveisDeControle();
         enemyVision.ResetarVariaveisDeControle();
+    }
+
+    public void SerSpawnado(Vector2 _pontoSpawn)
+    {
+        Iniciar();
+
+        this.gameObject.SetActive(false);
     }
 
     void RotinasDoInimigo()

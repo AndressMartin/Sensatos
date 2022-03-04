@@ -15,18 +15,32 @@ public class AnimacaoJogador : MonoBehaviour
     private string armaEquipadaVisual; //Guarda a arma equipada
     private string animacaoAtual; //Guarda a animacao atual
 
+    private bool iniciado = false;
+
     //Getters
     public SpriteRenderer CorpoSprite => corpoSprite;
     public string AnimacaoAtual => animacaoAtual;
 
     void Start()
     {
+        Iniciar();
+    }
+
+    public void Iniciar()
+    {
+        if (iniciado == true)
+        {
+            return;
+        }
+
         corpo = transform.Find("Corpo").GetComponent<Animator>();
         braco = transform.Find("Bracos").GetComponent<Animator>();
         corpoSprite = transform.Find("Corpo").GetComponent<SpriteRenderer>();
         bracoSprite = transform.Find("Bracos").GetComponent<SpriteRenderer>();
         armaEquipadaVisual = "";
         animacaoAtual = "Idle";
+
+        iniciado = true;
     }
 
     //Atualiza o valor dos parametros de direcao nos animators
