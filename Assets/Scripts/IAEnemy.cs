@@ -54,6 +54,10 @@ public class IAEnemy : MonoBehaviour
     protected Vector2 posicaoAtualPlayer;
     protected Vector2 posicaoInicial;
 
+
+
+
+
     //Controladores
     protected float tempoEntrarEmModoAlerta;
     protected float tempoEsquecerPlayer;
@@ -63,6 +67,7 @@ public class IAEnemy : MonoBehaviour
     protected float tempoVerificandoTomeiTiro;
     protected float tempoRecarregarArma;
     protected float tempoVerificarMorto;
+    [SerializeField]protected float tempoImpedirSoftlock;
 
     //Controladores Max
     [Tooltip("Tempo para o inimigo detectar o jogador e entrar em modo combate")]
@@ -79,6 +84,8 @@ public class IAEnemy : MonoBehaviour
     [SerializeField] protected float tempoVerificandoTomeiTiroMax;
     [Tooltip("Tempo que o inimigo vai ficar verificando o morto antes de ativar o lockdown")]
     [SerializeField] protected float tempoVerificarMortoMax;
+    [Tooltip("Tempo que o inimigo vai tentar fazer algo senão conseguir conclui a task")]
+    [SerializeField] protected float tempoImpedirSoftlockMax;
 
 
     protected float tempoRecarregarArmaMax;
@@ -141,6 +148,8 @@ public class IAEnemy : MonoBehaviour
 
         presenteNaListaDeDeteccao = false;
 
+
+
         posicaoTiroPlayer = Vector2.zero;
         posicaoUltimoLugarVisto = Vector2.zero;
         posicaoAtualPlayer = Vector2.zero;
@@ -185,6 +194,7 @@ public class IAEnemy : MonoBehaviour
         verifiqueiUltimaPosicaoJogador = false;
         tomeiDano = false;
         primeiraVezTomeiDano = false;
+
 
         municaoNoCarregador = municaoNoCarregadorMax;
         indiceDoBotaoMaisPerto = 0;
@@ -298,12 +308,10 @@ public class IAEnemy : MonoBehaviour
                     {
                         if (Contador(ref tempoVerificarMorto, tempoVerificarMortoMax))
                         {
-                            inimigoEstados = InimigoEstados.IndoAtivarLockDown;
-                            Debug.Log("mudei aqui");
+                            MudarEnumIndoAtivarLockdown();
                         }
                         else
                         {
-                            Debug.Log("to no if");
 
                         }
                     }
@@ -311,7 +319,7 @@ public class IAEnemy : MonoBehaviour
                     else if (viuPlayerAlgumaVez && !emLockDown && inimigoEstados != InimigoEstados.IndoAtivarLockDown && !vouApertarBotao)    //caso tenha visto o player alguma vez, nao esteja em lockDown e esteja mais perto do botao de lockdown do que o player           
                     {
                         vouApertarBotao = true;
-                        inimigoEstados = InimigoEstados.IndoAtivarLockDown;
+                        MudarEnumIndoAtivarLockdown();
                     }
 
                     else if (ouvindoSom && !vouApertarBotao)   //caso tenha ouvido algo
@@ -346,6 +354,7 @@ public class IAEnemy : MonoBehaviour
             case EstadoDeteccaoPlayer.DetectandoPlayer:
                 if (tomeiDano)
                 {
+                    tempoVerificandoUltimaPosicaoPlayer = 0;
                     verifiqueiUltimaPosicaoJogador = false;
                     viuPlayerAlgumaVez = true;
                     enemyVisionScript.MudarVisao(true);
@@ -357,6 +366,7 @@ public class IAEnemy : MonoBehaviour
 
                 if (emLockDown && vendoPlayer) // vendo player em lockdown
                 {
+                    tempoVerificandoUltimaPosicaoPlayer = 0;
                     verifiqueiUltimaPosicaoJogador = false;
                     viuPlayerAlgumaVez = true;
                     enemyVisionScript.MudarVisao(true);
@@ -370,6 +380,7 @@ public class IAEnemy : MonoBehaviour
                 {
                     if (ContadorVisao(ref tempoEntrarEmModoAlerta, tempoEntrarEmModoAlertaMax))
                     {
+                        tempoVerificandoUltimaPosicaoPlayer = 0;
                         verifiqueiUltimaPosicaoJogador = false;
                         viuPlayerAlgumaVez = true;
                         enemyVisionScript.MudarVisao(true);
@@ -426,7 +437,7 @@ public class IAEnemy : MonoBehaviour
                             }
                             else
                             {
-                                inimigoEstados = InimigoEstados.IndoAtivarLockDown;
+                                MudarEnumIndoAtivarLockdown();
                             }
                             Debug.Log("Perdi o player De vista, indo na sua ultima posicao");
                             //O inimigo pode ficar preso procurando a ultima posicao do jogador nesta parte do codigo!!! ****
@@ -453,7 +464,7 @@ public class IAEnemy : MonoBehaviour
                         // Debug.Log("to entrando aqui "+gameObject.name+"sas");
                         if (enemy.GeneralManager.EnemyManager.VerificarUltimoVerPlayer(posicaoListaIndiceDeteccao) && !emLockDown) //o ultimo inimigo a ver o player deve ativar o lockdown isso tem prioridade sobre atacar ou mover
                         {
-                            inimigoEstados = InimigoEstados.IndoAtivarLockDown;
+                            MudarEnumIndoAtivarLockdown();
                         }
 
                         else if (playerAreaAtaque)
@@ -483,6 +494,15 @@ public class IAEnemy : MonoBehaviour
         }
         #endregion        
     }
+    void MudarEnumIndoAtivarLockdown()
+    {
+        if (inimigoEstados != InimigoEstados.IndoAtivarLockDown)
+        {
+            inimigoEstados = InimigoEstados.IndoAtivarLockDown;
+            tempoImpedirSoftlock = 0;
+        }
+
+    }
 
     protected virtual void AndarAtePlayer()
     {
@@ -498,7 +518,7 @@ public class IAEnemy : MonoBehaviour
     }
     protected virtual void  TomeiDanoSemVerJogador()
     {
-        if (FuncaoIrAteLugarVerificarArea(posicaoUltimoLugarVisto, ref tempoVerificandoTomeiTiro, tempoVerificandoTomeiTiroMax))
+        if (FuncaoIrAteLugarVerificarArea(posicaoUltimoLugarVisto, ref tempoVerificandoTomeiTiro, tempoVerificandoTomeiTiroMax) || Contador(ref tempoImpedirSoftlock, tempoImpedirSoftlockMax))
         {
             estadoDeteccaoPlayer = EstadoDeteccaoPlayer.NaoToVendoPlayer;
             somPasso = false;
@@ -526,7 +546,7 @@ public class IAEnemy : MonoBehaviour
     }
     protected virtual void SomTiro()
     {
-        if (FuncaoIrAteLugarVerificarArea(posicaoTiroPlayer, ref tempoVerificandoSomTiro, tempoVerificandoSomTiroMax))
+        if (FuncaoIrAteLugarVerificarArea(posicaoTiroPlayer, ref tempoVerificandoSomTiro, tempoVerificandoSomTiroMax) || Contador(ref tempoImpedirSoftlock, tempoImpedirSoftlockMax))
         {
             somTiro = false;
             //Debug.Log("pronto ja fui e olhei o som do tiro,");
@@ -534,7 +554,7 @@ public class IAEnemy : MonoBehaviour
     }
     protected virtual void AndandoUltimaPosicaoPlayerConhecida()
     {
-        if (FuncaoIrAteLugarVerificarArea(posicaoUltimoLugarVisto, ref tempoVerificandoUltimaPosicaoPlayer, tempoVerificandoUltimaPosicaoPlayerMax))
+        if (FuncaoIrAteLugarVerificarArea(posicaoUltimoLugarVisto, ref tempoVerificandoUltimaPosicaoPlayer, tempoVerificandoUltimaPosicaoPlayerMax) || Contador(ref tempoImpedirSoftlock, tempoImpedirSoftlockMax))
         {
             verifiqueiUltimaPosicaoJogador = true;
             //Debug.Log("pronto ja fui e olhei,");
@@ -545,6 +565,10 @@ public class IAEnemy : MonoBehaviour
         if (VerificarChegouAteAlvo(generalManager.ObjectManager.ListaAlarmes[indiceDoBotaoMaisPerto].transform.position))
         {
             AtivarLockDown();
+        }
+        else if (Contador(ref tempoImpedirSoftlock, tempoImpedirSoftlockMax))
+        {
+            transform.position = new Vector2(generalManager.ObjectManager.ListaAlarmes[indiceDoBotaoMaisPerto].transform.position.x, generalManager.ObjectManager.ListaAlarmes[indiceDoBotaoMaisPerto].transform.position.y);
         }
     }
     protected virtual void FicarParado()
@@ -574,7 +598,7 @@ public class IAEnemy : MonoBehaviour
             case InimigoEstados.AtacarPlayer:
                 Atacar();
                 break;
-            case InimigoEstados.TomeiDano:
+            case InimigoEstados.TomeiDano: // so fazer aqui msm
                 TomeiDanoSemVerJogador();
                 break;
 
@@ -582,15 +606,15 @@ public class IAEnemy : MonoBehaviour
                 SomPassos();
                 break;
 
-            case InimigoEstados.SomTiro:
+            case InimigoEstados.SomTiro: // so fazer aqui msms
                 SomTiro();
                 break;
 
-            case InimigoEstados.AndandoUltimaPosicaoPlayerConhecida:
+            case InimigoEstados.AndandoUltimaPosicaoPlayerConhecida:// so fazer aqui msms
                 AndandoUltimaPosicaoPlayerConhecida();
                 break;
 
-            case InimigoEstados.IndoAtivarLockDown:
+            case InimigoEstados.IndoAtivarLockDown: //tp
                 IndoAtivarLockdown();
                 break;
 
@@ -840,17 +864,26 @@ public class IAEnemy : MonoBehaviour
         {
             somTiro = true;
             posicaoTiroPlayer = posicao;
+
+            tempoVerificandoSomTiro = 0;
         }
         else
         {
             somPasso = true;
-        }      
+
+            tempoVerificandoSomPassos = 0;
+        }
+        tempoImpedirSoftlock = 0;
+
     }
 
     public void ReceberDano()
     {
         primeiraVezTomeiDano = true;
         tomeiDano = true;
+
+        tempoVerificandoTomeiTiro = 0;
+        tempoImpedirSoftlock = 0;
     }
     #endregion
 }

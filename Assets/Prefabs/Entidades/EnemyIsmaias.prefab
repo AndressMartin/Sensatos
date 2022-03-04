@@ -490,7 +490,8 @@ MonoBehaviour:
   tempoVerificandoSomTiroMax: 2
   tempoVerificandoSomPassosMax: 2
   tempoVerificandoTomeiTiroMax: 2
-  tempoVerificarMortoMax: 0
+  tempoVerificarMortoMax: 1
+  tempoImpedirSoftlockMax: 15
 --- !u!114 &6297625325533714492
 MonoBehaviour:
   m_ObjectHideFlags: 0
