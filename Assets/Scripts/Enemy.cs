@@ -143,10 +143,12 @@ public class Enemy : EntityModel
 
     private void FixedUpdate()
     {
+        /*
         if((Vector2)transform.position != posAnterior)
         {
             generalManager.PathfinderManager.EscanearPathfinder(colisao);
         }
+        */
 
         vetorVelocidade = (Vector2)transform.position - posAnterior;
         posAnterior = transform.position;

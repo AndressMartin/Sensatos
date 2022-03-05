@@ -38,6 +38,8 @@ public class Spawner : MonoBehaviour
                 break;
             }
         }
+
+        colisao.enabled = false;
     }
 
     public void InstanciarInimigos()
