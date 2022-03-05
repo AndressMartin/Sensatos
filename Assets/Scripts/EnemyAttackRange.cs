@@ -4,35 +4,24 @@ using UnityEngine;
 
 public class EnemyAttackRange : MonoBehaviour
 {
-    //Managers
-    private GeneralManagerScript generalManager;
 
     //Variaveis
     private Enemy enemy;
-    private bool vendoSubVisao;
+    private SubAttackRange subAttackRange;
     [SerializeField] private bool vendo;
-
-    //Setters
-    public void SetVendoSubVisao(bool ativo)
-    {
-        vendoSubVisao = ativo;
-    }
+    [SerializeField] private bool vendoSub;
+    [SerializeField] private float raioSubAttack;
+    
+    
 
     void Start()
     {
-        generalManager = FindObjectOfType<GeneralManagerScript>();
         enemy = GetComponentInParent<Enemy>();
+        subAttackRange = GetComponentInChildren<SubAttackRange>();
+
+        subAttackRange.Iniciar(raioSubAttack, this);
     }
-    private void Update()
-    {
-        if(generalManager.PauseManager.JogoPausado == false)
-        {
-            if (vendo || vendoSubVisao)
-            {
-                enemy.SetPlayerOnAttackRange(vendoSubVisao);
-            }
-        }
-    }
+
     
     private void OnTriggerStay2D(Collider2D collision)
     {
@@ -41,7 +30,7 @@ public class EnemyAttackRange : MonoBehaviour
         if (temp != null)
         {
             vendo = true;
-            //enemy.playerOnAttackRange= true;         
+            PassarVisao();
         }
     }
 
@@ -52,9 +41,16 @@ public class EnemyAttackRange : MonoBehaviour
         if (temp != null)
         {
             vendo = false;
-            //enemy.playerOnAttackRange = false;
-            //enemyMovement.playerOnAttackRange = false;
+            PassarVisao();
         }
 
+    }
+    void PassarVisao()
+    {
+        enemy.SetarAttackRange(vendo, vendoSub);
+    }
+    public void SetarAttackRange(bool _vendo)
+    {
+        vendoSub = _vendo;
     }
 }

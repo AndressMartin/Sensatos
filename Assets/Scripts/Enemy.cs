@@ -34,6 +34,8 @@ public class Enemy : EntityModel
 
     private bool morto;
     private bool playerOnAttackRange;
+    private bool playerOnAttackRangeSubVision;
+
 
     private float tempoTiro;
 
@@ -58,6 +60,8 @@ public class Enemy : EntityModel
     public Estado GetEstado => estado;
     public bool Morto => morto;
     public bool PlayerOnAttackRange => playerOnAttackRange;
+    public bool PlayerOnAttackRangeSubVision => playerOnAttackRangeSubVision;
+
     public Player GetPlayer => player;
     public InventarioEnemy GetInventarioEnemy => inventario;
     public EnemyMovement GetEnemyMovement => enemyMovement;
@@ -537,5 +541,10 @@ public class Enemy : EntityModel
     public void EscutarSom(Player player, bool somTiro)
     {
         ia_Enemy.ReceberSom(player.transform.position, somTiro);
+    }
+    public void SetarAttackRange(bool _vendo,bool _vendoSubVisao)
+    {
+        playerOnAttackRange = _vendo;
+        playerOnAttackRangeSubVision = _vendoSubVisao;
     }
 }

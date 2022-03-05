@@ -4,10 +4,18 @@ using UnityEngine;
 
 public class SubAttackRange : MonoBehaviour
 {
-    EnemyAttackRange enemyAttack;
-    void Start()
+    EnemyAttackRange enemyAttackRange;
+    [SerializeField] private bool vendo;
+    CircleCollider2D circleCollider;
+
+    public void Iniciar(float _raio,EnemyAttackRange pai)
     {
-        enemyAttack = GetComponentInParent<EnemyAttackRange>();
+        enemyAttackRange = pai;
+        circleCollider = GetComponent<CircleCollider2D>();
+        if (_raio > 0.5)
+        {
+            circleCollider.radius = _raio;
+        }
     }
     private void OnTriggerStay2D(Collider2D collision)
     {
@@ -15,7 +23,8 @@ public class SubAttackRange : MonoBehaviour
 
         if (temp != null)
         {
-            enemyAttack.SetVendoSubVisao(true);
+            vendo = true;
+            enemyAttackRange.SetarAttackRange(vendo);
         }
     }
 
@@ -25,11 +34,9 @@ public class SubAttackRange : MonoBehaviour
 
         if (temp != null)
         {
-            enemyAttack.SetVendoSubVisao(false);
-            //enemyMovement.playerOnAttackRange = false;
+            vendo = false;
+            enemyAttackRange.SetarAttackRange(vendo);
         }
 
     }
 }
-
-

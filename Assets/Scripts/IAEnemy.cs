@@ -49,6 +49,9 @@ public class IAEnemy : MonoBehaviour
     protected bool primeiraVezTomeiDano;
     protected int indiceDoBotaoMaisPerto;
     protected bool vendoMorto;
+    protected bool ativarLockDownVerPlayer;
+    protected bool areaMovimento;
+
 
     protected bool presenteNaListaDeDeteccao;
     protected int posicaoListaIndiceDeteccao;
@@ -148,6 +151,8 @@ public class IAEnemy : MonoBehaviour
         verifiqueiUltimaPosicaoJogador = false;
         tomeiDano = false;
         primeiraVezTomeiDano = false;
+        ativarLockDownVerPlayer = false;
+        areaMovimento = false;
         indiceDoBotaoMaisPerto = 0;
 
         presenteNaListaDeDeteccao = false;
@@ -196,7 +201,8 @@ public class IAEnemy : MonoBehaviour
         verifiqueiUltimaPosicaoJogador = false;
         tomeiDano = false;
         primeiraVezTomeiDano = false;
-
+        ativarLockDownVerPlayer = false;
+        areaMovimento = false;
 
         municaoNoCarregador = municaoNoCarregadorMax;
         indiceDoBotaoMaisPerto = 0;
@@ -304,6 +310,8 @@ public class IAEnemy : MonoBehaviour
                     
                     if(tomeiDano)
                     {
+                        
+                        enemyVisionScript.MudarVisao(true);
                         inimigoEstados = InimigoEstados.TomeiDano;
                     }
                     else if(vendoMorto)
@@ -318,7 +326,7 @@ public class IAEnemy : MonoBehaviour
                         }
                     }
 
-                    else if (viuPlayerAlgumaVez && !emLockDown && inimigoEstados != InimigoEstados.IndoAtivarLockDown && !vouApertarBotao)    //caso tenha visto o player alguma vez, nao esteja em lockDown e esteja mais perto do botao de lockdown do que o player           
+                    else if (viuPlayerAlgumaVez && !emLockDown && inimigoEstados != InimigoEstados.IndoAtivarLockDown && !vouApertarBotao && ativarLockDownVerPlayer)    //caso tenha visto o player alguma vez, nao esteja em lockDown e esteja mais perto do botao de lockdown do que o player           
                     {
                         vouApertarBotao = true;
                         MudarEnumIndoAtivarLockdown();
@@ -359,6 +367,7 @@ public class IAEnemy : MonoBehaviour
                     tempoVerificandoUltimaPosicaoPlayer = 0;
                     verifiqueiUltimaPosicaoJogador = false;
                     viuPlayerAlgumaVez = true;
+                    ativarLockDownVerPlayer = true;
                     enemyVisionScript.MudarVisao(true);
                     estadoDeteccaoPlayer = EstadoDeteccaoPlayer.PlayerDetectado;
                     inimigoEstados = InimigoEstados.AndandoAtePlayer;
@@ -371,6 +380,7 @@ public class IAEnemy : MonoBehaviour
                     tempoVerificandoUltimaPosicaoPlayer = 0;
                     verifiqueiUltimaPosicaoJogador = false;
                     viuPlayerAlgumaVez = true;
+                    ativarLockDownVerPlayer = true;
                     enemyVisionScript.MudarVisao(true);
                     estadoDeteccaoPlayer = EstadoDeteccaoPlayer.PlayerDetectado;
                     inimigoEstados = InimigoEstados.AndandoAtePlayer;
@@ -385,6 +395,7 @@ public class IAEnemy : MonoBehaviour
                         tempoVerificandoUltimaPosicaoPlayer = 0;
                         verifiqueiUltimaPosicaoJogador = false;
                         viuPlayerAlgumaVez = true;
+                        ativarLockDownVerPlayer = true;
                         enemyVisionScript.MudarVisao(true);
                         estadoDeteccaoPlayer = EstadoDeteccaoPlayer.PlayerDetectado;
 
@@ -417,6 +428,7 @@ public class IAEnemy : MonoBehaviour
                 vendoPlayer = vendoPlayerCircular;
                 somTiro = false;
                 somPasso = false;
+                ativarLockDownVerPlayer = true;
 
                 if (!presenteNaListaDeDeteccao) //sistema para ultimo integrante ter que apertar o botao, sempre ´e a ultimo inimigo a ver o player quem vai ativar
                 {
@@ -467,12 +479,16 @@ public class IAEnemy : MonoBehaviour
                         if (enemy.GeneralManager.EnemyManager.VerificarUltimoVerPlayer(posicaoListaIndiceDeteccao) && !emLockDown) //o ultimo inimigo a ver o player deve ativar o lockdown isso tem prioridade sobre atacar ou mover
                         {
                             MudarEnumIndoAtivarLockdown();
-                        }
 
-                        else if (playerAreaAtaque)
+                        }
+                        else if (areaMovimento)
                         {
-                            //Debug.Log("ele ta perto de min posso atirar");
-                            inimigoEstados = InimigoEstados.AtacarPlayer;
+                            //Debug.Log("Ele ta longe de min nao posso Atacar");
+                            inimigoEstados = InimigoEstados.FicarParado;
+                            if (playerAreaAtaque)
+                            {
+                                Atacar();
+                            }
                         }
 
                         else if (tomeiDano)
@@ -484,6 +500,10 @@ public class IAEnemy : MonoBehaviour
                         {
                             //Debug.Log("Ele ta longe de min nao posso Atacar");
                             inimigoEstados = InimigoEstados.AndandoAtePlayer;
+                            if (playerAreaAtaque)
+                            {
+                                Atacar();
+                            }
                         }
 
                     }
@@ -528,6 +548,11 @@ public class IAEnemy : MonoBehaviour
             tomeiDano = false;
             viuPlayerAlgumaVez = true;
             enemyVisionScript.MudarVisao(true);
+
+            tempoVerificandoUltimaPosicaoPlayer = 0;
+            verifiqueiUltimaPosicaoJogador = false;
+            ativarLockDownVerPlayer = true;
+
         }
         else
         {
@@ -674,9 +699,8 @@ public class IAEnemy : MonoBehaviour
         //fazer a rotina lockdown
     }
 
-    void Atacar()
+    protected void Atacar()
     {
-        enemyMovement.ZerarVelocidade();
         if (municaoNoCarregador > 0)
         {
             if (enemy.Atirar()) //Reload
@@ -827,6 +851,7 @@ public class IAEnemy : MonoBehaviour
         vendoPlayer = enemyVisionScript.GetVendoPlayer;
         vendoPlayerCircular = enemyVisionScript.GetVendoPlayerCircular;
         playerAreaAtaque = enemy.PlayerOnAttackRange;
+        areaMovimento = enemy.PlayerOnAttackRangeSubVision;
         posicaoAtualPlayer = enemy.GetPlayer.transform.position;
         indiceDoBotaoMaisPerto = RetornarIndiceBotaoLockDownMaisPerto();
     }
@@ -834,6 +859,7 @@ public class IAEnemy : MonoBehaviour
     {
         if(enemy.Morto == false)
         {
+            vouApertarBotao = false;
             vendoMorto = false;
             enemyVisionScript.MudarVisao(true);
             fazerRotinaLockDown = true;
@@ -849,6 +875,8 @@ public class IAEnemy : MonoBehaviour
     {
         if (enemy.Morto == false)
         {
+            verifiqueiUltimaPosicaoJogador = true;
+            ativarLockDownVerPlayer = false;
             emLockDown = false;
             fazerRotinaLockDown = false;
         }

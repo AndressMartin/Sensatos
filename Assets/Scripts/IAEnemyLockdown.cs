@@ -113,13 +113,29 @@ public class IAEnemyLockdown : IAEnemy
                     {
                         inimigoEstados = InimigoEstados.IndoAtivarLockDown;
                     }
-                    else if (playerAreaAtaque)
+                    else if (areaMovimento)
                     {
-                        inimigoEstados = InimigoEstados.AtacarPlayer;
+                        //Debug.Log("Ele ta longe de min nao posso Atacar");
+                        inimigoEstados = InimigoEstados.FicarParado;
+                        if (playerAreaAtaque)
+                        {
+                            Atacar();
+                        }
                     }
-                    else
+
+                    else if (tomeiDano)
                     {
                         inimigoEstados = InimigoEstados.AndandoAtePlayer;
+                    }
+
+                    else
+                    {
+                        //Debug.Log("Ele ta longe de min nao posso Atacar");
+                        inimigoEstados = InimigoEstados.AndandoAtePlayer;
+                        if (playerAreaAtaque)
+                        {
+                            Atacar();
+                        }
                     }
                 }
                 else
