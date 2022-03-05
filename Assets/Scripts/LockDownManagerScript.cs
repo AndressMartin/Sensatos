@@ -33,6 +33,11 @@ public class LockDownManagerScript : MonoBehaviour
         }
     }
 
+    public void Respawn()
+    {
+        DesativarLockDown();
+    }
+
     public void Contador()
     {
         contadorTempoLockdown = contadorTempoLockdownMax;
@@ -65,16 +70,15 @@ public class LockDownManagerScript : MonoBehaviour
             {
                 enemy.GetIAEnemy.ReceberLockDown(posicaoDoPlayer);
             }
+            else
+            {
+                enemy.SeDesativarNoLockdown();
+            }
         }
 
         TrancarPortas();
 
         generalManager.Hud.LockDownUIAtiva(true);
-    }
-
-    public void Respawn()
-    {
-        DesativarLockDown();
     }
 
     public void DesativarLockDown()

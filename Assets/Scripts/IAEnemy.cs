@@ -261,7 +261,7 @@ public class IAEnemy : MonoBehaviour
         ReferenciaVariaveisExternas();
 
         StateMachine();
-        funcoesBasicas();
+        FuncoesBasicas();
         Acoes();
 
     }
@@ -496,6 +496,7 @@ public class IAEnemy : MonoBehaviour
         }
         #endregion        
     }
+
     void MudarEnumIndoAtivarLockdown()
     {
         if (inimigoEstados != InimigoEstados.IndoAtivarLockDown)
@@ -632,7 +633,7 @@ public class IAEnemy : MonoBehaviour
         }
         #endregion
     }
-    void funcoesBasicas()
+    void FuncoesBasicas()
     {
 
         if (municaoNoCarregador <= 0)
