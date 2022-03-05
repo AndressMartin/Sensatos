@@ -298,7 +298,11 @@ public class Enemy : EntityModel
     {
         estado = Estado.Normal;
     }
-
+    public void SetarAttackRange(bool _vendo, bool _vendoSubVisao)
+    {
+        playerOnAttackRange = _vendo;
+        playerOnAttackRangeSubVision = _vendoSubVisao;
+    }
     public bool Atirar()
     {
         TrocarDirecaoAtaque(player.transform.position);
@@ -564,4 +568,5 @@ public class Enemy : EntityModel
         morto = false;
         ResetarVariaveis();
     }
+    
 }
