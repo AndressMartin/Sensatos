@@ -542,9 +542,26 @@ public class Enemy : EntityModel
     {
         ia_Enemy.ReceberSom(player.transform.position, somTiro);
     }
-    public void SetarAttackRange(bool _vendo,bool _vendoSubVisao)
+
+    public void SeDesativarNoLockdown()
     {
-        playerOnAttackRange = _vendo;
-        playerOnAttackRangeSubVision = _vendoSubVisao;
+        StartCoroutine(SeDesativarNoLockdownCorrotina());
+    }
+
+    private IEnumerator SeDesativarNoLockdownCorrotina()
+    {
+        yield return null;
+        animacao.SetVelocidade(1);
+        animacao.AtualizarArmaBracos("");
+        animacao.TrocarAnimacao("MortoSorrateiramente");
+        Morrer();
+
+        while (animacao.AnimacaoAtual != "Vazio")
+        {
+            yield return null;
+        }
+
+        morto = false;
+        ResetarVariaveis();
     }
 }
