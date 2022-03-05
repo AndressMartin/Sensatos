@@ -7,19 +7,19 @@ public class EnemyAttackRange : MonoBehaviour
 
     //Variaveis
     private Enemy enemy;
-    private SubAttackRange subAttackRange;
+    private EnemyMovementRange movementRange;
     [SerializeField] private bool vendo;
-    [SerializeField] private bool vendoSub;
-    [SerializeField] private float raioSubAttack;
+    [SerializeField] private bool colidiuMovimento;
+    [SerializeField] private float raioMovementRange;
     
     
 
     void Start()
     {
         enemy = GetComponentInParent<Enemy>();
-        subAttackRange = GetComponentInChildren<SubAttackRange>();
+        movementRange = GetComponentInChildren<EnemyMovementRange>();
 
-        subAttackRange.Iniciar(raioSubAttack, this);
+        movementRange.Iniciar(raioMovementRange, this);
     }
 
     
@@ -47,10 +47,10 @@ public class EnemyAttackRange : MonoBehaviour
     }
     void PassarVisao()
     {
-        enemy.SetarAttackRange(vendo, vendoSub);
+        enemy.SetarAttackRange(vendo, colidiuMovimento);
     }
     public void SetarAttackRange(bool _vendo)
     {
-        vendoSub = _vendo;
+        colidiuMovimento = _vendo;
     }
 }

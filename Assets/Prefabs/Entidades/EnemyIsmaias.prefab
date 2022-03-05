@@ -680,8 +680,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   vendo: 0
-  vendoSub: 0
-  raioSubAttack: 2
+  colidiuMovimento: 0
+  raioMovementRange: 2
 --- !u!58 &6297625326670532824
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -767,7 +767,7 @@ GameObject:
   - component: {fileID: 9173488662851559693}
   - component: {fileID: 8121875269696211240}
   m_Layer: 0
-  m_Name: AreaMovimento
+  m_Name: MovementRange
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -796,7 +796,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7145623290142229261}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 115563d89a397a348b9a31d324a4d803, type: 3}
+  m_Script: {fileID: 11500000, guid: 2e33798543fac4b4ca780cdcba3aef0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   vendo: 0

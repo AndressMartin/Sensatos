@@ -113,7 +113,7 @@ public class IAEnemyLockdown : IAEnemy
                     {
                         inimigoEstados = InimigoEstados.IndoAtivarLockDown;
                     }
-                    else if (areaMovimento)
+                    else if (movementRange)
                     {
                         //Debug.Log("Ele ta longe de min nao posso Atacar");
                         inimigoEstados = InimigoEstados.FicarParado;

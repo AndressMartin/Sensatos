@@ -34,7 +34,7 @@ public class Enemy : EntityModel
 
     private bool morto;
     private bool playerOnAttackRange;
-    private bool playerOnAttackRangeSubVision;
+    private bool playerMovementRange;
 
 
     private float tempoTiro;
@@ -60,7 +60,7 @@ public class Enemy : EntityModel
     public Estado GetEstado => estado;
     public bool Morto => morto;
     public bool PlayerOnAttackRange => playerOnAttackRange;
-    public bool PlayerOnAttackRangeSubVision => playerOnAttackRangeSubVision;
+    public bool PlayerMovementRange => playerMovementRange;
 
     public Player GetPlayer => player;
     public InventarioEnemy GetInventarioEnemy => inventario;
@@ -298,10 +298,10 @@ public class Enemy : EntityModel
     {
         estado = Estado.Normal;
     }
-    public void SetarAttackRange(bool _vendo, bool _vendoSubVisao)
+    public void SetarAttackRange(bool _vendo, bool _colidiuMovimento)
     {
         playerOnAttackRange = _vendo;
-        playerOnAttackRangeSubVision = _vendoSubVisao;
+        playerMovementRange = _colidiuMovimento;
     }
     public bool Atirar()
     {

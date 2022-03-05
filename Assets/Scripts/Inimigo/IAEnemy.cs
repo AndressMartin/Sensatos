@@ -50,7 +50,7 @@ public class IAEnemy : MonoBehaviour
     protected int indiceDoBotaoMaisPerto;
     protected bool vendoMorto;
     protected bool ativarLockDownVerPlayer;
-    protected bool areaMovimento;
+    protected bool movementRange;
 
 
     protected bool presenteNaListaDeDeteccao;
@@ -152,7 +152,7 @@ public class IAEnemy : MonoBehaviour
         tomeiDano = false;
         primeiraVezTomeiDano = false;
         ativarLockDownVerPlayer = false;
-        areaMovimento = false;
+        movementRange = false;
         indiceDoBotaoMaisPerto = 0;
 
         presenteNaListaDeDeteccao = false;
@@ -202,7 +202,7 @@ public class IAEnemy : MonoBehaviour
         tomeiDano = false;
         primeiraVezTomeiDano = false;
         ativarLockDownVerPlayer = false;
-        areaMovimento = false;
+        movementRange = false;
 
         municaoNoCarregador = municaoNoCarregadorMax;
         indiceDoBotaoMaisPerto = 0;
@@ -481,7 +481,7 @@ public class IAEnemy : MonoBehaviour
                             MudarEnumIndoAtivarLockdown();
 
                         }
-                        else if (areaMovimento)
+                        else if (movementRange)
                         {
                             //Debug.Log("Ele ta longe de min nao posso Atacar");
                             inimigoEstados = InimigoEstados.FicarParado;
@@ -852,7 +852,7 @@ public class IAEnemy : MonoBehaviour
         vendoPlayer = enemyVisionScript.GetVendoPlayer;
         vendoPlayerCircular = enemyVisionScript.GetVendoPlayerCircular;
         playerAreaAtaque = enemy.PlayerOnAttackRange;
-        areaMovimento = enemy.PlayerOnAttackRangeSubVision;
+        movementRange = enemy.PlayerMovementRange;
         posicaoAtualPlayer = enemy.GetPlayer.transform.position;
         indiceDoBotaoMaisPerto = RetornarIndiceBotaoLockDownMaisPerto();
     }

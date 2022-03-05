@@ -2,13 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SubAttackRange : MonoBehaviour
+public class EnemyMovementRange : MonoBehaviour
 {
     EnemyAttackRange enemyAttackRange;
     [SerializeField] private bool vendo;
     CircleCollider2D circleCollider;
 
-    public void Iniciar(float _raio,EnemyAttackRange pai)
+    public void Iniciar(float _raio, EnemyAttackRange pai)
     {
         enemyAttackRange = pai;
         circleCollider = GetComponent<CircleCollider2D>();
