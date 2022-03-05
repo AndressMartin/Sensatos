@@ -468,6 +468,9 @@ MonoBehaviour:
   direcao: 0
   vidaInicial: 10
   velocidadeAnimacaoCorrendo: 1.5
+  layerDasZonas:
+    serializedVersion: 2
+    m_Bits: 256
 --- !u!114 &6885532772316150975
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -484,6 +487,7 @@ MonoBehaviour:
   estadoDeteccaoPlayer: 0
   vendoPlayerCircular: 0
   vendoPlayer: 0
+  tempoImpedirSoftlock: 0
   tempoEntrarEmModoAlertaMax: 1
   tempoEsquecerPlayerMax: 3
   tempoVerificandoUltimaPosicaoPlayerMax: 5

@@ -252,7 +252,7 @@ GameObject:
   - component: {fileID: 2150433992448801304}
   - component: {fileID: 7187578302697251405}
   - component: {fileID: 8916929928765734730}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -362,6 +362,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d6bc40ff15266f4e9bc2086a08b4389, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  direcao: 0
   vidaInicial: 0
   direcaoMovimento: 0
   modoMovimento: 0
@@ -395,6 +396,7 @@ MonoBehaviour:
   armas:
   - {fileID: 7703806124257995746, guid: 74b17ffc4bfc3144d8c2041820ad2f94, type: 3}
   - {fileID: 81589876889633317, guid: b35e4543861f8ab49bb9b2505f0e2867, type: 3}
+  roupasDeCamuflagem: []
   armaSlot1: {fileID: 0}
   armaSlot2: {fileID: 0}
   hasSortedWeapons:
@@ -586,8 +588,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dano: 10
-  horizontal: 0
-  vertical: 0
 --- !u!114 &8916929928054043164
 MonoBehaviour:
   m_ObjectHideFlags: 0

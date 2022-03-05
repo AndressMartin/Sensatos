@@ -2,16 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LockDown : ObjetoInteragivel
+public class LockDownButton : MonoBehaviour
 {
     //Managers
     private GeneralManagerScript generalManager;
 
     //Componentes
     SpriteRenderer spriteRenderer;
-
-    //Variaveis
-    public bool lockDownAtivo;
 
     private void Start()
     {
@@ -21,38 +18,33 @@ public class LockDown : ObjetoInteragivel
         //Componentes
         spriteRenderer = GetComponent<SpriteRenderer>();
 
-        //Variaveis
-        ativo = true;
-
         //Se adicionar a lista de objetos interagiveis do ObjectManager
-        generalManager.ObjectManager.AdicionarAosObjetosInteragiveis(this);
         generalManager.ObjectManager.AdicionarAosAlarmes(this);
-
-        //Variaveis
-        lockDownAtivo = false;
     }
-    public override void Respawn()
+
+    public void Respawn()
     {
         DesativarLockDown();
+    }
 
-    }
-    public void AtivarLockDown()
+    public void AtivarLockDown(Vector2 posicaoDoPlayer)
     {
-        lockDownAtivo = true;
-        CorBotao();
+        generalManager.LockDownManager.AtivarLockDown(posicaoDoPlayer);
     }
+
     public void DesativarLockDown()
     {
-        lockDownAtivo = false;
-        CorBotao();
+        CorBotao(false);
     }
-    public override void Interagir(Player player)
+
+    public void ReceberLockDown()
     {
-        
+        CorBotao(true);
     }
-    void CorBotao()
+
+    void CorBotao(bool ativo)
     {
-        if (lockDownAtivo)
+        if (ativo)
         {
             spriteRenderer.color = Color.green;
         }

@@ -12,5 +12,6 @@ public class DuplicadorDeTileMapsQueBloqueiamVisao : MonoBehaviour
 
         copia.layer = LayerMask.NameToLayer("ColidirComORaycast");
         copia.GetComponent<CompositeCollider2D>().isTrigger = true;
+        copia.name = this.name + " Para Bloquear Visao";
     }
 }

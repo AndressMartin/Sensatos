@@ -8,14 +8,14 @@ public class ObjectManagerScript : MonoBehaviour
     [SerializeField] private List<ObjetoInteragivel> listaObjetosInteragiveis;
     [SerializeField] private List<ParedeModel> listaParedesQuebraveis;
     [SerializeField] private List<Enemy> listaInimigos;
-    [SerializeField] private List<LockDown> listaAlarmes;
+    [SerializeField] private List<LockDownButton> listaAlarmes;
     [SerializeField] private List<Porta> listaPortas;
 
     //Getters
     [SerializeField] public List<ObjetoInteragivel> ListaObjetosInteragiveis => listaObjetosInteragiveis;
     [SerializeField] public List<ParedeModel> ListaParedesQuebraveis => listaParedesQuebraveis;
     [SerializeField] public List<Enemy> ListaInimigos => listaInimigos;
-    [SerializeField] public List<LockDown> ListaAlarmes => listaAlarmes;
+    [SerializeField] public List<LockDownButton> ListaAlarmes => listaAlarmes;
     [SerializeField] public List<Porta> ListaPortas => listaPortas;
 
     public void AdicionarAosObjetosInteragiveis(ObjetoInteragivel objetoInteragivel)
@@ -51,12 +51,12 @@ public class ObjectManagerScript : MonoBehaviour
         listaInimigos.Remove(inimigo);
     }
 
-    public void AdicionarAosAlarmes(LockDown alarme)
+    public void AdicionarAosAlarmes(LockDownButton alarme)
     {
         listaAlarmes.Add(alarme);
     }
 
-    public void RemoverDosAlarmes(LockDown alarme)
+    public void RemoverDosAlarmes(LockDownButton alarme)
     {
         listaAlarmes.Remove(alarme);
     }

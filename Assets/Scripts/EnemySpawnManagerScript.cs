@@ -4,8 +4,19 @@ using UnityEngine;
 
 public class EnemySpawnManagerScript : MonoBehaviour
 {
+    //Managers
+    private GeneralManagerScript generalManager;
+
+    //Variaveis
     [SerializeField] private List<Spawner> salasSeguranca;
+
+    //Getters
     public List<Spawner> SalasSeguranca => salasSeguranca;
+
+    private void Start()
+    {
+        generalManager = FindObjectOfType<GeneralManagerScript>();
+    }
 
     public void AddToLista(Spawner spawner)
     {
@@ -16,7 +27,10 @@ public class EnemySpawnManagerScript : MonoBehaviour
     {
         foreach (Spawner spawner in salasSeguranca)
         {
-            spawner.AtivarDesativarInimigos();
+            if(spawner.Zona == generalManager.ZoneManager.ZonaAtual)
+            {
+                spawner.AtivarInimigos();
+            }
         }
     }
 }

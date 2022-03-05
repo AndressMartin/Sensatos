@@ -20,6 +20,8 @@ public class IAEnemyLockdown : IAEnemy
         }
 
         base.Iniciar();
+
+        tipoInimigo = TipoInimigo.Lockdown;
         salaSegurança = transform.position;
     }
 
@@ -53,7 +55,7 @@ public class IAEnemyLockdown : IAEnemy
                     }
                     else if (!vendoPlayer && !tomeiDano)
                     {
-                        inimigoEstados = InimigoEstados.FazerRotinaLockdow;
+                        inimigoEstados = InimigoEstados.FazerRotinaLockdown;
                     }
                 }
                 else //voltar pro spawn

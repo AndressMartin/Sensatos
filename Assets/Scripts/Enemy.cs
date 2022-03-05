@@ -22,8 +22,12 @@ public class Enemy : EntityModel
     private Player player;
 
     //Variaveis
+    [SerializeField] LayerMask layerDasZonas;
+
     [SerializeField] private int vidaInicial;
     [SerializeField] private float velocidadeAnimacaoCorrendo;
+
+    private int zona;
 
     public enum Estado { Normal, TomandoDano };
     private Estado estado;
@@ -50,6 +54,7 @@ public class Enemy : EntityModel
     //Getters
     public GeneralManagerScript GeneralManager => generalManager;
     public AnimacaoJogador Animacao => animacao;
+    public int Zona => zona;
     public Estado GetEstado => estado;
     public bool Morto => morto;
     public bool PlayerOnAttackRange => playerOnAttackRange;
@@ -123,6 +128,8 @@ public class Enemy : EntityModel
 
         SetRespawnInicial();
 
+        SetarZona();
+
         iniciado = true;
     }
 
@@ -163,28 +170,33 @@ public class Enemy : EntityModel
 
         if(morto == false)
         {
-            vida = vidaInicial;
-            transform.position = posicaoRespawn;
-            ChangeDirection(direcaoRespawn);
-
-            ia_Enemy.Respawn();
-            enemyMovement.ZerarVelocidade();
-
-            enemyVision.gameObject.SetActive(true);
-            enemyAttackRange.gameObject.SetActive(true);
-
-            colisao.enabled = true;
-            hitboxDano.enabled = true;
-            rb.bodyType = RigidbodyType2D.Dynamic;
-
-            animacao.SetVelocidade(1);
-
-            ResetarVariaveisDeControle();
+            ResetarVariaveis();
         }
         else
         {
             Desaparecer();
         }
+    }
+
+    public void ResetarVariaveis()
+    {
+        vida = vidaInicial;
+        transform.position = posicaoRespawn;
+        ChangeDirection(direcaoRespawn);
+
+        ia_Enemy.Respawn();
+        enemyMovement.ZerarVelocidade();
+
+        enemyVision.gameObject.SetActive(true);
+        enemyAttackRange.gameObject.SetActive(true);
+
+        colisao.enabled = true;
+        hitboxDano.enabled = true;
+        rb.bodyType = RigidbodyType2D.Dynamic;
+
+        animacao.SetVelocidade(1);
+
+        ResetarVariaveisDeControle();
     }
 
     private void ResetarVariaveisDeControle()
@@ -205,6 +217,19 @@ public class Enemy : EntityModel
         Iniciar();
 
         this.gameObject.SetActive(false);
+    }
+
+    private void SetarZona()
+    {
+        Collider2D[] hitColliders = Physics2D.OverlapBoxAll(colisao.bounds.center, colisao.bounds.extents, 0, layerDasZonas);
+        foreach (Collider2D objeto in hitColliders)
+        {
+            if(objeto.GetComponent<Zona>())
+            {
+                zona = objeto.GetComponent<Zona>().GetZona;
+                break;
+            }
+        }
     }
 
     void RotinasDoInimigo()

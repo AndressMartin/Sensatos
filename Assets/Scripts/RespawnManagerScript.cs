@@ -32,10 +32,12 @@ public class RespawnManagerScript : MonoBehaviour
             inimigo.SetRespawn();
         }
 
-        foreach (LockDown alarme in generalManager.ObjectManager.ListaAlarmes)
+        /*
+        foreach (LockDownButton alarme in generalManager.ObjectManager.ListaAlarmes)
         {
             alarme.SetRespawn();
         }
+        */
 
         foreach (Porta porta in generalManager.ObjectManager.ListaPortas)
         {
@@ -62,7 +64,7 @@ public class RespawnManagerScript : MonoBehaviour
             inimigo.Respawn();
         }
 
-        foreach (LockDown alarme in generalManager.ObjectManager.ListaAlarmes)
+        foreach (LockDownButton alarme in generalManager.ObjectManager.ListaAlarmes)
         {
             alarme.Respawn();
         }

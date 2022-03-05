@@ -17,15 +17,19 @@ public class IAEnemy : MonoBehaviour
     protected BarraDeVisaoDoInimigo barraDeVisao;
     
     //Enuns
-    protected enum InimigoEstados { AndandoAtePlayer, Patrulhar, AtacarPlayer, SomPassos, SomTiro, AndandoUltimaPosicaoPlayerConhecida, IndoAtivarLockDown , FicarParado , FazerRotinaLockdow , TomeiDano  };
+    public enum InimigoEstados { AndandoAtePlayer, Patrulhar, AtacarPlayer, SomPassos, SomTiro, AndandoUltimaPosicaoPlayerConhecida, IndoAtivarLockDown , FicarParado , FazerRotinaLockdown , TomeiDano  };
     [SerializeField] protected InimigoEstados inimigoEstados;
 
     public enum EstadoDeteccaoPlayer { NaoToVendoPlayer, DetectandoPlayer, PlayerDetectado };
     [SerializeField] protected EstadoDeteccaoPlayer estadoDeteccaoPlayer;
 
+    public enum TipoInimigo { Normal, Lockdown}
+
     //Variaveis
     protected int municaoNoCarregador;
     protected int municaoNoCarregadorMax;
+
+    [SerializeField] protected TipoInimigo tipoInimigo;
 
     protected bool iniciado = false;
 
@@ -53,10 +57,6 @@ public class IAEnemy : MonoBehaviour
     protected Vector2 posicaoUltimoLugarVisto;
     protected Vector2 posicaoAtualPlayer;
     protected Vector2 posicaoInicial;
-
-
-
-
 
     //Controladores
     protected float tempoEntrarEmModoAlerta;
@@ -94,8 +94,10 @@ public class IAEnemy : MonoBehaviour
     protected bool viuPlayerAlgumaVezRespawn;
 
     //Getters
+    public InimigoEstados GetInimigoEstados => inimigoEstados;
     public EstadoDeteccaoPlayer GetEstadoDeteccaoPlayer => estadoDeteccaoPlayer;
-    public bool GetLockdown => emLockDown;
+    public TipoInimigo GetTipoInimigo => tipoInimigo;
+    public bool GetEmLockdown => emLockDown;
     public virtual void Start()
     {
         Iniciar();
@@ -126,6 +128,8 @@ public class IAEnemy : MonoBehaviour
         inimigoEstados = InimigoEstados.Patrulhar;
         estadoDeteccaoPlayer = EstadoDeteccaoPlayer.NaoToVendoPlayer;
 
+        tipoInimigo = TipoInimigo.Normal;
+
         inventarioEnemy.Iniciar();
 
         municaoNoCarregadorMax = inventarioEnemy.ArmaSlot.GetStatus.MunicaoMaxCartucho;
@@ -147,8 +151,6 @@ public class IAEnemy : MonoBehaviour
         indiceDoBotaoMaisPerto = 0;
 
         presenteNaListaDeDeteccao = false;
-
-
 
         posicaoTiroPlayer = Vector2.zero;
         posicaoUltimoLugarVisto = Vector2.zero;
@@ -336,7 +338,7 @@ public class IAEnemy : MonoBehaviour
 
                     else if (!ouvindoSom && fazerRotinaLockDown && !vouApertarBotao) // caso receba que é pra fazer a rotina de lockdown(varrer a fase)
                     {
-                        inimigoEstados = InimigoEstados.FazerRotinaLockdow;
+                        inimigoEstados = InimigoEstados.FazerRotinaLockdown;
                     }
 
                     else if (!ouvindoSom && !verifiqueiUltimaPosicaoJogador && viuPlayerAlgumaVez && !vouApertarBotao)
@@ -433,7 +435,7 @@ public class IAEnemy : MonoBehaviour
 
                             if(emLockDown == true)
                             {
-                                inimigoEstados = InimigoEstados.FazerRotinaLockdow;
+                                inimigoEstados = InimigoEstados.FazerRotinaLockdown;
                             }
                             else
                             {
@@ -456,7 +458,7 @@ public class IAEnemy : MonoBehaviour
                         posicaoUltimoLugarVisto = posicaoAtualPlayer;
                         ContadorInverso(ref tempoEsquecerPlayer, tempoEsquecerPlayerMax);
 
-                        if(inimigoEstados == InimigoEstados.FazerRotinaLockdow)
+                        if(inimigoEstados == InimigoEstados.FazerRotinaLockdown)
                         {
                             Debug.LogError("o inimigo ta pra fazer lockdown mesmo vendo o player");
                         }
@@ -622,7 +624,7 @@ public class IAEnemy : MonoBehaviour
                 FicarParado();
                 break;
 
-            case InimigoEstados.FazerRotinaLockdow:
+            case InimigoEstados.FazerRotinaLockdown:
                 FazerRotinaLockdown();
                 break;
             default:
@@ -687,12 +689,9 @@ public class IAEnemy : MonoBehaviour
     void AtivarLockDown()
     {
         vouApertarBotao = false;
-        generalManager.ObjectManager.ListaAlarmes[indiceDoBotaoMaisPerto].AtivarLockDown();
-        enemy.GeneralManager.LockDownManager.AtivarLockDown(posicaoUltimoLugarVisto);
+        generalManager.ObjectManager.ListaAlarmes[indiceDoBotaoMaisPerto].AtivarLockDown(posicaoUltimoLugarVisto);
         inimigoEstados = InimigoEstados.AndandoUltimaPosicaoPlayerConhecida;
     }
-
-
 
     #region IrAteLugarVerificarArea
     protected bool FuncaoIrAteLugarVerificarArea(Vector2 posicaoAlvo,ref float tempo, float tempoMax) // func que verifica se chegou ate o ponto e retorna se ja verificou a area
@@ -775,7 +774,7 @@ public class IAEnemy : MonoBehaviour
     }
     private int RetornarIndiceBotaoLockDownMaisPerto()
     {
-        List<LockDown> botoesLockDown = generalManager.ObjectManager.ListaAlarmes;
+        List<LockDownButton> botoesLockDown = generalManager.ObjectManager.ListaAlarmes;
 
         float menorDistancia = 10000;
         Vector2 botaoMaisProximo = Vector2.zero;

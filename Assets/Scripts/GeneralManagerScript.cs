@@ -13,6 +13,7 @@ public class GeneralManagerScript : MonoBehaviour
     private EnemyManagerScript enemyManager;
     private EnemySpawnManagerScript enemySpawnManager;
     private LockDownManagerScript lockDownManager;
+    private ZoneManagerScript zoneManager;
     private PathfinderManagerScript pathfinderManager;
     private DebugModeManagerScript debugModeManager;
 
@@ -30,6 +31,7 @@ public class GeneralManagerScript : MonoBehaviour
     public EnemyManagerScript EnemyManager => enemyManager;
     public EnemySpawnManagerScript EnemySpawnManager => enemySpawnManager;
     public LockDownManagerScript LockDownManager => lockDownManager;
+    public ZoneManagerScript ZoneManager => zoneManager;
     public PathfinderManagerScript PathfinderManager => pathfinderManager;
     public DebugModeManagerScript DebugModeManager => debugModeManager;
     public Player Player => player;
@@ -47,6 +49,7 @@ public class GeneralManagerScript : MonoBehaviour
         enemyManager = FindObjectOfType<EnemyManagerScript>();
         enemySpawnManager = FindObjectOfType<EnemySpawnManagerScript>();
         lockDownManager = FindObjectOfType<LockDownManagerScript>();
+        zoneManager = FindObjectOfType<ZoneManagerScript>();
         pathfinderManager = FindObjectOfType<PathfinderManagerScript>();
         debugModeManager = FindObjectOfType<DebugModeManagerScript>();
 

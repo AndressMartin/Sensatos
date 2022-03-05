@@ -54,9 +54,17 @@ public class LockDownManagerScript : MonoBehaviour
         contadorTempoLockdown = contadorTempoLockdownMax;
         generalManager.EnemySpawnManager.AtivarInimigos();
 
+        foreach (LockDownButton botao in generalManager.ObjectManager.ListaAlarmes)
+        {
+            botao.ReceberLockDown();
+        }
+
         foreach (Enemy enemy in generalManager.ObjectManager.ListaInimigos)
         {
-            enemy.GetIAEnemy.ReceberLockDown(posicaoDoPlayer);
+            if(enemy.Zona == generalManager.ZoneManager.ZonaAtual)
+            {
+                enemy.GetIAEnemy.ReceberLockDown(posicaoDoPlayer);
+            }
         }
 
         TrancarPortas();
@@ -73,7 +81,8 @@ public class LockDownManagerScript : MonoBehaviour
     {
         contadorTempoLockdown = 0;
         emLockdown = false;
-        foreach (LockDown lockDown in generalManager.ObjectManager.ListaAlarmes)
+
+        foreach (LockDownButton lockDown in generalManager.ObjectManager.ListaAlarmes)
         {
             lockDown.DesativarLockDown();
         }
