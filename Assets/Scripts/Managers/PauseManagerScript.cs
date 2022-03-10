@@ -16,9 +16,9 @@ public class PauseManagerScript : MonoBehaviour
         permitirInput = true; //Permite que o jogador use comandos da gameplay principal, isto nao inclui os menus, inventario, lojas e caixas de dialogo
     }
 
-    public void Pausar()
+    public void Pausar(bool pausar)
     {
-        if(jogoPausado == false)
+        if(pausar == true)
         {
             jogoPausado = true;
             Time.timeScale = 0; //Pausa todas as operacoes calculadas com tempo

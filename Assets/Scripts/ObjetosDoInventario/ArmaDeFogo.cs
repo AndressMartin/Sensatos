@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 [CreateAssetMenu(menuName = "Inventario/Arma de Fogo")]
 
-public class ArmaDeFogo : Usable
+public class ArmaDeFogo : ItemDoInventario
 {
     //Variaveis
     [SerializeField] private string nomeAnimacao;

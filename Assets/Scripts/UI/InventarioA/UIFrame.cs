@@ -5,18 +5,18 @@ using UnityEngine.UI;
 
 public class UIFrame : MonoBehaviour
 {
-    protected Usable savedUsable;
+    protected ItemDoInventario savedUsable;
     public Image image;
     public UIScreen screenThatIOpen;
 
-    public virtual void Init(Usable usableRef)
+    public virtual void Init(ItemDoInventario usableRef)
     {
         if (!image) image = GetComponent<Image>();
         savedUsable = usableRef;
         image.sprite = usableRef.ImagemInventario;
     }
 
-    public virtual Usable GetSavedElement()
+    public virtual ItemDoInventario GetSavedElement()
     {
         return savedUsable;
     }

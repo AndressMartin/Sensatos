@@ -20,6 +20,8 @@ public class Inventario : MonoBehaviour
     private RoupaDeCamuflagem roupaAtual;
     private Item itemAtual;
 
+    private int dinheiro;
+
     [HideInInspector] public UnityEvent hasSortedWeapons;
 
     //Getters
@@ -30,6 +32,7 @@ public class Inventario : MonoBehaviour
     public ArmaDeFogo ArmaSlot2 => armaSlot2;
     public RoupaDeCamuflagem RoupaAtual => roupaAtual;
     public Item ItemAtual => itemAtual;
+    public int Dinheiro => dinheiro;
 
     void Start()
     {

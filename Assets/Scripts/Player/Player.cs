@@ -58,6 +58,8 @@ public class Player : EntityModel
     public GeneralManagerScript GeneralManager => generalManager;
     public Inventario Inventario => inventario;
     public InventarioMissao InventarioMissao => inventarioMissao;
+    public int Vida => vida;
+    public int VidaMax => vidaMax;
     public bool ModoDeCombate => modoDeCombate;
     public Estado GetEstado => estado;
     public float TempoRecarregar => tempoRecarregar;
@@ -82,6 +84,7 @@ public class Player : EntityModel
 
         //Variaveis
         vida = vidaInicial;
+        vidaMax = vidaInicial;
         raioPassos = 1.5f;
 
         modoDeCombate = true;

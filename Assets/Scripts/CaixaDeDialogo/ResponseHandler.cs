@@ -89,7 +89,7 @@ public class ResponseHandler : MonoBehaviour
                     UpdateButtonSelectionEffect(selection);
                 }
             }
-            else if (Input.GetKeyDown(KeyCode.Space))
+            else if (Input.GetKeyDown(KeyCode.E))
             {
                 responsePicked = true;
             }

@@ -46,7 +46,14 @@ public class PlayerInput : MonoBehaviour
         //Pausar o jogo
         if (Input.GetKeyDown(KeyCode.Backspace))
         {
-            generalManager.PauseManager.Pausar();
+            if(generalManager.PauseManager.JogoPausado == false)
+            {
+                generalManager.PauseManager.Pausar(true);
+            }
+            else
+            {
+                generalManager.PauseManager.Pausar(false);
+            }
         }
     }
 
@@ -150,6 +157,12 @@ public class PlayerInput : MonoBehaviour
                 {
                     player.modoMovimento = Player.ModoMovimento.Normal;
                 }
+            }
+
+            //Abrir o inventario
+            if (Input.GetKeyDown(KeyCode.I))
+            {
+                generalManager.Hud.AbrirOInventario();
             }
         }
         

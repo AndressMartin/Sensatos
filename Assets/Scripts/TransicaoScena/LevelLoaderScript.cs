@@ -8,7 +8,7 @@ public class LevelLoaderScript : MonoBehaviour
 {
     public static LevelLoaderScript Instance { get; private set; }
 
-    [SerializeField] RectTransform LoadingScreen;
+    [SerializeField] RectTransform loadingScreen;
     [SerializeField] Slider slider;
     void Awake()
     {
@@ -22,14 +22,15 @@ public class LevelLoaderScript : MonoBehaviour
         }
         DontDestroyOnLoad(transform.gameObject);
     }
+
     private void Start()
     {
-        LoadingScreen = GetComponentInChildren<RectTransform>();
-        slider = LoadingScreen.GetComponentInChildren<Slider>();
+        loadingScreen.gameObject.SetActive(false);
     }
+
     public void CarregarNivel(string ScenaIndex)
     {
-        LoadingScreen.gameObject.SetActive(true);
+        loadingScreen.gameObject.SetActive(true);
         StartCoroutine(LoadLevel(ScenaIndex));
     }
     IEnumerator LoadLevel(string levelIndex)
@@ -44,7 +45,7 @@ public class LevelLoaderScript : MonoBehaviour
         }
         if(asyncLoad.isDone)
         {
-            LoadingScreen.gameObject.SetActive(false);
+            loadingScreen.gameObject.SetActive(false);
         }
 
     }

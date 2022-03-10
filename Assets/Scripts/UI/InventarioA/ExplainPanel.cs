@@ -12,7 +12,7 @@ public class ExplainPanel : MonoBehaviour
      *  TODO: List<melhoriaUI>
      */
 
-    public void ChangeUI(Usable element)
+    public void ChangeUI(ItemDoInventario element)
     {
         nametxt.text = element.Nome;
         description.text = element.Descricao;

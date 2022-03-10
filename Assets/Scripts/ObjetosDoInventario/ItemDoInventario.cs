@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Usable : ScriptableObject
+public class ItemDoInventario : ScriptableObject
 {
     [SerializeField] protected Sprite imagemInventario;
     [SerializeField] protected string nome;

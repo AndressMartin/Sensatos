@@ -549,7 +549,10 @@ public class Enemy : EntityModel
 
     public void SeDesativarNoLockdown()
     {
-        StartCoroutine(SeDesativarNoLockdownCorrotina());
+        if(gameObject.activeSelf == true)
+        {
+            StartCoroutine(SeDesativarNoLockdownCorrotina());
+        }
     }
 
     private IEnumerator SeDesativarNoLockdownCorrotina()

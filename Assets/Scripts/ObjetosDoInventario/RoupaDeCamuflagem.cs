@@ -4,7 +4,7 @@ using UnityEngine;
 
 [CreateAssetMenu(menuName = "Inventario/Roupa de Camuflagem")]
 
-public class RoupaDeCamuflagem : Usable
+public class RoupaDeCamuflagem : ItemDoInventario
 {
     [SerializeField] private float fatorDePercepcao;
 

@@ -7,6 +7,7 @@ public class HUDScript : MonoBehaviour
     //Componentes
     private Canvas canvas;
     [SerializeField] private Camera cameraAtiva;
+    [SerializeField] private MenuDoInventario menuDoInventario;
     [SerializeField] private LockDownUI lockDownUI;
     [SerializeField] private PlayerUIScript playerUI;
     [SerializeField] private BarraDeVisaoDoInimigo barraDeVisaoDoInimigo;
@@ -88,5 +89,10 @@ public class HUDScript : MonoBehaviour
         }
 
         lockDownUI.AtualizarTempo(textoFinal);
+    }
+
+    public void AbrirOInventario()
+    {
+        menuDoInventario.AbrirOInventario();
     }
 }
