@@ -29,12 +29,12 @@ public class LevelLoaderScript : MonoBehaviour
     }
     public void CarregarNivel(string ScenaIndex)
     {
+        LoadingScreen.gameObject.SetActive(true);
         StartCoroutine(LoadLevel(ScenaIndex));
     }
     IEnumerator LoadLevel(string levelIndex)
     {
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(levelIndex);
-        LoadingScreen.gameObject.SetActive(true);
 
         while (!asyncLoad.isDone)
         {
