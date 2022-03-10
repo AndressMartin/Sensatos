@@ -17,6 +17,8 @@ public class Inventario : MonoBehaviour
 
     [SerializeField] private ArmaDeFogo armaSlot1;
     [SerializeField] private ArmaDeFogo armaSlot2;
+    private int armaAtual;
+
     private RoupaDeCamuflagem roupaAtual;
     private Item itemAtual;
 
@@ -30,6 +32,7 @@ public class Inventario : MonoBehaviour
     public List<ArmaDeFogo> Armas => armas;
     public ArmaDeFogo ArmaSlot1 => armaSlot1;
     public ArmaDeFogo ArmaSlot2 => armaSlot2;
+    public int ArmaAtual => armaAtual;
     public RoupaDeCamuflagem RoupaAtual => roupaAtual;
     public Item ItemAtual => itemAtual;
     public int Dinheiro => dinheiro;
