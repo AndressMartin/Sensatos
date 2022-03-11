@@ -59,7 +59,7 @@ public class Alicate : Item
 
     private void SeDestruir(Player player)
     {
-        player.Inventario.RemoveItem(this);
+        player.Inventario.RemoverItem(this);
     }
 
     public override string GetNomeAnimacao()

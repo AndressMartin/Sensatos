@@ -20,8 +20,6 @@ public class ArmaDeFogo : ItemDoInventario
     [SerializeField] private Status statusBase;
     [SerializeField] private List<Melhoria> melhorias;
 
-    [HideInInspector] public int index;
-
     //Getters
     public string NomeAnimacao => nomeAnimacao;
     public bool RapidFire => rapidFire;

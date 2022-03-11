@@ -19,6 +19,7 @@ public class AnimacaoJogador : MonoBehaviour
 
     //Getters
     public SpriteRenderer CorpoSprite => corpoSprite;
+    public string ArmaEquipadaVisual => armaEquipadaVisual;
     public string AnimacaoAtual => animacaoAtual;
 
     void Start()

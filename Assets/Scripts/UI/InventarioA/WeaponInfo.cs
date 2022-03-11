@@ -59,16 +59,19 @@ public class WeaponInfo : InfoScreen
 
     public void SortInventoryWeapons(Button panel)
     {
+        /*
         //Debug.LogWarning($"TRYING TO SWITCH {elementsButtons.IndexOf(panel)} & {objectThatCalled.GetComponent<WeaponFrame>().GetSavedElement().index}");
         ArmaDeFogo clickedWeapon = elementsButtons[elementsButtons.IndexOf(panel)].gameObject.GetComponent<WeaponFrame>().GetSavedElement() as ArmaDeFogo;
         if (clickedWeapon.index == 0 || clickedWeapon.index == 1)
             return;
         inventario.TrocarArmaDoInventario(clickedWeapon, objectThatCalled);
         CloseScreen();
+        */
     }
 
     private void SetWeaponSlots()
     {
+        /*
         for (int i = 0; i < inventario.Armas.Count; i++)
         {
             if(elementsButtons.Count >= i)
@@ -81,6 +84,7 @@ public class WeaponInfo : InfoScreen
                 }
             }
         }
+        */
     }
 
     void SortListAndNav()

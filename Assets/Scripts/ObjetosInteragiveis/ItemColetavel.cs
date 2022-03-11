@@ -81,7 +81,7 @@ public class ItemColetavel : ObjetoInteragivel
 
     private void AdicionarAoInventario(Player player)
     {
-        player.Inventario.AddItem(item);
+        player.Inventario.AdicionarItem(item);
     }
 
     private void AdicionarAoInventarioMissao(Player player)

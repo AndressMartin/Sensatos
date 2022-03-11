@@ -17,7 +17,7 @@ public class InventoryHUD : MonoBehaviour
         if (inventario == null) inventario = FindObjectOfType<Inventario>();
         InventoryHudController.invOpen.AddListener(SortWeapons);
         SortWeapons();
-        inventario.hasSortedWeapons.AddListener(SortWeapons);
+        //inventario.hasSortedWeapons.AddListener(SortWeapons);
 
         foreach (Transform itemSlot in itensGridHolder.transform)
         {
@@ -27,8 +27,10 @@ public class InventoryHUD : MonoBehaviour
         {
             for (int i = 0; i < inventoryItens.Count; i++)
             {
+                /*
                 if (i < inventario.Itens.Count)
                     inventoryItens[i].Init(inventario.Itens[i]);
+                */
             }
             colocouTodosOsItens = true;
         }
@@ -37,8 +39,8 @@ public class InventoryHUD : MonoBehaviour
 
     public void SortWeapons()
     {
-        equipedWeaponFrames[0].Init(inventario.ArmaSlot1);
-        equipedWeaponFrames[1].Init(inventario.ArmaSlot2);
+        //equipedWeaponFrames[0].Init(inventario.ArmaSlot1);
+        //equipedWeaponFrames[1].Init(inventario.ArmaSlot2);
     }
 
 }

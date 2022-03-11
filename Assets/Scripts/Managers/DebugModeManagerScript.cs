@@ -119,11 +119,11 @@ public class DebugModeManagerScript : MonoBehaviour
             switch (item.Tipo)
             {
                 case Item.TipoItem.Consumivel:
-                    player.Inventario.AddItem(item);
+                    player.Inventario.AdicionarItem(item);
                     break;
 
                 case Item.TipoItem.Ferramenta:
-                    player.Inventario.AddItem(item);
+                    player.Inventario.AdicionarItem(item);
                     break;
 
                 case Item.TipoItem.ItemChave:

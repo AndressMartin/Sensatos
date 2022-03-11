@@ -56,6 +56,7 @@ public class Player : EntityModel
 
     //Getters
     public GeneralManagerScript GeneralManager => generalManager;
+    public AnimacaoJogador Animacao => animacao;
     public Inventario Inventario => inventario;
     public InventarioMissao InventarioMissao => inventarioMissao;
     public int Vida => vida;
@@ -64,7 +65,7 @@ public class Player : EntityModel
     public Estado GetEstado => estado;
     public float TempoRecarregar => tempoRecarregar;
     public float TempoRecarregarMax => tempoRecarregarMax;
-    public bool RapidFire => inventario.ArmaSlot1.RapidFire;
+    public bool RapidFire => inventario.ArmaSlot[inventario.ArmaAtual].RapidFire;
 
     void Start()
     {
@@ -285,7 +286,7 @@ public class Player : EntityModel
 
     public void Atirar()
     {
-        if (estado == Estado.Normal && inventario.ArmaSlot1 != null)
+        if (estado == Estado.Normal && inventario.ArmaSlot[inventario.ArmaAtual] != null)
         {
             AtualizarPontaDaArma();
 
@@ -293,9 +294,9 @@ public class Player : EntityModel
             {
                 if (recarregando == false)
                 {
-                    GerarSom(inventario.ArmaSlot1.RaioDoSomDoTiro, true);
-                    inventario.ArmaSlot1.Atirar(this, generalManager.BulletManager, pontaArma.transform.position, VetorDirecao(direcao), Alvo.Enemy);
-                    animacao.AtualizarArmaBracos(inventario.ArmaSlot1.NomeAnimacao);
+                    GerarSom(inventario.ArmaSlot[inventario.ArmaAtual].RaioDoSomDoTiro, true);
+                    inventario.ArmaSlot[inventario.ArmaAtual].Atirar(this, generalManager.BulletManager, pontaArma.transform.position, VetorDirecao(direcao), Alvo.Enemy);
+                    animacao.AtualizarArmaBracos(inventario.ArmaSlot[inventario.ArmaAtual].NomeAnimacao);
                 }
             }
         }
@@ -303,11 +304,11 @@ public class Player : EntityModel
 
     public void Recarregar()
     {
-        if(recarregando == false && (inventario.ArmaSlot1.MunicaoCartucho < inventario.ArmaSlot1.GetStatus.MunicaoMaxCartucho))
+        if(recarregando == false && (inventario.ArmaSlot[inventario.ArmaAtual].MunicaoCartucho < inventario.ArmaSlot[inventario.ArmaAtual].GetStatus.MunicaoMaxCartucho))
         {
             recarregando = true;
             tempoRecarregar = 0;
-            tempoRecarregarMax = inventario.ArmaSlot1.GetStatus.TempoParaRecarregar;
+            tempoRecarregarMax = inventario.ArmaSlot[inventario.ArmaAtual].GetStatus.TempoParaRecarregar;
         }
     }
 
@@ -317,7 +318,7 @@ public class Player : EntityModel
 
         if(tempoRecarregar >= tempoRecarregarMax)
         {
-            inventario.ArmaSlot1.Recarregar();
+            inventario.ArmaSlot[inventario.ArmaAtual].Recarregar();
             FinalizarRecarregamento();
         }
     }
@@ -358,7 +359,7 @@ public class Player : EntityModel
             FinalizarRecarregamento();
         }
         AtualizarPontaDaArma();
-        animacao.AtualizarArmaBracos(inventario.ArmaSlot1.NomeAnimacao);
+        animacao.AtualizarArmaBracos(inventario.ArmaSlot[inventario.ArmaAtual].NomeAnimacao);
     }
 
     public void UsarItem(Item item)
@@ -466,9 +467,9 @@ public class Player : EntityModel
     {
         Vector2 offSet = Vector2.zero;
 
-        if(inventario.ArmaSlot1 != null)
+        if(inventario.ArmaSlot[inventario.ArmaAtual] != null)
         {
-            switch (inventario.ArmaSlot1.NomeAnimacao)
+            switch (inventario.ArmaSlot[inventario.ArmaAtual].NomeAnimacao)
             {
                 case "Arma1":
                     offSet = direcao switch

@@ -9,14 +9,15 @@ public class Inventario : MonoBehaviour
     private Player player;
 
     //Variaveis
-    [SerializeField] private List<Item> itens = new List<Item>();
-    private List<Item> itensEmAtalhos = new List<Item>();
+    [SerializeField] private Item itemVazio;
+
+    [SerializeField] private Item[] itens = new Item[9];
+    private Item[] atalhosDeItens = new Item[4];
 
     [SerializeField] private List<ArmaDeFogo> armas = new List<ArmaDeFogo>();
     [SerializeField] private List<RoupaDeCamuflagem> roupasDeCamuflagem = new List<RoupaDeCamuflagem>();
 
-    [SerializeField] private ArmaDeFogo armaSlot1;
-    [SerializeField] private ArmaDeFogo armaSlot2;
+    [SerializeField] private ArmaDeFogo[] armaSlot = new ArmaDeFogo[2];
     private int armaAtual;
 
     private RoupaDeCamuflagem roupaAtual;
@@ -24,14 +25,11 @@ public class Inventario : MonoBehaviour
 
     private int dinheiro;
 
-    [HideInInspector] public UnityEvent hasSortedWeapons;
-
     //Getters
-    public List<Item> Itens => itens;
-    public List<Item> ItensEmAtalhos => itensEmAtalhos;
+    public Item[] Itens => itens;
+    public Item[] AtalhosDeItens => atalhosDeItens;
     public List<ArmaDeFogo> Armas => armas;
-    public ArmaDeFogo ArmaSlot1 => armaSlot1;
-    public ArmaDeFogo ArmaSlot2 => armaSlot2;
+    public ArmaDeFogo[] ArmaSlot => armaSlot;
     public int ArmaAtual => armaAtual;
     public RoupaDeCamuflagem RoupaAtual => roupaAtual;
     public Item ItemAtual => itemAtual;
@@ -42,36 +40,91 @@ public class Inventario : MonoBehaviour
         //Componentes
         player = GetComponentInParent<Player>();
 
-        if (hasSortedWeapons == null)
-            hasSortedWeapons = new UnityEvent();
+        //Criar o inventario de itens
+        for (int i = 0; i < itens.Length; i++)
+        {
+            itens[i] = ScriptableObject.Instantiate(itemVazio);
+        }
+
+        //Criar a array dos atalhos
+        for (int i = 0; i < atalhosDeItens.Length; i++)
+        {
+            atalhosDeItens[i] = itemVazio;
+        }
+
+        armaAtual = 0;
     }
 
     private void SetarArmasEquipadas()
     {
         if(armas.Count >= 1)
         {
-            armaSlot1 = armas[0];
-            armas[0].index = 0;
+            armaSlot[0] = armas[0];
         }
 
         if (armas.Count >= 2)
         {
-            armaSlot2 = armas[1];
-            armas[1].index = 1;
+            armaSlot[1] = armas[1];
         }
     }
 
-    public void AddItem(Item item)
+    public bool AdicionarItem(Item item)
     {
         //Cria uma nova instancia do scriptable object e a adiciona no inventario
         Item novoItem = ScriptableObject.Instantiate(item);
-        itens.Add(novoItem);
+
+        for(int i = 0; i < itens.Length; i++)
+        {
+            if(itens[i].ID == 0)
+            {
+                Destroy(itens[i]);
+                itens[i] = novoItem;
+                return true;
+            }
+        }
+
+        return false;
     }
 
-    public void RemoveItem(Item item)
+    public void RemoverItem(Item item)
     {
-        itens.Remove(item);
-        Destroy(item);
+        for (int i = 0; i < itens.Length; i++)
+        {
+            if (itens[i] == item)
+            {
+                Destroy(itens[i]);
+                itens[i] = ScriptableObject.Instantiate(itemVazio);
+                return;
+            }
+        }
+
+        Debug.LogWarning("O item para ser excluido nao foi encontrado!");
+    }
+
+    public void MoverItem(int indice1, int indice2)
+    {
+        Item itemTemp = itens[indice2];
+
+        itens[indice2] = itens[indice1];
+        itens[indice1] = itemTemp;
+    }
+
+    public void AdicionarAtalho(int indice, Item item)
+    {
+        atalhosDeItens[indice] = item;
+    }
+
+    public void RemoverAtalho(int indice)
+    {
+        atalhosDeItens[indice] = itemVazio;
+    }
+
+    public void MoverAtalho(int indice1, int indice2)
+    {
+        Item itemTemp = atalhosDeItens[indice2];
+
+        atalhosDeItens[indice2] = atalhosDeItens[indice1];
+        atalhosDeItens[indice1] = itemTemp;
     }
 
     public void AddArma(ArmaDeFogo arma)
@@ -79,13 +132,11 @@ public class Inventario : MonoBehaviour
         //Cria uma nova instancia do scriptable object e a adiciona no inventario
         ArmaDeFogo novaArma = ScriptableObject.Instantiate(arma);
         armas.Add(novaArma);
-        novaArma.index = armas.Count - 1;
 
         if(armas.Count <= 2)
         {
             SetarArmasEquipadas();
         }
-        //Needs resorting indexes?
     }
 
     public void AddRoupa(RoupaDeCamuflagem roupa)
@@ -110,32 +161,26 @@ public class Inventario : MonoBehaviour
         itemAtual?.Usar(player);
     }
 
-    public void EquiparArma(ArmaDeFogo arma)
-    {
-        armaSlot1 = arma;
-        //Needs resorting indexes?
-    }
-
     public void TrocarArma()
     {
-        foreach (var arma in armas)
+        if(armas.Count < 2)
         {
-            if(arma.index == 0)
-            {
-                armaSlot2 = arma;
-                arma.index = 1;
-            }
-            else if (arma.index == 1)
-            {
-                armaSlot1 = arma;
-                arma.index = 0;
-            }
+            return;
         }
-        ReSort();
+
+        if(armaAtual == 0)
+        {
+            armaAtual = 1;
+        }
+        else
+        {
+            armaAtual = 0;
+        }
     }
 
     public void TrocarArmaDoInventario(ArmaDeFogo arma, GameObject objectThatCalled)
     {
+        /*
         ArmaDeFogo weaponToBeBenched = objectThatCalled.GetComponent<WeaponFrame>().GetSavedElement() as ArmaDeFogo;
         int temporaryIndex = arma.index; //E.g. temp = 7
         arma.index = weaponToBeBenched.index; //E.g. arma7 = 1
@@ -144,10 +189,12 @@ public class Inventario : MonoBehaviour
         else if (arma.index == 1) armaSlot2 = arma;
         else Debug.LogError("WARNING: SWITCHING WEAPONS IN INVENTORY WENT WRONG.");
         ReSort();
+        */
     }
 
     public void ReSort()
     {
+        /*
         List<ArmaDeFogo> armasTemp = new List<ArmaDeFogo>();
         foreach (var arma in armas)
         {
@@ -161,5 +208,6 @@ public class Inventario : MonoBehaviour
             armas.Add(arma);
         }
         hasSortedWeapons.Invoke();
+        */
     }
 }

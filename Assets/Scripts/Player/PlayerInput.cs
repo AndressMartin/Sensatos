@@ -72,7 +72,7 @@ public class PlayerInput : MonoBehaviour
                 }
 
                 //Atirar
-                if(player.Inventario.ArmaSlot1 != null)
+                if(player.Inventario.ArmaSlot[inventario.ArmaAtual] != null)
                 {
                     if (player.RapidFire == true)
                     {
@@ -157,12 +157,6 @@ public class PlayerInput : MonoBehaviour
                 {
                     player.modoMovimento = Player.ModoMovimento.Normal;
                 }
-            }
-
-            //Abrir o inventario
-            if (Input.GetKeyDown(KeyCode.I))
-            {
-                generalManager.Hud.AbrirOInventario();
             }
         }
         

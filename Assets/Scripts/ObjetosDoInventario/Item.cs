@@ -4,10 +4,14 @@ using UnityEngine;
 
 public class Item : ItemDoInventario
 {
-    //Variaveis
-    //
+    //Enums
     public enum TipoItem { Consumivel, Ferramenta, ItemChave };
 
+    //Variaveis
+    [SerializeField] protected int id;
+
+    //Getters
+    public virtual int ID => id;
     public virtual TipoItem Tipo => TipoItem.Consumivel;
 
     virtual public void Usar(Player player)
@@ -32,6 +36,6 @@ public class Item : ItemDoInventario
 
     public void JogarFora()
     {
-
+        //Alguma coisa
     }
 }
