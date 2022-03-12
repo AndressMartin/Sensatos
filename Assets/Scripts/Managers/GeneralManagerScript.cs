@@ -5,6 +5,8 @@ using UnityEngine;
 public class GeneralManagerScript : MonoBehaviour
 {
     //Managers
+    private MusicManager musicManager;
+    private SoundManager soundManager;
     private PauseManagerScript pauseManager;
     private MapManagerScript mapManager;
     private RespawnManagerScript respawnManager;
@@ -23,6 +25,8 @@ public class GeneralManagerScript : MonoBehaviour
     private DialogueUI dialogueUI;
 
     //Getters
+    public MusicManager MusicManager => musicManager;
+    public SoundManager SoundManager => soundManager;
     public PauseManagerScript PauseManager => pauseManager;
     public MapManagerScript MapManager => mapManager;
     public RespawnManagerScript RespawnManager => respawnManager;
@@ -41,6 +45,8 @@ public class GeneralManagerScript : MonoBehaviour
     private void Awake()
     {
         //Managers
+        musicManager = FindObjectOfType<MusicManager>();
+        soundManager = FindObjectOfType<SoundManager>();
         pauseManager = FindObjectOfType<PauseManagerScript>();
         mapManager = FindObjectOfType<MapManagerScript>();
         respawnManager = FindObjectOfType<RespawnManagerScript>();

@@ -10,6 +10,7 @@ public class LevelLoaderScript : MonoBehaviour
 
     [SerializeField] RectTransform loadingScreen;
     [SerializeField] Slider slider;
+
     void Awake()
     {
         if (Instance != null && Instance != this)
