@@ -13,6 +13,7 @@ public class ZoneManagerScript : MonoBehaviour
 
     //Getters
     public int ZonaAtual => zonaAtual;
+    public List<Transform> PontosDeProcuraAtuais => GetPontosDeProcura();
 
     //Setters
     public void SetZonaAtual(int zona)
@@ -52,6 +53,21 @@ public class ZoneManagerScript : MonoBehaviour
     private void DesativarInimigo(Enemy enemy)
     {
         enemy.gameObject.SetActive(false);
+    }
+
+    public List<Transform> GetPontosDeProcura()
+    {
+        foreach(Zona zona in zonas)
+        {
+            if(zona.GetZona == zonaAtual)
+            {
+                return zona.PontosDeProcura;
+            }
+        }
+
+        Debug.LogWarning("A zona nao existe!");
+
+        return null;
     }
 
     private IEnumerator AtivarEDesativarInimigos()

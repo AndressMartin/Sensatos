@@ -7,11 +7,9 @@ public class EnemyManagerScript : MonoBehaviour
     //Variaveis
     [SerializeField] private int quantidadeInimigosVendoPlayer;
     public int GetQuantidadeInimigosVendoPlayer => quantidadeInimigosVendoPlayer;
-    [SerializeField] private List<Transform> pontosDeProcura;
 
     //Getters
     public int QuantidadeInimigosVendoPlayer => quantidadeInimigosVendoPlayer;
-    public List<Transform> PontosDeProcura => pontosDeProcura;
 
     public void Respawn()
     {

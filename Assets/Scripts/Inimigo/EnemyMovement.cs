@@ -23,6 +23,8 @@ public class EnemyMovement : MonoBehaviour
 
     private Vector2 vetorKnockBack;
 
+    private List<Transform> pontosDeProcura;
+
     bool iniciado = false;
 
     //Variaveis de controle
@@ -41,10 +43,16 @@ public class EnemyMovement : MonoBehaviour
     //Getters
     public Vector2 GetUltimaPosicaoOrigem => ultimaPosicaoEnquantoFaziaRota;
     public Vector2 PontosDeRota => pontosDeRota[indiceListaNaoLockdown].position;
-    public Vector2 PontoDeProcura => enemy.GeneralManager.EnemyManager.PontosDeProcura[indiceListaLockdown].position;
+    public Vector2 PontoDeProcura => pontosDeProcura[indiceListaLockdown].position;
     public float GetVelocidade => velocidade;
     public float GetVelocidadeModoNormal => velocidadeModoNormal;
     public float GetVelocidadeModoLockdown => velocidadeModoLockdown;
+
+    //Setters
+    public void SetPontosDeProcura(List<Transform> pontosDeProcura)
+    {
+        this.pontosDeProcura = pontosDeProcura;
+    }
 
     private void Start()
     {
@@ -161,7 +169,7 @@ public class EnemyMovement : MonoBehaviour
     }
     void GerarPontoAleatorio()
     {
-        indiceListaLockdown = Random.Range(0, enemy.GeneralManager.EnemyManager.PontosDeProcura.Count);
+        indiceListaLockdown = Random.Range(0, pontosDeProcura.Count);
     }
     void GeradorDePontos(ref int _pontoIndiceLista,ref int _ultimoPontoQueFui, List<Transform> _ListaDePontosUtilizada)
     {
@@ -186,27 +194,27 @@ public class EnemyMovement : MonoBehaviour
     public void VarrerFase()
     {
 
-        Mover(enemy.GeneralManager.EnemyManager.PontosDeProcura[indiceListaLockdown].position);
+        Mover(pontosDeProcura[indiceListaLockdown].position);
     
         //gera um novo lugar de waypoint
-        if (indiceListaLockdown >= enemy.GeneralManager.EnemyManager.PontosDeProcura.Count - 1)
+        if (indiceListaLockdown >= pontosDeProcura.Count - 1)
             indiceListaLockdown = 0;
         else
             indiceListaLockdown++;
 
-        indiceListaLockdown = Random.Range(0, enemy.GeneralManager.EnemyManager.PontosDeProcura.Count);//para aleatorizar o proximo destino que ele vai
+        indiceListaLockdown = Random.Range(0, pontosDeProcura.Count);//para aleatorizar o proximo destino que ele vai
         if (indiceListaLockdown != indiceUltimoPontoListaLockdown)
         {
                 
             indiceUltimoPontoListaLockdown = indiceListaLockdown;
-            ultimaPosicaoEnquantoFaziaRota = enemy.GeneralManager.EnemyManager.PontosDeProcura[indiceUltimoPontoListaLockdown].position;
+            ultimaPosicaoEnquantoFaziaRota = pontosDeProcura[indiceUltimoPontoListaLockdown].position;
         }
         else
         {
             while (indiceListaLockdown == indiceUltimoPontoListaLockdown)
             {
                    
-                indiceListaLockdown = Random.Range(0, enemy.GeneralManager.EnemyManager.PontosDeProcura.Count);
+                indiceListaLockdown = Random.Range(0, pontosDeProcura.Count);
             }
         }
         

@@ -856,7 +856,7 @@ public class IAEnemy : MonoBehaviour
         posicaoAtualPlayer = enemy.GetPlayer.transform.position;
         indiceDoBotaoMaisPerto = RetornarIndiceBotaoLockDownMaisPerto();
     }
-    public void ReceberLockDown(Vector2 _posicaoPlayer)
+    public void ReceberLockDown(Vector2 _posicaoPlayer, List<Transform> pontosDeProcura)
     {
         if(enemy.Morto == false)
         {
@@ -866,6 +866,7 @@ public class IAEnemy : MonoBehaviour
             fazerRotinaLockDown = true;
             emLockDown = true;
             posicaoUltimoLugarVisto = _posicaoPlayer;
+            enemyMovement.SetPontosDeProcura(pontosDeProcura);
         }
         else if (enemy.Animacao.AnimacaoAtual != "Vazio")
         {

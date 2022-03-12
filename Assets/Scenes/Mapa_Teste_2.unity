@@ -247,51 +247,6 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: 12402cec469d3a74b8a422fa1ce69c63, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 993152c3fb1a02a43a65ff0ce924dd81, type: 3}
---- !u!1 &118891350
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 118891352}
-  - component: {fileID: 118891351}
-  m_Layer: 0
-  m_Name: LevelLoader
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &118891351
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 118891350}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6ef34ff8a6214ff40ac1746cf92375b7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  loadingScreen: {fileID: 0}
-  slider: {fileID: 0}
---- !u!4 &118891352
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 118891350}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 631.2292, y: 488.97113, z: -20.011005}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 6
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &119276957
 GameObject:
   m_ObjectHideFlags: 0
@@ -964,7 +919,7 @@ Transform:
   m_LocalScale: {x: 1, y: 3, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &236634337
 SpriteRenderer:
@@ -1612,7 +1567,7 @@ Transform:
   - {fileID: 1434703183}
   - {fileID: 584245398}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &584245394
 GameObject:
@@ -1965,7 +1920,7 @@ Transform:
   - {fileID: 2024739027}
   - {fileID: 854754850}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &802696656
 GameObject:
@@ -25948,6 +25903,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   zona: 0
+  pontosDeProcura:
+  - {fileID: 643664288}
+  - {fileID: 1496330674}
+  - {fileID: 1702063283}
+  - {fileID: 490963852}
 --- !u!4 &1361205844 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2492521331506860110, guid: 51ed629a2c18ba441b343a664d8aebc1, type: 3}
@@ -26028,7 +25988,7 @@ Transform:
   - {fileID: 453327857}
   - {fileID: 1160105243}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1419059695
 PrefabInstance:
@@ -26360,7 +26320,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 6351317539819562123, guid: 1a37e3f3fbeeb7c4e8930c148d682602, type: 3}
       propertyPath: m_Name
-      value: SistemaLoadCena
+      value: LevelLoader
       objectReference: {fileID: 0}
     - target: {fileID: 6351317539819562124, guid: 1a37e3f3fbeeb7c4e8930c148d682602, type: 3}
       propertyPath: m_Pivot.x
@@ -26372,7 +26332,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6351317539819562124, guid: 1a37e3f3fbeeb7c4e8930c148d682602, type: 3}
       propertyPath: m_RootOrder
-      value: 7
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6351317539819562124, guid: 1a37e3f3fbeeb7c4e8930c148d682602, type: 3}
       propertyPath: m_AnchorMax.x
@@ -26536,7 +26496,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 700864800803910912, guid: 6d63f8b028557034bbfc590405d0f4e6, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 700864800803910912, guid: 6d63f8b028557034bbfc590405d0f4e6, type: 3}
       propertyPath: m_AnchorMax.x
@@ -32565,6 +32525,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   zona: 0
+  pontosDeProcura:
+  - {fileID: 643664288}
+  - {fileID: 1496330674}
+  - {fileID: 1702063283}
+  - {fileID: 490963852}
 --- !u!4 &1920490846 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1281963047238720326, guid: 993152c3fb1a02a43a65ff0ce924dd81, type: 3}

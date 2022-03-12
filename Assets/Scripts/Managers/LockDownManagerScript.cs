@@ -68,7 +68,7 @@ public class LockDownManagerScript : MonoBehaviour
         {
             if(enemy.Zona == generalManager.ZoneManager.ZonaAtual)
             {
-                enemy.GetIAEnemy.ReceberLockDown(posicaoDoPlayer);
+                enemy.GetIAEnemy.ReceberLockDown(posicaoDoPlayer, generalManager.ZoneManager.PontosDeProcuraAtuais);
             }
             else
             {
