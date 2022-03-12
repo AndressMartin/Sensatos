@@ -215,7 +215,15 @@ public class MenuDoInventario : MonoBehaviour
 
     private void MenuArma()
     {
-        menuDasArmas.SelecionandoArma();
+        if (Input.GetKeyDown(KeyCode.UpArrow))
+        {
+            menuDasArmas.Subir();
+        }
+
+        if (Input.GetKeyDown(KeyCode.DownArrow))
+        {
+            menuDasArmas.Descer();
+        }
 
         if (Input.GetKeyDown(KeyCode.Space))
         {

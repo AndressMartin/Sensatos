@@ -13,6 +13,7 @@ public class ItemColetavel : ObjetoInteragivel
 
     //Variaveis
     [SerializeField] private Item item;
+    private bool itemFoiColetado;
 
     //Variaveis de respawn
     private bool ativoRespawn;
@@ -27,7 +28,7 @@ public class ItemColetavel : ObjetoInteragivel
         boxCollider2D = GetComponent<BoxCollider2D>();
 
         //Variaveis
-        ativo = true;
+        itemFoiColetado = false;
 
         //Se adicionar a lista de objetos interagiveis do ObjectManager
         generalManager.ObjectManager.AdicionarAosObjetosInteragiveis(this);
@@ -53,24 +54,33 @@ public class ItemColetavel : ObjetoInteragivel
 
     public override void Interagir(Player player)
     {
+        itemFoiColetado = false;
+
         if(item != null)
         {
             switch(item.Tipo)
             {
                 case Item.TipoItem.Consumivel:
                     AdicionarAoInventario(player);
-                    Desativar();
                     break;
 
                 case Item.TipoItem.Ferramenta:
                     AdicionarAoInventario(player);
-                    Desativar();
                     break;
 
                 case Item.TipoItem.ItemChave:
                     AdicionarAoInventarioMissao(player);
-                    Desativar();
                     break;
+            }
+
+            if(itemFoiColetado == true)
+            {
+                Desativar();
+            }
+            else
+            {
+                //Substituir pela funcao que vai dar ao jogador a opcao de escolher um item para colocar este no lugar ou nao.
+                Debug.LogWarning("Nao havia espaco no inventario para adicionar o item");
             }
         }
         else
@@ -81,12 +91,13 @@ public class ItemColetavel : ObjetoInteragivel
 
     private void AdicionarAoInventario(Player player)
     {
-        player.Inventario.AdicionarItem(item);
+        itemFoiColetado = player.Inventario.AdicionarItem(item);
     }
 
     private void AdicionarAoInventarioMissao(Player player)
     {
         player.InventarioMissao.Add(item);
+        itemFoiColetado = true;
     }
 
     private void Desativar()

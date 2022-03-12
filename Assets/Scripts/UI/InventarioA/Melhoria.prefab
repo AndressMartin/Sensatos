@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7567542793962865061}
+  - component: {fileID: 8280191140910577317}
   m_Layer: 5
   m_Name: Melhoria
   m_TagString: Untagged
@@ -38,6 +39,21 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 610, y: 175}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &8280191140910577317
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7567542793962865062}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d304fcca222243049bea38208ae2ef37, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  imagem: {fileID: 7567542793990088698}
+  nome: {fileID: 7567542795451070029}
+  descricao: {fileID: 7567542795169539271}
 --- !u!1 &7567542793990088700
 GameObject:
   m_ObjectHideFlags: 0

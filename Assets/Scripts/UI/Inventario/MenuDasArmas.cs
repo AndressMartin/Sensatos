@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class MenuDasArmas : MonoBehaviour
@@ -11,8 +12,14 @@ public class MenuDasArmas : MonoBehaviour
     [SerializeField] private RectTransform scroolDasArmas;
     [SerializeField] private SelecaoArma[] armas;
 
+    [SerializeField] private TMP_Text nomeDaArma;
+    [SerializeField] private TMP_Text descricaoDaArma;
+    [SerializeField] private InformacoesDaMelhoria[] melhorias;
+
     private int indiceArmaAtual;
-    private int scroolID;
+    private int selecao;
+    private int scrool;
+    private int maxArmasNaTela;
 
     private bool iniciado = false;
 
@@ -33,7 +40,9 @@ public class MenuDasArmas : MonoBehaviour
 
         //Variaveis
         indiceArmaAtual = 0;
-        scroolID = 0;
+        selecao = 0;
+        scrool = 0;
+        maxArmasNaTela = 3;
 
         foreach(SelecaoArma selecaoArma in armas)
         {
@@ -43,32 +52,47 @@ public class MenuDasArmas : MonoBehaviour
         iniciado = true;
     }
 
+    private void AtualizarInformacoesDaArma()
+    {
+        nomeDaArma.text = generalManager.Player.Inventario.Armas[selecao].Nome;
+        descricaoDaArma.text = generalManager.Player.Inventario.Armas[selecao].Descricao;
+
+        foreach(InformacoesDaMelhoria melhoria in melhorias)
+        {
+            melhoria.gameObject.SetActive(false);
+        }
+
+        for (int i = 0; i < generalManager.Player.Inventario.Armas[selecao].Melhorias.Count; i++)
+        {
+            melhorias[i].gameObject.SetActive(true);
+            melhorias[i].AtualizarInformacoes(generalManager.Player.Inventario.Armas[selecao].Melhorias[i]);
+        }
+    }
+
     public void AtualizarPosicaoDoScroolDasArmas(float posY)
     {
         scroolDasArmas.transform.position = new Vector2(scroolDasArmas.transform.position.x, posY);
     }
 
-    private void AtualizarInformacoesDasArmas()
+    private void AtualizarScroolDasArmas()
     {
-        armas[0].AtualizarInformacoes(generalManager.Player.Inventario.Armas[scroolID]);
+        for (int i = 0; i < maxArmasNaTela; i++)
+        {
+            if(scrool + i >= generalManager.Player.Inventario.Armas.Count || scrool + i < 0)
+            {
+                armas[i].ZerarInformacoes();
+            }
+            else
+            {
+                armas[i].AtualizarInformacoes(generalManager.Player.Inventario.Armas[scrool + i]);
+            }
+        }
 
-        if (scroolID + 1 >= generalManager.Player.Inventario.Armas.Count)
-        {
-            armas[1].ZerarInformacoes();
-        }
-        else
-        {
-            armas[1].AtualizarInformacoes(generalManager.Player.Inventario.Armas[scroolID + 1]);
-        }
+        armas[0].Selecionado(false);
+        armas[1].Selecionado(false);
+        armas[2].Selecionado(false);
 
-        if (scroolID + 2 >= generalManager.Player.Inventario.Armas.Count)
-        {
-            armas[2].ZerarInformacoes();
-        }
-        else
-        {
-            armas[2].AtualizarInformacoes(generalManager.Player.Inventario.Armas[scroolID + 2]);
-        }
+        armas[selecao - scrool].Selecionado(true);
     }
 
     public void IniciarScrool(int novoIndiceArmaAtual)
@@ -79,37 +103,46 @@ public class MenuDasArmas : MonoBehaviour
         {
             if(generalManager.Player.Inventario.Armas[i] == generalManager.Player.Inventario.ArmaSlot[indiceArmaAtual])
             {
-                scroolID = i;
+                selecao = i;
+                scrool = i;
                 break;
             }
         }
 
-        armas[0].Selecionado(true);
-        armas[1].Selecionado(false);
-        armas[2].Selecionado(false);
-
-        AtualizarInformacoesDasArmas();
+        AtualizarScroolDasArmas();
+        AtualizarInformacoesDaArma();
     }
 
-    public void SelecionandoArma()
+    public void Subir()
     {
-        if (Input.GetKeyDown(KeyCode.UpArrow))
+        if (selecao > 0)
         {
-            if(scroolID > 0)
-            {
-                scroolID--;
-            }
-        }
+            selecao--;
 
-        if (Input.GetKeyDown(KeyCode.DownArrow))
+            if (selecao < scrool)
+            {
+                scrool = selecao;
+            }
+
+            AtualizarScroolDasArmas();
+            AtualizarInformacoesDaArma();
+        }
+    }
+
+    public void Descer()
+    {
+        if (selecao < generalManager.Player.Inventario.Armas.Count - 1)
         {
-            if (scroolID < generalManager.Player.Inventario.Armas.Count - 1)
-            {
-                scroolID++;
-            }
-        }
+            selecao++;
 
-        AtualizarInformacoesDasArmas();
+            if (selecao - scrool > maxArmasNaTela - 1)
+            {
+                scrool = selecao - (maxArmasNaTela - 1);
+            }
+
+            AtualizarScroolDasArmas();
+            AtualizarInformacoesDaArma();
+        }
     }
 
     public void ConfirmarArma()
@@ -127,16 +160,16 @@ public class MenuDasArmas : MonoBehaviour
         }
 
         //Confere se a arma que o jogador vai equipar e igual a outra arma que o jogador tem equipada, se for verdade, inverte as armas equipadas
-        if(generalManager.Player.Inventario.Armas[scroolID] == generalManager.Player.Inventario.ArmaSlot[indiceComparacao])
+        if(generalManager.Player.Inventario.Armas[selecao] == generalManager.Player.Inventario.ArmaSlot[indiceComparacao])
         {
             armaTemp = generalManager.Player.Inventario.ArmaSlot[indiceArmaAtual];
 
-            generalManager.Player.Inventario.ArmaSlot[indiceArmaAtual] = generalManager.Player.Inventario.Armas[scroolID];
+            generalManager.Player.Inventario.ArmaSlot[indiceArmaAtual] = generalManager.Player.Inventario.Armas[selecao];
             generalManager.Player.Inventario.ArmaSlot[indiceComparacao] = armaTemp;
         }
         else
         {
-            generalManager.Player.Inventario.ArmaSlot[indiceArmaAtual] = generalManager.Player.Inventario.Armas[scroolID];
+            generalManager.Player.Inventario.ArmaSlot[indiceArmaAtual] = generalManager.Player.Inventario.Armas[selecao];
         }
     }
 }
