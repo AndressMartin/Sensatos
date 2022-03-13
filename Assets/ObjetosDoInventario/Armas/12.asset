@@ -14,13 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   imagemInventario: {fileID: 21300000, guid: 2abff2a3b0df83a45982946068bb6d78, type: 3}
   nome: 12
-  nomeAnimacao: Arma2
   descricao: Arma de fogo melee.
-  rapidFire: 0
+  nomeAnimacao: Arma2
   raioDoSomDoTiro: 10
-  nivelMelhoria: 0
+  rapidFire: 0
   statusBase:
     projetil: {fileID: -3273666588168549129, guid: cde5861db3c7034458bf0dc15e2300b4, type: 3}
+    somDoTiro: {fileID: 8300000, guid: 223c02718fda69847b46ec22db0eb4ba, type: 3}
     dano: 25
     velocidadeProjetil: 0
     knockBack: 5
@@ -31,4 +31,3 @@ MonoBehaviour:
     municaoMaxCartucho: 8
     municaoMax: 24
   melhorias: []
-  index: 0

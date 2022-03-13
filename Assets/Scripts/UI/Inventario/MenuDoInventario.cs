@@ -136,6 +136,8 @@ public class MenuDoInventario : MonoBehaviour
         selecaoAtual.Selecionado(true);
 
         AtualizarInformacoes();
+
+        generalManager.Hud.SonsDeMenus.TocarSom(SonsDeMenus.Som.AbrirOInventario);
     }
 
     public void FecharOInventario()
@@ -154,6 +156,8 @@ public class MenuDoInventario : MonoBehaviour
         }
 
         ativo = false;
+
+        generalManager.Hud.SonsDeMenus.TocarSom(SonsDeMenus.Som.FecharOInventario);
     }
 
     private void MenuInicial()
@@ -161,6 +165,8 @@ public class MenuDoInventario : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             selecaoAtual.Confirmar(this);
+
+            generalManager.Hud.SonsDeMenus.TocarSom(SonsDeMenus.Som.Confirmar);
         }
 
         if (Input.GetKeyDown(KeyCode.E))
@@ -176,6 +182,8 @@ public class MenuDoInventario : MonoBehaviour
 
                 selecaoAtual = selecaoAtual.Selecao.Cima;
                 selecaoAtual.Selecionado(true);
+
+                generalManager.Hud.SonsDeMenus.TocarSom(SonsDeMenus.Som.Movimento2);
             }
         }
 
@@ -187,6 +195,8 @@ public class MenuDoInventario : MonoBehaviour
 
                 selecaoAtual = selecaoAtual.Selecao.Baixo;
                 selecaoAtual.Selecionado(true);
+
+                generalManager.Hud.SonsDeMenus.TocarSom(SonsDeMenus.Som.Movimento2);
             }
         }
 
@@ -198,6 +208,8 @@ public class MenuDoInventario : MonoBehaviour
 
                 selecaoAtual = selecaoAtual.Selecao.Esquerda;
                 selecaoAtual.Selecionado(true);
+
+                generalManager.Hud.SonsDeMenus.TocarSom(SonsDeMenus.Som.Movimento2);
             }
         }
 
@@ -209,6 +221,8 @@ public class MenuDoInventario : MonoBehaviour
 
                 selecaoAtual = selecaoAtual.Selecao.Direita;
                 selecaoAtual.Selecionado(true);
+
+                generalManager.Hud.SonsDeMenus.TocarSom(SonsDeMenus.Som.Movimento2);
             }
         }
     }
@@ -229,11 +243,15 @@ public class MenuDoInventario : MonoBehaviour
         {
             menuDasArmas.ConfirmarArma();
             SetMenuAtual(Menu.Inicio);
+
+            generalManager.Hud.SonsDeMenus.TocarSom(SonsDeMenus.Som.EquiparArma);
         }
 
         if (Input.GetKeyDown(KeyCode.E))
         {
             SetMenuAtual(Menu.Inicio);
+
+            generalManager.Hud.SonsDeMenus.TocarSom(SonsDeMenus.Som.Voltar);
         }
     }
 

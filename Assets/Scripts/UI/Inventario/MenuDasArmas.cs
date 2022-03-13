@@ -126,6 +126,8 @@ public class MenuDasArmas : MonoBehaviour
 
             AtualizarScroolDasArmas();
             AtualizarInformacoesDaArma();
+
+            generalManager.Hud.SonsDeMenus.TocarSom(SonsDeMenus.Som.Movimento1);
         }
     }
 
@@ -142,6 +144,8 @@ public class MenuDasArmas : MonoBehaviour
 
             AtualizarScroolDasArmas();
             AtualizarInformacoesDaArma();
+
+            generalManager.Hud.SonsDeMenus.TocarSom(SonsDeMenus.Som.Movimento2);
         }
     }
 

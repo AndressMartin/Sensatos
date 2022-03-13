@@ -12,11 +12,18 @@ public class HUDScript : MonoBehaviour
     [SerializeField] private PlayerUIScript playerUI;
     [SerializeField] private BarraDeVisaoDoInimigo barraDeVisaoDoInimigo;
 
+    private SonsDeMenus sonsDeMenus;
+
     //Getters
+    public MenuDoInventario MenuDoInventario => menuDoInventario;
     public BarraDeVisaoDoInimigo BarraDeVisaoDoInimigo => barraDeVisaoDoInimigo;
+    public SonsDeMenus SonsDeMenus => sonsDeMenus;
 
     private void Start()
     {
+        //Componentes
+        sonsDeMenus = GetComponent<SonsDeMenus>();
+
         LockDownUIAtiva(false);
         BarraDeRecarregamentoAtiva(false);
     }

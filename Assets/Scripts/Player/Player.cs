@@ -17,6 +17,8 @@ public class Player : EntityModel
     private PontaArmaPlayerScript pontaArma;
     private Inventario inventario;
     private InventarioMissao inventarioMissao;
+    private SomDosTiros somDosTiros;
+    private SonsDoJogador sonsDoJogador;
 
     //Enums
     public enum ModoMovimento { Normal, AndandoSorrateiramente, Strafing };
@@ -82,6 +84,8 @@ public class Player : EntityModel
         pontaArma = GetComponentInChildren<PontaArmaPlayerScript>();
         inventario = GetComponent<Inventario>();
         inventarioMissao = GetComponent<InventarioMissao>();
+        somDosTiros = GetComponentInChildren<SomDosTiros>();
+        sonsDoJogador = GetComponent<SonsDoJogador>();
 
         //Variaveis
         vida = vidaInicial;
@@ -294,7 +298,6 @@ public class Player : EntityModel
             {
                 if (recarregando == false)
                 {
-                    GerarSom(inventario.ArmaSlot[inventario.ArmaAtual].RaioDoSomDoTiro, true);
                     inventario.ArmaSlot[inventario.ArmaAtual].Atirar(this, generalManager.BulletManager, pontaArma.transform.position, VetorDirecao(direcao), Alvo.Enemy);
                     animacao.AtualizarArmaBracos(inventario.ArmaSlot[inventario.ArmaAtual].NomeAnimacao);
                 }
@@ -360,6 +363,12 @@ public class Player : EntityModel
         }
         AtualizarPontaDaArma();
         animacao.AtualizarArmaBracos(inventario.ArmaSlot[inventario.ArmaAtual].NomeAnimacao);
+    }
+
+    public void GerarSomDoTiro()
+    {
+        GerarSom(inventario.ArmaSlot[inventario.ArmaAtual].RaioDoSomDoTiro, true);
+        somDosTiros.TocarSom(inventario.ArmaSlot[inventario.ArmaAtual].GetStatus.SomDoTiro);
     }
 
     public void UsarItem(Item item)
@@ -431,6 +440,8 @@ public class Player : EntityModel
         animacao.AtualizarDirecao(direcao, direcaoMovimento);
 
         FinalizarRecarregamento();
+
+        sonsDoJogador.TocarSom(SonsDoJogador.Som.Morte);
     }
 
     public void GerarSom(float raio, bool somTiro)

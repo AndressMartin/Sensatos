@@ -41,6 +41,7 @@ public class ArmaDeFogo : ItemDoInventario
                 CriarTiro(objQueChamou, bulletManager, posicao, direcao, alvo);
                 municaoCartucho--;
                 player.SetCadenciaTiro(GetStatus.CadenciaDosTiros);
+                player.GerarSomDoTiro();
             }
             else if (municao > 0)
             {
@@ -137,6 +138,7 @@ public class ArmaDeFogo : ItemDoInventario
     {
         //Variaveis
         [SerializeField] private ProjetilScript projetil;
+        [SerializeField] private AudioClip somDoTiro;
         [SerializeField] private int dano;
         [SerializeField] private float velocidadeProjetil;
         [SerializeField] private float knockBack;
@@ -150,6 +152,7 @@ public class ArmaDeFogo : ItemDoInventario
 
         //Getters
         public ProjetilScript Projetil => projetil;
+        public AudioClip SomDoTiro => somDoTiro;
         public int Dano => dano;
         public float VelocidadeProjetil => velocidadeProjetil;
         public float KnockBack => knockBack;

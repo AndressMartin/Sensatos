@@ -20,6 +20,8 @@ public class Enemy : EntityModel
     private Rigidbody2D rb;
     private IAEnemy ia_Enemy;
     private Player player;
+    private SomDosTiros somDosTiros;
+    private SonsDoInimigo sonsDoInimigo;
 
     //Variaveis
     [SerializeField] LayerMask layerDasZonas;
@@ -107,8 +109,10 @@ public class Enemy : EntityModel
         colisao = GetComponent<BoxCollider2D>();
         hitboxDano = transform.Find("HitboxDano").GetComponent<BoxCollider2D>();
         rb = GetComponent<Rigidbody2D>();
+        somDosTiros = GetComponentInChildren<SomDosTiros>();
+        sonsDoInimigo = GetComponent<SonsDoInimigo>();
 
-        player = FindObjectOfType<Player>();
+        player = generalManager.Player;
 
         //Variaveis
         vida = vidaInicial;
@@ -313,6 +317,7 @@ public class Enemy : EntityModel
             animacao.AtualizarArmaBracos(inventario.ArmaSlot.NomeAnimacao);
 
             SetCadenciaTiro(inventario.ArmaSlot.GetStatus.CadenciaDosTiros);
+            somDosTiros.TocarSom(inventario.ArmaSlot.GetStatus.SomDoTiro);
             return true;
         }   
         return false;
@@ -342,7 +347,7 @@ public class Enemy : EntityModel
 
     public override void TomarDano(int _dano, float _knockBack, float _knockBackTrigger, Vector2 _direcaoKnockBack)
     {
-        if(estado == Estado.Normal)
+        if(morto == false && estado == Estado.Normal)
         {
             if (vida <= 0)
             {
@@ -402,6 +407,8 @@ public class Enemy : EntityModel
         rb.bodyType = RigidbodyType2D.Kinematic;
 
         animacao.AtualizarDirecao(direcao, direcao);
+
+        sonsDoInimigo.TocarSom(SonsDoInimigo.Som.Morte);
     }
 
     public void AnimacaoDesaparecendo()
