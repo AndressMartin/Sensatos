@@ -14,6 +14,11 @@ public class Item : ItemDoInventario
     public virtual int ID => id;
     public virtual TipoItem Tipo => TipoItem.Consumivel;
 
+    virtual public void Iniciar()
+    {
+        //Nada.
+    }
+
     virtual public void Usar(Player player)
     {
         //Nada.

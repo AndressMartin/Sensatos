@@ -11,8 +11,8 @@ public class Inventario : MonoBehaviour
     //Variaveis
     [SerializeField] private Item itemVazio;
 
-    [SerializeField] private Item[] itens = new Item[9];
-    private Item[] atalhosDeItens = new Item[4];
+    [SerializeField] private Item[] itens;
+    private Item[] atalhosDeItens;
 
     [SerializeField] private List<ArmaDeFogo> armas = new List<ArmaDeFogo>();
     [SerializeField] private List<RoupaDeCamuflagem> roupasDeCamuflagem = new List<RoupaDeCamuflagem>();
@@ -41,12 +41,18 @@ public class Inventario : MonoBehaviour
         player = GetComponentInParent<Player>();
 
         //Criar o inventario de itens
+
+        itens = new Item[9];
+
         for (int i = 0; i < itens.Length; i++)
         {
             itens[i] = ScriptableObject.Instantiate(itemVazio);
         }
 
         //Criar a array dos atalhos
+
+        atalhosDeItens = new Item[4];
+
         for (int i = 0; i < atalhosDeItens.Length; i++)
         {
             atalhosDeItens[i] = itemVazio;
@@ -72,6 +78,8 @@ public class Inventario : MonoBehaviour
     {
         //Cria uma nova instancia do scriptable object e a adiciona no inventario
         Item novoItem = ScriptableObject.Instantiate(item);
+
+        novoItem.Iniciar();
 
         for(int i = 0; i < itens.Length; i++)
         {

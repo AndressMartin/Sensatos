@@ -8,7 +8,7 @@ public class MenuDasArmas : MonoBehaviour
     //Managers
     private GeneralManagerScript generalManager;
 
-    //Variaveis
+    //Componentes
     [SerializeField] private RectTransform scroolDasArmas;
     [SerializeField] private SelecaoArma[] armas;
 
@@ -16,6 +16,7 @@ public class MenuDasArmas : MonoBehaviour
     [SerializeField] private TMP_Text descricaoDaArma;
     [SerializeField] private InformacoesDaMelhoria[] melhorias;
 
+    //Variaveis
     private int indiceArmaAtual;
     private int selecao;
     private int scrool;

@@ -86,6 +86,7 @@ GameObject:
   - component: {fileID: 3073498240392505296}
   - component: {fileID: 3073498240392505298}
   - component: {fileID: 3073498240392505297}
+  - component: {fileID: 7080519238859382304}
   m_Layer: 5
   m_Name: Item_Slot
   m_TagString: Untagged
@@ -153,6 +154,23 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &7080519238859382304
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3073498240392505303}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e36a7ebc95460294faf6d2171d3b2baa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  imagem: {fileID: 6194287384610884341}
+  barraDeUsoObjeto: {fileID: 3073498241952426305}
+  barraDeUso: {fileID: 3073498241087565311}
+  numeroAtalhoObjeto: {fileID: 3073498241716502790}
+  numeroAtalho: {fileID: 3073498240594010074}
 --- !u!1 &3073498240594010072
 GameObject:
   m_ObjectHideFlags: 0
@@ -165,7 +183,7 @@ GameObject:
   - component: {fileID: 3073498240594010075}
   - component: {fileID: 3073498240594010074}
   m_Layer: 5
-  m_Name: Texto
+  m_Name: TextoNumeroAtalho
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

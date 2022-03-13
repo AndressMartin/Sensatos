@@ -16,11 +16,15 @@ public class MenuDoInventario : MonoBehaviour
     [SerializeField] private RectTransform telaInicial;
     [SerializeField] private RectTransform telaEscuraDaTelaInicial;
     [SerializeField] private MenuDasArmas menuDasArmas;
-    [SerializeField] private RectTransform menuDosItens;
+    [SerializeField] private MenuDosItens menuDosItens;
     [SerializeField] private RectTransform menuDasRoupas;
 
+    //Getters
+    public float PosicaoXBarraDeExplicacaoItens => armaSlots[0].transform.position.x - (Colisao.GetWorldRect(armaSlots[0].GetComponent<RectTransform>()).size.x / 2);
+    public float PosicaoXBarraDeExplicacaoAtalhos => itemSlots[0].transform.position.x - (Colisao.GetWorldRect(itemSlots[0].GetComponent<RectTransform>()).size.x / 2);
+
     //Enums
-    public enum Menu { Inicio, Arma, Item, Roupa, ItensChave, Missoes, Conquistas}
+    public enum Menu { Inicio, Arma, Item, Atalho, Roupa, ItensChave, Missoes, Conquistas}
 
     //Variaveis
     private bool ativo;
@@ -30,9 +34,14 @@ public class MenuDoInventario : MonoBehaviour
     private SelecaoDoInventario selecaoAtual;
 
     [SerializeField] private SelecaoArma[] armaSlots;
+    [SerializeField] private SelecaoItem[] itemSlots;
+    [SerializeField] private SelecaoAtalho[] atalhoSlots;
 
     //Getters
     public MenuDasArmas MenuDasArmas => menuDasArmas;
+    public MenuDosItens MenuDosItens => menuDosItens;
+    public SelecaoItem[] ItemSlots => itemSlots;
+    public SelecaoAtalho[] AtalhoSlots => atalhoSlots;
 
     //Setters
     public void SetMenuAtual(Menu menuAtual)
@@ -55,6 +64,11 @@ public class MenuDoInventario : MonoBehaviour
                 break;
 
             case Menu.Item:
+                menuDosItens.gameObject.SetActive(true);
+                telaEscuraDaTelaInicial.gameObject.SetActive(true);
+                break;
+
+            case Menu.Atalho:
                 menuDosItens.gameObject.SetActive(true);
                 telaEscuraDaTelaInicial.gameObject.SetActive(true);
                 break;
@@ -118,6 +132,10 @@ public class MenuDoInventario : MonoBehaviour
 
             case Menu.Arma:
                 MenuArma();
+                break;
+
+            case Menu.Item:
+                MenuItem();
                 break;
         }
     }
@@ -256,10 +274,16 @@ public class MenuDoInventario : MonoBehaviour
         }
     }
 
+    private void MenuItem()
+    {
+        menuDosItens.MenuItem();
+    }
+
     private void AtualizarInformacoes()
     {
         AtualizarInformacoesJogador();
         AtualizarInformacoesArmas();
+        AtualizarInformacoesItens();
     }
 
     private void AtualizarInformacoesJogador()
@@ -280,6 +304,21 @@ public class MenuDoInventario : MonoBehaviour
             else
             {
                 armaSlots[i].ZerarInformacoes();
+            }
+        }
+    }
+
+    private void AtualizarInformacoesItens()
+    {
+        for (int i = 0; i < itemSlots.Length; i++)
+        {
+            if (generalManager.Player.Inventario.Itens[i].ID != 0)
+            {
+                itemSlots[i].AtualizarInformacoes(generalManager.Player.Inventario.Itens[i]);
+            }
+            else
+            {
+                itemSlots[i].ZerarInformacoes();
             }
         }
     }

@@ -6,13 +6,24 @@ using UnityEngine;
 
 public class Alicate : Item
 {
+    //Variaveis
     public override TipoItem Tipo => TipoItem.Ferramenta;
 
     [SerializeField] private int dano;
-    [SerializeField] private int quantidadeDeUsos;
+    private int quantidadeDeUsos;
+    [SerializeField] private int quantidadeDeUsosMax;
     [SerializeField] private string nomeAnimacao;
 
     private ParedeModel paredeQuebravel;
+
+    //Getters
+    public int QuantidadeDeUsos => quantidadeDeUsos;
+    public int QuantidadeDeUsosMax => quantidadeDeUsosMax;
+
+    public override void Iniciar()
+    {
+        quantidadeDeUsos = quantidadeDeUsosMax;
+    }
 
     public override void Usar(Player player)
     {

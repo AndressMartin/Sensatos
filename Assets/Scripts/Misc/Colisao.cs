@@ -91,4 +91,17 @@ static public class Colisao
             return false;
         }
     }
+
+    /// <summary>
+    /// Retorna um retangulo nas coordenadas globais a partir de um RectTransform
+    /// </summary>
+    /// <param name="rectTransform">RectTransform para servir de base para o retangulo</param>
+    /// <returns>Um Rect</returns>
+    static public Rect GetWorldRect(RectTransform rectTransform)
+    {
+        Vector3[] bordas = new Vector3[4];
+        rectTransform.GetWorldCorners(bordas);
+
+        return new Rect(bordas[0], bordas[2] - bordas[0]);
+    }
 }
