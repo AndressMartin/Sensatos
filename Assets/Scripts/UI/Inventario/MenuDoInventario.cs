@@ -11,6 +11,7 @@ public class MenuDoInventario : MonoBehaviour
 
     //Componentes
     [SerializeField] private Image barraDeVida;
+    [SerializeField] private TMP_Text vidaTexto;
     [SerializeField] private TMP_Text dinheiroTexto;
     [SerializeField] private RectTransform telaInicial;
     [SerializeField] private RectTransform telaEscuraDaTelaInicial;
@@ -263,8 +264,9 @@ public class MenuDoInventario : MonoBehaviour
 
     private void AtualizarInformacoesJogador()
     {
-        barraDeVida.fillAmount = generalManager.Player.Vida / generalManager.Player.VidaMax;
-        dinheiroTexto.text = "R$ " + generalManager.Player.Inventario.Dinheiro;
+        barraDeVida.fillAmount = (float)generalManager.Player.Vida / (float)generalManager.Player.VidaMax;
+        vidaTexto.text = generalManager.Player.Vida.ToString() + "/" + generalManager.Player.VidaMax.ToString();
+        dinheiroTexto.text = generalManager.Player.Inventario.Dinheiro.ToString();
     }
 
     private void AtualizarInformacoesArmas()

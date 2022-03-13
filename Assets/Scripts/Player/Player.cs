@@ -61,6 +61,7 @@ public class Player : EntityModel
     public AnimacaoJogador Animacao => animacao;
     public Inventario Inventario => inventario;
     public InventarioMissao InventarioMissao => inventarioMissao;
+    public SonsDoJogador SonsDoJogador => sonsDoJogador;
     public int Vida => vida;
     public int VidaMax => vidaMax;
     public bool ModoDeCombate => modoDeCombate;
@@ -280,6 +281,8 @@ public class Player : EntityModel
         {
             estado = Estado.Atacando;
             animacao.AtualizarArmaBracos("");
+
+            sonsDoJogador.TocarSom(SonsDoJogador.Som.AtaqueFisico);
         }
     }
 
@@ -421,6 +424,8 @@ public class Player : EntityModel
                 tempoImune = 0;
                 estado = Estado.TomandoDano;
                 KnockBack(_knockBack, _direcaoKnockBack);
+
+                sonsDoJogador.TocarSom(SonsDoJogador.Som.Dano);
             }
         }
     }

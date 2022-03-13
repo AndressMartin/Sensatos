@@ -365,7 +365,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   direcao: 0
-  vidaInicial: 0
+  vidaInicial: 100
   direcaoMovimento: 0
   modoMovimento: 0
 --- !u!114 &8603944095133171121
@@ -439,6 +439,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f9be8716244a5c46b5f2f354fa59db9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ataqueFisico: {fileID: 8300000, guid: 063014b8e2e11324aa955620308bd174, type: 3}
+  acertoAtaqueFisico: {fileID: 8300000, guid: 96e69c78df191c34086369a9a2213b1f, type: 3}
+  dano:
+  - {fileID: 8300000, guid: 895d2fb0386db0844b87506cfcfc7699, type: 3}
+  - {fileID: 8300000, guid: 8d4525e07b5bd384cb4ed3cbb528038f, type: 3}
   morte: {fileID: 8300000, guid: eb084eeca5a384b43a2643d0bc6dae89, type: 3}
 --- !u!1 &7035996260120561340
 GameObject:

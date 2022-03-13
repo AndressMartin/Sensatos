@@ -2614,6 +2614,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   barraDeVida: {fileID: 416190861102660837}
+  vidaTexto: {fileID: 5215178302787660492}
   dinheiroTexto: {fileID: 4605408657711456587}
   telaInicial: {fileID: 5979652313385530849}
   telaEscuraDaTelaInicial: {fileID: 3574193712528869528}
@@ -2860,7 +2861,7 @@ GameObject:
   - component: {fileID: 8269956355692791566}
   - component: {fileID: 5215178302787660492}
   m_Layer: 5
-  m_Name: Texto
+  m_Name: TextoPV
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

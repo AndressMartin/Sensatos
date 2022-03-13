@@ -334,14 +334,18 @@ public class Enemy : EntityModel
 
     public void TomarDanoFisico(int _dano, float _knockBack, float _knockBackTrigger, Direcao _direcao)
     {
-        if (ia_Enemy.GetEstadoDeteccaoPlayer != IAEnemy.EstadoDeteccaoPlayer.PlayerDetectado)
+        if (morto == false && estado == Estado.Normal)
         {
-            StealthKill(_direcao);
-        }
-        else
-        {
-            Debug.Log("Entrei");
-            TomarDano(_dano, _knockBack, _knockBackTrigger, VetorDirecao(_direcao));
+            if (ia_Enemy.GetEstadoDeteccaoPlayer != IAEnemy.EstadoDeteccaoPlayer.PlayerDetectado)
+            {
+                StealthKill(_direcao);
+            }
+            else
+            {
+                TomarDano(_dano, _knockBack, _knockBackTrigger, VetorDirecao(_direcao));
+            }
+
+            generalManager.Player.SonsDoJogador.TocarSom(SonsDoJogador.Som.AcertoAtaqueFisico);
         }
     }
 
