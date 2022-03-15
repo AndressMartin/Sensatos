@@ -228,6 +228,13 @@ public class MenuDosItens : MonoBehaviour
             }
         }
 
+        //Nao iniciar o menu caso a selecao seja de um item vazio
+        if(generalManager.Player.Inventario.Itens[selecao].ID == 0)
+        {
+            generalManager.Hud.MenuDoInventario.SetMenuAtual(MenuDoInventario.Menu.Inicio);
+            return;
+        }
+
         selecaoPainelDeEscolha = 0;
 
         SetMenuItemAtual(MenuItemEnum.Inicio);
@@ -263,6 +270,13 @@ public class MenuDosItens : MonoBehaviour
                 selecao = i;
                 break;
             }
+        }
+
+        //Nao iniciar o menu caso a selecao seja de um item vazio
+        if (generalManager.Player.Inventario.AtalhosDeItens[selecao].ID == 0)
+        {
+            generalManager.Hud.MenuDoInventario.SetMenuAtual(MenuDoInventario.Menu.Inicio);
+            return;
         }
 
         selecaoPainelDeEscolha = 0;

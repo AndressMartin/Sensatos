@@ -47,37 +47,37 @@ public class DebugModeManagerScript : MonoBehaviour
     private void ComandosDeDebug()
     {
         //Tomar dano
-        if (Input.GetKeyDown(KeyCode.G))
+        if (Input.GetKeyDown(KeyCode.F))
         {
             player.TomarDano(0, 2, 0, new Vector2(UnityEngine.Random.Range(-1f, 1f), UnityEngine.Random.Range(-1f, 1f)));
         }
 
         //Ativar/Desativar o modo de combate
-        if (Input.GetKeyDown(KeyCode.K))
+        if (Input.GetKeyDown(KeyCode.O))
         {
             player.SetModoDeCombate(!(player.ModoDeCombate));
         }
 
         //Fazer um checkpoint
-        if (Input.GetKeyDown(KeyCode.H))
+        if (Input.GetKeyDown(KeyCode.G))
         {
             generalManager.RespawnManager.SetCheckpoint(player.transform.position, player.GetDirecao);
         }
 
         //Respawnar
-        if (Input.GetKeyDown(KeyCode.J))
+        if (Input.GetKeyDown(KeyCode.H))
         {
             generalManager.RespawnManager.Respawn();
         }
 
         //Ativar Lockdown
-        if (Input.GetKeyUp(KeyCode.P))
+        if (Input.GetKeyUp(KeyCode.L))
         {
             generalManager.LockDownManager.AtivarLockDown(player.transform.position);
         }
 
         //Desativar Lockdown
-        if (Input.GetKeyUp(KeyCode.V))
+        if (Input.GetKeyUp(KeyCode.K))
         {
             generalManager.LockDownManager.DesativarLockDown();
         }

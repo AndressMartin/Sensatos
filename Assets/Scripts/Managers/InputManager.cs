@@ -38,7 +38,7 @@ public static class InputManager
 
     public static bool Pausar()
     {
-        return Input.GetKeyDown(KeyCode.Backspace);
+        return Input.GetKeyDown(KeyCode.P);
     }
 
     public static bool AbrirOInventario()
