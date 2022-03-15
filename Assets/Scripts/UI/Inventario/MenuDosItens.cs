@@ -131,7 +131,8 @@ public class MenuDosItens : MonoBehaviour
 
     private void EscolhendoOpcaoItem()
     {
-        if (Input.GetKeyDown(KeyCode.UpArrow))
+        //Mover para cima
+        if (InputManager.Cima())
         {
             if (selecaoPainelDeEscolha > 0)
             {
@@ -143,7 +144,8 @@ public class MenuDosItens : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.DownArrow))
+        //Mover para baixo
+        if (InputManager.Baixo())
         {
             if (selecaoPainelDeEscolha < painelDeEscolhaDosItens.Opcoes.Length - 1)
             {
@@ -155,14 +157,16 @@ public class MenuDosItens : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.E))
+        //Voltar
+        if (InputManager.Voltar())
         {
             generalManager.Hud.MenuDoInventario.SetMenuAtual(MenuDoInventario.Menu.Inicio);
 
             generalManager.Hud.SonsDeMenus.TocarSom(SonsDeMenus.Som.Voltar);
         }
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        //Confirmar
+        if (InputManager.Confirmar())
         {
             switch(selecaoPainelDeEscolha)
             {

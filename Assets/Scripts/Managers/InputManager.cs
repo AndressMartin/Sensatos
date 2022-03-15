@@ -46,6 +46,11 @@ public static class InputManager
         return Input.GetKeyDown(KeyCode.I);
     }
 
+    public static bool AvancarDialogo()
+    {
+        return Input.GetKeyDown(KeyCode.E);
+    }
+
     #endregion
 
     #region Gameplay Principal
@@ -73,6 +78,11 @@ public static class InputManager
     public static bool Lockstrafe()
     {
         return Input.GetButton("Lockstrafe");
+    }
+
+    public static bool SoltarLockstrafe()
+    {
+        return Input.GetButtonUp("Lockstrafe");
     }
 
     public static bool RecarregarArma()

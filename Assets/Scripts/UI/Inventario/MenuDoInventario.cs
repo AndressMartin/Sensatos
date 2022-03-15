@@ -108,7 +108,7 @@ public class MenuDoInventario : MonoBehaviour
                 if (generalManager.PauseManager.JogoPausado == false)
                 {
                     //Abrir o inventario
-                    if (Input.GetKeyDown(KeyCode.I))
+                    if (InputManager.AbrirOInventario())
                     {
                         AbrirOInventario();
                     }
@@ -119,7 +119,7 @@ public class MenuDoInventario : MonoBehaviour
         }
 
         //Fechar o inventario
-        if (Input.GetKeyDown(KeyCode.I))
+        if (InputManager.AbrirOInventario())
         {
             FecharOInventario();
         }
@@ -181,19 +181,22 @@ public class MenuDoInventario : MonoBehaviour
 
     private void MenuInicial()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        //Confirmar
+        if (InputManager.Confirmar())
         {
             selecaoAtual.Confirmar(this);
 
             generalManager.Hud.SonsDeMenus.TocarSom(SonsDeMenus.Som.Confirmar);
         }
 
-        if (Input.GetKeyDown(KeyCode.E))
+        //Voltar
+        if (InputManager.Voltar())
         {
             FecharOInventario();
         }
 
-        if (Input.GetKeyDown(KeyCode.UpArrow))
+        //Mover para cima
+        if (InputManager.Cima())
         {
             if(selecaoAtual.Selecao.Cima != null)
             {
@@ -206,7 +209,8 @@ public class MenuDoInventario : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.DownArrow))
+        //Mover para baixo
+        if (InputManager.Baixo())
         {
             if (selecaoAtual.Selecao.Baixo != null)
             {
@@ -219,7 +223,8 @@ public class MenuDoInventario : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        //Mover para a esquerda
+        if (InputManager.Esquerda())
         {
             if (selecaoAtual.Selecao.Esquerda != null)
             {
@@ -232,7 +237,8 @@ public class MenuDoInventario : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.RightArrow))
+        //Mover para a direita
+        if (InputManager.Direita())
         {
             if (selecaoAtual.Selecao.Direita != null)
             {
@@ -248,17 +254,20 @@ public class MenuDoInventario : MonoBehaviour
 
     private void MenuArma()
     {
-        if (Input.GetKeyDown(KeyCode.UpArrow))
+        //Mover para cima
+        if (InputManager.Cima())
         {
             menuDasArmas.Subir();
         }
 
-        if (Input.GetKeyDown(KeyCode.DownArrow))
+        //Mover para baixo
+        if (InputManager.Baixo())
         {
             menuDasArmas.Descer();
         }
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        //Confirmar
+        if (InputManager.Confirmar())
         {
             menuDasArmas.ConfirmarArma();
             SetMenuAtual(Menu.Inicio);
@@ -266,7 +275,8 @@ public class MenuDoInventario : MonoBehaviour
             generalManager.Hud.SonsDeMenus.TocarSom(SonsDeMenus.Som.EquiparArma);
         }
 
-        if (Input.GetKeyDown(KeyCode.E))
+        //Voltar
+        if (InputManager.Voltar())
         {
             SetMenuAtual(Menu.Inicio);
 

@@ -73,7 +73,7 @@ public class ResponseHandler : MonoBehaviour
         {
             yield return null;
 
-            if(Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
+            if(InputManager.Cima()) //Mover para cima
             {
                 if(selection > 0)
                 {
@@ -81,7 +81,7 @@ public class ResponseHandler : MonoBehaviour
                     UpdateButtonSelectionEffect(selection);
                 }
             }
-            else if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
+            else if (InputManager.Baixo()) //Mover para baixo
             {
                 if(selection < responses.Length - 1)
                 {
@@ -89,7 +89,7 @@ public class ResponseHandler : MonoBehaviour
                     UpdateButtonSelectionEffect(selection);
                 }
             }
-            else if (Input.GetKeyDown(KeyCode.E))
+            else if (InputManager.AvancarDialogo()) //Confirmar
             {
                 responsePicked = true;
             }
