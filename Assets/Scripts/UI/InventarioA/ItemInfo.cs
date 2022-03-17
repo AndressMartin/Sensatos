@@ -151,7 +151,7 @@ public class ItemInfo : InfoScreen
         Debug.Log("JogarFora.");
         var frame = objectThatCalled.GetComponent<ItemFrame>();
         var item = frame.GetSavedElement() as Item;
-        item.JogarFora();
+        //item.JogarFora();
         frame.RemoveElement(); 
         CloseScreen();
     }

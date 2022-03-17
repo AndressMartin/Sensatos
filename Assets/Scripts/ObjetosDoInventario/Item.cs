@@ -13,6 +13,7 @@ public class Item : ItemDoInventario
     //Getters
     public virtual int ID => id;
     public virtual TipoItem Tipo => TipoItem.Consumivel;
+    virtual public string GetNomeAnimacao => "";
 
     virtual public void Iniciar()
     {
@@ -24,9 +25,9 @@ public class Item : ItemDoInventario
         //Nada.
     }
 
-    virtual public void UsarNoInventario(Player player)
+    virtual public bool UsarNoInventario(Player player)
     {
-        //Nada.
+        return false;
     }
 
     virtual public void UsarNaGameplay(Player player)
@@ -34,13 +35,8 @@ public class Item : ItemDoInventario
         //Nada.
     }
 
-    virtual public string GetNomeAnimacao()
+    public void JogarFora(Player player)
     {
-        return "";
-    }
-
-    public void JogarFora()
-    {
-        //Alguma coisa
+        player.Inventario.RemoverItem(this);
     }
 }

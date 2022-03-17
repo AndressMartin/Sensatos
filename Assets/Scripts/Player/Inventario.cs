@@ -96,6 +96,17 @@ public class Inventario : MonoBehaviour
 
     public void RemoverItem(Item item)
     {
+        //Procura o item nos atalhos para remove-lo
+        for (int i = 0; i < atalhosDeItens.Length; i++)
+        {
+            if (atalhosDeItens[i] == item)
+            {
+                atalhosDeItens[i] = itemVazio;
+                break;
+            }
+        }
+
+        //Procura o item no inventario para destrui-lo
         for (int i = 0; i < itens.Length; i++)
         {
             if (itens[i] == item)
@@ -109,16 +120,31 @@ public class Inventario : MonoBehaviour
         Debug.LogWarning("O item para ser excluido nao foi encontrado!");
     }
 
-    public void MoverItem(int indice1, int indice2)
+    public void MoverItem(int indiceOrigem, int indiceDestino)
     {
-        Item itemTemp = itens[indice2];
+        if(indiceOrigem == indiceDestino)
+        {
+            return;
+        }
 
-        itens[indice2] = itens[indice1];
-        itens[indice1] = itemTemp;
+        Item itemTemp = itens[indiceDestino];
+
+        itens[indiceDestino] = itens[indiceOrigem];
+        itens[indiceOrigem] = itemTemp;
     }
 
     public void AdicionarAtalho(int indice, Item item)
     {
+        //Confere se o item ja nao esta em algum atalho, se estiver, troca a posicao dele com a do atalho selecionado
+        for (int i = 0; i < atalhosDeItens.Length; i++)
+        {
+            if (atalhosDeItens[i] == item)
+            {
+                MoverAtalho(i, indice);
+                return;
+            }
+        }
+
         atalhosDeItens[indice] = item;
     }
 
@@ -127,12 +153,17 @@ public class Inventario : MonoBehaviour
         atalhosDeItens[indice] = itemVazio;
     }
 
-    public void MoverAtalho(int indice1, int indice2)
+    public void MoverAtalho(int indiceOrigem, int indiceDestino)
     {
-        Item itemTemp = atalhosDeItens[indice2];
+        if (indiceOrigem == indiceDestino)
+        {
+            return;
+        }
 
-        atalhosDeItens[indice2] = atalhosDeItens[indice1];
-        atalhosDeItens[indice1] = itemTemp;
+        Item itemTemp = atalhosDeItens[indiceDestino];
+
+        atalhosDeItens[indiceDestino] = atalhosDeItens[indiceOrigem];
+        atalhosDeItens[indiceOrigem] = itemTemp;
     }
 
     public void AddArma(ArmaDeFogo arma)
@@ -162,11 +193,6 @@ public class Inventario : MonoBehaviour
     public void SetarItemAtual(Item item)
     {
         itemAtual = item;
-    }
-
-    public void UsarItemAtual()
-    {
-        itemAtual?.Usar(player);
     }
 
     public void TrocarArma()

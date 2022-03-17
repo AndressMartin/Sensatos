@@ -29,4 +29,9 @@ public class EventosAnimacaoJogador : MonoBehaviour
     {
         player.UsarItemGameplay();
     }
+
+    public void TocarSom(SonsDoJogador.Som som)
+    {
+        player.SonsDoJogador.TocarSom(som);
+    }
 }

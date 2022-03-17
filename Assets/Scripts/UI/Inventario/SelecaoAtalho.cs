@@ -15,4 +15,9 @@ public class SelecaoAtalho : SelecaoItem
         menuDoInventario.MenuDosItens.AtualizarPosicaoDoPainelDeExplicacaoDosItens(menuDoInventario.PosicaoXBarraDeExplicacaoAtalhos);
         menuDoInventario.MenuDosItens.IniciarSelecaoAtalho(this);
     }
+
+    public void AtualizarNumeroAtalho(int numero)
+    {
+        informacoesDoItem.AtualizarNumeroAtalho(numero);
+    }
 }

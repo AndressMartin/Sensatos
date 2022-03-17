@@ -17,6 +17,7 @@ public class Alicate : Item
     private ParedeModel paredeQuebravel;
 
     //Getters
+    public override string GetNomeAnimacao => nomeAnimacao;
     public int QuantidadeDeUsos => quantidadeDeUsos;
     public int QuantidadeDeUsosMax => quantidadeDeUsosMax;
 
@@ -25,18 +26,44 @@ public class Alicate : Item
         quantidadeDeUsos = quantidadeDeUsosMax;
     }
 
+    public override bool UsarNoInventario(Player player)
+    {
+        if (player.GetEstado == Player.Estado.Normal && quantidadeDeUsos > 0)
+        {
+            BoxCollider2D boxCollider2D = player.GetHitBoxInteracao();
+            GeneralManagerScript generalManager = player.GeneralManager;
+
+            if (ProcurarCerca(player, boxCollider2D, generalManager) == true)
+            {
+                return true;
+            }
+
+            return false;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
     public override void Usar(Player player)
     {
         if(player.GetEstado == Player.Estado.Normal && quantidadeDeUsos > 0)
         {
             BoxCollider2D boxCollider2D = player.GetHitBoxInteracao();
             GeneralManagerScript generalManager = player.GeneralManager;
-            ProcurarCerca(player, boxCollider2D, generalManager);
+            
+            if(ProcurarCerca(player, boxCollider2D, generalManager) == true)
+            {
+                ChamarAnimacao(player);
+            }
         }
     }
 
-    private void ProcurarCerca(Player player, BoxCollider2D boxCollider2D, GeneralManagerScript generalManager)
+    private bool ProcurarCerca(Player player, BoxCollider2D boxCollider2D, GeneralManagerScript generalManager)
     {
+        bool achouCerca = false;
+
         boxCollider2D.enabled = true;
         foreach (ParedeModel paredeQuebravel in generalManager.ObjectManager.ListaParedesQuebraveis)
         {
@@ -45,12 +72,14 @@ public class Alicate : Item
                 if(paredeQuebravel.Ativo == true)
                 {
                     this.paredeQuebravel = paredeQuebravel;
-                    ChamarAnimacao(player);
+                    achouCerca = true;
                     break;
                 }
             }
         }
         boxCollider2D.enabled = false;
+
+        return achouCerca;
     }
 
     private void ChamarAnimacao(Player player)
@@ -64,17 +93,7 @@ public class Alicate : Item
         quantidadeDeUsos--;
         if (quantidadeDeUsos <= 0)
         {
-            SeDestruir(player);
+            JogarFora(player);
         }
-    }
-
-    private void SeDestruir(Player player)
-    {
-        player.Inventario.RemoverItem(this);
-    }
-
-    public override string GetNomeAnimacao()
-    {
-        return nomeAnimacao;
     }
 }

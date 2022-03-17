@@ -69,6 +69,8 @@ public class PlayerInput : MonoBehaviour
                 {
                     inventario.TrocarArma();
                     player.AtualizarArma();
+
+                    player.SonsDoJogador.TocarSom(SonsDoJogador.Som.TrocarDeArma);
                 }
 
                 //Atirar
@@ -141,9 +143,7 @@ public class PlayerInput : MonoBehaviour
                     player.modoMovimento = Player.ModoMovimento.Strafing;
                 }
             }
-
-            //Desativar o lockstrafe
-            if (InputManager.SoltarLockstrafe())
+            else
             {
                 if (player.modoMovimento == Player.ModoMovimento.Strafing)
                 {

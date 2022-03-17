@@ -17,10 +17,11 @@ public class SonsDeMenus : MonoBehaviour
     [SerializeField] private AudioClip movimento2;
     [SerializeField] private AudioClip confirmar;
     [SerializeField] private AudioClip voltar;
+    [SerializeField] private AudioClip falha;
     [SerializeField] private AudioClip equiparArma;
 
     //Enums
-    public enum Som { Pausar, Despausar, AbrirOInventario, FecharOInventario, Movimento1, Movimento2, Confirmar, Voltar, EquiparArma };
+    public enum Som { Pausar, Despausar, AbrirOInventario, FecharOInventario, Movimento1, Movimento2, Confirmar, Voltar, Falha, EquiparArma };
 
     private void Start()
     {
@@ -62,6 +63,10 @@ public class SonsDeMenus : MonoBehaviour
 
             case Som.Voltar:
                 generalManager.SoundManager.TocarSomIgnorandoPause(voltar);
+                break;
+
+            case Som.Falha:
+                generalManager.SoundManager.TocarSomIgnorandoPause(falha);
                 break;
 
             case Som.EquiparArma:

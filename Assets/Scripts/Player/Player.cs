@@ -247,10 +247,10 @@ public class Player : EntityModel
                 break;
 
             case Estado.UsandoItem:
-                if (animacao.AnimacaoAtual != inventario.ItemAtual.GetNomeAnimacao() + "Usando")
+                if (animacao.AnimacaoAtual != inventario.ItemAtual.GetNomeAnimacao + "Usando")
                 {
                     animacao.AtualizarArmaBracos("");
-                    animacao.TrocarAnimacao(inventario.ItemAtual.GetNomeAnimacao() + "Usando");
+                    animacao.TrocarAnimacao(inventario.ItemAtual.GetNomeAnimacao + "Usando");
                 }
                 break;
         }
@@ -376,14 +376,15 @@ public class Player : EntityModel
 
     public void UsarItem(Item item)
     {
-        //Arrumar - Ele deve usar o item passado pelo inventario ou atalho e nao o atual!!!
-        inventario.UsarItemAtual();
+        item.Usar(this);
     }
 
     public void UsarItemAtalho(int atalho)
     {
-        //Arrumar - UsarItem(atalho[atalho])
-        inventario.UsarItemAtual();
+        if (inventario.AtalhosDeItens[atalho].ID != 0)
+        {
+            UsarItem(inventario.AtalhosDeItens[atalho]);
+        }
     }
 
     public void AnimacaoItem(Item item)

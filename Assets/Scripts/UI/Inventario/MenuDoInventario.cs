@@ -14,7 +14,6 @@ public class MenuDoInventario : MonoBehaviour
     [SerializeField] private TMP_Text vidaTexto;
     [SerializeField] private TMP_Text dinheiroTexto;
     [SerializeField] private RectTransform telaInicial;
-    [SerializeField] private RectTransform telaEscuraDaTelaInicial;
     [SerializeField] private MenuDasArmas menuDasArmas;
     [SerializeField] private MenuDosItens menuDosItens;
     [SerializeField] private RectTransform menuDasRoupas;
@@ -54,30 +53,32 @@ public class MenuDoInventario : MonoBehaviour
                 menuDasArmas.gameObject.SetActive(false);
                 menuDosItens.gameObject.SetActive(false);
                 menuDasRoupas.gameObject.SetActive(false);
-                telaEscuraDaTelaInicial.gameObject.SetActive(false);
                 AtualizarInformacoes();
                 break;
 
             case Menu.Arma:
                 menuDasArmas.gameObject.SetActive(true);
-                telaEscuraDaTelaInicial.gameObject.SetActive(true);
                 break;
 
             case Menu.Item:
                 menuDosItens.gameObject.SetActive(true);
-                telaEscuraDaTelaInicial.gameObject.SetActive(true);
                 break;
 
             case Menu.Atalho:
                 menuDosItens.gameObject.SetActive(true);
-                telaEscuraDaTelaInicial.gameObject.SetActive(true);
                 break;
 
             case Menu.Roupa:
                 menuDasRoupas.gameObject.SetActive(true);
-                telaEscuraDaTelaInicial.gameObject.SetActive(true);
                 break;
         }
+    }
+
+    public void SetSelecaoAtual(SelecaoDoInventario selecaoAtual)
+    {
+        this.selecaoAtual.Selecionado(false);
+        this.selecaoAtual = selecaoAtual;
+        this.selecaoAtual.Selecionado(true);
     }
 
     private void Start()
@@ -137,6 +138,10 @@ public class MenuDoInventario : MonoBehaviour
             case Menu.Item:
                 MenuItem();
                 break;
+
+            case Menu.Atalho:
+                MenuAtalho();
+                break;
         }
     }
 
@@ -150,9 +155,7 @@ public class MenuDoInventario : MonoBehaviour
         telaInicial.gameObject.SetActive(true);
         SetMenuAtual(Menu.Inicio);
 
-        selecaoAtual.Selecionado(false);
-        selecaoAtual = selecaoInicial;
-        selecaoAtual.Selecionado(true);
+        SetSelecaoAtual(selecaoInicial);
 
         AtualizarInformacoes();
 
@@ -185,8 +188,6 @@ public class MenuDoInventario : MonoBehaviour
         if (InputManager.Confirmar())
         {
             selecaoAtual.Confirmar(this);
-
-            generalManager.Hud.SonsDeMenus.TocarSom(SonsDeMenus.Som.Confirmar);
         }
 
         //Voltar
@@ -200,10 +201,7 @@ public class MenuDoInventario : MonoBehaviour
         {
             if(selecaoAtual.Selecao.Cima != null)
             {
-                selecaoAtual.Selecionado(false);
-
-                selecaoAtual = selecaoAtual.Selecao.Cima;
-                selecaoAtual.Selecionado(true);
+                SetSelecaoAtual(selecaoAtual.Selecao.Cima);
 
                 generalManager.Hud.SonsDeMenus.TocarSom(SonsDeMenus.Som.Movimento2);
             }
@@ -214,10 +212,7 @@ public class MenuDoInventario : MonoBehaviour
         {
             if (selecaoAtual.Selecao.Baixo != null)
             {
-                selecaoAtual.Selecionado(false);
-
-                selecaoAtual = selecaoAtual.Selecao.Baixo;
-                selecaoAtual.Selecionado(true);
+                SetSelecaoAtual(selecaoAtual.Selecao.Baixo);
 
                 generalManager.Hud.SonsDeMenus.TocarSom(SonsDeMenus.Som.Movimento2);
             }
@@ -228,10 +223,7 @@ public class MenuDoInventario : MonoBehaviour
         {
             if (selecaoAtual.Selecao.Esquerda != null)
             {
-                selecaoAtual.Selecionado(false);
-
-                selecaoAtual = selecaoAtual.Selecao.Esquerda;
-                selecaoAtual.Selecionado(true);
+                SetSelecaoAtual(selecaoAtual.Selecao.Esquerda);
 
                 generalManager.Hud.SonsDeMenus.TocarSom(SonsDeMenus.Som.Movimento2);
             }
@@ -242,10 +234,7 @@ public class MenuDoInventario : MonoBehaviour
         {
             if (selecaoAtual.Selecao.Direita != null)
             {
-                selecaoAtual.Selecionado(false);
-
-                selecaoAtual = selecaoAtual.Selecao.Direita;
-                selecaoAtual.Selecionado(true);
+                SetSelecaoAtual(selecaoAtual.Selecao.Direita);
 
                 generalManager.Hud.SonsDeMenus.TocarSom(SonsDeMenus.Som.Movimento2);
             }
@@ -289,11 +278,17 @@ public class MenuDoInventario : MonoBehaviour
         menuDosItens.MenuItem();
     }
 
+    private void MenuAtalho()
+    {
+        menuDosItens.MenuAtalho();
+    }
+
     private void AtualizarInformacoes()
     {
         AtualizarInformacoesJogador();
         AtualizarInformacoesArmas();
         AtualizarInformacoesItens();
+        AtualizarInformacoesAtalhos();
     }
 
     private void AtualizarInformacoesJogador()
@@ -329,6 +324,23 @@ public class MenuDoInventario : MonoBehaviour
             else
             {
                 itemSlots[i].ZerarInformacoes();
+            }
+        }
+    }
+
+    private void AtualizarInformacoesAtalhos()
+    {
+        for (int i = 0; i < atalhoSlots.Length; i++)
+        {
+            atalhoSlots[i].AtualizarNumeroAtalho(i + 1);
+
+            if (generalManager.Player.Inventario.AtalhosDeItens[i].ID != 0)
+            {
+                atalhoSlots[i].AtualizarInformacoes(generalManager.Player.Inventario.AtalhosDeItens[i]);
+            }
+            else
+            {
+                atalhoSlots[i].ZerarInformacoes();
             }
         }
     }

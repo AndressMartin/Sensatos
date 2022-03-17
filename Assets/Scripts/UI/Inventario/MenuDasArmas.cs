@@ -112,6 +112,8 @@ public class MenuDasArmas : MonoBehaviour
 
         AtualizarScroolDasArmas();
         AtualizarInformacoesDaArma();
+
+        generalManager.Hud.SonsDeMenus.TocarSom(SonsDeMenus.Som.Confirmar);
     }
 
     public void Subir()
