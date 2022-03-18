@@ -20,7 +20,6 @@ public class MenuDasArmas : MonoBehaviour
     private int indiceArmaAtual;
     private int selecao;
     private int scrool;
-    private int maxArmasNaTela;
 
     private bool iniciado = false;
 
@@ -43,7 +42,6 @@ public class MenuDasArmas : MonoBehaviour
         indiceArmaAtual = 0;
         selecao = 0;
         scrool = 0;
-        maxArmasNaTela = 3;
 
         foreach(SelecaoArma selecaoArma in armas)
         {
@@ -77,7 +75,7 @@ public class MenuDasArmas : MonoBehaviour
 
     private void AtualizarScroolDasArmas()
     {
-        for (int i = 0; i < maxArmasNaTela; i++)
+        for (int i = 0; i < armas.Length; i++)
         {
             if(scrool + i >= generalManager.Player.Inventario.Armas.Count || scrool + i < 0)
             {
@@ -89,9 +87,10 @@ public class MenuDasArmas : MonoBehaviour
             }
         }
 
-        armas[0].Selecionado(false);
-        armas[1].Selecionado(false);
-        armas[2].Selecionado(false);
+        foreach(SelecaoArma arma in armas)
+        {
+            arma.Selecionado(false);
+        }
 
         armas[selecao - scrool].Selecionado(true);
     }
@@ -116,39 +115,62 @@ public class MenuDasArmas : MonoBehaviour
         generalManager.Hud.SonsDeMenus.TocarSom(SonsDeMenus.Som.Confirmar);
     }
 
-    public void Subir()
+    public void MenuArma()
     {
-        if (selecao > 0)
+        //Mover para cima
+        if (InputManager.Cima())
         {
-            selecao--;
-
-            if (selecao < scrool)
+            if (selecao > 0)
             {
-                scrool = selecao;
+                selecao--;
+
+                if (selecao < scrool)
+                {
+                    scrool = selecao;
+                }
+
+                AtualizarScroolDasArmas();
+                AtualizarInformacoesDaArma();
+
+                generalManager.Hud.SonsDeMenus.TocarSom(SonsDeMenus.Som.Movimento1);
             }
-
-            AtualizarScroolDasArmas();
-            AtualizarInformacoesDaArma();
-
-            generalManager.Hud.SonsDeMenus.TocarSom(SonsDeMenus.Som.Movimento1);
         }
-    }
 
-    public void Descer()
-    {
-        if (selecao < generalManager.Player.Inventario.Armas.Count - 1)
+        //Mover para baixo
+        if (InputManager.Baixo())
         {
-            selecao++;
-
-            if (selecao - scrool > maxArmasNaTela - 1)
+            if (selecao < generalManager.Player.Inventario.Armas.Count - 1)
             {
-                scrool = selecao - (maxArmasNaTela - 1);
+                selecao++;
+
+                if (selecao - scrool > armas.Length - 1)
+                {
+                    scrool = selecao - (armas.Length - 1);
+                }
+
+                AtualizarScroolDasArmas();
+                AtualizarInformacoesDaArma();
+
+                generalManager.Hud.SonsDeMenus.TocarSom(SonsDeMenus.Som.Movimento2);
             }
+        }
 
-            AtualizarScroolDasArmas();
-            AtualizarInformacoesDaArma();
+        //Voltar
+        if (InputManager.Voltar())
+        {
+            generalManager.Hud.MenuDoInventario.SetMenuAtual(MenuDoInventario.Menu.Inicio);
 
-            generalManager.Hud.SonsDeMenus.TocarSom(SonsDeMenus.Som.Movimento2);
+            generalManager.Hud.SonsDeMenus.TocarSom(SonsDeMenus.Som.Voltar);
+        }
+
+        //Confirmar
+        if (InputManager.Confirmar())
+        {
+            ConfirmarArma();
+
+            generalManager.Hud.MenuDoInventario.SetMenuAtual(MenuDoInventario.Menu.Inicio);
+
+            generalManager.Hud.SonsDeMenus.TocarSom(SonsDeMenus.Som.EquiparArma);
         }
     }
 

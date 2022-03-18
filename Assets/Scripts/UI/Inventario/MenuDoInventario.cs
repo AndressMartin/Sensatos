@@ -16,7 +16,8 @@ public class MenuDoInventario : MonoBehaviour
     [SerializeField] private RectTransform telaInicial;
     [SerializeField] private MenuDasArmas menuDasArmas;
     [SerializeField] private MenuDosItens menuDosItens;
-    [SerializeField] private RectTransform menuDasRoupas;
+    [SerializeField] private MenuDasRoupas menuDasRoupas;
+    [SerializeField] private MenuDosItensChave menuDosItensChave;
 
     //Getters
     public float PosicaoXBarraDeExplicacaoItens => armaSlots[0].transform.position.x - (Colisao.GetWorldRect(armaSlots[0].GetComponent<RectTransform>()).size.x / 2);
@@ -33,12 +34,15 @@ public class MenuDoInventario : MonoBehaviour
     private SelecaoDoInventario selecaoAtual;
 
     [SerializeField] private SelecaoArma[] armaSlots;
+    [SerializeField] private SelecaoRoupa roupaSlot;
     [SerializeField] private SelecaoItem[] itemSlots;
     [SerializeField] private SelecaoAtalho[] atalhoSlots;
+    [SerializeField] private SelecaoMenu[] botoesDeMenus;
 
     //Getters
     public MenuDasArmas MenuDasArmas => menuDasArmas;
     public MenuDosItens MenuDosItens => menuDosItens;
+    public MenuDasRoupas MenuDasRoupas => menuDasRoupas;
     public SelecaoItem[] ItemSlots => itemSlots;
     public SelecaoAtalho[] AtalhoSlots => atalhoSlots;
 
@@ -53,6 +57,7 @@ public class MenuDoInventario : MonoBehaviour
                 menuDasArmas.gameObject.SetActive(false);
                 menuDosItens.gameObject.SetActive(false);
                 menuDasRoupas.gameObject.SetActive(false);
+                menuDosItensChave.gameObject.SetActive(false);
                 AtualizarInformacoes();
                 break;
 
@@ -70,6 +75,10 @@ public class MenuDoInventario : MonoBehaviour
 
             case Menu.Roupa:
                 menuDasRoupas.gameObject.SetActive(true);
+                break;
+
+            case Menu.ItensChave:
+                menuDosItensChave.gameObject.SetActive(true);
                 break;
         }
     }
@@ -92,12 +101,43 @@ public class MenuDoInventario : MonoBehaviour
 
         selecaoAtual = selecaoInicial;
 
-        menuDasArmas.Iniciar();
+        IniciarComponentes();
 
         telaInicial.gameObject.SetActive(false);
         menuDasArmas.gameObject.SetActive(false);
         menuDosItens.gameObject.SetActive(false);
         menuDasRoupas.gameObject.SetActive(false);
+        menuDosItensChave.gameObject.SetActive(false);
+    }
+
+    private void IniciarComponentes()
+    {
+        menuDasArmas.Iniciar();
+        menuDosItens.Iniciar();
+        menuDasRoupas.Iniciar();
+        menuDosItensChave.Iniciar();
+
+        foreach (SelecaoArma arma in armaSlots)
+        {
+            arma.Iniciar();
+        }
+
+        foreach (SelecaoItem item in itemSlots)
+        {
+            item.Iniciar();
+        }
+
+        foreach (SelecaoAtalho atalho in atalhoSlots)
+        {
+            atalho.Iniciar();
+        }
+
+        roupaSlot.Iniciar();
+
+        foreach (SelecaoMenu botao in botoesDeMenus)
+        {
+            botao.Iniciar();
+        }
     }
 
     private void Update()
@@ -125,6 +165,7 @@ public class MenuDoInventario : MonoBehaviour
             FecharOInventario();
         }
 
+        //Executa as funcoes do menu atual
         switch (menuAtual)
         {
             case Menu.Inicio:
@@ -141,6 +182,14 @@ public class MenuDoInventario : MonoBehaviour
 
             case Menu.Atalho:
                 MenuAtalho();
+                break;
+
+            case Menu.Roupa:
+                MenuRoupa();
+                break;
+
+            case Menu.ItensChave:
+                MenuItensChave();
                 break;
         }
     }
@@ -243,34 +292,7 @@ public class MenuDoInventario : MonoBehaviour
 
     private void MenuArma()
     {
-        //Mover para cima
-        if (InputManager.Cima())
-        {
-            menuDasArmas.Subir();
-        }
-
-        //Mover para baixo
-        if (InputManager.Baixo())
-        {
-            menuDasArmas.Descer();
-        }
-
-        //Confirmar
-        if (InputManager.Confirmar())
-        {
-            menuDasArmas.ConfirmarArma();
-            SetMenuAtual(Menu.Inicio);
-
-            generalManager.Hud.SonsDeMenus.TocarSom(SonsDeMenus.Som.EquiparArma);
-        }
-
-        //Voltar
-        if (InputManager.Voltar())
-        {
-            SetMenuAtual(Menu.Inicio);
-
-            generalManager.Hud.SonsDeMenus.TocarSom(SonsDeMenus.Som.Voltar);
-        }
+        menuDasArmas.MenuArma();
     }
 
     private void MenuItem()
@@ -283,10 +305,21 @@ public class MenuDoInventario : MonoBehaviour
         menuDosItens.MenuAtalho();
     }
 
+    private void MenuRoupa()
+    {
+        menuDasRoupas.MenuRoupa();
+    }
+
+    private void MenuItensChave()
+    {
+        menuDosItensChave.MenuItensChave();
+    }
+
     private void AtualizarInformacoes()
     {
         AtualizarInformacoesJogador();
         AtualizarInformacoesArmas();
+        AtualizarInformacoesRoupa();
         AtualizarInformacoesItens();
         AtualizarInformacoesAtalhos();
     }
@@ -311,6 +344,11 @@ public class MenuDoInventario : MonoBehaviour
                 armaSlots[i].ZerarInformacoes();
             }
         }
+    }
+
+    private void AtualizarInformacoesRoupa()
+    {
+        roupaSlot.AtualizarInformacoes(generalManager.Player.Inventario.RoupaAtual);
     }
 
     private void AtualizarInformacoesItens()

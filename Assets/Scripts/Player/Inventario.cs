@@ -29,11 +29,18 @@ public class Inventario : MonoBehaviour
     public Item[] Itens => itens;
     public Item[] AtalhosDeItens => atalhosDeItens;
     public List<ArmaDeFogo> Armas => armas;
+    public List<RoupaDeCamuflagem> RoupasDeCamuflagem => roupasDeCamuflagem;
     public ArmaDeFogo[] ArmaSlot => armaSlot;
     public int ArmaAtual => armaAtual;
     public RoupaDeCamuflagem RoupaAtual => roupaAtual;
     public Item ItemAtual => itemAtual;
     public int Dinheiro => dinheiro;
+
+    //Setters
+    public void SetRoupaAtual(RoupaDeCamuflagem roupa)
+    {
+        roupaAtual = roupa;
+    }
 
     void Start()
     {

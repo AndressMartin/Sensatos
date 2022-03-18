@@ -2,17 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class MenuDasRoupas : MonoBehaviour
+public class MenuDosItensChave : MonoBehaviour
 {
     //Managers
     private GeneralManagerScript generalManager;
 
     //Componentes
-    [SerializeField] private SelecaoRoupa[] roupas;
+    //[SerializeField] private SelecaoRoupa[] roupas;
 
-    [SerializeField] private TMP_Text nomeDaRoupa;
-    [SerializeField] private TMP_Text descricaoDaRoupa;
+    [SerializeField] private TMP_Text nomeDoItem;
+    [SerializeField] private Image imagemDoItem;
+    [SerializeField] private TMP_Text descricaoDoItem;
 
     //Variaveis
     private int selecao;
@@ -39,22 +41,26 @@ public class MenuDasRoupas : MonoBehaviour
         selecao = 0;
         scrool = 0;
 
+        /*
         foreach (SelecaoRoupa selecaoRoupa in roupas)
         {
             selecaoRoupa.Iniciar();
         }
+        */
 
         iniciado = true;
     }
 
-    private void AtualizarInformacoesDaRoupa()
+    private void AtualizarInformacoesDoItem()
     {
-        nomeDaRoupa.text = generalManager.Player.Inventario.RoupasDeCamuflagem[selecao].Nome;
-        descricaoDaRoupa.text = generalManager.Player.Inventario.RoupasDeCamuflagem[selecao].Descricao;
+        nomeDoItem.text = generalManager.Player.InventarioMissao.Itens[selecao].Nome;
+        imagemDoItem.sprite = generalManager.Player.InventarioMissao.Itens[selecao].ImagemInventario;
+        descricaoDoItem.text = generalManager.Player.InventarioMissao.Itens[selecao].Descricao;
     }
 
-    private void AtualizarScroolDasRoupas()
+    private void AtualizarScroolDosItens()
     {
+        /*
         for (int i = 0; i < roupas.Length; i++)
         {
             if (scrool + i >= generalManager.Player.Inventario.RoupasDeCamuflagem.Count || scrool + i < 0)
@@ -73,30 +79,24 @@ public class MenuDasRoupas : MonoBehaviour
         }
 
         roupas[selecao - scrool].Selecionado(true);
+        */
     }
 
     public void IniciarScrool()
     {
-        for (int i = 0; i < generalManager.Player.Inventario.RoupasDeCamuflagem.Count; i++)
-        {
-            if (generalManager.Player.Inventario.RoupasDeCamuflagem[i] == generalManager.Player.Inventario.RoupaAtual)
-            {
-                selecao = i;
-                scrool = i - 1;
-                break;
-            }
-        }
+        selecao = 0;
+        scrool = 0;
 
-        AtualizarScroolDasRoupas();
-        AtualizarInformacoesDaRoupa();
+        AtualizarScroolDosItens();
+        AtualizarInformacoesDoItem();
 
         generalManager.Hud.SonsDeMenus.TocarSom(SonsDeMenus.Som.Confirmar);
     }
 
-    public void MenuRoupa()
+    public void MenuItensChave()
     {
-        //Mover para a esquerda
-        if (InputManager.Esquerda())
+        //Mover para cima
+        if (InputManager.Cima())
         {
             if (selecao > 0)
             {
@@ -107,27 +107,29 @@ public class MenuDasRoupas : MonoBehaviour
                     scrool = selecao;
                 }
 
-                AtualizarScroolDasRoupas();
-                AtualizarInformacoesDaRoupa();
+                AtualizarScroolDosItens();
+                AtualizarInformacoesDoItem();
 
                 generalManager.Hud.SonsDeMenus.TocarSom(SonsDeMenus.Som.Movimento1);
             }
         }
 
-        //Mover para a direita
-        if (InputManager.Direita())
+        //Mover para baixo
+        if (InputManager.Baixo())
         {
-            if (selecao < generalManager.Player.Inventario.RoupasDeCamuflagem.Count - 1)
+            if (selecao < generalManager.Player.InventarioMissao.Itens.Count - 1)
             {
                 selecao++;
 
+                /*
                 if (selecao - scrool > roupas.Length - 1)
                 {
                     scrool = selecao - (roupas.Length - 1);
                 }
+                */
 
-                AtualizarScroolDasRoupas();
-                AtualizarInformacoesDaRoupa();
+                AtualizarScroolDosItens();
+                AtualizarInformacoesDoItem();
 
                 generalManager.Hud.SonsDeMenus.TocarSom(SonsDeMenus.Som.Movimento2);
             }
@@ -140,20 +142,5 @@ public class MenuDasRoupas : MonoBehaviour
 
             generalManager.Hud.SonsDeMenus.TocarSom(SonsDeMenus.Som.Voltar);
         }
-
-        //Confirmar
-        if (InputManager.Confirmar())
-        {
-            ConfirmarRoupa();
-
-            generalManager.Hud.MenuDoInventario.SetMenuAtual(MenuDoInventario.Menu.Inicio);
-
-            generalManager.Hud.SonsDeMenus.TocarSom(SonsDeMenus.Som.EquiparRoupa);
-        }
-    }
-
-    public void ConfirmarRoupa()
-    {
-        generalManager.Player.Inventario.SetRoupaAtual(generalManager.Player.Inventario.RoupasDeCamuflagem[selecao]);
     }
 }

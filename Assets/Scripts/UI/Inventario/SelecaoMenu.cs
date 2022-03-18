@@ -3,14 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SelecaoArma : SelecaoDoInventario
+public class SelecaoMenu : SelecaoDoInventario
 {
     //Componentes
     private Image imagem;
-    private InformacoesDaArma informacoesDaArma;
+
+    //Enums
+    public enum Menu { ItensChave, Missoes, Conquistas }
 
     //Variaveis
-    [SerializeField] private int indiceArmaAtual;
+    [SerializeField] private Menu menu;
 
     private bool iniciado = false;
 
@@ -27,31 +29,32 @@ public class SelecaoArma : SelecaoDoInventario
         }
 
         imagem = GetComponent<Image>();
-        informacoesDaArma = GetComponent<InformacoesDaArma>();
 
         iniciado = true;
     }
 
     public override void Confirmar(MenuDoInventario menuDoInventario)
     {
-        menuDoInventario.SetMenuAtual(MenuDoInventario.Menu.Arma);
-        menuDoInventario.MenuDasArmas.AtualizarPosicaoDoScroolDasArmas(transform.position.y);
-        menuDoInventario.MenuDasArmas.IniciarScrool(indiceArmaAtual);
-    }
+        switch(menu)
+        {
+            case Menu.ItensChave:
+                menuDoInventario.SetMenuAtual(MenuDoInventario.Menu.ItensChave);
+                menuDoInventario.MenuDasRoupas.IniciarScrool();
+                break;
 
-    public void ZerarInformacoes()
-    {
-        informacoesDaArma.ZerarInformacoes();
-    }
+            case Menu.Missoes:
+                //menuDoInventario.SetMenuAtual(MenuDoInventario.Menu.Missoes);
+                break;
 
-    public void AtualizarInformacoes(ArmaDeFogo arma)
-    {
-        informacoesDaArma.AtualizarInformacoes(arma);
+            case Menu.Conquistas:
+                //menuDoInventario.SetMenuAtual(MenuDoInventario.Menu.Conquistas);
+                break;
+        }
     }
 
     public override void Selecionado(bool selecionado)
     {
-        if(selecionado == true)
+        if (selecionado == true)
         {
             imagem.color = Color.blue;
         }

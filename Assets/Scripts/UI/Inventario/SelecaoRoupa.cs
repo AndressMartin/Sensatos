@@ -3,14 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SelecaoItem : SelecaoDoInventario
+public class SelecaoRoupa : SelecaoDoInventario
 {
     //Componentes
-    protected Image imagem;
-    protected InformacoesDoItem informacoesDoItem;
+    private Image imagem;
+    private InformacoesDaRoupa informacoesDaRoupa;
 
-    //Variaveis
-    protected bool iniciado = false;
+    private bool iniciado = false;
 
     private void Start()
     {
@@ -25,26 +24,25 @@ public class SelecaoItem : SelecaoDoInventario
         }
 
         imagem = GetComponent<Image>();
-        informacoesDoItem = GetComponent<InformacoesDoItem>();
+        informacoesDaRoupa = GetComponent<InformacoesDaRoupa>();
 
         iniciado = true;
     }
 
     public override void Confirmar(MenuDoInventario menuDoInventario)
     {
-        menuDoInventario.SetMenuAtual(MenuDoInventario.Menu.Item);
-        menuDoInventario.MenuDosItens.AtualizarPosicaoDoPainelDeExplicacaoDosItens(menuDoInventario.PosicaoXBarraDeExplicacaoItens);
-        menuDoInventario.MenuDosItens.IniciarSelecaoItem(this);
+        menuDoInventario.SetMenuAtual(MenuDoInventario.Menu.Roupa);
+        menuDoInventario.MenuDasRoupas.IniciarScrool();
     }
 
     public void ZerarInformacoes()
     {
-        informacoesDoItem.ZerarInformacoes();
+        informacoesDaRoupa.ZerarInformacoes();
     }
 
-    public void AtualizarInformacoes(Item item)
+    public void AtualizarInformacoes(RoupaDeCamuflagem roupa)
     {
-        informacoesDoItem.AtualizarInformacoes(item);
+        informacoesDaRoupa.AtualizarInformacoes(roupa);
     }
 
     public override void Selecionado(bool selecionado)
