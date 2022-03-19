@@ -70,13 +70,15 @@ public class PlayerInput : MonoBehaviour
                     inventario.TrocarArma();
                     player.AtualizarArma();
 
+                    generalManager.Hud.AtualizarPlayerHUD();
+
                     player.SonsDoJogador.TocarSom(SonsDoJogador.Som.TrocarDeArma);
                 }
 
                 //Atirar
                 if(player.Inventario.ArmaSlot[inventario.ArmaAtual] != null)
                 {
-                    if (player.RapidFire == true)
+                    if (player.RapidFire == true && player.TemMunicao() == true)
                     {
                         if (InputManager.AtirarComRapidFire())
                         {
@@ -90,6 +92,8 @@ public class PlayerInput : MonoBehaviour
                             player.Atirar();
                         }
                     }
+
+                    generalManager.Hud.AtualizarPlayerHUD();
                 }
 
                 //Recarregar

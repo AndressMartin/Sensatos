@@ -16,6 +16,8 @@ public class MenuDasArmas : MonoBehaviour
     [SerializeField] private TMP_Text descricaoDaArma;
     [SerializeField] private InformacoesDaMelhoria[] melhorias;
 
+    [SerializeField] private SetaDeScrool[] setasDeScrool;
+
     //Variaveis
     private int indiceArmaAtual;
     private int selecao;
@@ -46,6 +48,11 @@ public class MenuDasArmas : MonoBehaviour
         foreach(SelecaoArma selecaoArma in armas)
         {
             selecaoArma.Iniciar();
+        }
+
+        foreach(SetaDeScrool setaDeScrool in setasDeScrool)
+        {
+            setaDeScrool.Ativa(false);
         }
 
         iniciado = true;
@@ -93,6 +100,26 @@ public class MenuDasArmas : MonoBehaviour
         }
 
         armas[selecao - scrool].Selecionado(true);
+
+
+        //Setas de Scrool
+        if(scrool > 0)
+        {
+            setasDeScrool[0].Ativa(true);
+        }
+        else
+        {
+            setasDeScrool[0].Ativa(false);
+        }
+
+        if (scrool + armas.Length < generalManager.Player.Inventario.Armas.Count)
+        {
+            setasDeScrool[1].Ativa(true);
+        }
+        else
+        {
+            setasDeScrool[1].Ativa(false);
+        }
     }
 
     public void IniciarScrool(int novoIndiceArmaAtual)

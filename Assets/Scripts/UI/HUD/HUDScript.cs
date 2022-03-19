@@ -7,6 +7,7 @@ public class HUDScript : MonoBehaviour
     //Componentes
     private Canvas canvas;
     [SerializeField] private Camera cameraAtiva;
+    [SerializeField] private PlayerHUD playerHUD;
     [SerializeField] private MenuDoInventario menuDoInventario;
     [SerializeField] private LockDownUI lockDownUI;
     [SerializeField] private PlayerUIScript playerUI;
@@ -26,6 +27,11 @@ public class HUDScript : MonoBehaviour
 
         LockDownUIAtiva(false);
         BarraDeRecarregamentoAtiva(false);
+    }
+
+    public void AtualizarPlayerHUD()
+    {
+        playerHUD.AtualizarInformacoes();
     }
 
     public void BarraDeRecarregamentoAtiva(bool ativa)

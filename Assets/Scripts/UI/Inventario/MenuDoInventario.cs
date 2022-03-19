@@ -147,7 +147,7 @@ public class MenuDoInventario : MonoBehaviour
         {
             if (generalManager.PauseManager.PermitirInput == true)
             {
-                if (generalManager.PauseManager.JogoPausado == false)
+                if (generalManager.PauseManager.JogoPausado == false && generalManager.Player.GetEstado == Player.Estado.Normal)
                 {
                     //Abrir o inventario
                     if (InputManager.AbrirOInventario())

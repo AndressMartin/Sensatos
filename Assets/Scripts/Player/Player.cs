@@ -315,6 +315,8 @@ public class Player : EntityModel
             recarregando = true;
             tempoRecarregar = 0;
             tempoRecarregarMax = inventario.ArmaSlot[inventario.ArmaAtual].GetStatus.TempoParaRecarregar;
+
+            sonsDoJogador.TocarSom(SonsDoJogador.Som.RecarregarArma);
         }
     }
 
@@ -333,11 +335,18 @@ public class Player : EntityModel
     {
         recarregando = false;
         generalManager.Hud.BarraDeRecarregamentoAtiva(false);
+
+        generalManager.Hud.AtualizarPlayerHUD();
     }
 
     public void SemMunicao()
     {
-        Debug.Log("Sem Municao!");
+        sonsDoJogador.TocarSom(SonsDoJogador.Som.SemMunicao);
+    }
+
+    public bool TemMunicao()
+    {
+        return inventario.ArmaSlot[inventario.ArmaAtual].MunicaoCartucho > 0;
     }
 
     private void CadenciaTiro()
@@ -377,6 +386,7 @@ public class Player : EntityModel
     public void UsarItem(Item item)
     {
         item.Usar(this);
+        generalManager.Hud.AtualizarPlayerHUD();
     }
 
     public void UsarItemAtalho(int atalho)
@@ -396,13 +406,15 @@ public class Player : EntityModel
     public void UsarItemGameplay()
     {
         inventario.ItemAtual.UsarNaGameplay(this);
+        generalManager.Hud.AtualizarPlayerHUD();
     }
 
     public override void TomarDano(int _dano, float _knockBack, float _knockBackTrigger, Vector2 _direcaoKnockBack)
     {
         if (!imune && estado != Estado.Morto)
         {
-            
+            vida -= _dano;
+
             if (generalManager.DialogueUI.IsOpen == true)
             {
                 generalManager.DialogueUI.ForcedCloseDialogueBox();
@@ -415,12 +427,11 @@ public class Player : EntityModel
 
             if (vida <= 0)
             {
+                vida = 0;
                 Morrer();
             }
             else
             {
-                vida -= _dano;
-
                 imune = true;
                 tempoImune = 0;
                 estado = Estado.TomandoDano;
@@ -428,6 +439,8 @@ public class Player : EntityModel
 
                 sonsDoJogador.TocarSom(SonsDoJogador.Som.Dano);
             }
+
+            generalManager.Hud.AtualizarPlayerHUD();
         }
     }
 

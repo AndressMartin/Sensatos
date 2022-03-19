@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: 512
   m_EditorClassIdentifier: 
   imagemInventario: {fileID: 21300000, guid: 474c61c513e8ff54aab5f13ea4b91be0, type: 3}
-  nome: 38
+  nome: 512
   descricao: Gohan pega o 38 do pai 2.
   nomeAnimacao: Arma1
   raioDoSomDoTiro: 5
@@ -29,7 +29,7 @@ MonoBehaviour:
     cadenciaDosTiros: 0.4
     tempoParaRecarregar: 1
     municaoMaxCartucho: 5
-    municaoMax: 60
+    municaoMax: 10
   melhorias:
   - imagemMelhoria: {fileID: 0}
     nome: Carregador Estendido

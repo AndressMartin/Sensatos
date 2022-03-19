@@ -353,6 +353,8 @@ public class Enemy : EntityModel
     {
         if(morto == false && estado == Estado.Normal)
         {
+            vida -= _dano;
+
             if (vida <= 0)
             {
                 animacao.SetVelocidade(1);
@@ -362,7 +364,6 @@ public class Enemy : EntityModel
             }
             else
             {
-                vida -= _dano;
                 ia_Enemy.ReceberDano();
 
                 knockBackTrigger += _knockBackTrigger;

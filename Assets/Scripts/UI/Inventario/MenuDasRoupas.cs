@@ -14,6 +14,8 @@ public class MenuDasRoupas : MonoBehaviour
     [SerializeField] private TMP_Text nomeDaRoupa;
     [SerializeField] private TMP_Text descricaoDaRoupa;
 
+    [SerializeField] private SetaDeScrool[] setasDeScrool;
+
     //Variaveis
     private int selecao;
     private int scrool;
@@ -42,6 +44,11 @@ public class MenuDasRoupas : MonoBehaviour
         foreach (SelecaoRoupa selecaoRoupa in roupas)
         {
             selecaoRoupa.Iniciar();
+        }
+
+        foreach (SetaDeScrool setaDeScrool in setasDeScrool)
+        {
+            setaDeScrool.Ativa(false);
         }
 
         iniciado = true;
@@ -73,6 +80,25 @@ public class MenuDasRoupas : MonoBehaviour
         }
 
         roupas[selecao - scrool].Selecionado(true);
+
+        //Setas de Scrool
+        if (scrool > 0)
+        {
+            setasDeScrool[0].Ativa(true);
+        }
+        else
+        {
+            setasDeScrool[0].Ativa(false);
+        }
+
+        if (scrool + roupas.Length < generalManager.Player.Inventario.RoupasDeCamuflagem.Count)
+        {
+            setasDeScrool[1].Ativa(true);
+        }
+        else
+        {
+            setasDeScrool[1].Ativa(false);
+        }
     }
 
     public void IniciarScrool()

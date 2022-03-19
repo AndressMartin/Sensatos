@@ -123,7 +123,7 @@ public class IAEnemy : MonoBehaviour
         inventarioEnemy = GetComponent<InventarioEnemy>();
 
         var barraDeVisaoTemp = Instantiate(generalManager.Hud.BarraDeVisaoDoInimigo.gameObject);
-        barraDeVisaoTemp.GetComponent<RectTransform>().SetParent(generalManager.Hud.transform, false);
+        barraDeVisaoTemp.GetComponent<RectTransform>().SetParent(generalManager.Hud.BarraDeVisaoDoInimigo.transform.parent, false);
         barraDeVisaoTemp.gameObject.SetActive(true);
 
         barraDeVisao = barraDeVisaoTemp.GetComponent<BarraDeVisaoDoInimigo>();

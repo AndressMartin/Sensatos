@@ -13,12 +13,14 @@ public class SonsDoJogador : MonoBehaviour
     [SerializeField] private AudioClip[] dano;
     [SerializeField] private AudioClip morte;
 
+    [SerializeField] private AudioClip semMunicao;
+    [SerializeField] private AudioClip recarregarArma;
     [SerializeField] private AudioClip trocarDeArma;
 
     [SerializeField] private AudioClip usarOAlicate;
 
     //Enums
-    public enum Som { AtaqueFisico, AcertoAtaqueFisico, Dano, Morte, TrocarDeArma, UsarOAlicate };
+    public enum Som { AtaqueFisico, AcertoAtaqueFisico, Dano, Morte, SemMunicao, RecarregarArma, TrocarDeArma, UsarOAlicate };
 
     private void Start()
     {
@@ -44,6 +46,14 @@ public class SonsDoJogador : MonoBehaviour
 
             case Som.Morte:
                 generalManager.SoundManager.TocarSom(morte);
+                break;
+
+            case Som.SemMunicao:
+                generalManager.SoundManager.TocarSom(semMunicao);
+                break;
+
+            case Som.RecarregarArma:
+                generalManager.SoundManager.TocarSom(recarregarArma);
                 break;
 
             case Som.TrocarDeArma:
