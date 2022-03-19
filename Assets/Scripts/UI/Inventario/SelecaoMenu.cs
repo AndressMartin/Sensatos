@@ -39,7 +39,7 @@ public class SelecaoMenu : SelecaoDoInventario
         {
             case Menu.ItensChave:
                 menuDoInventario.SetMenuAtual(MenuDoInventario.Menu.ItensChave);
-                menuDoInventario.MenuDasRoupas.IniciarScrool();
+                menuDoInventario.MenuDosItensChave.IniciarScrool();
                 break;
 
             case Menu.Missoes:
@@ -60,7 +60,7 @@ public class SelecaoMenu : SelecaoDoInventario
         }
         else
         {
-            imagem.color = Color.red;
+            imagem.color = Color.white;
         }
     }
 }

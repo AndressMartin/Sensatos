@@ -43,6 +43,7 @@ public class MenuDoInventario : MonoBehaviour
     public MenuDasArmas MenuDasArmas => menuDasArmas;
     public MenuDosItens MenuDosItens => menuDosItens;
     public MenuDasRoupas MenuDasRoupas => menuDasRoupas;
+    public MenuDosItensChave MenuDosItensChave => menuDosItensChave;
     public SelecaoItem[] ItemSlots => itemSlots;
     public SelecaoAtalho[] AtalhoSlots => atalhoSlots;
 

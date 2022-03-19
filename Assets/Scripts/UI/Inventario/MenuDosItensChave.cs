@@ -10,15 +10,23 @@ public class MenuDosItensChave : MonoBehaviour
     private GeneralManagerScript generalManager;
 
     //Componentes
-    //[SerializeField] private SelecaoRoupa[] roupas;
+    [SerializeField] private ListaSlot[] itens;
 
     [SerializeField] private TMP_Text nomeDoItem;
     [SerializeField] private Image imagemDoItem;
     [SerializeField] private TMP_Text descricaoDoItem;
 
+    [SerializeField] private RectTransform barraDeRolagem;
+
     //Variaveis
     private int selecao;
     private int scrool;
+
+    private float barraDeRolagemAlturaInicial;
+
+    [SerializeField] private string nomeSemItens;
+    [SerializeField] private Sprite imagemSemItens;
+    [SerializeField] private string descricaoSemItens;
 
     private bool iniciado = false;
 
@@ -41,14 +49,22 @@ public class MenuDosItensChave : MonoBehaviour
         selecao = 0;
         scrool = 0;
 
-        /*
-        foreach (SelecaoRoupa selecaoRoupa in roupas)
+        barraDeRolagemAlturaInicial = barraDeRolagem.sizeDelta.y;
+
+        foreach (ListaSlot listaSlot in itens)
         {
-            selecaoRoupa.Iniciar();
+            listaSlot.Iniciar();
+            listaSlot.ZerarInformacoes();
         }
-        */
 
         iniciado = true;
+    }
+
+    private void AtualizarInformacoesSemItem()
+    {
+        nomeDoItem.text = nomeSemItens;
+        imagemDoItem.sprite = imagemSemItens;
+        descricaoDoItem.text = descricaoSemItens;
     }
 
     private void AtualizarInformacoesDoItem()
@@ -60,26 +76,35 @@ public class MenuDosItensChave : MonoBehaviour
 
     private void AtualizarScroolDosItens()
     {
-        /*
-        for (int i = 0; i < roupas.Length; i++)
+        for (int i = 0; i < itens.Length; i++)
         {
-            if (scrool + i >= generalManager.Player.Inventario.RoupasDeCamuflagem.Count || scrool + i < 0)
+            if (scrool + i >= generalManager.Player.InventarioMissao.Itens.Count || scrool + i < 0)
             {
-                roupas[i].ZerarInformacoes();
+                itens[i].gameObject.SetActive(false);
             }
             else
             {
-                roupas[i].AtualizarInformacoes(generalManager.Player.Inventario.RoupasDeCamuflagem[scrool + i]);
+                itens[i].AtualizarNome(generalManager.Player.InventarioMissao.Itens[scrool + i].Nome);
+                itens[i].gameObject.SetActive(true);
             }
         }
 
-        foreach (SelecaoRoupa roupa in roupas)
+        foreach (ListaSlot listaSlot in itens)
         {
-            roupa.Selecionado(false);
+            listaSlot.Selecionado(false);
         }
 
-        roupas[selecao - scrool].Selecionado(true);
-        */
+        itens[selecao - scrool].Selecionado(true);
+
+        //Posicao da Barra de Rolagem
+        if (itens.Length < generalManager.Player.InventarioMissao.Itens.Count)
+        {
+            barraDeRolagem.anchoredPosition = new Vector2(0, (barraDeRolagemAlturaInicial / generalManager.Player.InventarioMissao.Itens.Count) * scrool * -1);
+        }
+        else
+        {
+            barraDeRolagem.anchoredPosition = Vector2.zero;
+        }
     }
 
     public void IniciarScrool()
@@ -87,8 +112,26 @@ public class MenuDosItensChave : MonoBehaviour
         selecao = 0;
         scrool = 0;
 
+        //Tamanho da Barra de Rolagem
+        if (itens.Length < generalManager.Player.InventarioMissao.Itens.Count)
+        {
+            barraDeRolagem.sizeDelta = new Vector2(barraDeRolagem.sizeDelta.x, barraDeRolagemAlturaInicial * ((float)itens.Length / generalManager.Player.InventarioMissao.Itens.Count));
+        }
+        else
+        {
+            barraDeRolagem.sizeDelta = new Vector2(barraDeRolagem.sizeDelta.x, barraDeRolagemAlturaInicial);
+        }
+
         AtualizarScroolDosItens();
-        AtualizarInformacoesDoItem();
+
+        if(generalManager.Player.InventarioMissao.Itens.Count > 0)
+        {
+            AtualizarInformacoesDoItem();
+        }
+        else
+        {
+            AtualizarInformacoesSemItem();
+        }
 
         generalManager.Hud.SonsDeMenus.TocarSom(SonsDeMenus.Som.Confirmar);
     }
@@ -121,12 +164,10 @@ public class MenuDosItensChave : MonoBehaviour
             {
                 selecao++;
 
-                /*
-                if (selecao - scrool > roupas.Length - 1)
+                if (selecao - scrool > itens.Length - 1)
                 {
-                    scrool = selecao - (roupas.Length - 1);
+                    scrool = selecao - (itens.Length - 1);
                 }
-                */
 
                 AtualizarScroolDosItens();
                 AtualizarInformacoesDoItem();
