@@ -17,6 +17,11 @@ public class SomDosTiros : MonoBehaviour
         audioSource.Play();
     }
 
+    public void PararSom()
+    {
+        audioSource.Stop();
+    }
+
     private void SetSom(AudioClip som)
     {
         this.audioSource.clip = som;

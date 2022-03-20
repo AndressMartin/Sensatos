@@ -212,6 +212,8 @@ public class Enemy : EntityModel
         animacao.AtivarSpriteRenderers();
         animacao.SetVelocidade(1);
 
+        somDosTiros.PararSom();
+
         ResetarVariaveisDeControle();
     }
 
