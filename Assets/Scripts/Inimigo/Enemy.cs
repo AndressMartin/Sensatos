@@ -19,9 +19,10 @@ public class Enemy : EntityModel
     private BoxCollider2D hitboxDano;
     private Rigidbody2D rb;
     private IAEnemy ia_Enemy;
-    private Player player;
     private SomDosTiros somDosTiros;
     private SonsDoInimigo sonsDoInimigo;
+
+    private Player player;
 
     //Variaveis
     [SerializeField] LayerMask layerDasZonas;
@@ -71,6 +72,7 @@ public class Enemy : EntityModel
     public InventarioEnemy GetInventarioEnemy => inventario;
     public EnemyMovement GetEnemyMovement => enemyMovement;
     public IAEnemy GetIAEnemy => ia_Enemy;
+    public SonsDoInimigo SonsDoInimigo => sonsDoInimigo;
     public Vector2 VetorVelocidade => vetorVelocidade;
 
     //Setters
@@ -207,6 +209,7 @@ public class Enemy : EntityModel
         hitboxDano.enabled = true;
         rb.bodyType = RigidbodyType2D.Dynamic;
 
+        animacao.AtivarSpriteRenderers();
         animacao.SetVelocidade(1);
 
         ResetarVariaveisDeControle();
@@ -270,7 +273,7 @@ public class Enemy : EntityModel
     {
         animacao.AtualizarDirecao(direcao, direcao);
 
-        if(animacao.AnimacaoAtual == "Andando" && enemyMovement.GetVelocidade > enemyMovement.GetVelocidadeModoNormal)
+        if (animacao.AnimacaoAtual == "Andando" && enemyMovement.GetVelocidade > enemyMovement.GetVelocidadeModoNormal)
         {
             animacao.SetVelocidade(velocidadeAnimacaoCorrendo);
         }

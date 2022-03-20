@@ -282,6 +282,8 @@ public class IAEnemy : MonoBehaviour
     {
         barraDeVisao.AtivarIconeDeAlerta();
         barraDeVisao.AtualizarBarraDeVisao(tempoEntrarEmModoAlerta, tempoEntrarEmModoAlertaMax);
+
+        enemy.SonsDoInimigo.TocarSom(SonsDoInimigo.Som.Alerta);
     }
 
     protected virtual void StateMachine()

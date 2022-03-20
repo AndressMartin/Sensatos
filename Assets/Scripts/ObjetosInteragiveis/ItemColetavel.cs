@@ -13,6 +13,8 @@ public class ItemColetavel : ObjetoInteragivel
 
     //Variaveis
     [SerializeField] private Item item;
+    [SerializeField] private AudioClip somAoSerColetado;
+
     private bool itemFoiColetado;
 
     //Variaveis de respawn
@@ -58,6 +60,11 @@ public class ItemColetavel : ObjetoInteragivel
 
         if(item != null)
         {
+            if(somAoSerColetado != null)
+            {
+                generalManager.SoundManager.TocarSom(somAoSerColetado);
+            }
+
             switch(item.Tipo)
             {
                 case Item.TipoItem.Consumivel:

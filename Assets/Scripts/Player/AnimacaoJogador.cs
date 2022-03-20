@@ -101,4 +101,10 @@ public class AnimacaoJogador : MonoBehaviour
         corpoEfeitosVisuais.SetTintSolidEffect(cor, velocidadeEfeito);
         bracoEfeitosVisuais.SetTintSolidEffect(cor, velocidadeEfeito);
     }
+
+    public void AtivarSpriteRenderers()
+    {
+        corpoSprite.enabled = true;
+        bracoSprite.enabled = true;
+    }
 }
