@@ -6,7 +6,7 @@ public class SomDosTiros : MonoBehaviour
 {
     private AudioSource audioSource;
 
-    void Start()
+    void Awake()
     {
         audioSource = GetComponent<AudioSource>();
     }
