@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: 180495879}
   - component: {fileID: 180495878}
   - component: {fileID: 180495877}
+  - component: {fileID: 3303565852281827627}
+  - component: {fileID: 712454933016154167}
   m_Layer: 0
   m_Name: Corpo
   m_TagString: Untagged
@@ -127,6 +129,32 @@ SortingGroup:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!114 &3303565852281827627
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 180495874}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b09a0828091a97d4e96c2660693204f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  materialTint: {fileID: 2100000, guid: 0f5963c216892b44595b947b6871fde6, type: 2}
+  materialTintSolid: {fileID: 2100000, guid: d759a7e0d4ba1e247a270dce00f889f4, type: 2}
+--- !u!114 &712454933016154167
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 180495874}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 801d8697283762948aae7d5524c5257a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &380813994
 GameObject:
   m_ObjectHideFlags: 0
@@ -138,6 +166,8 @@ GameObject:
   - component: {fileID: 380813995}
   - component: {fileID: 380813997}
   - component: {fileID: 380813996}
+  - component: {fileID: 2423039502989504216}
+  - component: {fileID: 6780779467519173832}
   m_Layer: 0
   m_Name: Bracos
   m_TagString: Untagged
@@ -229,6 +259,32 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &2423039502989504216
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 380813994}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b09a0828091a97d4e96c2660693204f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  materialTint: {fileID: 2100000, guid: 0f5963c216892b44595b947b6871fde6, type: 2}
+  materialTintSolid: {fileID: 2100000, guid: d759a7e0d4ba1e247a270dce00f889f4, type: 2}
+--- !u!114 &6780779467519173832
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 380813994}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 801d8697283762948aae7d5524c5257a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4051575243111830711
 GameObject:
   m_ObjectHideFlags: 0
@@ -413,6 +469,8 @@ MonoBehaviour:
     m_Bits: 256
   vidaInicial: 100
   velocidadeAnimacaoCorrendo: 1.5
+  corEfeitoTomandoDano: {r: 0.8207547, g: 0.081301175, b: 0.081301175, a: 1}
+  velocidadeEfeitoTomandoDano: 6
 --- !u!114 &6885532772316150975
 MonoBehaviour:
   m_ObjectHideFlags: 0

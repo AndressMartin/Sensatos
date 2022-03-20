@@ -711,6 +711,8 @@ GameObject:
   - component: {fileID: 8916929928804292821}
   - component: {fileID: 8916929928804292823}
   - component: {fileID: 8916929928804292820}
+  - component: {fileID: 8150429493051363746}
+  - component: {fileID: 1151592208873252887}
   m_Layer: 0
   m_Name: Bracos
   m_TagString: Untagged
@@ -802,6 +804,32 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &8150429493051363746
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8916929928804292810}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b09a0828091a97d4e96c2660693204f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  materialTint: {fileID: 2100000, guid: 0f5963c216892b44595b947b6871fde6, type: 2}
+  materialTintSolid: {fileID: 2100000, guid: d759a7e0d4ba1e247a270dce00f889f4, type: 2}
+--- !u!114 &1151592208873252887
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8916929928804292810}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 801d8697283762948aae7d5524c5257a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8916929929206015125
 GameObject:
   m_ObjectHideFlags: 0
@@ -954,6 +982,8 @@ GameObject:
   - component: {fileID: 8916929929810154643}
   - component: {fileID: 8916929929810154642}
   - component: {fileID: 8916929929810154653}
+  - component: {fileID: 1550596585684568798}
+  - component: {fileID: 8588963753750123037}
   m_Layer: 0
   m_Name: Corpo
   m_TagString: Untagged
@@ -1068,6 +1098,32 @@ SortingGroup:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!114 &1550596585684568798
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8916929929810154641}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b09a0828091a97d4e96c2660693204f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  materialTint: {fileID: 2100000, guid: 0f5963c216892b44595b947b6871fde6, type: 2}
+  materialTintSolid: {fileID: 2100000, guid: d759a7e0d4ba1e247a270dce00f889f4, type: 2}
+--- !u!114 &8588963753750123037
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8916929929810154641}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 801d8697283762948aae7d5524c5257a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &8862317246209479919
 PrefabInstance:
   m_ObjectHideFlags: 0

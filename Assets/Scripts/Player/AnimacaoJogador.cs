@@ -10,6 +10,8 @@ public class AnimacaoJogador : MonoBehaviour
     private Animator braco; //Animator dos bracos
     private SpriteRenderer corpoSprite; //SpriteRenderer do corpo
     private SpriteRenderer bracoSprite; //SpriteRenderer dos bracos
+    private EfeitosVisuais corpoEfeitosVisuais; //Efeitos visuais do corpo
+    private EfeitosVisuais bracoEfeitosVisuais; //Efeitos visuais dos bracos
 
     //Variaveis
     private string armaEquipadaVisual; //Guarda a arma equipada
@@ -38,6 +40,8 @@ public class AnimacaoJogador : MonoBehaviour
         braco = transform.Find("Bracos").GetComponent<Animator>();
         corpoSprite = transform.Find("Corpo").GetComponent<SpriteRenderer>();
         bracoSprite = transform.Find("Bracos").GetComponent<SpriteRenderer>();
+        corpoEfeitosVisuais = transform.Find("Corpo").GetComponent<EfeitosVisuais>();
+        bracoEfeitosVisuais = transform.Find("Bracos").GetComponent<EfeitosVisuais>();
         armaEquipadaVisual = "";
         animacaoAtual = "Idle";
 
@@ -84,5 +88,17 @@ public class AnimacaoJogador : MonoBehaviour
     {
         corpo.speed = velocidade;
         braco.speed = velocidade;
+    }
+
+    public void SetTintEffect(Color cor, float velocidadeEfeito)
+    {
+        corpoEfeitosVisuais.SetTintEffect(cor, velocidadeEfeito);
+        bracoEfeitosVisuais.SetTintEffect(cor, velocidadeEfeito);
+    }
+
+    public void SetTintSolidEffect(Color cor, float velocidadeEfeito)
+    {
+        corpoEfeitosVisuais.SetTintSolidEffect(cor, velocidadeEfeito);
+        bracoEfeitosVisuais.SetTintSolidEffect(cor, velocidadeEfeito);
     }
 }

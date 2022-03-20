@@ -29,6 +29,9 @@ public class Enemy : EntityModel
     [SerializeField] private int vidaInicial;
     [SerializeField] private float velocidadeAnimacaoCorrendo;
 
+    [SerializeField] private Color corEfeitoTomandoDano;
+    [SerializeField] private float velocidadeEfeitoTomandoDano;
+
     private int zona;
 
     public enum Estado { Normal, TomandoDano };
@@ -375,6 +378,8 @@ public class Enemy : EntityModel
                     estado = Estado.TomandoDano;
                     KnockBack(_knockBack, _direcaoKnockBack);
                 }
+
+                EfeitoTomandoDano();
             }
         } 
     }
@@ -565,6 +570,11 @@ public class Enemy : EntityModel
         {
             StartCoroutine(SeDesativarNoLockdownCorrotina());
         }
+    }
+
+    private void EfeitoTomandoDano()
+    {
+        animacao.SetTintSolidEffect(corEfeitoTomandoDano, velocidadeEfeitoTomandoDano);
     }
 
     private IEnumerator SeDesativarNoLockdownCorrotina()
