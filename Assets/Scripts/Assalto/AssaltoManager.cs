@@ -2,21 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AssaltoManager : MonoBehaviour
+public static class AssaltoManager
 {
-    
+    [SerializeField] private static string nomeAssalto;
 
 
-    [SerializeField] private string nomeAssalto;
+    [SerializeField] private static List<Missao> missaoPrincipais = new List<Missao>();
+    [SerializeField] private static List<Missao> missaoSecundaria = new List<Missao>();
 
 
-    [SerializeField] private List<Missao> missaoPrincipais = new List<Missao>();
-    [SerializeField] private List<Missao> missaoSecundaria = new List<Missao>();
-
-
-    [SerializeField] private List<Missao> missoesPrincipais_Cumprir = new List<Missao>();
-    [SerializeField] private List<Missao> missoesSecundarias_Cumprir = new List<Missao>();
-    public bool Verificar(Assalto _assalto)
+    [SerializeField] private static List<Missao> missoesPrincipais_Cumprir = new List<Missao>();
+    [SerializeField] private static List<Missao> missoesSecundarias_Cumprir = new List<Missao>();
+    public static bool Verificar(Assalto _assalto)
     {
         missoesPrincipais_Cumprir.Clear();
         missoesSecundarias_Cumprir.Clear();
@@ -46,6 +43,40 @@ public class AssaltoManager : MonoBehaviour
         else
         {
             return false;
+        }
+    }
+    public static void VerificarItem(Item item,Player player)
+    {
+        Missao_ColetarItem missaoTemp=null;
+        foreach (var ms in missaoPrincipais)
+        {
+            if((Missao_ColetarItem)ms)
+            {
+                missaoTemp = (Missao_ColetarItem)ms;
+            }
+        }
+        foreach (var ms in missaoSecundaria)
+        {
+            if ((Missao_ColetarItem)ms)
+            {
+                missaoTemp = (Missao_ColetarItem)ms;
+            }
+        }
+
+        if(missaoTemp != null)
+        {
+            if(missaoTemp.GetItemDeMissao.GetItem == item)
+            {
+                if(missaoTemp.GetquantidadeItensCompletarMissao < player.InventarioMissao.ProcurarQuantidadeItem(item))
+                {
+                    //AtualizaHud
+                }
+                else
+                {
+                    //AtualizaHud
+                    //Ativar Flag Missao Completa
+                }
+            }
         }
     }
 }

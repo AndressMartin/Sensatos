@@ -575,6 +575,69 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3716437794092535854, guid: 8519aa45d02449f42a2007dd173dc765, type: 3}
   m_PrefabInstance: {fileID: 3716437794187907819}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &203051356
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 203051359}
+  - component: {fileID: 203051358}
+  - component: {fileID: 203051357}
+  m_Layer: 0
+  m_Name: Teste
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &203051357
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 203051356}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e22ab6b870fe4248b7b1e17160446cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nomeAssalto: 
+  missaoPrincipais: []
+  missaoSecundaria: []
+  missoesPrincipais_Cumprir: []
+  missoesSecundarias_Cumprir: []
+--- !u!114 &203051358
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 203051356}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9f6ec5146df47149a8a4b776fce0c34, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mapaAssalto01: {fileID: 11400000, guid: a9f586e555618ca4fb69771caaff76ca, type: 2}
+  mapaAssalto02: {fileID: 11400000, guid: 27c656cbe6f0aa14bacaa0d741d4fa1a, type: 2}
+--- !u!4 &203051359
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 203051356}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -9.105791, y: -4.0411706, z: -2.1888416}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &224880114 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8092945610503558096, guid: dc3a116f3859f244b9426692e00a3497, type: 3}
@@ -25636,7 +25699,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1691348882}
-  - component: {fileID: 1691348881}
   - component: {fileID: 1691348880}
   m_Layer: 0
   m_Name: Assalto
@@ -25671,26 +25733,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 3}
   m_EdgeRadius: 0
---- !u!114 &1691348881
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1691348879}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ae2c5bfe2a6910b4186f07e0ff5f5354, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mapaAssalto01: {fileID: 11400000, guid: a9f586e555618ca4fb69771caaff76ca, type: 2}
-  mapaAssalto02: {fileID: 11400000, guid: 27c656cbe6f0aa14bacaa0d741d4fa1a, type: 2}
-  nomeAssalto: 
-  todasMissoesPrincipaisConcluidas: 0
-  missaoPrincipais: []
-  missaoSecundaria: []
-  missoesPrincipais_Cumprir: []
-  missoesSecundarias_Cumprir: []
 --- !u!4 &1691348882
 Transform:
   m_ObjectHideFlags: 0

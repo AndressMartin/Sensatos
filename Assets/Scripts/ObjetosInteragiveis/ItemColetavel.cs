@@ -20,6 +20,9 @@ public class ItemColetavel : ObjetoInteragivel
     //Variaveis de respawn
     private bool ativoRespawn;
 
+    //Getter
+    public Item GetItem => item;
+
     void Start()
     {
         //Managers
@@ -103,6 +106,10 @@ public class ItemColetavel : ObjetoInteragivel
 
     private void AdicionarAoInventarioMissao(Player player)
     {
+        if((ItemDeMissao)item)
+        {
+            AssaltoManager.VerificarItem(item,player);
+        }
         player.InventarioMissao.Add(item);
         itemFoiColetado = true;
     }

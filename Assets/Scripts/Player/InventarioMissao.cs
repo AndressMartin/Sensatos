@@ -22,4 +22,17 @@ public class InventarioMissao : MonoBehaviour
         itens.Remove(item);
         Destroy(item);
     }
+
+    public int ProcurarQuantidadeItem(Item _item)
+    {
+        int i = 0;
+        foreach (var x in itens)
+        {
+            if (x == _item)
+            {
+                i++;
+            }
+        }
+        return i;
+    }
 }

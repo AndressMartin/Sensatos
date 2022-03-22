@@ -5,8 +5,8 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Missao")]
 public class Missao : ScriptableObject
 {
-    [SerializeField] private string nomeMissao;
-    [SerializeField] private bool concluida;
+    [SerializeField] protected string nomeMissao;
+    [SerializeField] protected bool concluida;
     public string GetNomeMissao => nomeMissao;
     public bool GetConcluida => concluida;
 }
