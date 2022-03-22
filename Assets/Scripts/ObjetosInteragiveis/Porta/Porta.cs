@@ -109,7 +109,7 @@ public class Porta : ObjetoInteragivel
                 if(item is Chave)
                 {
                     Chave chave = (Chave)item;
-                    if(chave.IDChave == this.chave.IDChave)
+                    if(chave.ID == this.chave.ID)
                     {
                         Destrancar();
                     }
