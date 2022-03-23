@@ -58,6 +58,11 @@ public class ResponseHandler : MonoBehaviour
             }
             else
             {
+                if (achouArquivoDeTexto == true)
+                {
+                    Debug.LogWarning("Ha menos respostas no arquivo do que no objeto de respostas!");
+                }
+
                 responseButton.GetComponent<TMP_Text>().text = response.ResponseText;
             }
 

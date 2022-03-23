@@ -145,6 +145,10 @@ public class ArmaDeFogo : ItemDoInventario
                 melhorias[i].SetNome(textosArma.melhorias[i].nome);
                 melhorias[i].SetDescricao(textosArma.melhorias[i].descricao);
             }
+            else
+            {
+                Debug.LogWarning("Ha menos melhorias no arquivo do que na lista de melhorias da arma!");
+            }
         }
     }
 
