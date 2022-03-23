@@ -5,6 +5,7 @@ using UnityEngine;
 public class GeneralManagerScript : MonoBehaviour
 {
     //Managers
+    private IdiomaManager idiomaManager;
     private MusicManager musicManager;
     private SoundManager soundManager;
     private PauseManagerScript pauseManager;
@@ -25,6 +26,7 @@ public class GeneralManagerScript : MonoBehaviour
     private DialogueUI dialogueUI;
 
     //Getters
+    public IdiomaManager IdiomaManager => idiomaManager;
     public MusicManager MusicManager => musicManager;
     public SoundManager SoundManager => soundManager;
     public PauseManagerScript PauseManager => pauseManager;
@@ -45,6 +47,7 @@ public class GeneralManagerScript : MonoBehaviour
     private void Awake()
     {
         //Managers
+        idiomaManager = FindObjectOfType<IdiomaManager>();
         musicManager = FindObjectOfType<MusicManager>();
         soundManager = FindObjectOfType<SoundManager>();
         pauseManager = FindObjectOfType<PauseManagerScript>();

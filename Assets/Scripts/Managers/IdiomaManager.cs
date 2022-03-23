@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class IdiomaManager : MonoBehaviour
 {
@@ -10,11 +11,14 @@ public class IdiomaManager : MonoBehaviour
     //Variaveis
     private static string idioma;
 
+    private UnityEvent eventoTrocarIdioma = new UnityEvent();
+
     //Getters
     public static string GetIdioma => idioma;
+    public UnityEvent EventoTrocarIdioma => eventoTrocarIdioma;
 
     //Setters
-    public static void SetIdioma(Idioma idioma)
+    public void SetIdioma(Idioma idioma)
     {
         switch (idioma)
         {
@@ -26,6 +30,11 @@ public class IdiomaManager : MonoBehaviour
                 IdiomaManager.idioma = "EN";
                 break;
         }
+
+        if(eventoTrocarIdioma != null)
+        {
+            eventoTrocarIdioma.Invoke();
+        }
     }
 
     private void Awake()
@@ -34,5 +43,7 @@ public class IdiomaManager : MonoBehaviour
         {
             SetIdioma(Idioma.Portugues);
         }
+
+
     }
 }

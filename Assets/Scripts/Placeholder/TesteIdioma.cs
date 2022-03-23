@@ -18,13 +18,13 @@ public class TesteIdioma : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.Z))
         {
-            IdiomaManager.SetIdioma(IdiomaManager.Idioma.Portugues);
+            generalManager.IdiomaManager.SetIdioma(IdiomaManager.Idioma.Portugues);
             idioma = IdiomaManager.GetIdioma;
         }
 
         if (Input.GetKeyDown(KeyCode.X))
         {
-            IdiomaManager.SetIdioma(IdiomaManager.Idioma.Ingles);
+            generalManager.IdiomaManager.SetIdioma(IdiomaManager.Idioma.Ingles);
             idioma = IdiomaManager.GetIdioma;
         }
     }
