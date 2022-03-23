@@ -12,4 +12,10 @@ public class ItemDoInventario : ScriptableObject
     public Sprite ImagemInventario => imagemInventario;
     public string Nome => nome;
     public string Descricao => descricao;
+
+    public void TrocarIdioma(MudarIdiomaItensDoInventario.TextosItem textosItem)
+    {
+        nome = textosItem.nome;
+        descricao = textosItem.descricao;
+    }
 }

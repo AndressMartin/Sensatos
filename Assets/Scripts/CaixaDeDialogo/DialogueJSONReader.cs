@@ -26,7 +26,7 @@ public class DialogueJSONReader : MonoBehaviour
 
     public bool CarregarDialogo(DialogueObject dialogueObject)
     {
-        string caminhoDoArquivo = "Dialogos/" + IdiomaManager.GetIdioma + "/" + dialogueObject.name + IdiomaManager.GetIdioma;
+        string caminhoDoArquivo = "Textos/Dialogos/" + IdiomaManager.GetIdioma + "/" + dialogueObject.name + IdiomaManager.GetIdioma;
 
         TextAsset texto = (TextAsset) Resources.Load(caminhoDoArquivo);
 
@@ -36,7 +36,7 @@ public class DialogueJSONReader : MonoBehaviour
             return true;
         }
 
-        Debug.LogWarning("O arquivo de texto nao foi encontrado!");
+        Debug.LogWarning("O arquivo de texto nao foi encontrado!\nCaminho: " + caminhoDoArquivo);
         return false;
     }
 }

@@ -5,17 +5,20 @@ using UnityEngine.Events;
 
 public class Inventario : MonoBehaviour
 {
+    //Managers
+    private GeneralManagerScript generalManager;
+
     //Componentes
-    private Player player;
+    private MudarIdiomaItensDoInventario mudarIdiomaItensDoInventario;
 
     //Variaveis
     [SerializeField] private Item itemVazio;
 
-    [SerializeField] private Item[] itens;
+    private Item[] itens;
     private Item[] atalhosDeItens;
 
     [SerializeField] private List<ArmaDeFogo> armas = new List<ArmaDeFogo>();
-    [SerializeField] private List<RoupaDeCamuflagem> roupasDeCamuflagem = new List<RoupaDeCamuflagem>();
+    private List<RoupaDeCamuflagem> roupasDeCamuflagem = new List<RoupaDeCamuflagem>();
 
     [SerializeField] private ArmaDeFogo[] armaSlot = new ArmaDeFogo[2];
     private int armaAtual;
@@ -44,11 +47,16 @@ public class Inventario : MonoBehaviour
 
     void Start()
     {
+        //Managers
+        generalManager = FindObjectOfType<GeneralManagerScript>();
+
+        //Adicionar a funcao de trocar idioma ao evento do Idioma Manager
+        generalManager.IdiomaManager.EventoTrocarIdioma.AddListener(TrocarIdioma);
+
         //Componentes
-        player = GetComponentInParent<Player>();
+        mudarIdiomaItensDoInventario = GetComponent<MudarIdiomaItensDoInventario>();
 
         //Criar o inventario de itens
-
         itens = new Item[9];
 
         for (int i = 0; i < itens.Length; i++)
@@ -66,6 +74,9 @@ public class Inventario : MonoBehaviour
         }
 
         armaAtual = 0;
+
+        //Trocar o idioma uma vez para iniciar os objetos com o idioma correto
+        TrocarIdioma();
     }
 
     private void SetarArmasEquipadas()
@@ -85,10 +96,13 @@ public class Inventario : MonoBehaviour
     {
         //Cria uma nova instancia do scriptable object e a adiciona no inventario
         Item novoItem = ScriptableObject.Instantiate(item);
+        novoItem.name = item.name;
 
         novoItem.Iniciar();
 
-        for(int i = 0; i < itens.Length; i++)
+        mudarIdiomaItensDoInventario.TrocarIdioma(novoItem);
+
+        for (int i = 0; i < itens.Length; i++)
         {
             if(itens[i].ID == 0)
             {
@@ -177,6 +191,10 @@ public class Inventario : MonoBehaviour
     {
         //Cria uma nova instancia do scriptable object e a adiciona no inventario
         ArmaDeFogo novaArma = ScriptableObject.Instantiate(arma);
+        novaArma.name = arma.name;
+
+        mudarIdiomaItensDoInventario.TrocarIdioma(novaArma);
+
         armas.Add(novaArma);
 
         if(armas.Count <= 2)
@@ -189,6 +207,10 @@ public class Inventario : MonoBehaviour
     {
         //Cria uma nova instancia do scriptable object e a adiciona no inventario
         RoupaDeCamuflagem novaRoupa = ScriptableObject.Instantiate(roupa);
+        novaRoupa.name = roupa.name;
+
+        mudarIdiomaItensDoInventario.TrocarIdioma(novaRoupa);
+
         roupasDeCamuflagem.Add(novaRoupa);
 
         if (roupasDeCamuflagem.Count <= 1)
@@ -219,36 +241,21 @@ public class Inventario : MonoBehaviour
         }
     }
 
-    public void TrocarArmaDoInventario(ArmaDeFogo arma, GameObject objectThatCalled)
+    private void TrocarIdioma()
     {
-        /*
-        ArmaDeFogo weaponToBeBenched = objectThatCalled.GetComponent<WeaponFrame>().GetSavedElement() as ArmaDeFogo;
-        int temporaryIndex = arma.index; //E.g. temp = 7
-        arma.index = weaponToBeBenched.index; //E.g. arma7 = 1
-        weaponToBeBenched.index = temporaryIndex; //E.g. arma1 = 7
-        if (arma.index == 0) armaSlot1 = arma;
-        else if (arma.index == 1) armaSlot2 = arma;
-        else Debug.LogError("WARNING: SWITCHING WEAPONS IN INVENTORY WENT WRONG.");
-        ReSort();
-        */
-    }
+        foreach (ArmaDeFogo arma in armas)
+        {
+            mudarIdiomaItensDoInventario.TrocarIdioma(arma);
+        }
 
-    public void ReSort()
-    {
-        /*
-        List<ArmaDeFogo> armasTemp = new List<ArmaDeFogo>();
-        foreach (var arma in armas)
+        foreach (Item item in itens)
         {
-            //Debug.Log(arma.index);
-            if (armasTemp.Count >= arma.index) armasTemp.Insert(arma.index, arma);
-            else armasTemp.Add(arma);
+            mudarIdiomaItensDoInventario.TrocarIdioma(item);
         }
-        armas.Clear();
-        foreach (var arma in armasTemp)
+
+        foreach (RoupaDeCamuflagem roupa in roupasDeCamuflagem)
         {
-            armas.Add(arma);
+            mudarIdiomaItensDoInventario.TrocarIdioma(roupa);
         }
-        hasSortedWeapons.Invoke();
-        */
     }
 }

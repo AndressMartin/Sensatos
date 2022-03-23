@@ -133,6 +133,21 @@ public class ArmaDeFogo : ItemDoInventario
         nivelMelhoria = nivel;
     }
 
+    public void TrocarIdioma(MudarIdiomaItensDoInventario.TextosArma textosArma)
+    {
+        nome = textosArma.nome;
+        descricao = textosArma.descricao;
+
+        for(int i = 0; i < melhorias.Count; i++)
+        {
+            if(textosArma.melhorias.Length > i)
+            {
+                melhorias[i].SetNome(textosArma.melhorias[i].nome);
+                melhorias[i].SetDescricao(textosArma.melhorias[i].descricao);
+            }
+        }
+    }
+
     [System.Serializable]
     public struct Status
     {
@@ -165,7 +180,7 @@ public class ArmaDeFogo : ItemDoInventario
     }
 
     [System.Serializable]
-    public struct Melhoria
+    public class Melhoria
     {
         //Variaveis
         [SerializeField] private Sprite imagemMelhoria;
@@ -178,5 +193,16 @@ public class ArmaDeFogo : ItemDoInventario
         public string Descricao => descricao;
         public string Nome => nome;
         public Status GetStatus => status;
+
+        //Setters
+        public void SetNome(string nome)
+        {
+            this.nome = nome;
+        }
+
+        public void SetDescricao(string descricao)
+        {
+            this.descricao = descricao;
+        }
     }
 }

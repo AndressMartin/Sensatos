@@ -30,7 +30,7 @@ public class MudarIdiomaInventario : MonoBehaviour
     [SerializeField] private TMP_Text textoNao;
     [SerializeField] private TMP_Text textoSim;
 
-    public void TrocarIdioma(MudarIdiomaUI.TextosUI textosUI)
+    public void TrocarIdioma(MudarIdiomaUI.TextosUI textosUI, GeneralManagerScript generalManager)
     {
         this.tituloArmas.text = textosUI.tituloArmas;
         this.tituloAtalhos.text = textosUI.tituloAtalhos;
@@ -51,5 +51,8 @@ public class MudarIdiomaInventario : MonoBehaviour
         this.textoPerguntaJogarFora.text = textosUI.textoPerguntaJogarFora;
         this.textoNao.text = textosUI.textoNao;
         this.textoSim.text = textosUI.textoSim;
-}
+
+        generalManager.Hud.MenuDoInventario.MenuDosItensChave.SetNomeSemItens(textosUI.nomeSemItens);
+        generalManager.Hud.MenuDoInventario.MenuDosItensChave.SetDescricaoSemItens(textosUI.descricaoSemItens);
+    }
 }

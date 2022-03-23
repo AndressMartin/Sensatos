@@ -106,12 +106,13 @@ public class ItemColetavel : ObjetoInteragivel
 
     private void AdicionarAoInventarioMissao(Player player)
     {
-        if((ItemDeMissao)item)
-        {
-            AssaltoManager.VerificarItem(item,player);
-        }
-        player.InventarioMissao.Add(item);
+        player.InventarioMissao.AdicionarItem(item);
         itemFoiColetado = true;
+
+        if (item is ItemDeMissao)
+        {
+            AssaltoManager.VerificarItem(item, player);
+        }
     }
 
     private void Desativar()

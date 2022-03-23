@@ -43,6 +43,10 @@ public class MudarIdiomaUI : MonoBehaviour
         public string textoPerguntaJogarFora;
         public string textoNao;
         public string textoSim;
+
+        //Textos para quando nao ha itens chave
+        public string nomeSemItens;
+        public string descricaoSemItens;
     }
 
     //Instancia da classe com os textos
@@ -58,11 +62,14 @@ public class MudarIdiomaUI : MonoBehaviour
 
         //Componentes
         mudarIdiomaInventario = GetComponentInChildren<MudarIdiomaInventario>();
+
+        //Trocar o idioma uma vez para iniciar o objeto com o idioma correto
+        TrocarIdioma();
     }
 
     private void TrocarIdioma()
     {
-        string caminhoDoArquivo = "Textos/" + IdiomaManager.GetIdioma + "/" + "TextosUI" + IdiomaManager.GetIdioma;
+        string caminhoDoArquivo = "Textos/Geral/" + IdiomaManager.GetIdioma + "/" + "TextosUI" + IdiomaManager.GetIdioma;
 
         TextAsset texto = (TextAsset)Resources.Load(caminhoDoArquivo);
 
@@ -73,13 +80,13 @@ public class MudarIdiomaUI : MonoBehaviour
             return;
         }
 
-        Debug.LogWarning("O arquivo de texto nao foi encontrado!");
+        Debug.LogWarning("O arquivo de texto nao foi encontrado!\nCaminho: " + caminhoDoArquivo);
     }
 
     private void TrocarTextos()
     {
         textoLockdown.text = "<u>" + textosUI.textoLockdown + "</u>";
 
-        mudarIdiomaInventario.TrocarIdioma(textosUI);
+        mudarIdiomaInventario.TrocarIdioma(textosUI, generalManager);
     }
 }
