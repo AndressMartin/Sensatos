@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FazerAssalto : MonoBehaviour
+public class DebugFazerAssalto : MonoBehaviour
 {
     GeneralManagerScript generalManagerScript;
 
@@ -17,7 +17,7 @@ public class FazerAssalto : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Keypad1))
         {
-            if (AssaltoManager.Verificar(mapaAssalto01))
+            if (AssaltoManager.Verificar(mapaAssalto01,generalManagerScript.Player))
             {
                 Debug.Log("Mapa01\n Pode Fazer o mapa, todas quest principais feitas");
             }
@@ -29,7 +29,7 @@ public class FazerAssalto : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Keypad2))
         {
-            if (AssaltoManager.Verificar(mapaAssalto02))
+            if (AssaltoManager.Verificar(mapaAssalto02,generalManagerScript.Player))
             {
                 Debug.Log("Mapa02\n Pode Fazer o mapa, todas quest principais feitas");
 
