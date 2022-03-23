@@ -21,6 +21,8 @@ public class DialogueUI : MonoBehaviour
     private ResponseHandler responseHandler;
     private TypewriterEffect typewriterEffect;
 
+    private DialogueJSONReader dialogueJSONReader;
+
     void Start()
     {
         //Managers
@@ -29,6 +31,7 @@ public class DialogueUI : MonoBehaviour
         //Componentes
         typewriterEffect = GetComponent<TypewriterEffect>();
         responseHandler = GetComponent<ResponseHandler>();
+        dialogueJSONReader = GetComponent<DialogueJSONReader>();
 
         CloseDialogueBox();
     }
@@ -101,10 +104,24 @@ public class DialogueUI : MonoBehaviour
     //Passa por cada um dos arrays de texto do dialogueObject e os mostra na tela
     private IEnumerator StepThroughDialogue(DialogueObject dialogueObject)
     {
+        bool achouArquivoDeTexto = dialogueJSONReader.CarregarDialogo(dialogueObject);
+
         for(int i = 0; i < dialogueObject.Dialogue.Length; i++)
         {
+            string dialogue;
+
             UpdateImage(dialogueObject.Dialogue[i]);
-            string dialogue = dialogueObject.Dialogue[i].text;
+
+            //Confere se um arquivo de texto com o dialogo foi encontrado, e usa o texto dele. Caso nao tenha sido encontrado, usa o texto que esta no DialogueObject
+            if(achouArquivoDeTexto == true && dialogueJSONReader.dataDeDialogo.dialogos.Length > i)
+            {
+                dialogue = dialogueJSONReader.dataDeDialogo.dialogos[i].texto;
+            }
+            else
+            {
+                dialogue = dialogueObject.Dialogue[i].text;
+            }
+            
 
             yield return RunTypingEffect(dialogue);
 
@@ -119,7 +136,7 @@ public class DialogueUI : MonoBehaviour
         if(dialogueObject.HasResponses)
         {
             dialogueEndEvents = null;
-            responseHandler.ShowResponses(dialogueObject.Responses);
+            responseHandler.ShowResponses(dialogueObject.Responses, dialogueJSONReader.dataDeDialogo, achouArquivoDeTexto);
         }
         else
         {

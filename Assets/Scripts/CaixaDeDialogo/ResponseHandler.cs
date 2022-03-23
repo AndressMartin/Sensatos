@@ -39,7 +39,7 @@ public class ResponseHandler : MonoBehaviour
         this.responseEvents = responseEvents;
     }
 
-    public void ShowResponses(Response[] responses)
+    public void ShowResponses(Response[] responses, DialogueJSONReader.DataDeDialogo dataDeDialogo, bool achouArquivoDeTexto)
     {
         float responseBoxHeight = 0;
 
@@ -50,7 +50,17 @@ public class ResponseHandler : MonoBehaviour
 
             GameObject responseButton = Instantiate(responseButtonTemplate.gameObject, responseContainer);
             responseButton.gameObject.SetActive(true);
-            responseButton.GetComponent<TMP_Text>().text = response.ResponseText;
+
+            //Confere se um arquivo de texto com o texto da resposta foi encontrado, e usa o texto dele. Caso nao tenha sido encontrado, usa o texto que esta no objeto da resposta
+            if (achouArquivoDeTexto == true && dataDeDialogo.respostas.Length > i)
+            {
+                responseButton.GetComponent<TMP_Text>().text = dataDeDialogo.respostas[i].texto;
+            }
+            else
+            {
+                responseButton.GetComponent<TMP_Text>().text = response.ResponseText;
+            }
+
             //responseButton.GetComponent<Button>().onClick.AddListener(() => OnPickResponse(response, responseIndex)); //Adiciona um metodo ao botao, a mesma coisa que se faz atraves do editor do Unity, mas por codigo
 
             tempResponseButtons.Add(responseButton);

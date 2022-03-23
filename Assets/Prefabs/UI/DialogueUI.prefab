@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6079488165647792543}
   - component: {fileID: 8307805765642042745}
   - component: {fileID: 8217429454498665250}
+  - component: {fileID: 5210135498008202195}
   m_Layer: 5
   m_Name: DialogueUI
   m_TagString: Untagged
@@ -82,6 +83,21 @@ MonoBehaviour:
   responseBox: {fileID: 3611333044068640868}
   responseButtonTemplate: {fileID: 3611333043935884376}
   responseContainer: {fileID: 3611333045628716876}
+--- !u!114 &5210135498008202195
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 85891077885564576}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8e3952b0bdd20c4ba7ff7a70de6670c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dataDeDialogo:
+    dialogos: []
+    respostas: []
 --- !u!1001 &2985166016159608291
 PrefabInstance:
   m_ObjectHideFlags: 0
