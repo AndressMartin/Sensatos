@@ -53,7 +53,7 @@ public class InventarioMissao : MonoBehaviour
         int i = 0;
         foreach (var x in itens)
         {
-            if (x == _item)
+            if (x.ID == _item.ID)
             {
                 i++;
             }

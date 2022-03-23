@@ -13,7 +13,9 @@ public static class AssaltoManager
 
     [SerializeField] private static List<Missao> missoesPrincipais_Cumprir = new List<Missao>();
     [SerializeField] private static List<Missao> missoesSecundarias_Cumprir = new List<Missao>();
-    public static bool Verificar(Assalto _assalto)
+
+    
+    public static bool Verificar(Assalto _assalto,Player player)
     {
         missoesPrincipais_Cumprir.Clear();
         missoesSecundarias_Cumprir.Clear();
@@ -22,20 +24,12 @@ public static class AssaltoManager
         missaoPrincipais = _assalto.GetMissaoPrincipal;
         missaoSecundaria = _assalto.GetMissaoSecundaria;
 
-        foreach (var item in missaoPrincipais)
-        {
-            if (!item.GetConcluida)
-            {
-                missoesPrincipais_Cumprir.Add(item);
-            }
-        }
-        foreach (var item in missaoSecundaria)
-        {
-            if (!item.GetConcluida)
-            {
-                missoesSecundarias_Cumprir.Add(item);
-            }
-        }
+        List<Missao> missoesTemp = new List<Missao>();
+        VerificarMissaoCompleta(missaoPrincipais,missoesPrincipais_Cumprir,missoesTemp,player);
+        VerificarMissaoCompleta(missaoSecundaria, missoesSecundarias_Cumprir, missoesTemp, player);    
+        missoesTemp = null;
+
+
         if (missoesPrincipais_Cumprir.Count <= 0)
         {
             return true;
@@ -45,7 +39,34 @@ public static class AssaltoManager
             return false;
         }
     }
-    public static void VerificarItem(Item item,Player player)
+    static void VerificarMissaoCompleta(List<Missao> _listaMissoes, List<Missao> _listaMissoes_Cumprir, List<Missao> _listaMissoes_temp, Player player)
+    {
+        foreach (var item in _listaMissoes)
+        {
+            if (!item.GetConcluida)
+            {
+                _listaMissoes_Cumprir.Add(item);
+            }
+        }
+        foreach (var item in _listaMissoes_Cumprir)
+        {
+            if (item is Missao_ColetarItem)
+            {
+                Missao_ColetarItem _item_temp = item as Missao_ColetarItem;
+                if (VerificarItem(_item_temp.GetItemDeMissao, player))
+                {
+                    _listaMissoes_temp.Add(item);
+                }
+            }
+        }
+        foreach (var item in _listaMissoes_temp)
+        {
+            _listaMissoes_Cumprir.Remove(item);
+        }
+        _listaMissoes_temp.Clear();
+    }
+
+    public static bool VerificarItem(Item item,Player player)
     {
         Missao_ColetarItem missaoTemp=null;
         foreach (var ms in missaoPrincipais)
@@ -65,18 +86,24 @@ public static class AssaltoManager
 
         if(missaoTemp != null)
         {
-            if(missaoTemp.GetItemDeMissao.GetItem == item)
+            if(missaoTemp.GetItemDeMissao == item)
             {
-                if(missaoTemp.GetquantidadeItensCompletarMissao < player.InventarioMissao.ProcurarQuantidadeItem(item))
+                if(player.InventarioMissao.ProcurarQuantidadeItem(item) < missaoTemp.GetquantidadeItensCompletarMissao)
                 {
                     //AtualizaHud
+                    Debug.Log("Falta macas ainda");
+                    return false;
                 }
                 else
                 {
+                    Debug.Log("Coletaste todas as macas");
+
                     //AtualizaHud
                     //Ativar Flag Missao Completa
+                    return true;
                 }
             }
         }
+        return false;
     }
 }

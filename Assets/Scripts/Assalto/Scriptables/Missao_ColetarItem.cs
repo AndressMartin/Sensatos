@@ -6,13 +6,9 @@ using UnityEngine;
 
 public class Missao_ColetarItem : Missao
 {
-    [SerializeField] private ItemColetavel itemColetavels;
+    [SerializeField] private ItemDeMissao itemColetavels;
     [SerializeField] private int quantidadeItensCompletarMissao;
-    public ItemColetavel GetItemDeMissao => itemColetavels;
+    public ItemDeMissao GetItemDeMissao => itemColetavels;
     public int GetquantidadeItensCompletarMissao => quantidadeItensCompletarMissao;
 
-    void Test()
-    {
-
-    }
 }
