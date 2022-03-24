@@ -11,7 +11,7 @@ public class InventarioMissao : MonoBehaviour
     private MudarIdiomaItensDoInventario mudarIdiomaItensDoInventario;
 
     //Variaveis
-    private List<Item> itens = new List<Item>();
+    private static List<Item> itens = new List<Item>();
 
     //Getters
     public List<Item> Itens => itens;

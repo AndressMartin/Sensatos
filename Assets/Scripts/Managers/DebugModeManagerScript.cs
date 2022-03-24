@@ -20,8 +20,6 @@ public class DebugModeManagerScript : MonoBehaviour
     private float fps;
     private float tempoFPS;
 
-    public SaveConfiguracoes.Configuracoes configuracoes = new SaveConfiguracoes.Configuracoes(0, 0, IdiomaManager.Idioma.Portugues);
-
     void Start()
     {
         //Managers
@@ -87,9 +85,7 @@ public class DebugModeManagerScript : MonoBehaviour
         //Carregar Configuracoes
         if (Input.GetKeyUp(KeyCode.Z))
         {
-            configuracoes.volumeMusica = SaveConfiguracoes.configuracoes.volumeMusica;
-            configuracoes.volumeEfeitosSonoros = SaveConfiguracoes.configuracoes.volumeEfeitosSonoros;
-            configuracoes.idioma = SaveConfiguracoes.configuracoes.idioma;
+            generalManager.Player.Inventario.SetDinheiro(generalManager.Player.Inventario.Dinheiro + 100);
         }
     }
 

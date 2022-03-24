@@ -15,10 +15,11 @@ public class Player : EntityModel
     private AtaqueFisico ataqueHitBox;
     private PlayerSound sound;
     private PontaArmaPlayerScript pontaArma;
-    private Inventario inventario;
-    private InventarioMissao inventarioMissao;
     private SomDosTiros somDosTiros;
     private SonsDoJogador sonsDoJogador;
+
+    private Inventario inventario;
+    private InventarioMissao inventarioMissao;
 
     //Enums
     public enum ModoMovimento { Normal, AndandoSorrateiramente, Strafing };
@@ -59,10 +60,10 @@ public class Player : EntityModel
     //Getters
     public GeneralManagerScript GeneralManager => generalManager;
     public AnimacaoJogador Animacao => animacao;
-    public Inventario Inventario => inventario;
-    public InventarioMissao InventarioMissao => inventarioMissao;
     public SomDosTiros SomDosTiros => somDosTiros;
     public SonsDoJogador SonsDoJogador => sonsDoJogador;
+    public Inventario Inventario => inventario;
+    public InventarioMissao InventarioMissao => inventarioMissao;
     public int Vida => vida;
     public int VidaMax => vidaMax;
     public bool ModoDeCombate => modoDeCombate;
@@ -84,10 +85,11 @@ public class Player : EntityModel
         ataqueHitBox = GetComponentInChildren<AtaqueFisico>();
         sound = FindObjectOfType<PlayerSound>();
         pontaArma = GetComponentInChildren<PontaArmaPlayerScript>();
-        inventario = GetComponent<Inventario>();
-        inventarioMissao = GetComponent<InventarioMissao>();
         somDosTiros = GetComponentInChildren<SomDosTiros>();
         sonsDoJogador = GetComponent<SonsDoJogador>();
+
+        inventario = GetComponent<Inventario>();
+        inventarioMissao = GetComponent<InventarioMissao>();
 
         //Variaveis
         vida = vidaInicial;

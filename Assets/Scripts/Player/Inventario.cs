@@ -14,19 +14,19 @@ public class Inventario : MonoBehaviour
     //Variaveis
     [SerializeField] private Item itemVazio;
 
-    private Item[] itens;
-    private Item[] atalhosDeItens;
+    private static Item[] itens;
+    private static Item[] atalhosDeItens;
 
-    [SerializeField] private List<ArmaDeFogo> armas = new List<ArmaDeFogo>();
-    private List<RoupaDeCamuflagem> roupasDeCamuflagem = new List<RoupaDeCamuflagem>();
+    private static List<ArmaDeFogo> armas = new List<ArmaDeFogo>();
+    private static List<RoupaDeCamuflagem> roupasDeCamuflagem = new List<RoupaDeCamuflagem>();
 
-    [SerializeField] private ArmaDeFogo[] armaSlot = new ArmaDeFogo[2];
+    private static ArmaDeFogo[] armaSlot = new ArmaDeFogo[2];
     private int armaAtual;
 
-    private RoupaDeCamuflagem roupaAtual;
-    private Item itemAtual;
+    private static RoupaDeCamuflagem roupaAtual;
+    private static Item itemAtual;
 
-    private int dinheiro;
+    private static int dinheiro = 0;
 
     //Getters
     public Item[] Itens => itens;
@@ -45,6 +45,11 @@ public class Inventario : MonoBehaviour
         roupaAtual = roupa;
     }
 
+    public void SetDinheiro(int novoDinheiro)
+    {
+        dinheiro = novoDinheiro;
+    }
+
     void Start()
     {
         //Managers
@@ -57,20 +62,25 @@ public class Inventario : MonoBehaviour
         mudarIdiomaItensDoInventario = GetComponent<MudarIdiomaItensDoInventario>();
 
         //Criar o inventario de itens
-        itens = new Item[9];
-
-        for (int i = 0; i < itens.Length; i++)
+        if(itens == null)
         {
-            itens[i] = ScriptableObject.Instantiate(itemVazio);
+            itens = new Item[9];
+
+            for (int i = 0; i < itens.Length; i++)
+            {
+                itens[i] = ScriptableObject.Instantiate(itemVazio);
+            }
         }
 
         //Criar a array dos atalhos
-
-        atalhosDeItens = new Item[4];
-
-        for (int i = 0; i < atalhosDeItens.Length; i++)
+        if(atalhosDeItens == null)
         {
-            atalhosDeItens[i] = itemVazio;
+            atalhosDeItens = new Item[4];
+
+            for (int i = 0; i < atalhosDeItens.Length; i++)
+            {
+                atalhosDeItens[i] = itemVazio;
+            }
         }
 
         armaAtual = 0;
