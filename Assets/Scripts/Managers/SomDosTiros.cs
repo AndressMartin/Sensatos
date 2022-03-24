@@ -26,4 +26,9 @@ public class SomDosTiros : MonoBehaviour
     {
         this.audioSource.clip = som;
     }
+
+    public void SetVolume(int volume)
+    {
+        audioSource.volume = (float)volume / 100;
+    }
 }

@@ -55,10 +55,12 @@ public class ListaSlot : MonoBehaviour
         if (selecionado == true)
         {
             imagem.color = Color.blue;
+            nome.color = Color.white;
         }
         else
         {
             imagem.color = Color.white;
+            nome.color = Color.black;
         }
     }
 }

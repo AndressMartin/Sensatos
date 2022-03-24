@@ -19,10 +19,6 @@ public class MenuDoInventario : MonoBehaviour
     [SerializeField] private MenuDasRoupas menuDasRoupas;
     [SerializeField] private MenuDosItensChave menuDosItensChave;
 
-    //Getters
-    public float PosicaoXBarraDeExplicacaoItens => armaSlots[0].transform.position.x - (Colisao.GetWorldRect(armaSlots[0].GetComponent<RectTransform>()).size.x / 2);
-    public float PosicaoXBarraDeExplicacaoAtalhos => itemSlots[0].transform.position.x - (Colisao.GetWorldRect(itemSlots[0].GetComponent<RectTransform>()).size.x / 2);
-
     //Enums
     public enum Menu { Inicio, Arma, Item, Atalho, Roupa, ItensChave, Missoes, Conquistas}
 
@@ -46,6 +42,8 @@ public class MenuDoInventario : MonoBehaviour
     public MenuDosItensChave MenuDosItensChave => menuDosItensChave;
     public SelecaoItem[] ItemSlots => itemSlots;
     public SelecaoAtalho[] AtalhoSlots => atalhoSlots;
+    public float PosicaoXBarraDeExplicacaoItens => armaSlots[0].transform.position.x - (Colisao.GetWorldRect(armaSlots[0].GetComponent<RectTransform>()).size.x / 2);
+    public float PosicaoXBarraDeExplicacaoAtalhos => itemSlots[0].transform.position.x - (Colisao.GetWorldRect(itemSlots[0].GetComponent<RectTransform>()).size.x / 2);
 
     //Setters
     public void SetMenuAtual(Menu menuAtual)
@@ -147,7 +145,7 @@ public class MenuDoInventario : MonoBehaviour
         {
             if (generalManager.PauseManager.PermitirInput == true)
             {
-                if (generalManager.PauseManager.JogoPausado == false && generalManager.Player.GetEstado == Player.Estado.Normal)
+                if (generalManager.Hud.MenuAberto == HUDScript.Menu.Nenhum && generalManager.Player.GetEstado == Player.Estado.Normal)
                 {
                     //Abrir o inventario
                     if (InputManager.AbrirOInventario())
@@ -197,6 +195,7 @@ public class MenuDoInventario : MonoBehaviour
 
     public void AbrirOInventario()
     {
+        generalManager.Hud.SetMenuAberto(HUDScript.Menu.Inventario);
         generalManager.PauseManager.Pausar(true);
         generalManager.PauseManager.SetPermitirInput(false);
 
@@ -214,6 +213,7 @@ public class MenuDoInventario : MonoBehaviour
 
     public void FecharOInventario()
     {
+        generalManager.Hud.SetMenuAberto(HUDScript.Menu.Nenhum);
         generalManager.PauseManager.Pausar(false);
         generalManager.PauseManager.SetPermitirInput(true);
 

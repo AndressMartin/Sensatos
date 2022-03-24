@@ -20,6 +20,8 @@ public class DebugModeManagerScript : MonoBehaviour
     private float fps;
     private float tempoFPS;
 
+    public SaveConfiguracoes.Configuracoes configuracoes = new SaveConfiguracoes.Configuracoes(0, 0, IdiomaManager.Idioma.Portugues);
+
     void Start()
     {
         //Managers
@@ -80,6 +82,14 @@ public class DebugModeManagerScript : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.K))
         {
             generalManager.LockDownManager.DesativarLockDown();
+        }
+
+        //Carregar Configuracoes
+        if (Input.GetKeyUp(KeyCode.Z))
+        {
+            configuracoes.volumeMusica = SaveConfiguracoes.configuracoes.volumeMusica;
+            configuracoes.volumeEfeitosSonoros = SaveConfiguracoes.configuracoes.volumeEfeitosSonoros;
+            configuracoes.idioma = SaveConfiguracoes.configuracoes.idioma;
         }
     }
 

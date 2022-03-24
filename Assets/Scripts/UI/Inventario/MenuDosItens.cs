@@ -10,9 +10,9 @@ public class MenuDosItens : MonoBehaviour
     private GeneralManagerScript generalManager;
 
     //Componentes
-    [SerializeField] private PainelDeEscolhaDosItens painelDeEscolhaDosItens;
-    [SerializeField] private PainelDeEscolhaDosItens painelDeEscolhaDosAtalhos;
-    [SerializeField] private PainelDeEscolhaDosItens painelDeConfirmacaoParaJogarUmItemFora;
+    [SerializeField] private PainelDeEscolha painelDeEscolhaDosItens;
+    [SerializeField] private PainelDeEscolha painelDeEscolhaDosAtalhos;
+    [SerializeField] private PainelDeEscolha painelDeConfirmacaoParaJogarUmItemFora;
     [SerializeField] private RectTransform painelDeExplicacaoDosItens;
     [SerializeField] private RectTransform selecaoDoItem;
 
@@ -81,7 +81,7 @@ public class MenuDosItens : MonoBehaviour
         selecaoDoItem.transform.position = item.transform.position;
     }
 
-    private void IniciarPainelDeEscolha(PainelDeEscolhaDosItens painelDeEscolha, SelecaoItem selecaoItem)
+    private void IniciarPainelDeEscolha(PainelDeEscolha painelDeEscolha, SelecaoItem selecaoItem)
     {
         Rect retanguloGlobal = Colisao.GetWorldRect(selecaoItem.GetComponent<RectTransform>());
         painelDeEscolha.transform.position = new Vector2(selecaoItem.transform.position.x, selecaoItem.transform.position.y - (retanguloGlobal.size.y / 2) - (retanguloGlobal.size.y / 21));
@@ -93,7 +93,7 @@ public class MenuDosItens : MonoBehaviour
         }
     }
 
-    private void AtualizarPainelDeEscolha(PainelDeEscolhaDosItens painelDeEscolha, int selecao)
+    private void AtualizarPainelDeEscolha(PainelDeEscolha painelDeEscolha, int selecao)
     {
         painelDeEscolha.Selecionar(selecao);
     }

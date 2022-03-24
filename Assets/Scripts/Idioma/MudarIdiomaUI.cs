@@ -12,6 +12,7 @@ public class MudarIdiomaUI : MonoBehaviour
     [SerializeField] private TMP_Text textoLockdown;
 
     private MudarIdiomaInventario mudarIdiomaInventario;
+    private MudarIdiomaMenuDePausa mudarIdiomaMenuDePausa;
 
     //Classe que contem os textos
     [System.Serializable]
@@ -20,7 +21,7 @@ public class MudarIdiomaUI : MonoBehaviour
         //LockdownUI
         public string textoLockdown;
 
-        //Titulos
+        //Titulos Inventario
         public string tituloArmas;
         public string tituloAtalhos;
         public string tituloInventario;
@@ -47,6 +48,27 @@ public class MudarIdiomaUI : MonoBehaviour
         //Textos para quando nao ha itens chave
         public string nomeSemItens;
         public string descricaoSemItens;
+
+        //Titulos Menu de Pausa
+        public string tituloPausa;
+        public string tituloSalvar;
+        public string tituloOpcoes;
+
+        //Painel de Escolha do Menu Inicial
+        public string textoContinuar;
+        public string textoSalvar;
+        public string textoOpcoes;
+        public string textoMenuPrincipal;
+
+        //Texto de Confirmacao para Voltar ao Menu Principal
+        public string textoPerguntaSairParaOMenuPrincipal;
+        public string textoNaoMenuPrincipal;
+        public string textoSimMenuPrincipal;
+
+        //Textos das opcoes do Menu de Opcoes
+        public string textoVolumeMusica;
+        public string textoVolumeEfeitosSonoros;
+        public string textoIdioma;
     }
 
     //Instancia da classe com os textos
@@ -62,6 +84,7 @@ public class MudarIdiomaUI : MonoBehaviour
 
         //Componentes
         mudarIdiomaInventario = GetComponentInChildren<MudarIdiomaInventario>();
+        mudarIdiomaMenuDePausa = GetComponentInChildren<MudarIdiomaMenuDePausa>();
 
         //Trocar o idioma uma vez para iniciar o objeto com o idioma correto
         TrocarIdioma();
@@ -88,5 +111,6 @@ public class MudarIdiomaUI : MonoBehaviour
         textoLockdown.text = "<u>" + textosUI.textoLockdown + "</u>";
 
         mudarIdiomaInventario.TrocarIdioma(textosUI, generalManager);
+        mudarIdiomaMenuDePausa.TrocarIdioma(textosUI, generalManager);
     }
 }

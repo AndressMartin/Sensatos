@@ -21,9 +21,19 @@ public static class InputManager
         return Input.GetKeyDown(KeyCode.LeftArrow);
     }
 
+    public static bool EsquerdaSegurar()
+    {
+        return Input.GetButton("Esquerda");
+    }
+
     public static bool Direita()
     {
         return Input.GetKeyDown(KeyCode.RightArrow);
+    }
+
+    public static bool DireitaSegurar()
+    {
+        return Input.GetButton("Direita");
     }
 
     public static bool Confirmar()

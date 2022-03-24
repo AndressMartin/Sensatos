@@ -9,12 +9,14 @@ public class IdiomaManager : MonoBehaviour
     public enum Idioma { Portugues, Ingles }
 
     //Variaveis
+    private static Idioma idiomaEnum;
     private static string idioma;
 
     private UnityEvent eventoTrocarIdioma = new UnityEvent();
 
     //Getters
     public static string GetIdioma => idioma;
+    public static Idioma GetIdiomaEnum => idiomaEnum;
     public UnityEvent EventoTrocarIdioma => eventoTrocarIdioma;
 
     //Setters
@@ -31,7 +33,9 @@ public class IdiomaManager : MonoBehaviour
                 break;
         }
 
-        if(eventoTrocarIdioma != null)
+        IdiomaManager.idiomaEnum = idioma;
+
+        if (eventoTrocarIdioma != null)
         {
             eventoTrocarIdioma.Invoke();
         }
@@ -43,7 +47,5 @@ public class IdiomaManager : MonoBehaviour
         {
             SetIdioma(Idioma.Portugues);
         }
-
-
     }
 }

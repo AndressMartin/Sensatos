@@ -61,6 +61,7 @@ public class Player : EntityModel
     public AnimacaoJogador Animacao => animacao;
     public Inventario Inventario => inventario;
     public InventarioMissao InventarioMissao => inventarioMissao;
+    public SomDosTiros SomDosTiros => somDosTiros;
     public SonsDoJogador SonsDoJogador => sonsDoJogador;
     public int Vida => vida;
     public int VidaMax => vidaMax;
