@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 [CreateAssetMenu(menuName = "Inventario/Arma de Fogo")]
-
+[System.Serializable]
 public class ArmaDeFogo : ItemDoInventario
 {
     //Variaveis
@@ -131,6 +131,12 @@ public class ArmaDeFogo : ItemDoInventario
     public void SetNivelMelhoria(int nivel)
     {
         nivelMelhoria = nivel;
+    }
+
+    public void SetMunicoes(int municao, int municaoCartucho)
+    {
+        this.municao = municao;
+        this.municaoCartucho = municaoCartucho;
     }
 
     public void TrocarIdioma(MudarIdiomaItensDoInventario.TextosArma textosArma)
