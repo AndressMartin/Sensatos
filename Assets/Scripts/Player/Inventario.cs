@@ -87,6 +87,9 @@ public class Inventario : MonoBehaviour
 
         //Trocar o idioma uma vez para iniciar os objetos com o idioma correto
         TrocarIdioma();
+        SaveManager.GetInstance().OnSavingGame.AddListener(SaveInventory);
+        SaveManager.GetInstance().OnGameLoaded.AddListener(LoadInventory);
+        Debug.LogWarning("Subscribed to saveManager");
     }
 
     private void SetarArmasEquipadas()
@@ -267,5 +270,41 @@ public class Inventario : MonoBehaviour
         {
             mudarIdiomaItensDoInventario.TrocarIdioma(roupa);
         }
+    }
+
+    private void LoadInventory()
+    {
+        Debug.Log("Carregando inventario");
+        var playerProfile = SaveData.current.playerProfile;
+        dinheiro = playerProfile.inventory.dinheiro;
+        for (int i = 0; i < playerProfile.inventory.armas.Count; i++)
+        {
+            armas[i] = playerProfile.inventory.armas[i].arma;
+            armas[i].SetMunicoes(playerProfile.inventory.armas[i].municao, playerProfile.inventory.armas[i].municaoCartucho);
+        }
+        //atalhosDeItens = playerProfile.inventory.atalhosDeItens;
+        //itens = playerProfile.inventory.itens;
+        //roupaAtual = playerProfile.inventory.roupaAtual;
+
+        generalManager.Hud.AtualizarPlayerHUD();
+    }
+
+    private void SaveInventory()
+    {
+        Debug.Log("Salvando inventario");
+        var playerProfile = SaveData.current.playerProfile;
+        playerProfile.inventory.dinheiro = Dinheiro;
+        playerProfile.inventory.armas.Clear();
+        for (int i = 0; i < armas.Count; i++)
+        {
+            Debug.Log(armas[i].Municao);
+            var serializedArmaDeFogo = new SerializableArmaDeFogo(armas[i]);
+            serializedArmaDeFogo.municao = armas[i].Municao;
+            serializedArmaDeFogo.municaoCartucho = armas[i].MunicaoCartucho;
+            playerProfile.inventory.armas.Add(serializedArmaDeFogo);
+        }
+        //playerProfile.inventory.atalhosDeItens = AtalhosDeItens;
+        //playerProfile.inventory.itens = Itens;
+        //playerProfile.inventory.roupaAtual = RoupaAtual;
     }
 }

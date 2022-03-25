@@ -121,6 +121,10 @@ public class Player : EntityModel
         tempoSoftlockMax = 10f;
 
         SetRespawn();
+
+        SaveManager.GetInstance().OnSavingGame.AddListener(SavePlayer);
+        SaveManager.GetInstance().OnGameLoaded.AddListener(LoadPlayer);
+        Debug.LogWarning("Subscribed to saveManager");
     }
 
     void Update()
@@ -566,6 +570,24 @@ public class Player : EntityModel
             imune = false;
             tempoImune = 0;
         }
+    }
+
+    private void LoadPlayer()
+    {
+        Debug.Log("Carregando player");
+        var playerProfile = SaveData.current.playerProfile;
+        vidaMax = playerProfile.vidaMax;
+        vida = playerProfile.vidaAtual;
+        Debug.Log($"LOAD: {vidaMax.ToString()}\n{vida.ToString()}");
+    }
+
+    private void SavePlayer()
+    {
+        Debug.Log("Salvando player");
+        var playerProfile = SaveData.current.playerProfile;
+        playerProfile.vidaMax = vidaMax;
+        playerProfile.vidaAtual = vida;
+        Debug.Log($"SAVE: {vidaMax.ToString()}\n{vida.ToString()}");
     }
 
     private void ChangeCollision(Collision2D collision, bool ignorarColisao)
