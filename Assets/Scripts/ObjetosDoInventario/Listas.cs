@@ -2,10 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour
+public class Listas : MonoBehaviour
 {
     //Instancia do singleton
-    public static GameManager instance = null;
+    public static Listas instance = null;
+
+    //Variaveis
+    [SerializeField] private ListaDeArmas listaDeArmas;
+    [SerializeField] private ListaDeItens listaDeItens;
+    [SerializeField] private ListaDeRoupas listaDeRoupas;
+
+    //Getters
+    public ListaDeArmas ListaDeArmas => listaDeArmas;
+    public ListaDeItens ListaDeItens => listaDeItens;
+    public ListaDeRoupas ListaDeRoupas => listaDeRoupas;
 
     private void Awake()
     {
@@ -23,18 +33,9 @@ public class GameManager : MonoBehaviour
         //Caso o objeto esteja sendo criado pela primeira vez, marca ela para nao ser destruido em mudancas de cenas
         DontDestroyOnLoad(transform.gameObject);
 
-        //Roda algumas funcoes iniciais do jogo
-        FuncoesInicias();
-    }
-
-    private void FuncoesInicias()
-    {
-        //Carrega as configuracoes do arquivo quando o jogo se inicia
-        SaveConfiguracoes.CarregarConfiguracoes();
-
-        //Atualiza o idioma
-        IdiomaManager idiomaManager = gameObject.AddComponent<IdiomaManager>() as IdiomaManager;
-        idiomaManager.SetIdioma(SaveConfiguracoes.configuracoes.idioma);
-        Destroy(idiomaManager);
+        //Inicia os dicionarios das listas
+        listaDeArmas.Iniciar();
+        listaDeItens.Iniciar();
+        listaDeRoupas.Iniciar();
     }
 }

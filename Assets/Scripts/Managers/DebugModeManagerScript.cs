@@ -117,7 +117,7 @@ public class DebugModeManagerScript : MonoBehaviour
 
         foreach(ArmaDeFogo arma in armasIniciais)
         {
-            player.Inventario.AddArma(arma);
+            player.Inventario.AdicionarArma(arma);
 
             ArmaDeFogo novaArma = player.Inventario.Armas[player.Inventario.Armas.Count - 1];
             novaArma.AdicionarMunicao(novaArma.GetStatus.MunicaoMax + novaArma.GetStatus.MunicaoMaxCartucho);
@@ -125,7 +125,7 @@ public class DebugModeManagerScript : MonoBehaviour
 
         foreach (RoupaDeCamuflagem roupa in roupasIniciais)
         {
-            player.Inventario.AddRoupa(roupa);
+            player.Inventario.AdicionarRoupa(roupa);
         }
 
         foreach (Item item in itensIniciais)

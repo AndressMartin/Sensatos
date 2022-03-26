@@ -201,7 +201,7 @@ public class Inventario : MonoBehaviour
         atalhosDeItens[indiceOrigem] = itemTemp;
     }
 
-    public void AddArma(ArmaDeFogo arma)
+    public void AdicionarArma(ArmaDeFogo arma)
     {
         //Cria uma nova instancia do scriptable object e a adiciona no inventario
         ArmaDeFogo novaArma = ScriptableObject.Instantiate(arma);
@@ -217,7 +217,7 @@ public class Inventario : MonoBehaviour
         }
     }
 
-    public void AddRoupa(RoupaDeCamuflagem roupa)
+    public void AdicionarRoupa(RoupaDeCamuflagem roupa)
     {
         //Cria uma nova instancia do scriptable object e a adiciona no inventario
         RoupaDeCamuflagem novaRoupa = ScriptableObject.Instantiate(roupa);
