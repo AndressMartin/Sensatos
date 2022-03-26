@@ -11,7 +11,7 @@ public class Item : ItemDoInventario
     [SerializeField] protected int id;
 
     //Getters
-    public virtual int ID => id;
+    public virtual int ID => Listas.instance.ListaDeItens.GetID[this.name];
     public virtual TipoItem Tipo => TipoItem.Consumivel;
     virtual public string GetNomeAnimacao => "";
 

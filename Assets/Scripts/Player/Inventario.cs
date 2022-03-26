@@ -69,6 +69,7 @@ public class Inventario : MonoBehaviour
             for (int i = 0; i < itens.Length; i++)
             {
                 itens[i] = ScriptableObject.Instantiate(itemVazio);
+                itens[i].name = itemVazio.name;
             }
         }
 
@@ -118,7 +119,7 @@ public class Inventario : MonoBehaviour
 
         for (int i = 0; i < itens.Length; i++)
         {
-            if(itens[i].ID == 0)
+            if(itens[i].ID == Listas.instance.ListaDeItens.GetID["ItemVazio"])
             {
                 Destroy(itens[i]);
                 itens[i] = novoItem;
@@ -148,6 +149,7 @@ public class Inventario : MonoBehaviour
             {
                 Destroy(itens[i]);
                 itens[i] = ScriptableObject.Instantiate(itemVazio);
+                itens[i].name = itemVazio.name;
                 return;
             }
         }

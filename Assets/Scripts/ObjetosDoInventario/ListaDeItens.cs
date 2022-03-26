@@ -23,7 +23,6 @@ public class ListaDeItens : ScriptableObject
 
         for (int i = 0; i < itens.Length; i++)
         {
-            Debug.Log("Item ID " + i + " : " + itens[i].name);
             getID.Add(itens[i].name, i);
             getItem.Add(i, itens[i]);
         }

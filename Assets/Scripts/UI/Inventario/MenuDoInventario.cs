@@ -358,7 +358,7 @@ public class MenuDoInventario : MonoBehaviour
     {
         for (int i = 0; i < itemSlots.Length; i++)
         {
-            if (generalManager.Player.Inventario.Itens[i].ID != 0)
+            if (generalManager.Player.Inventario.Itens[i].ID != Listas.instance.ListaDeItens.GetID["ItemVazio"])
             {
                 itemSlots[i].AtualizarInformacoes(generalManager.Player.Inventario.Itens[i]);
             }
@@ -375,7 +375,7 @@ public class MenuDoInventario : MonoBehaviour
         {
             atalhoSlots[i].AtualizarNumeroAtalho(i + 1);
 
-            if (generalManager.Player.Inventario.AtalhosDeItens[i].ID != 0)
+            if (generalManager.Player.Inventario.AtalhosDeItens[i].ID != Listas.instance.ListaDeItens.GetID["ItemVazio"])
             {
                 atalhoSlots[i].AtualizarInformacoes(generalManager.Player.Inventario.AtalhosDeItens[i]);
             }

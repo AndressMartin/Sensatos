@@ -11,10 +11,10 @@ public class InventarioMissao : MonoBehaviour
     private MudarIdiomaItensDoInventario mudarIdiomaItensDoInventario;
 
     //Variaveis
-    private static List<Item> itens = new List<Item>();
+    private static List<ItemChave> itens = new List<ItemChave>();
 
     //Getters
-    public List<Item> Itens => itens;
+    public List<ItemChave> Itens => itens;
 
     private void Start()
     {
@@ -31,18 +31,29 @@ public class InventarioMissao : MonoBehaviour
         TrocarIdioma();
     }
 
-    public void AdicionarItem(Item item)
+    public void AdicionarItem(ItemChave item)
     {
+        //Confere se o item ja esta na lista de itens chave, se estiver, adiciona um ao numero do item
+        foreach(ItemChave itemChave in itens)
+        {
+            if(itemChave.ID == item.ID)
+            {
+                itemChave.SetNumero(itemChave.Numero + 1);
+                return;
+            }
+        }
+
         //Cria uma nova instancia do scriptable object e a adiciona no inventario
-        Item novoItem = ScriptableObject.Instantiate(item);
+        ItemChave novoItem = ScriptableObject.Instantiate(item);
         novoItem.name = item.name;
+        novoItem.SetNumero(1);
 
         mudarIdiomaItensDoInventario.TrocarIdioma(novoItem);
 
         itens.Add(novoItem);
     }
 
-    public void RemoverItem(Item item)
+    public void RemoverItem(ItemChave item)
     {
         itens.Remove(item);
         Destroy(item);

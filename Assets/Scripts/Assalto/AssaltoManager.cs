@@ -41,9 +41,9 @@ public static class AssaltoManager
     }
     static void VerificarMissaoCompleta(List<Missao> _listaMissoes, List<Missao> _listaMissoes_Cumprir, List<Missao> _listaMissoes_temp, Player player)
     {
-        foreach (var item in _listaMissoes)
+        foreach (Missao item in _listaMissoes)
         {
-            if (!item.GetConcluida)
+            if (item.GetEstado != Missao.Estado.Concluida)
             {
                 _listaMissoes_Cumprir.Add(item);
             }

@@ -156,7 +156,7 @@ public class MenuDosItens : MonoBehaviour
         }
 
         //Nao iniciar o menu caso a selecao seja de um item vazio
-        if (generalManager.Player.Inventario.Itens[selecao].ID == 0)
+        if (generalManager.Player.Inventario.Itens[selecao].ID == Listas.instance.ListaDeItens.GetID["ItemVazio"])
         {
             generalManager.Hud.MenuDoInventario.SetMenuAtual(MenuDoInventario.Menu.Inicio);
             return;
@@ -526,7 +526,7 @@ public class MenuDosItens : MonoBehaviour
         }
 
         //Nao iniciar o menu caso a selecao seja de um item vazio
-        if (generalManager.Player.Inventario.AtalhosDeItens[selecao].ID == 0)
+        if (generalManager.Player.Inventario.AtalhosDeItens[selecao].ID == Listas.instance.ListaDeItens.GetID["ItemVazio"])
         {
             generalManager.Hud.MenuDoInventario.SetMenuAtual(MenuDoInventario.Menu.Inicio);
             return;

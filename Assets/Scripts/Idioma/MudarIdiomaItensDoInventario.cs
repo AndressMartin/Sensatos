@@ -49,7 +49,7 @@ public class MudarIdiomaItensDoInventario : MonoBehaviour
         {
             Item itemTemp = (Item) item;
 
-            if(itemTemp.ID == 0)
+            if (itemTemp.ID == Listas.instance.ListaDeItens.GetID["ItemVazio"])
             {
                 return;
             }

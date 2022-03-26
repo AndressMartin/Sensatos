@@ -141,7 +141,8 @@ public class DebugModeManagerScript : MonoBehaviour
                     break;
 
                 case Item.TipoItem.ItemChave:
-                    player.InventarioMissao.AdicionarItem(item);
+                    ItemChave itemChave = (ItemChave)item;
+                    player.InventarioMissao.AdicionarItem(itemChave);
                     break;
             }
         }

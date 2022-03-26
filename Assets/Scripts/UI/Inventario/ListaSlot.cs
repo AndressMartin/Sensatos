@@ -8,6 +8,7 @@ public class ListaSlot : MonoBehaviour
 {
     //Componentes
     [SerializeField] private TMP_Text nome;
+    [SerializeField] private TMP_Text numero;
     [SerializeField] private Image imagemConquista;
 
     private Image imagem;
@@ -35,13 +36,21 @@ public class ListaSlot : MonoBehaviour
     public void ZerarInformacoes()
     {
         nome.text = "";
+        numero.text = "";
         imagemConquista.sprite = null;
+        numero.gameObject.SetActive(false);
         imagemConquista.gameObject.SetActive(false);
     }
 
     public void AtualizarNome(string texto)
     {
         nome.text = texto;
+    }
+
+    public void AtualizarNumero(int numero)
+    {
+        this.numero.text = numero.ToString();
+        this.numero.gameObject.SetActive(true);
     }
 
     public void AtualizarImagem(Sprite imagem)
@@ -56,11 +65,13 @@ public class ListaSlot : MonoBehaviour
         {
             imagem.color = Color.blue;
             nome.color = Color.white;
+            numero.color = Color.white;
         }
         else
         {
             imagem.color = Color.white;
             nome.color = Color.black;
+            numero.color = Color.black;
         }
     }
 }

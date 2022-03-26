@@ -405,7 +405,7 @@ public class Player : EntityModel
 
     public void UsarItemAtalho(int atalho)
     {
-        if (inventario.AtalhosDeItens[atalho].ID != 0)
+        if (inventario.AtalhosDeItens[atalho].ID != Listas.instance.ListaDeItens.GetID["ItemVazio"])
         {
             UsarItem(inventario.AtalhosDeItens[atalho]);
         }

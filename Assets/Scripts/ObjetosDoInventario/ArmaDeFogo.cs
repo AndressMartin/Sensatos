@@ -21,6 +21,7 @@ public class ArmaDeFogo : ItemDoInventario
     [SerializeField] private List<Melhoria> melhorias;
 
     //Getters
+    public virtual int ID => Listas.instance.ListaDeArmas.GetID[this.name];
     public string NomeAnimacao => nomeAnimacao;
     public bool RapidFire => rapidFire;
     public float RaioDoSomDoTiro => raioDoSomDoTiro;

@@ -75,7 +75,7 @@ public class PlayerHUD : MonoBehaviour
         {
             atalhos[i].AtualizarNumeroAtalho(i + 1);
 
-            if (generalManager.Player.Inventario.AtalhosDeItens[i].ID != 0)
+            if (generalManager.Player.Inventario.AtalhosDeItens[i].ID != Listas.instance.ListaDeItens.GetID["ItemVazio"])
             {
                 atalhos[i].AtualizarInformacoes(generalManager.Player.Inventario.AtalhosDeItens[i]);
             }

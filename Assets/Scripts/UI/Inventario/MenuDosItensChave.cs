@@ -96,6 +96,7 @@ public class MenuDosItensChave : MonoBehaviour
             else
             {
                 itens[i].AtualizarNome(generalManager.Player.InventarioMissao.Itens[scrool + i].Nome);
+                itens[i].AtualizarNumero(generalManager.Player.InventarioMissao.Itens[scrool + i].Numero);
                 itens[i].gameObject.SetActive(true);
             }
         }
