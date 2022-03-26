@@ -32,7 +32,7 @@ public static class SaveConfiguracoes
 
     public static void SalvarConfiguracoes()
     {
-        string caminhoDoArquivo = Application.dataPath + "/Saves/configuracoes.txt";
+        string caminhoDoArquivo = Path.Combine(Application.dataPath, "Saves", "configuracoes.txt");
 
         string texto = JsonUtility.ToJson(configuracoes);
 
@@ -47,7 +47,7 @@ public static class SaveConfiguracoes
 
     public static void CarregarConfiguracoes()
     {
-        string caminhoDoArquivo = Application.dataPath + "/Saves/configuracoes.txt";
+        string caminhoDoArquivo = Path.Combine(Application.dataPath, "Saves", "configuracoes.txt");
 
         string texto = "";
 

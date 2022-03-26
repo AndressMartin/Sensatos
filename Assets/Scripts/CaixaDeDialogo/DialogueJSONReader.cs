@@ -26,7 +26,7 @@ public class DialogueJSONReader : MonoBehaviour
 
     public bool CarregarDialogo(DialogueObject dialogueObject)
     {
-        string caminhoDoArquivo = "Textos/Dialogos/" + IdiomaManager.GetIdioma + "/" + dialogueObject.name + IdiomaManager.GetIdioma;
+        string caminhoDoArquivo = Path.Combine("Textos", "Dialogos", IdiomaManager.GetIdioma, dialogueObject.name + IdiomaManager.GetIdioma);
 
         TextAsset texto = (TextAsset) Resources.Load(caminhoDoArquivo);
 

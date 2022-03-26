@@ -22,7 +22,7 @@ public static class Save
         //A instancia da classe
         SaveFile save = new SaveFile();
 
-        string caminhoDoArquivo = Application.dataPath + "/Saves/save" + slot.ToString() + ".txt";
+        string caminhoDoArquivo = Path.Combine(Application.dataPath, "Saves", "save" + slot.ToString() + ".txt");
 
         string texto = JsonUtility.ToJson(save);
 
@@ -40,7 +40,7 @@ public static class Save
         //A instancia da classe
         SaveFile save = new SaveFile();
 
-        string caminhoDoArquivo = Application.dataPath + "/Saves/save" + slot.ToString() + ".txt";
+        string caminhoDoArquivo = Path.Combine(Application.dataPath, "Saves", "save" + slot.ToString() + ".txt");
 
         string texto;
 
@@ -61,9 +61,9 @@ public static class Save
 
     public static bool SaveExiste(int slot)
     {
-        string caminhoDoArquivo = Application.dataPath + "/Saves/save" + slot.ToString() + ".txt";
+        string caminhoDoArquivo = Path.Combine(Application.dataPath, "Saves", "save" + slot.ToString() + ".txt");
 
-        if(File.Exists(caminhoDoArquivo))
+        if (File.Exists(caminhoDoArquivo))
         {
             return true;
         }
