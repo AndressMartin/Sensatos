@@ -376,12 +376,19 @@ public class Player : EntityModel
 
     public void AtualizarArma()
     {
-        if(recarregando == true)
+        if (inventario.Armas.Count < 2)
+        {
+            return;
+        }
+
+        if (recarregando == true)
         {
             FinalizarRecarregamento();
         }
         AtualizarPontaDaArma();
         animacao.AtualizarArmaBracos(inventario.ArmaSlot[inventario.ArmaAtual].NomeAnimacao);
+
+        sonsDoJogador.TocarSom(SonsDoJogador.Som.TrocarDeArma);
     }
 
     public void GerarSomDoTiro()

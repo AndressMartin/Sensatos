@@ -53,8 +53,6 @@ public class PlayerInput : MonoBehaviour
                     player.AtualizarArma();
 
                     generalManager.Hud.AtualizarPlayerHUD();
-
-                    player.SonsDoJogador.TocarSom(SonsDoJogador.Som.TrocarDeArma);
                 }
 
                 //Atirar

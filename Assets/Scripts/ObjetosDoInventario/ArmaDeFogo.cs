@@ -30,6 +30,18 @@ public class ArmaDeFogo : ItemDoInventario
     public List<Melhoria> Melhorias => melhorias;
     public Status GetStatus => GetStatusMetodo();
 
+    //Setters
+    public void SetNivelMelhoria(int nivel)
+    {
+        nivelMelhoria = nivel;
+    }
+
+    public void SetMunicoes(int municao, int municaoCartucho)
+    {
+        this.municao = municao;
+        this.municaoCartucho = municaoCartucho;
+    }
+
     public void Atirar(EntityModel objQueChamou, BulletManagerScript bulletManager, Vector3 posicao, Vector2 direcao, EntityModel.Alvo alvo)
     {
         if(objQueChamou.transform.GetComponent<Player>())
@@ -58,7 +70,7 @@ public class ArmaDeFogo : ItemDoInventario
         }
     }
 
-    void CriarTiro(EntityModel objQueChamou, BulletManagerScript bulletManager, Vector3 posicao, Vector2 direcao, EntityModel.Alvo alvo)
+    private void CriarTiro(EntityModel objQueChamou, BulletManagerScript bulletManager, Vector3 posicao, Vector2 direcao, EntityModel.Alvo alvo)
     {
         bulletManager.CriarTiro(objQueChamou, this, posicao, direcao, alvo);
     }
@@ -126,17 +138,6 @@ public class ArmaDeFogo : ItemDoInventario
         {
             return statusBase;
         }
-    }
-
-    public void SetNivelMelhoria(int nivel)
-    {
-        nivelMelhoria = nivel;
-    }
-
-    public void SetMunicoes(int municao, int municaoCartucho)
-    {
-        this.municao = municao;
-        this.municaoCartucho = municaoCartucho;
     }
 
     public void TrocarIdioma(MudarIdiomaItensDoInventario.TextosArma textosArma)

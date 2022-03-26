@@ -229,6 +229,8 @@ public class MenuDoInventario : MonoBehaviour
 
         ativo = false;
 
+        generalManager.Hud.AtualizarPlayerHUD();
+
         generalManager.Hud.SonsDeMenus.TocarSom(SonsDeMenus.Som.FecharOInventario);
     }
 

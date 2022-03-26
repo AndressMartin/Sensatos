@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 
-public class Save : MonoBehaviour
+public static class Save
 {
     //Classe que contem as variaveis salvas
     [System.Serializable]
@@ -17,7 +17,7 @@ public class Save : MonoBehaviour
         }
     }
 
-    public void Salvar(int slot)
+    public static void Salvar(int slot)
     {
         //A instancia da classe
         SaveFile save = new SaveFile();
@@ -35,7 +35,7 @@ public class Save : MonoBehaviour
         Debug.LogWarning("Nao foi possivel salvar o arquivo!\nCaminho: " + caminhoDoArquivo);
     }
 
-    public void Carregar(int slot)
+    public static void Carregar(int slot)
     {
         //A instancia da classe
         SaveFile save = new SaveFile();
@@ -59,7 +59,19 @@ public class Save : MonoBehaviour
         Debug.LogWarning("O arquivo nao foi encontrado!\nCaminho: " + caminhoDoArquivo);
     }
 
-    private void PassarInformacoesDoSave(SaveFile save)
+    public static bool SaveExiste(int slot)
+    {
+        string caminhoDoArquivo = Application.dataPath + "/Saves/save" + slot.ToString() + ".txt";
+
+        if(File.Exists(caminhoDoArquivo))
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    private static void PassarInformacoesDoSave(SaveFile save)
     {
         Flags.PassarInformacoesSave(save);
     }

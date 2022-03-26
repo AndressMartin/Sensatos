@@ -87,6 +87,7 @@ public class Inventario : MonoBehaviour
 
         //Trocar o idioma uma vez para iniciar os objetos com o idioma correto
         TrocarIdioma();
+
         SaveManager.GetInstance().OnSavingGame.AddListener(SaveInventory);
         SaveManager.GetInstance().OnGameLoaded.AddListener(LoadInventory);
         Debug.LogWarning("Subscribed to saveManager");
@@ -279,6 +280,7 @@ public class Inventario : MonoBehaviour
         dinheiro = playerProfile.inventory.dinheiro;
         for (int i = 0; i < playerProfile.inventory.armas.Count; i++)
         {
+            armas.Clear();
             armas[i] = playerProfile.inventory.armas[i].arma;
             armas[i].SetMunicoes(playerProfile.inventory.armas[i].municao, playerProfile.inventory.armas[i].municaoCartucho);
         }

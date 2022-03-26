@@ -82,10 +82,18 @@ public class DebugModeManagerScript : MonoBehaviour
             generalManager.LockDownManager.DesativarLockDown();
         }
 
-        //Carregar Configuracoes
+        //Salvar o jogo
         if (Input.GetKeyUp(KeyCode.Z))
         {
-            generalManager.Player.Inventario.SetDinheiro(generalManager.Player.Inventario.Dinheiro + 100);
+            Save.Salvar(1);
+            Debug.Log("O jogo foi salvo no slot 1.");
+        }
+
+        //Carregar o jogo
+        if (Input.GetKeyUp(KeyCode.X))
+        {
+            Save.Carregar(1);
+            Debug.Log("O save no slot 1 foi carregado.");
         }
     }
 
