@@ -9,14 +9,14 @@ public class ItemChave : Item
     public override TipoItem Tipo => TipoItem.ItemChave;
 
     //Variaveis
-    private int numero = 0;
+    private int quantidade = 0;
 
     //Getters
-    public int Numero => numero;
+    public int Quantidade => quantidade;
 
     //Setters
-    public void SetNumero(int numero)
+    public void SetQuantidade(int quantidade)
     {
-        this.numero = numero;
+        this.quantidade = quantidade;
     }
 }

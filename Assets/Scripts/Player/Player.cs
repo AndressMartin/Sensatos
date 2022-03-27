@@ -26,6 +26,7 @@ public class Player : EntityModel
     public enum Estado { Normal, TomandoDano, Atacando, UsandoItem, Morto };
 
     //Variaveis
+    private static int vidaMaxima = 0;
     [SerializeField] private int vidaInicial;
 
     public Direcao direcaoMovimento;
@@ -66,6 +67,7 @@ public class Player : EntityModel
     public InventarioMissao InventarioMissao => inventarioMissao;
     public int Vida => vida;
     public int VidaMax => vidaMax;
+    public int VidaMaxima => vidaMaxima;
     public bool ModoDeCombate => modoDeCombate;
     public Estado GetEstado => estado;
     public float TempoRecarregar => tempoRecarregar;
@@ -74,6 +76,10 @@ public class Player : EntityModel
 
     void Start()
     {
+        //Eventos
+        SaveManager.instance.OnSavingGame.AddListener(AtualizarSaveFile);
+        SaveManager.instance.OnGameLoaded.AddListener(CarregarSaveFile);
+
         //Managers
         generalManager = FindObjectOfType<GeneralManagerScript>();
 
@@ -92,8 +98,15 @@ public class Player : EntityModel
         inventarioMissao = GetComponent<InventarioMissao>();
 
         //Variaveis
-        vida = vidaInicial;
-        vidaMax = vidaInicial;
+
+        if(vidaMaxima == 0)
+        {
+            vidaMaxima = vidaInicial;
+        }
+
+        vidaMax = vidaMaxima;
+        vida = vidaMax;
+
         raioPassos = 1.5f;
 
         modoDeCombate = true;
@@ -120,11 +133,7 @@ public class Player : EntityModel
         tempoSoftlock = 0;
         tempoSoftlockMax = 10f;
 
-        SetRespawn();
-
-        SaveManager.GetInstance().OnSavingGame.AddListener(SavePlayer);
-        SaveManager.GetInstance().OnGameLoaded.AddListener(LoadPlayer);
-        Debug.LogWarning("Subscribed to saveManager");
+        SetRespawn(transform.position, direcao);
     }
 
     void Update()
@@ -170,26 +179,27 @@ public class Player : EntityModel
         }
     }
 
-    private void SetRespawn()
-    {
-        posicaoRespawn = transform.position;
-        direcaoRespawn = direcao;
-    }
-
     public void SetRespawn(Vector2 posicao, Direcao direcao)
     {
         posicaoRespawn = posicao;
         direcaoRespawn = direcao;
+
+        SaveData.AtualizarInventarioRespawn(this);
     }
 
     public void Respawn()
     {
-        vida = vidaInicial;
+        vida = vidaMax;
         transform.position = posicaoRespawn;
         ChangeDirection(direcaoRespawn);
         playerMovement.ResetarVariaveisDeControle();
 
+        inventario.Respawn();
+        inventarioMissao.Respawn();
+
         ResetarVariaveisDeControle();
+
+        generalManager.Hud.AtualizarPlayerHUD();
     }
 
     private void ResetarVariaveisDeControle()
@@ -579,22 +589,24 @@ public class Player : EntityModel
         }
     }
 
-    private void LoadPlayer()
+    private void AtualizarSaveFile()
     {
-        Debug.Log("Carregando player");
-        var playerProfile = SaveData.current.playerProfile;
-        vidaMax = playerProfile.vidaMax;
-        vida = playerProfile.vidaAtual;
-        Debug.Log($"LOAD: {vidaMax.ToString()}\n{vida.ToString()}");
+        SaveData.AtualizarSaveFile(this);
     }
 
-    private void SavePlayer()
+    private void CarregarSaveFile()
     {
-        Debug.Log("Salvando player");
-        var playerProfile = SaveData.current.playerProfile;
-        playerProfile.vidaMax = vidaMax;
-        playerProfile.vidaAtual = vida;
-        Debug.Log($"SAVE: {vidaMax.ToString()}\n{vida.ToString()}");
+        vidaMaxima = SaveData.SaveAtual.vidaMaxima;
+        vidaMax = vidaMaxima;
+        vida = vidaMax;
+
+        inventario.CarregarSave(SaveData.SaveAtual.inventarioSave);
+        inventarioMissao.CarregarSave(SaveData.SaveAtual.inventarioSave);
+
+        //Atualizar a HUD
+        generalManager.Hud.AtualizarPlayerHUD();
+
+        Debug.Log("Save carregado");
     }
 
     private void ChangeCollision(Collision2D collision, bool ignorarColisao)

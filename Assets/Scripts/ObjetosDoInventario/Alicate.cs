@@ -10,7 +10,6 @@ public class Alicate : Item
     public override TipoItem Tipo => TipoItem.Ferramenta;
 
     [SerializeField] private int dano;
-    private int quantidadeDeUsos;
     [SerializeField] private int quantidadeDeUsosMax;
     [SerializeField] private string nomeAnimacao;
 
@@ -18,7 +17,6 @@ public class Alicate : Item
 
     //Getters
     public override string GetNomeAnimacao => nomeAnimacao;
-    public int QuantidadeDeUsos => quantidadeDeUsos;
     public int QuantidadeDeUsosMax => quantidadeDeUsosMax;
 
     public override void Iniciar()

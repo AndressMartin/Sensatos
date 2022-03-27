@@ -85,14 +85,14 @@ public class DebugModeManagerScript : MonoBehaviour
         //Salvar o jogo
         if (Input.GetKeyUp(KeyCode.Z))
         {
-            Save.Salvar(1);
+            SaveManager.instance.SalvarJogo(1);
             Debug.Log("O jogo foi salvo no slot 1.");
         }
 
         //Carregar o jogo
         if (Input.GetKeyUp(KeyCode.X))
         {
-            Save.Carregar(1);
+            SaveManager.instance.CarregarJogo(1);
             Debug.Log("O save no slot 1 foi carregado.");
         }
     }
@@ -118,9 +118,6 @@ public class DebugModeManagerScript : MonoBehaviour
         foreach(ArmaDeFogo arma in armasIniciais)
         {
             player.Inventario.AdicionarArma(arma);
-
-            ArmaDeFogo novaArma = player.Inventario.Armas[player.Inventario.Armas.Count - 1];
-            novaArma.AdicionarMunicao(novaArma.GetStatus.MunicaoMax + novaArma.GetStatus.MunicaoMaxCartucho);
         }
 
         foreach (RoupaDeCamuflagem roupa in roupasIniciais)
@@ -146,5 +143,9 @@ public class DebugModeManagerScript : MonoBehaviour
                     break;
             }
         }
+
+        player.SetRespawn(player.transform.position, player.GetDirecao);
+
+        generalManager.Hud.AtualizarPlayerHUD();
     }
 }

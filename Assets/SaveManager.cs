@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class SaveManager : SingletonInstance<SaveManager>
+public class SaveManager : MonoBehaviour
 {
+    //Instancia do singleton
+    public static SaveManager instance = null;
 
     private UnityEvent onGameLoaded,
-                      onSavingGame;
+                       onSavingGame;
+
     public UnityEvent OnGameLoaded 
     {
         get
@@ -23,6 +26,7 @@ public class SaveManager : SingletonInstance<SaveManager>
             onGameLoaded = value;
         }
     }
+
     public UnityEvent OnSavingGame
     {
         get
@@ -38,38 +42,36 @@ public class SaveManager : SingletonInstance<SaveManager>
             onSavingGame = value;
         }
     }
-    private void Start()
+
+    private void Awake()
     {
-        SaveSystem.Init();
+        //Faz do script um singleton
+        if (instance == null) //Confere se a instancia nao e nula
+        {
+            instance = this;
+            Debug.Log("Setei a instancia do save manager");
+        }
+        else if (instance != this) //Caso a instancia nao seja nula e nao seja este objeto, ele se destroi
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        //Cria a pasta de saves, se ela nao existir
+        Save.IniciarPasta();
     }
 
-    /// <summary>
-    /// Loads the game using the data on SaveData and the methods on SaveSystem. Afterwards, raises the OnLoadedGame event.
-    /// </summary>
-    public void OnLoadGame()
+    public void SalvarJogo(int slot)
     {
-        //Get the respective files from SaveSystem.Load()
-        //Set SaveData.current
-        var loadedSave = SaveSystem.Load();
-        Debug.Log("Loaded game");
-        SaveData.current.playerProfile = JsonUtility.FromJson<PlayerProfile>(loadedSave);
-        //Invoke event for others to load
-        onGameLoaded.Invoke();
-    }
-    /// <summary>
-    /// First raises the event so that every script has a chance to save their content. 
-    /// Then, Saves the game using the data on SaveData and the methods on SaveSystem.
-    /// </summary>
-    public void OnSaveGame()
-    {
-        onSavingGame.Invoke();
-        SaveSystem.Save(SaveData.current.playerProfile);
-        Debug.Log("Saved game");
-        //Get the respetive files from SaveData and set on SaveSystem.Save();
+        onSavingGame?.Invoke();
+
+        Save.Salvar(slot);
     }
 
-    public void DeleteSaves()
+    public void CarregarJogo(int slot)
     {
-        Debug.LogWarning("TODO: Implement delete saves");
+        Save.Carregar(slot);
+
+        onGameLoaded?.Invoke();
     }
 }

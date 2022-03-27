@@ -20,6 +20,7 @@ public static class SaveConfiguracoes
             this.idioma = idioma;
         }
     }
+
     //A instancia da classe Configuracoes
     public static Configuracoes configuracoes = new Configuracoes(30, 100, IdiomaManager.Idioma.Portugues);
 

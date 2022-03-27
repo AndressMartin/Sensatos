@@ -31,6 +31,11 @@ public class InventarioMissao : MonoBehaviour
         TrocarIdioma();
     }
 
+    public void Respawn()
+    {
+        CarregarSave(SaveData.InventarioRespawn);
+    }
+
     public void AdicionarItem(ItemChave item)
     {
         //Confere se o item ja esta na lista de itens chave, se estiver, adiciona um ao numero do item
@@ -38,7 +43,7 @@ public class InventarioMissao : MonoBehaviour
         {
             if(itemChave.ID == item.ID)
             {
-                itemChave.SetNumero(itemChave.Numero + 1);
+                itemChave.SetQuantidade(itemChave.Quantidade + 1);
                 return;
             }
         }
@@ -46,7 +51,7 @@ public class InventarioMissao : MonoBehaviour
         //Cria uma nova instancia do scriptable object e a adiciona no inventario
         ItemChave novoItem = ScriptableObject.Instantiate(item);
         novoItem.name = item.name;
-        novoItem.SetNumero(1);
+        novoItem.SetQuantidade(1);
 
         mudarIdiomaItensDoInventario.TrocarIdioma(novoItem);
 
@@ -77,6 +82,19 @@ public class InventarioMissao : MonoBehaviour
         foreach (Item item in itens)
         {
             mudarIdiomaItensDoInventario.TrocarIdioma(item);
+        }
+    }
+
+    public void CarregarSave(SaveData.InventarioSave inventarioSave)
+    {
+        //Lista de itens
+        itens.Clear();
+
+        foreach (SaveData.ItemChaveSave item in inventarioSave.itensChave)
+        {
+            AdicionarItem((ItemChave)Listas.instance.ListaDeItens.GetItem[item.id]);
+
+            itens[itens.Count - 1].SetQuantidade(item.quantidade);
         }
     }
 }

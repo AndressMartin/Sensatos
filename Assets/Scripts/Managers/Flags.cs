@@ -38,7 +38,7 @@ public class Flags : MonoBehaviour
         }
     }
 
-    public static void PassarInformacoesSave(Save.SaveFile save)
+    public static void PassarInformacoesSave(SaveData.SaveFile save)
     {
         for (int i = 0; i < flags.Length; i++)
         {

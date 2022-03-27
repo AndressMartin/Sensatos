@@ -63,6 +63,7 @@ public class PlayerInput : MonoBehaviour
                         if (InputManager.AtirarComRapidFire())
                         {
                             player.Atirar();
+                            generalManager.Hud.AtualizarPlayerHUD();
                         }
                     }
                     else
@@ -70,10 +71,9 @@ public class PlayerInput : MonoBehaviour
                         if (InputManager.Atirar())
                         {
                             player.Atirar();
+                            generalManager.Hud.AtualizarPlayerHUD();
                         }
                     }
-
-                    generalManager.Hud.AtualizarPlayerHUD();
                 }
 
                 //Recarregar

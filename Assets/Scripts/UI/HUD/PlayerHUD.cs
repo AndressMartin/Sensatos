@@ -21,7 +21,7 @@ public class PlayerHUD : MonoBehaviour
         //Managers
         generalManager = FindObjectOfType<GeneralManagerScript>();
 
-        StartCoroutine(IniciarHUD());
+        AtualizarInformacoes();
     }
 
     public void AtualizarInformacoes()
@@ -84,12 +84,5 @@ public class PlayerHUD : MonoBehaviour
                 atalhos[i].ZerarInformacoes();
             }
         }
-    }
-
-    private IEnumerator IniciarHUD()
-    {
-        yield return new WaitForSeconds(0.1f);
-
-        AtualizarInformacoes();
     }
 }

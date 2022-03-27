@@ -50,19 +50,10 @@ public class Inventario : MonoBehaviour
         dinheiro = novoDinheiro;
     }
 
-    void Start()
+    private void Awake()
     {
-        //Managers
-        generalManager = FindObjectOfType<GeneralManagerScript>();
-
-        //Adicionar a funcao de trocar idioma ao evento do Idioma Manager
-        generalManager.IdiomaManager.EventoTrocarIdioma.AddListener(TrocarIdioma);
-
-        //Componentes
-        mudarIdiomaItensDoInventario = GetComponent<MudarIdiomaItensDoInventario>();
-
         //Criar o inventario de itens
-        if(itens == null)
+        if (itens == null)
         {
             itens = new Item[9];
 
@@ -74,7 +65,7 @@ public class Inventario : MonoBehaviour
         }
 
         //Criar a array dos atalhos
-        if(atalhosDeItens == null)
+        if (atalhosDeItens == null)
         {
             atalhosDeItens = new Item[4];
 
@@ -83,15 +74,28 @@ public class Inventario : MonoBehaviour
                 atalhosDeItens[i] = itemVazio;
             }
         }
+    }
+
+    void Start()
+    {
+        //Managers
+        generalManager = FindObjectOfType<GeneralManagerScript>();
+
+        //Adicionar a funcao de trocar idioma ao evento do Idioma Manager
+        generalManager.IdiomaManager.EventoTrocarIdioma.AddListener(TrocarIdioma);
+
+        //Componentes
+        mudarIdiomaItensDoInventario = GetComponent<MudarIdiomaItensDoInventario>();
 
         armaAtual = 0;
 
         //Trocar o idioma uma vez para iniciar os objetos com o idioma correto
         TrocarIdioma();
+    }
 
-        SaveManager.GetInstance().OnSavingGame.AddListener(SaveInventory);
-        SaveManager.GetInstance().OnGameLoaded.AddListener(LoadInventory);
-        Debug.LogWarning("Subscribed to saveManager");
+    public void Respawn()
+    {
+        CarregarSave(SaveData.InventarioRespawn);
     }
 
     private void SetarArmasEquipadas()
@@ -128,6 +132,29 @@ public class Inventario : MonoBehaviour
         }
 
         return false;
+    }
+
+    //Adiciona os itens de um arquivo de save
+    private void AdicionarItem(Item item, int indice)
+    {
+        //Cria uma nova instancia do scriptable object e a adiciona no inventario
+        Item novoItem = ScriptableObject.Instantiate(item);
+        novoItem.name = item.name;
+
+        novoItem.Iniciar();
+
+        mudarIdiomaItensDoInventario.TrocarIdioma(novoItem);
+
+        if (itens[indice].ID == Listas.instance.ListaDeItens.GetID["ItemVazio"])
+        {
+            Destroy(itens[indice]);
+        }
+        else
+        {
+            RemoverItem(itens[indice]);
+        }
+
+        itens[indice] = novoItem;
     }
 
     public void RemoverItem(Item item)
@@ -209,6 +236,8 @@ public class Inventario : MonoBehaviour
         ArmaDeFogo novaArma = ScriptableObject.Instantiate(arma);
         novaArma.name = arma.name;
 
+        novaArma.AdicionarMunicao(novaArma.GetStatus.MunicaoMax + novaArma.GetStatus.MunicaoMaxCartucho);
+
         mudarIdiomaItensDoInventario.TrocarIdioma(novaArma);
 
         armas.Add(novaArma);
@@ -275,40 +304,63 @@ public class Inventario : MonoBehaviour
         }
     }
 
-    private void LoadInventory()
+    public void CarregarSave(SaveData.InventarioSave inventarioSave)
     {
-        Debug.Log("Carregando inventario");
-        var playerProfile = SaveData.current.playerProfile;
-        dinheiro = playerProfile.inventory.dinheiro;
-        for (int i = 0; i < playerProfile.inventory.armas.Count; i++)
-        {
-            armas.Clear();
-            armas[i] = playerProfile.inventory.armas[i].arma;
-            armas[i].SetMunicoes(playerProfile.inventory.armas[i].municao, playerProfile.inventory.armas[i].municaoCartucho);
-        }
-        //atalhosDeItens = playerProfile.inventory.atalhosDeItens;
-        //itens = playerProfile.inventory.itens;
-        //roupaAtual = playerProfile.inventory.roupaAtual;
+        dinheiro = inventarioSave.dinheiro;
 
-        generalManager.Hud.AtualizarPlayerHUD();
-    }
+        //Lista de armas
+        armas.Clear();
 
-    private void SaveInventory()
-    {
-        Debug.Log("Salvando inventario");
-        var playerProfile = SaveData.current.playerProfile;
-        playerProfile.inventory.dinheiro = Dinheiro;
-        playerProfile.inventory.armas.Clear();
-        for (int i = 0; i < armas.Count; i++)
+        foreach(SaveData.ArmaDeFogoSave arma in inventarioSave.armas)
         {
-            Debug.Log(armas[i].Municao);
-            var serializedArmaDeFogo = new SerializableArmaDeFogo(armas[i]);
-            serializedArmaDeFogo.municao = armas[i].Municao;
-            serializedArmaDeFogo.municaoCartucho = armas[i].MunicaoCartucho;
-            playerProfile.inventory.armas.Add(serializedArmaDeFogo);
+            AdicionarArma(Listas.instance.ListaDeArmas.GetArma[arma.id]);
+
+            armas[armas.Count - 1].SetMunicoes(arma.municao, arma.municaoCartucho);
         }
-        //playerProfile.inventory.atalhosDeItens = AtalhosDeItens;
-        //playerProfile.inventory.itens = Itens;
-        //playerProfile.inventory.roupaAtual = RoupaAtual;
+
+        //Armas equipadas
+        armaSlot[0] = null;
+        armaSlot[1] = null;
+
+        if(armas.Count > 0)
+        {
+            armaSlot[0] = armas[inventarioSave.armaSlot[0]];
+            armaSlot[1] = armas[inventarioSave.armaSlot[1]];
+        }
+
+        //Lista de itens
+        for(int i = 0; i < inventarioSave.itens.Length; i++)
+        {
+            AdicionarItem(Listas.instance.ListaDeItens.GetItem[inventarioSave.itens[i].id], i);
+
+            if(itens[i].ID != Listas.instance.ListaDeItens.GetID["ItemVazio"])
+            {
+                itens[i].SetQuantidadeDeUsos(inventarioSave.itens[i].quantidadeDeUsos);
+            }
+        }
+
+        //Atalhos
+        for (int i = 0; i < inventarioSave.atalhosDeItens.Length; i++)
+        {
+            if(inventarioSave.atalhosDeItens[i] < 0)
+            {
+                RemoverAtalho(i);
+            }
+            else
+            {
+                AdicionarAtalho(i, itens[inventarioSave.atalhosDeItens[i]]);
+            }
+        }
+
+        //Lista de roupas
+        roupasDeCamuflagem.Clear();
+
+        foreach (int roupa in inventarioSave.roupasDeCamuflagem)
+        {
+            AdicionarRoupa(Listas.instance.ListaDeRoupas.GetRoupa[roupa]);
+        }
+
+        //Roupa atual
+        roupaAtual = roupasDeCamuflagem[inventarioSave.roupaAtual];
     }
 }
