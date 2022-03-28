@@ -8,29 +8,20 @@ public class NPC : ObjetoInteragivel
     private GeneralManagerScript generalManager;
 
     //Variaveis
-    private bool iniciado = false;
     [SerializeField] private Missao missao;
 
-    void Start()
-    {
-        Iniciar();
-    }
 
-    private void Iniciar()
+
+    private void OnTriggerStay2D(Collider2D collision)
     {
-        if (iniciado == true)
+        if(collision.CompareTag("Player"))
         {
-            return;
+
+            Interagir(collision.GetComponent<Player>());
         }
-        //Managers
-        generalManager = FindObjectOfType<GeneralManagerScript>();
-
-        //Se adicionar a lista de objetos interagiveis do ObjectManager
-        generalManager.ObjectManager.AdicionarAosObjetosInteragiveis(this);
     }
-
     public override void Interagir(Player player)
     {
-        AssaltoManager.VerificarMissao(missao,player);
+        VerificarAssaltoMissao.VerificarMissao(missao,player);
     }
 }

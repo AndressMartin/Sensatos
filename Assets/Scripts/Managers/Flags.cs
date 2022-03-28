@@ -8,7 +8,7 @@ public class Flags : MonoBehaviour
     private static bool[] flags;
 
     //Enuns
-    public enum Flag { Teste1, Teste2, Teste3, Teste4 }
+    public enum Flag { Teste1, Teste2, Teste3, Teste4 , MissaoTesteColetarItem }
 
     //Getters
     public static bool GetFlag(Flag flag)

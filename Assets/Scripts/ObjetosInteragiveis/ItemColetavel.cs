@@ -111,7 +111,7 @@ public class ItemColetavel : ObjetoInteragivel
         player.InventarioMissao.AdicionarItem(itemChave);
         itemFoiColetado = true;
 
-        AssaltoManager.VerificarItem(item, player);
+        VerificarAssaltoMissao.VerificarItem(item, player);
     }
 
     private void Desativar()
