@@ -17,19 +17,12 @@ public class DebugFazerAssalto : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Keypad1))
         {
-            if (AssaltoManager.Verificar(mapaAssalto01,generalManagerScript.Player))
-            {
-                Debug.Log("Mapa01\n Pode Fazer o mapa, todas quest principais feitas");
-            }
-            else
-            {
-                Debug.Log("Mapa01\n não Pode Fazer o mapa");
-
-            }
+            AssaltoManager.SetarAssalto(mapaAssalto01);
+            generalManagerScript.Player.Inventario.SetarAssalto(mapaAssalto01);
         }
         if (Input.GetKeyDown(KeyCode.Keypad2))
         {
-            if (AssaltoManager.Verificar(mapaAssalto02,generalManagerScript.Player))
+            if (AssaltoManager.VerificarAssalto(mapaAssalto02,generalManagerScript.Player))
             {
                 Debug.Log("Mapa02\n Pode Fazer o mapa, todas quest principais feitas");
 

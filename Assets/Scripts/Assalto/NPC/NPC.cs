@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class NPC : ObjetoInteragivel
 {
-
-
     //Managers
     private GeneralManagerScript generalManager;
 
@@ -33,6 +31,6 @@ public class NPC : ObjetoInteragivel
 
     public override void Interagir(Player player)
     {
-        print("Me Relou-me");
+        AssaltoManager.VerificarMissao(missao,player);
     }
 }

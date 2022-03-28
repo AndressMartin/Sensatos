@@ -14,8 +14,13 @@ public static class AssaltoManager
     [SerializeField] private static List<Missao> missoesPrincipais_Cumprir = new List<Missao>();
     [SerializeField] private static List<Missao> missoesSecundarias_Cumprir = new List<Missao>();
 
-    
-    public static bool Verificar(Assalto _assalto,Player player)
+    public static void SetarAssalto(Assalto _assalto)
+    {
+        nomeAssalto = _assalto.GetNomeAssalto;
+        missaoPrincipais = _assalto.GetMissaoPrincipal;
+        missaoSecundaria = _assalto.GetMissaoSecundaria;
+    }
+    public static bool VerificarAssalto(Assalto _assalto,Player player)
     {
         missoesPrincipais_Cumprir.Clear();
         missoesSecundarias_Cumprir.Clear();
@@ -39,7 +44,48 @@ public static class AssaltoManager
             return false;
         }
     }
-    static void VerificarMissaoCompleta(List<Missao> _listaMissoes, List<Missao> _listaMissoes_Cumprir, List<Missao> _listaMissoes_temp, Player player)
+    public static void VerificarMissao(Missao _missao, Player player)
+    {
+        foreach (var item in missaoPrincipais)
+        {
+            if(_missao.GetIdMissao == item.GetIdMissao)
+            {
+                if(_missao.GetConcluida)
+                {
+                    // olha so vc ja councluiu a missão muito obrigado
+                    Debug.Log("olha so vc ja councluiu a missão muito obrigado");
+                    break;
+                }
+                else if (_missao is Missao_ColetarItem)
+                {
+                    var _missao_Item = _missao as Missao_ColetarItem;
+
+                    if(VerificarItem(_missao_Item.GetItemDeMissao,player))
+                    {
+                        // obrigado por entregar os itens aqui sua recompensa
+                        Debug.Log("obrigado por entregar os itens aqui sua recompensa");
+                        break;
+                    }
+                    else
+                    {
+                        if(player.InventarioMissao.ProcurarQuantidadeItem(_missao_Item.GetItemDeMissao) > 0)
+                        {
+                            //esse iten agora eu preciso de mais dele
+                            Debug.Log("esse iten agora eu preciso de mais dele");
+                            break;
+                        }
+                        else
+                        {
+                            //voce precisa coletar os itens
+                            Debug.Log("voce precisa coletar os itens");
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    private static void VerificarMissaoCompleta(List<Missao> _listaMissoes, List<Missao> _listaMissoes_Cumprir, List<Missao> _listaMissoes_temp, Player player)
     {
         foreach (var item in _listaMissoes)
         {
@@ -91,12 +137,12 @@ public static class AssaltoManager
                 if(player.InventarioMissao.ProcurarQuantidadeItem(item) < missaoTemp.GetquantidadeItensCompletarMissao)
                 {
                     //AtualizaHud
-                    Debug.Log("Falta macas ainda");
+                    //Debug.Log("Falta macas ainda");
                     return false;
                 }
                 else
                 {
-                    Debug.Log("Coletaste todas as macas");
+                    //Debug.Log("Coletaste todas as macas");
 
                     //AtualizaHud
                     //Ativar Flag Missao Completa
