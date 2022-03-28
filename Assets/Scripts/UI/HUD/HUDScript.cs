@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -77,49 +78,16 @@ public class HUDScript : MonoBehaviour
         lockDownUI.gameObject.SetActive(ativa);
     }
 
-    public void AtualizarTempoLockDown(float tempo)
+    public void AtualizarTempoLockDown(float tempoEmSegundos)
     {
-        int tempoTemp = (int)(tempo * 100.0f);
-        char[] tempoString = tempoTemp.ToString().ToCharArray();
+        TimeSpan tempo = TimeSpan.FromSeconds((double)tempoEmSegundos);
 
-        string textoFinal = "";
+        //Exemplo: string tempoString = tempo.ToString(@"hh\:mm\:ss\:fff");
 
-        for(int i = 0; i < tempoString.Length; i++)
-        {
-            if(tempoString.Length < 4 && i == 0)
-            {
-                textoFinal += "0";
-            }
+        //As barras antes dos 2 pontos serve para indicar que eles sao um caractere a ser incluido no resultado da string, e nao uma parte da formatacao do texto
+        string tempoString = tempo.ToString(@"ss\:ff");
 
-            if (tempoString.Length < 3 && i == 0)
-            {
-                textoFinal += "0";
-            }
-
-            if (i == 0 && tempoString.Length <= 2)
-            {
-                textoFinal += ":";
-            }
-
-            if(i == 0 && tempoString.Length <= 1)
-            {
-                textoFinal += "0";
-            }
-
-            textoFinal += tempoString[i];
-
-            if(i == 1 && tempoString.Length >= 4)
-            {
-                textoFinal += ":";
-            }
-
-            if (i == 0 && tempoString.Length == 3)
-            {
-                textoFinal += ":";
-            }
-        }
-
-        lockDownUI.AtualizarTempo(textoFinal);
+        lockDownUI.AtualizarTempo(tempoString);
     }
 
     public void AbrirOInventario()

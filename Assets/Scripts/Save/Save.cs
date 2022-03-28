@@ -9,7 +9,7 @@ public static class Save
     private static readonly string pastaDosSaves = Path.Combine(Application.dataPath, "Saves");
 
     //Save Slot atual
-    private static int saveAtual = 1;
+    private static int saveAtual = 0;
 
     //Getters
     public static int SaveAtual => saveAtual;
@@ -41,7 +41,7 @@ public static class Save
         return false;
     }
 
-    public static void Salvar(int slot)
+    public static bool Salvar(int slot)
     {
         //Classe de save
         SaveData.SaveFile save = SaveData.SaveAtual;
@@ -57,13 +57,14 @@ public static class Save
             //Se o save for bem sucedido, altera  o save atual para o que acabou de ser salvo
             saveAtual = slot;
 
-            return;
+            return true;
         }
 
         Debug.LogWarning("Nao foi possivel salvar o arquivo!\nCaminho: " + caminhoDoArquivo);
+        return false;
     }
 
-    public static void Carregar(int slot)
+    public static bool Carregar(int slot)
     {
         //Classe de save
         SaveData.SaveFile save = SaveData.SaveAtual;
@@ -83,14 +84,40 @@ public static class Save
 
             PassarInformacoesDoSave(SaveData.SaveAtual);
 
-            return;
+            return true;
         }
 
         Debug.LogWarning("O arquivo nao foi encontrado!\nCaminho: " + caminhoDoArquivo);
+        return false;
+    }
+
+    public static SaveData.SaveFile CarregarInformacoes(int slot)
+    {
+        //Classe de save
+        SaveData.SaveFile save = SaveData.SaveAtual;
+
+        string caminhoDoArquivo = Path.Combine(Application.dataPath, "Saves", "save" + slot.ToString() + ".txt");
+
+        string texto;
+
+        texto = File.ReadAllText(caminhoDoArquivo);
+
+
+        if (texto != null)
+        {
+            save = JsonUtility.FromJson<SaveData.SaveFile>(texto);
+
+            return save;
+        }
+
+        Debug.LogWarning("O arquivo nao foi encontrado!\nCaminho: " + caminhoDoArquivo);
+        return null;
     }
 
     private static void PassarInformacoesDoSave(SaveData.SaveFile save)
     {
+        GameManager.instance.SetTempoDeJogo(save.informacoesSave.tempoDeJogo);
+
         Flags.PassarInformacoesSave(save);
     }
 }

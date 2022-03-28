@@ -222,6 +222,8 @@ public class MenuDePausa : MonoBehaviour
                 case 1:
                     SetMenuAtual(Menu.Salvar);
 
+                    menuSalvar.IniciarScrool();
+
                     generalManager.Hud.SonsDeMenus.TocarSom(SonsDeMenus.Som.Confirmar);
                     break;
 
@@ -247,13 +249,7 @@ public class MenuDePausa : MonoBehaviour
 
     private void MenuSalvar()
     {
-        //Voltar
-        if (InputManager.Voltar())
-        {
-            SetMenuAtual(Menu.Inicio);
-
-            generalManager.Hud.SonsDeMenus.TocarSom(SonsDeMenus.Som.Voltar);
-        }
+        menuSalvar.EscolhendoSave();
     }
 
     private void MenuOpcoes()
