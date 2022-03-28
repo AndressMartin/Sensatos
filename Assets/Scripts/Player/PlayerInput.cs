@@ -27,7 +27,6 @@ public class PlayerInput : MonoBehaviour
     {
         if (generalManager.PauseManager.PermitirInput == true)
         {
-            ComandosMenu();
             if (generalManager.PauseManager.JogoPausado == false)
             {
                 ComandosGameplay();
@@ -37,23 +36,6 @@ public class PlayerInput : MonoBehaviour
         {
             movement.horizontal = 0;
             movement.vertical = 0;
-        }
-    }
-
-    //Comandos de menus, como pausar o jogo
-    void ComandosMenu()
-    {
-        //Pausar o jogo
-        if (InputManager.Pausar())
-        {
-            if(generalManager.PauseManager.JogoPausado == false)
-            {
-                generalManager.PauseManager.Pausar(true);
-            }
-            else
-            {
-                generalManager.PauseManager.Pausar(false);
-            }
         }
     }
 
@@ -71,8 +53,6 @@ public class PlayerInput : MonoBehaviour
                     player.AtualizarArma();
 
                     generalManager.Hud.AtualizarPlayerHUD();
-
-                    player.SonsDoJogador.TocarSom(SonsDoJogador.Som.TrocarDeArma);
                 }
 
                 //Atirar
@@ -83,6 +63,7 @@ public class PlayerInput : MonoBehaviour
                         if (InputManager.AtirarComRapidFire())
                         {
                             player.Atirar();
+                            generalManager.Hud.AtualizarPlayerHUD();
                         }
                     }
                     else
@@ -90,10 +71,9 @@ public class PlayerInput : MonoBehaviour
                         if (InputManager.Atirar())
                         {
                             player.Atirar();
+                            generalManager.Hud.AtualizarPlayerHUD();
                         }
                     }
-
-                    generalManager.Hud.AtualizarPlayerHUD();
                 }
 
                 //Recarregar

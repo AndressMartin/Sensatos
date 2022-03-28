@@ -119,6 +119,11 @@ public class DialogueUI : MonoBehaviour
             }
             else
             {
+                if(achouArquivoDeTexto == true)
+                {
+                    Debug.LogWarning("Ha menos dialogos no arquivo do que no objeto de dialogo!");
+                }
+
                 dialogue = dialogueObject.Dialogue[i].text;
             }
             

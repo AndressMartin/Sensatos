@@ -5,15 +5,27 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Missao")]
 public class Missao : ScriptableObject
 {
-    [SerializeField] protected string nomeMissao;
-    [SerializeField] protected bool concluida;
-    [SerializeField] protected int idMissao;
-    public string GetNomeMissao => nomeMissao;
-    public bool GetConcluida => concluida;
-    public int GetIdMissao => idMissao;
+    //Enuns
+    public enum Estado { Inativa, Ativa, Concluida }
 
-    public bool ConferirMissao()
+    //Variaveis
+    [SerializeField] protected string nome;
+    [SerializeField] protected string descricao;
+    private Estado estado = Estado.Inativa;
+
+    //Getters
+    public string Nome => nome;
+    public string Descricao => descricao;
+    public Estado GetEstado => estado;
+
+    //Setters
+    public void SetEstado(Estado estado)
     {
-        return concluida;
+        this.estado = estado;
+    }
+
+    public virtual void ConferirMissao()
+    {
+        //Nada
     }
 }

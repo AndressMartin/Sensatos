@@ -15,16 +15,18 @@ public class Player : EntityModel
     private AtaqueFisico ataqueHitBox;
     private PlayerSound sound;
     private PontaArmaPlayerScript pontaArma;
-    private Inventario inventario;
-    private InventarioMissao inventarioMissao;
     private SomDosTiros somDosTiros;
     private SonsDoJogador sonsDoJogador;
+
+    private Inventario inventario;
+    private InventarioMissao inventarioMissao;
 
     //Enums
     public enum ModoMovimento { Normal, AndandoSorrateiramente, Strafing };
     public enum Estado { Normal, TomandoDano, Atacando, UsandoItem, Morto };
 
     //Variaveis
+    private static int vidaMaxima = 0;
     [SerializeField] private int vidaInicial;
 
     public Direcao direcaoMovimento;
@@ -59,11 +61,13 @@ public class Player : EntityModel
     //Getters
     public GeneralManagerScript GeneralManager => generalManager;
     public AnimacaoJogador Animacao => animacao;
+    public SomDosTiros SomDosTiros => somDosTiros;
+    public SonsDoJogador SonsDoJogador => sonsDoJogador;
     public Inventario Inventario => inventario;
     public InventarioMissao InventarioMissao => inventarioMissao;
-    public SonsDoJogador SonsDoJogador => sonsDoJogador;
     public int Vida => vida;
     public int VidaMax => vidaMax;
+    public int VidaMaxima => vidaMaxima;
     public bool ModoDeCombate => modoDeCombate;
     public Estado GetEstado => estado;
     public float TempoRecarregar => tempoRecarregar;
@@ -72,6 +76,10 @@ public class Player : EntityModel
 
     void Start()
     {
+        //Eventos
+        SaveManager.instance.OnSavingGame.AddListener(AtualizarSaveFile);
+        SaveManager.instance.OnGameLoaded.AddListener(CarregarSaveFile);
+
         //Managers
         generalManager = FindObjectOfType<GeneralManagerScript>();
 
@@ -83,14 +91,22 @@ public class Player : EntityModel
         ataqueHitBox = GetComponentInChildren<AtaqueFisico>();
         sound = FindObjectOfType<PlayerSound>();
         pontaArma = GetComponentInChildren<PontaArmaPlayerScript>();
-        inventario = GetComponent<Inventario>();
-        inventarioMissao = GetComponent<InventarioMissao>();
         somDosTiros = GetComponentInChildren<SomDosTiros>();
         sonsDoJogador = GetComponent<SonsDoJogador>();
 
+        inventario = GetComponent<Inventario>();
+        inventarioMissao = GetComponent<InventarioMissao>();
+
         //Variaveis
-        vida = vidaInicial;
-        vidaMax = vidaInicial;
+
+        if(vidaMaxima == 0)
+        {
+            vidaMaxima = vidaInicial;
+        }
+
+        vidaMax = vidaMaxima;
+        vida = vidaMax;
+
         raioPassos = 1.5f;
 
         modoDeCombate = true;
@@ -117,7 +133,7 @@ public class Player : EntityModel
         tempoSoftlock = 0;
         tempoSoftlockMax = 10f;
 
-        SetRespawn();
+        SetRespawn(transform.position, direcao);
     }
 
     void Update()
@@ -163,26 +179,27 @@ public class Player : EntityModel
         }
     }
 
-    private void SetRespawn()
-    {
-        posicaoRespawn = transform.position;
-        direcaoRespawn = direcao;
-    }
-
     public void SetRespawn(Vector2 posicao, Direcao direcao)
     {
         posicaoRespawn = posicao;
         direcaoRespawn = direcao;
+
+        SaveData.AtualizarInventarioRespawn(this);
     }
 
     public void Respawn()
     {
-        vida = vidaInicial;
+        vida = vidaMax;
         transform.position = posicaoRespawn;
         ChangeDirection(direcaoRespawn);
         playerMovement.ResetarVariaveisDeControle();
 
+        inventario.Respawn();
+        inventarioMissao.Respawn();
+
         ResetarVariaveisDeControle();
+
+        generalManager.Hud.AtualizarPlayerHUD();
     }
 
     private void ResetarVariaveisDeControle()
@@ -369,12 +386,19 @@ public class Player : EntityModel
 
     public void AtualizarArma()
     {
-        if(recarregando == true)
+        if (inventario.Armas.Count < 2)
+        {
+            return;
+        }
+
+        if (recarregando == true)
         {
             FinalizarRecarregamento();
         }
         AtualizarPontaDaArma();
         animacao.AtualizarArmaBracos(inventario.ArmaSlot[inventario.ArmaAtual].NomeAnimacao);
+
+        sonsDoJogador.TocarSom(SonsDoJogador.Som.TrocarDeArma);
     }
 
     public void GerarSomDoTiro()
@@ -391,7 +415,7 @@ public class Player : EntityModel
 
     public void UsarItemAtalho(int atalho)
     {
-        if (inventario.AtalhosDeItens[atalho].ID != 0)
+        if (inventario.AtalhosDeItens[atalho].ID != Listas.instance.ListaDeItens.GetID["ItemVazio"])
         {
             UsarItem(inventario.AtalhosDeItens[atalho]);
         }
@@ -563,6 +587,26 @@ public class Player : EntityModel
             imune = false;
             tempoImune = 0;
         }
+    }
+
+    private void AtualizarSaveFile()
+    {
+        SaveData.AtualizarSaveFile(this);
+    }
+
+    private void CarregarSaveFile()
+    {
+        vidaMaxima = SaveData.SaveAtual.vidaMaxima;
+        vidaMax = vidaMaxima;
+        vida = vidaMax;
+
+        inventario.CarregarSave(SaveData.SaveAtual.inventarioSave);
+        inventarioMissao.CarregarSave(SaveData.SaveAtual.inventarioSave);
+
+        //Atualizar a HUD
+        generalManager.Hud.AtualizarPlayerHUD();
+
+        Debug.Log("Save carregado");
     }
 
     private void ChangeCollision(Collision2D collision, bool ignorarColisao)

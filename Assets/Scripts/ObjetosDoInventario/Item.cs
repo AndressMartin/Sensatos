@@ -8,12 +8,19 @@ public class Item : ItemDoInventario
     public enum TipoItem { Consumivel, Ferramenta, ItemChave };
 
     //Variaveis
-    [SerializeField] protected int id;
+    protected int quantidadeDeUsos = 0;
 
     //Getters
-    public virtual int ID => id;
+    public virtual int ID => Listas.instance.ListaDeItens.GetID[this.name];
     public virtual TipoItem Tipo => TipoItem.Consumivel;
     virtual public string GetNomeAnimacao => "";
+    public int QuantidadeDeUsos => quantidadeDeUsos;
+
+    //Setters
+    public void SetQuantidadeDeUsos(int quantidadeDeUsos)
+    {
+        this.quantidadeDeUsos = quantidadeDeUsos;
+    }
 
     virtual public void Iniciar()
     {

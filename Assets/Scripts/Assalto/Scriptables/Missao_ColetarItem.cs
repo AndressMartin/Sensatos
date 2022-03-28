@@ -2,13 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Missao/Missao_Coletar_Item")]
+[CreateAssetMenu(menuName = "Missao/Missao de Coletar Item")]
 
 public class Missao_ColetarItem : Missao
 {
-    [SerializeField] private ItemDeMissao itemColetavels;
+    [SerializeField] private ItemChave itemColetavel;
     [SerializeField] private int quantidadeItensCompletarMissao;
-    public ItemDeMissao GetItemDeMissao => itemColetavels;
+    public ItemChave GetItemDeMissao => itemColetavel;
     public int GetquantidadeItensCompletarMissao => quantidadeItensCompletarMissao;
-
 }

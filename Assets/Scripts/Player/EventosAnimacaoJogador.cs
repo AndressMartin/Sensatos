@@ -30,8 +30,8 @@ public class EventosAnimacaoJogador : MonoBehaviour
         player.UsarItemGameplay();
     }
 
-    public void TocarSom(SonsDoJogador.Som som)
+    public void TocarSomAlitace()
     {
-        player.SonsDoJogador.TocarSom(som);
+        player.SonsDoJogador.TocarSom(SonsDoJogador.Som.UsarOAlicate);
     }
 }

@@ -72,6 +72,7 @@ public class Enemy : EntityModel
     public InventarioEnemy GetInventarioEnemy => inventario;
     public EnemyMovement GetEnemyMovement => enemyMovement;
     public IAEnemy GetIAEnemy => ia_Enemy;
+    public SomDosTiros SomDosTiros => somDosTiros;
     public SonsDoInimigo SonsDoInimigo => sonsDoInimigo;
     public Vector2 VetorVelocidade => vetorVelocidade;
 

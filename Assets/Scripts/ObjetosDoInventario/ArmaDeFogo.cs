@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 [CreateAssetMenu(menuName = "Inventario/Arma de Fogo")]
-
+[System.Serializable]
 public class ArmaDeFogo : ItemDoInventario
 {
     //Variaveis
@@ -21,6 +21,7 @@ public class ArmaDeFogo : ItemDoInventario
     [SerializeField] private List<Melhoria> melhorias;
 
     //Getters
+    public virtual int ID => Listas.instance.ListaDeArmas.GetID[this.name];
     public string NomeAnimacao => nomeAnimacao;
     public bool RapidFire => rapidFire;
     public float RaioDoSomDoTiro => raioDoSomDoTiro;
@@ -29,6 +30,18 @@ public class ArmaDeFogo : ItemDoInventario
     public int NivelMelhoria => nivelMelhoria;
     public List<Melhoria> Melhorias => melhorias;
     public Status GetStatus => GetStatusMetodo();
+
+    //Setters
+    public void SetNivelMelhoria(int nivel)
+    {
+        nivelMelhoria = nivel;
+    }
+
+    public void SetMunicoes(int municao, int municaoCartucho)
+    {
+        this.municao = municao;
+        this.municaoCartucho = municaoCartucho;
+    }
 
     public void Atirar(EntityModel objQueChamou, BulletManagerScript bulletManager, Vector3 posicao, Vector2 direcao, EntityModel.Alvo alvo)
     {
@@ -58,7 +71,7 @@ public class ArmaDeFogo : ItemDoInventario
         }
     }
 
-    void CriarTiro(EntityModel objQueChamou, BulletManagerScript bulletManager, Vector3 posicao, Vector2 direcao, EntityModel.Alvo alvo)
+    private void CriarTiro(EntityModel objQueChamou, BulletManagerScript bulletManager, Vector3 posicao, Vector2 direcao, EntityModel.Alvo alvo)
     {
         bulletManager.CriarTiro(objQueChamou, this, posicao, direcao, alvo);
     }
@@ -128,9 +141,23 @@ public class ArmaDeFogo : ItemDoInventario
         }
     }
 
-    public void SetNivelMelhoria(int nivel)
+    public void TrocarIdioma(MudarIdiomaItensDoInventario.TextosArma textosArma)
     {
-        nivelMelhoria = nivel;
+        nome = textosArma.nome;
+        descricao = textosArma.descricao;
+
+        for(int i = 0; i < melhorias.Count; i++)
+        {
+            if(textosArma.melhorias.Length > i)
+            {
+                melhorias[i].SetNome(textosArma.melhorias[i].nome);
+                melhorias[i].SetDescricao(textosArma.melhorias[i].descricao);
+            }
+            else
+            {
+                Debug.LogWarning("Ha menos melhorias no arquivo do que na lista de melhorias da arma!");
+            }
+        }
     }
 
     [System.Serializable]
@@ -165,7 +192,7 @@ public class ArmaDeFogo : ItemDoInventario
     }
 
     [System.Serializable]
-    public struct Melhoria
+    public class Melhoria
     {
         //Variaveis
         [SerializeField] private Sprite imagemMelhoria;
@@ -178,5 +205,16 @@ public class ArmaDeFogo : ItemDoInventario
         public string Descricao => descricao;
         public string Nome => nome;
         public Status GetStatus => status;
+
+        //Setters
+        public void SetNome(string nome)
+        {
+            this.nome = nome;
+        }
+
+        public void SetDescricao(string descricao)
+        {
+            this.descricao = descricao;
+        }
     }
 }

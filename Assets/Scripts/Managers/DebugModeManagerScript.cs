@@ -81,6 +81,20 @@ public class DebugModeManagerScript : MonoBehaviour
         {
             generalManager.LockDownManager.DesativarLockDown();
         }
+
+        //Salvar o jogo
+        if (Input.GetKeyUp(KeyCode.Z))
+        {
+            SaveManager.instance.SalvarJogo(1);
+            Debug.Log("O jogo foi salvo no slot 1.");
+        }
+
+        //Carregar o jogo
+        if (Input.GetKeyUp(KeyCode.X))
+        {
+            SaveManager.instance.CarregarJogo(1);
+            Debug.Log("O save no slot 1 foi carregado.");
+        }
     }
 
     private void ContadorDeFPS()
@@ -103,15 +117,12 @@ public class DebugModeManagerScript : MonoBehaviour
 
         foreach(ArmaDeFogo arma in armasIniciais)
         {
-            player.Inventario.AddArma(arma);
-
-            ArmaDeFogo novaArma = player.Inventario.Armas[player.Inventario.Armas.Count - 1];
-            novaArma.AdicionarMunicao(novaArma.GetStatus.MunicaoMax + novaArma.GetStatus.MunicaoMaxCartucho);
+            player.Inventario.AdicionarArma(arma);
         }
 
         foreach (RoupaDeCamuflagem roupa in roupasIniciais)
         {
-            player.Inventario.AddRoupa(roupa);
+            player.Inventario.AdicionarRoupa(roupa);
         }
 
         foreach (Item item in itensIniciais)
@@ -127,9 +138,14 @@ public class DebugModeManagerScript : MonoBehaviour
                     break;
 
                 case Item.TipoItem.ItemChave:
-                    player.InventarioMissao.Add(item);
+                    ItemChave itemChave = (ItemChave)item;
+                    player.InventarioMissao.AdicionarItem(itemChave);
                     break;
             }
         }
+
+        player.SetRespawn(player.transform.position, player.GetDirecao);
+
+        generalManager.Hud.AtualizarPlayerHUD();
     }
 }

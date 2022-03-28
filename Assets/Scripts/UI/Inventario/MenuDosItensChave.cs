@@ -30,6 +30,17 @@ public class MenuDosItensChave : MonoBehaviour
 
     private bool iniciado = false;
 
+    //Setters
+    public void SetNomeSemItens(string novoTexto)
+    {
+        nomeSemItens = novoTexto;
+    }
+
+    public void SetDescricaoSemItens(string novoTexto)
+    {
+        descricaoSemItens = novoTexto;
+    }
+
     void Start()
     {
         Iniciar();
@@ -85,6 +96,7 @@ public class MenuDosItensChave : MonoBehaviour
             else
             {
                 itens[i].AtualizarNome(generalManager.Player.InventarioMissao.Itens[scrool + i].Nome);
+                itens[i].AtualizarNumero(generalManager.Player.InventarioMissao.Itens[scrool + i].Quantidade);
                 itens[i].gameObject.SetActive(true);
             }
         }

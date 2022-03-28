@@ -9,21 +9,39 @@ public class HUDScript : MonoBehaviour
     [SerializeField] private Camera cameraAtiva;
     [SerializeField] private PlayerHUD playerHUD;
     [SerializeField] private MenuDoInventario menuDoInventario;
+    [SerializeField] private MenuDePausa menuDePausa;
     [SerializeField] private LockDownUI lockDownUI;
     [SerializeField] private PlayerUIScript playerUI;
     [SerializeField] private BarraDeVisaoDoInimigo barraDeVisaoDoInimigo;
 
     private SonsDeMenus sonsDeMenus;
 
+    //Enuns
+    public enum Menu { Nenhum, Pausa, Inventario }
+
+    //Variaveis
+    private Menu menuAberto;
+
     //Getters
     public MenuDoInventario MenuDoInventario => menuDoInventario;
+    public MenuDePausa MenuDePausa => menuDePausa;
     public BarraDeVisaoDoInimigo BarraDeVisaoDoInimigo => barraDeVisaoDoInimigo;
     public SonsDeMenus SonsDeMenus => sonsDeMenus;
+    public Menu MenuAberto => menuAberto;
+
+    //Setters
+    public void SetMenuAberto(Menu menuAberto)
+    {
+        this.menuAberto = menuAberto;
+    }
 
     private void Start()
     {
         //Componentes
         sonsDeMenus = GetComponent<SonsDeMenus>();
+
+        //Variaveis
+        menuAberto = Menu.Nenhum;
 
         LockDownUIAtiva(false);
         BarraDeRecarregamentoAtiva(false);
