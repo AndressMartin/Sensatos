@@ -49,7 +49,6 @@ public class SaveManager : MonoBehaviour
         if (instance == null) //Confere se a instancia nao e nula
         {
             instance = this;
-            Debug.Log("Setei a instancia do save manager");
         }
         else if (instance != this) //Caso a instancia nao seja nula e nao seja este objeto, ele se destroi
         {
@@ -73,5 +72,13 @@ public class SaveManager : MonoBehaviour
         Save.Carregar(slot);
 
         onGameLoaded?.Invoke();
+    }
+
+    public void AutoSave()
+    {
+        if(Save.SaveAtual != 0)
+        {
+            Save.Salvar(Save.SaveAtual);
+        }
     }
 }

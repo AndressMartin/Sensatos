@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,6 +9,8 @@ public class SaveData
     [System.Serializable]
     public class SaveFile
     {
+        public InformacoesSave informacoesSave = new InformacoesSave();
+
         public int vidaMaxima;
         public InventarioSave inventarioSave = new InventarioSave();
 
@@ -168,6 +171,43 @@ public class SaveData
         }
     }
 
+    //Classe que contem as informacoes do save
+    [System.Serializable]
+    public class InformacoesSave
+    {
+        public float tempoDeJogo;
+        public SerializableDateTime data;
+
+        public InformacoesSave()
+        {
+            tempoDeJogo = 0;
+            data = new SerializableDateTime(DateTime.Now);
+        }
+    }
+
+    //Classe que contem a data do save
+    [System.Serializable]
+    public class SerializableDateTime
+    {
+        public int second;
+        public int minute;
+        public int hour;
+
+        public int day;
+        public int month;
+        public int year;
+
+        public SerializableDateTime(DateTime dateTime)
+        {
+            second = dateTime.Second;
+            minute = dateTime.Minute;
+            hour = dateTime.Hour;
+            day = dateTime.Day;
+            month = dateTime.Month;
+            year = dateTime.Year;
+        }
+    }
+
     //Instancia das classes
     private static SaveFile saveAtual = new SaveFile();
     private static InventarioSave inventarioRespawn = new InventarioSave();
@@ -184,6 +224,9 @@ public class SaveData
 
     public static void AtualizarSaveFile(Player player)
     {
+        saveAtual.informacoesSave.tempoDeJogo = GameManager.instance.TempoDeJogo;
+        saveAtual.informacoesSave.data = new SerializableDateTime(DateTime.Now);
+
         saveAtual.vidaMaxima = player.VidaMaxima;
         saveAtual.inventarioSave.AtualizarInventarioSave(player.Inventario, player.InventarioMissao);
 
