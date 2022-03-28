@@ -48,7 +48,7 @@ public static class Save
 
         string caminhoDoArquivo = Path.Combine(Application.dataPath, "Saves", "save" + slot.ToString() + ".txt");
 
-        string texto = JsonUtility.ToJson(save);
+        string texto = JsonUtility.ToJson(save, true);
 
         if (texto != null)
         {

@@ -127,12 +127,14 @@ public class SaveData
     public class ArmaDeFogoSave
     {
         public int id;
+        public int nivelMelhoria;
         public int municao;
         public int municaoCartucho;
 
         public ArmaDeFogoSave(ArmaDeFogo arma)
         {
             id = Listas.instance.ListaDeArmas.GetID[arma.name];
+            nivelMelhoria = arma.NivelMelhoria;
             municao = arma.Municao;
             municaoCartucho = arma.MunicaoCartucho;
         }

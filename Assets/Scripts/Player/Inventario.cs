@@ -315,6 +315,7 @@ public class Inventario : MonoBehaviour
         {
             AdicionarArma(Listas.instance.ListaDeArmas.GetArma[arma.id]);
 
+            armas[armas.Count - 1].SetNivelMelhoria(arma.nivelMelhoria);
             armas[armas.Count - 1].SetMunicoes(arma.municao, arma.municaoCartucho);
         }
 
