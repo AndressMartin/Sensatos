@@ -2,22 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MenuDePausa : MonoBehaviour
+public class MenuPrincipal : MonoBehaviour
 {
     //Managers
     private GeneralManagerScript generalManager;
 
     //Componentes
-    [SerializeField] private RectTransform telaEscura;
+    [SerializeField] private RectTransform telaDoLogo;
     [SerializeField] private RectTransform telaInicial;
-    [SerializeField] private MenuSalvar menuSalvar;
+    [SerializeField] private MenuNovoJogo menuNovoJogo;
+    [SerializeField] private MenuCarregarJogo menuCarregarJogo;
     [SerializeField] private MenuOpcoes menuOpcoes;
 
     [SerializeField] private PainelDeEscolha opcoesMenuInicial;
-    [SerializeField] private PainelDeEscolha opcoesConfirmacaoParaVoltarAoMenuInicial;
+    [SerializeField] private PainelDeEscolha painelDeConfirmacaoParaSairDoJogo;
 
     //Enums
-    public enum Menu { Inicio, Salvar, Opcoes, ConfirmacaoMenuPrincipal }
+    public enum Menu { Inicio, NovoJogo, CarregarJogo, Opcoes, ConfirmacaoParaSairDoJogo }
 
     //Variaveis
     private bool ativo;
@@ -26,10 +27,12 @@ public class MenuDePausa : MonoBehaviour
     private int selecao;
     private int selecao2;
 
-    //Getters
-    public MenuSalvar GetMenuSalvar => menuSalvar;
-
     //Setters
+    public void SetAtivo(bool ativo)
+    {
+        this.ativo = ativo;
+    }
+
     public void SetMenuAtual(Menu menuAtual)
     {
         this.menuAtual = menuAtual;
@@ -38,35 +41,47 @@ public class MenuDePausa : MonoBehaviour
         {
             case Menu.Inicio:
                 telaInicial.gameObject.SetActive(true);
-                menuSalvar.gameObject.SetActive(false);
+                menuNovoJogo.gameObject.SetActive(false);
+                menuCarregarJogo.gameObject.SetActive(false);
                 menuOpcoes.gameObject.SetActive(false);
-                opcoesConfirmacaoParaVoltarAoMenuInicial.gameObject.SetActive(false);
+                painelDeConfirmacaoParaSairDoJogo.gameObject.SetActive(false);
                 break;
 
-            case Menu.Salvar:
+            case Menu.NovoJogo:
                 telaInicial.gameObject.SetActive(false);
-                menuSalvar.gameObject.SetActive(true);
+                menuNovoJogo.gameObject.SetActive(true);
+                menuCarregarJogo.gameObject.SetActive(false);
                 menuOpcoes.gameObject.SetActive(false);
-                opcoesConfirmacaoParaVoltarAoMenuInicial.gameObject.SetActive(false);
+                painelDeConfirmacaoParaSairDoJogo.gameObject.SetActive(false);
+                break;
+
+            case Menu.CarregarJogo:
+                telaInicial.gameObject.SetActive(false);
+                menuNovoJogo.gameObject.SetActive(false);
+                menuCarregarJogo.gameObject.SetActive(true);
+                menuOpcoes.gameObject.SetActive(false);
+                painelDeConfirmacaoParaSairDoJogo.gameObject.SetActive(false);
                 break;
 
             case Menu.Opcoes:
                 telaInicial.gameObject.SetActive(false);
-                menuSalvar.gameObject.SetActive(false);
+                menuNovoJogo.gameObject.SetActive(false);
+                menuCarregarJogo.gameObject.SetActive(false);
                 menuOpcoes.gameObject.SetActive(true);
-                opcoesConfirmacaoParaVoltarAoMenuInicial.gameObject.SetActive(false);
+                painelDeConfirmacaoParaSairDoJogo.gameObject.SetActive(false);
                 break;
 
-            case Menu.ConfirmacaoMenuPrincipal:
+            case Menu.ConfirmacaoParaSairDoJogo:
                 telaInicial.gameObject.SetActive(false);
-                menuSalvar.gameObject.SetActive(false);
+                menuNovoJogo.gameObject.SetActive(false);
+                menuCarregarJogo.gameObject.SetActive(false);
                 menuOpcoes.gameObject.SetActive(false);
-                opcoesConfirmacaoParaVoltarAoMenuInicial.gameObject.SetActive(true);
+                painelDeConfirmacaoParaSairDoJogo.gameObject.SetActive(true);
                 break;
         }
     }
 
-    private void Start()
+    private void Awake()
     {
         //Managers
         generalManager = FindObjectOfType<GeneralManagerScript>();
@@ -79,41 +94,26 @@ public class MenuDePausa : MonoBehaviour
 
         IniciarComponentes();
 
-        telaEscura.gameObject.SetActive(false);
-        telaInicial.gameObject.SetActive(false);
-        menuSalvar.gameObject.SetActive(false);
+        telaDoLogo.gameObject.SetActive(true);
+
+        menuNovoJogo.gameObject.SetActive(false);
+        menuCarregarJogo.gameObject.SetActive(false);
         menuOpcoes.gameObject.SetActive(false);
-        opcoesConfirmacaoParaVoltarAoMenuInicial.gameObject.SetActive(false);
+        painelDeConfirmacaoParaSairDoJogo.gameObject.SetActive(false);
     }
 
     private void IniciarComponentes()
     {
+        AtualizarPainelDeEscolha(opcoesMenuInicial, selecao);
+
         menuOpcoes.Iniciar();
     }
 
     private void Update()
     {
-        if (ativo == false)
+        if(ativo == false)
         {
-            if (generalManager.PauseManager.PermitirInput == true)
-            {
-                if (generalManager.Hud.MenuAberto == HUDScript.Menu.Nenhum && generalManager.Player.GetEstado != Player.Estado.Morto)
-                {
-                    //Abrir o menu de pausa
-                    if (InputManager.Pausar())
-                    {
-                        AbrirOMenuDePausa();
-                    }
-                }
-            }
-
             return;
-        }
-
-        //Fechar o menu de pausa
-        if (InputManager.Pausar())
-        {
-            FecharOMenuDePausa();
         }
 
         //Executa as funcoes do menu atual
@@ -123,59 +123,22 @@ public class MenuDePausa : MonoBehaviour
                 MenuInicial();
                 break;
 
-            case Menu.Salvar:
-                MenuSalvar();
+            case Menu.NovoJogo:
+                MenuNovoJogo();
+                break;
+
+            case Menu.CarregarJogo:
+                MenuCarregarJogo();
                 break;
 
             case Menu.Opcoes:
                 MenuOpcoes();
                 break;
 
-            case Menu.ConfirmacaoMenuPrincipal:
-                ConfirmacaoMenuPrincipal();
+            case Menu.ConfirmacaoParaSairDoJogo:
+                ConfirmacaoParaSairDoJogo();
                 break;
         }
-    }
-
-    private void AbrirOMenuDePausa()
-    {
-        generalManager.Hud.SetMenuAberto(HUDScript.Menu.Pausa);
-        generalManager.PauseManager.Pausar(true);
-        generalManager.PauseManager.SetPermitirInput(false);
-
-        ativo = true;
-
-        telaEscura.gameObject.SetActive(true);
-        SetMenuAtual(Menu.Inicio);
-
-        selecao = 0;
-        AtualizarPainelDeEscolha(opcoesMenuInicial, selecao);
-
-        generalManager.Hud.SonsDeMenus.TocarSom(SonsDeMenus.Som.Pausar);
-    }
-
-    private void FecharOMenuDePausa()
-    {
-        //Salva as configuracoes do jogo caso o jogador feche o menu de pausa enquanto esta no menu de opcoes
-        if (menuAtual == Menu.Opcoes)
-        {
-            SaveConfiguracoes.AtualizarConfiguracoes();
-            SaveConfiguracoes.SalvarConfiguracoes();
-        }
-
-        generalManager.Hud.SetMenuAberto(HUDScript.Menu.Nenhum);
-        generalManager.PauseManager.Pausar(false);
-        generalManager.PauseManager.SetPermitirInput(true);
-
-        telaEscura.gameObject.SetActive(false);
-        telaInicial.gameObject.SetActive(false);
-        menuSalvar.gameObject.SetActive(false);
-        menuOpcoes.gameObject.SetActive(false);
-        opcoesConfirmacaoParaVoltarAoMenuInicial.gameObject.SetActive(false);
-
-        ativo = false;
-
-        generalManager.Hud.SonsDeMenus.TocarSom(SonsDeMenus.Som.Despausar);
     }
 
     private void MenuInicial()
@@ -206,25 +169,19 @@ public class MenuDePausa : MonoBehaviour
             }
         }
 
-        //Voltar
-        if (InputManager.Voltar())
-        {
-            FecharOMenuDePausa();
-        }
-
         //Confirmar
         if (InputManager.Confirmar())
         {
             switch (selecao)
             {
                 case 0:
-                    FecharOMenuDePausa();
+                    SetMenuAtual(Menu.NovoJogo);
+
+                    generalManager.Hud.SonsDeMenus.TocarSom(SonsDeMenus.Som.Confirmar);
                     break;
 
                 case 1:
-                    SetMenuAtual(Menu.Salvar);
-
-                    menuSalvar.IniciarScrool();
+                    SetMenuAtual(Menu.CarregarJogo);
 
                     generalManager.Hud.SonsDeMenus.TocarSom(SonsDeMenus.Som.Confirmar);
                     break;
@@ -238,10 +195,10 @@ public class MenuDePausa : MonoBehaviour
                     break;
 
                 case 3:
-                    SetMenuAtual(Menu.ConfirmacaoMenuPrincipal);
+                    SetMenuAtual(Menu.ConfirmacaoParaSairDoJogo);
 
                     selecao2 = 0;
-                    AtualizarPainelDeEscolha(opcoesConfirmacaoParaVoltarAoMenuInicial, selecao2);
+                    AtualizarPainelDeEscolha(painelDeConfirmacaoParaSairDoJogo, selecao2);
 
                     generalManager.Hud.SonsDeMenus.TocarSom(SonsDeMenus.Som.Confirmar);
                     break;
@@ -249,9 +206,14 @@ public class MenuDePausa : MonoBehaviour
         }
     }
 
-    private void MenuSalvar()
+    private void MenuNovoJogo()
     {
-        menuSalvar.EscolhendoSave();
+
+    }
+
+    private void MenuCarregarJogo()
+    {
+
     }
 
     private void MenuOpcoes()
@@ -271,7 +233,7 @@ public class MenuDePausa : MonoBehaviour
         }
     }
 
-    private void ConfirmacaoMenuPrincipal()
+    private void ConfirmacaoParaSairDoJogo()
     {
         //Mover para cima
         if (InputManager.Esquerda())
@@ -280,7 +242,7 @@ public class MenuDePausa : MonoBehaviour
             {
                 selecao2--;
 
-                AtualizarPainelDeEscolha(opcoesConfirmacaoParaVoltarAoMenuInicial, selecao2);
+                AtualizarPainelDeEscolha(painelDeConfirmacaoParaSairDoJogo, selecao2);
 
                 generalManager.Hud.SonsDeMenus.TocarSom(SonsDeMenus.Som.Movimento1);
             }
@@ -289,11 +251,11 @@ public class MenuDePausa : MonoBehaviour
         //Mover para baixo
         if (InputManager.Direita())
         {
-            if (selecao2 < opcoesConfirmacaoParaVoltarAoMenuInicial.Opcoes.Length - 1)
+            if (selecao2 < painelDeConfirmacaoParaSairDoJogo.Opcoes.Length - 1)
             {
                 selecao2++;
 
-                AtualizarPainelDeEscolha(opcoesConfirmacaoParaVoltarAoMenuInicial, selecao2);
+                AtualizarPainelDeEscolha(painelDeConfirmacaoParaSairDoJogo, selecao2);
 
                 generalManager.Hud.SonsDeMenus.TocarSom(SonsDeMenus.Som.Movimento2);
             }
@@ -319,9 +281,9 @@ public class MenuDePausa : MonoBehaviour
                     break;
 
                 case 1:
-                    //Fazer algo
-
                     generalManager.Hud.SonsDeMenus.TocarSom(SonsDeMenus.Som.Confirmar);
+
+                    FecharOJogo();
                     break;
             }
         }
@@ -330,5 +292,10 @@ public class MenuDePausa : MonoBehaviour
     private void AtualizarPainelDeEscolha(PainelDeEscolha painelDeEscolha, int selecao)
     {
         painelDeEscolha.Selecionar(selecao);
+    }
+
+    private void FecharOJogo()
+    {
+        Application.Quit();
     }
 }

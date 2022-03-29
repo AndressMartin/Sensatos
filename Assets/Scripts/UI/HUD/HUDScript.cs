@@ -15,7 +15,7 @@ public class HUDScript : MonoBehaviour
     [SerializeField] private PlayerUIScript playerUI;
     [SerializeField] private BarraDeVisaoDoInimigo barraDeVisaoDoInimigo;
 
-    private SonsDeMenus sonsDeMenus;
+    [SerializeField] private SonsDeMenus sonsDeMenus;
 
     //Enuns
     public enum Menu { Nenhum, Pausa, Inventario }
@@ -38,9 +38,6 @@ public class HUDScript : MonoBehaviour
 
     private void Start()
     {
-        //Componentes
-        sonsDeMenus = GetComponent<SonsDeMenus>();
-
         //Variaveis
         menuAberto = Menu.Nenhum;
 

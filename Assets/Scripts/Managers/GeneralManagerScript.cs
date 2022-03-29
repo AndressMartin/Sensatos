@@ -64,6 +64,7 @@ public class GeneralManagerScript : MonoBehaviour
         pathfinderManager = FindObjectOfType<PathfinderManagerScript>();
         debugModeManager = FindObjectOfType<DebugModeManagerScript>();
         assaltoManager = FindObjectOfType<AssaltoManager>();
+
         //Componentes
         player = FindObjectOfType<Player>();
         hud = FindObjectOfType<HUDScript>();

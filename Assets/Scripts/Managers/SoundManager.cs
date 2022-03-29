@@ -76,11 +76,14 @@ public class SoundManager : MonoBehaviour
         audioSource.volume = (float)volume / 100;
         audioSourceIgnorandoPause.volume = (float)volume / 100;
 
-        generalManager.Player.SomDosTiros.SetVolume(volume);
+        generalManager.Player?.SomDosTiros.SetVolume(volume);
 
-        foreach(Enemy inimigo in generalManager.ObjectManager.ListaInimigos)
+        if(generalManager.ObjectManager != null)
         {
-            inimigo.SomDosTiros.SetVolume(volume);
+            foreach (Enemy inimigo in generalManager.ObjectManager.ListaInimigos)
+            {
+                inimigo.SomDosTiros.SetVolume(volume);
+            }
         }
     }
 

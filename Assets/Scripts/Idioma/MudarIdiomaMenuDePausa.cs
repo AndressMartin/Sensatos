@@ -6,10 +6,11 @@ using UnityEngine;
 public class MudarIdiomaMenuDePausa : MonoBehaviour
 {
     //Componentes
+    private MudarIdiomaMenuDeOpcoes mudarIdiomaMenuDeOpcoes;
+
     //Titulos
     [SerializeField] private TMP_Text tituloPausa;
     [SerializeField] private TMP_Text tituloSalvar;
-    [SerializeField] private TMP_Text tituloOpcoes;
 
     //Painel de Escolha do Menu Inicial
     [SerializeField] private TMP_Text textoContinuar;
@@ -22,11 +23,6 @@ public class MudarIdiomaMenuDePausa : MonoBehaviour
     [SerializeField] private TMP_Text textoNaoMenuPrincipal;
     [SerializeField] private TMP_Text textoSimMenuPrincipal;
 
-    //Textos das opcoes do Menu de Opcoes
-    [SerializeField] private TMP_Text textoVolumeMusica;
-    [SerializeField] private TMP_Text textoVolumeEfeitosSonoros;
-    [SerializeField] private TMP_Text textoIdioma;
-
     //Menu de Salvar
     [SerializeField] private TMP_Text textoPerguntaSobrescreverOSave;
     [SerializeField] private TMP_Text textoNaoSobrescreverSave;
@@ -34,11 +30,15 @@ public class MudarIdiomaMenuDePausa : MonoBehaviour
     [SerializeField] private TMP_Text textoSaveSucesso;
     [SerializeField] private TMP_Text textoContinuarSaveSucesso;
 
+    private void Start()
+    {
+        mudarIdiomaMenuDeOpcoes = GetComponentInChildren<MudarIdiomaMenuDeOpcoes>();
+    }
+
     public void TrocarIdioma(MudarIdiomaUI.TextosUI textosUI, GeneralManagerScript generalManager)
     {
         this.tituloPausa.text = textosUI.tituloPausa;
         this.tituloSalvar.text = textosUI.tituloSalvar;
-        this.tituloOpcoes.text = textosUI.tituloOpcoes;
 
         this.textoContinuar.text = textosUI.textoContinuar;
         this.textoSalvar.text = textosUI.textoSalvar;
@@ -49,10 +49,6 @@ public class MudarIdiomaMenuDePausa : MonoBehaviour
         this.textoNaoMenuPrincipal.text = textosUI.textoNaoMenuPrincipal;
         this.textoSimMenuPrincipal.text = textosUI.textoSimMenuPrincipal;
 
-        this.textoVolumeMusica.text = textosUI.textoVolumeMusica;
-        this.textoVolumeEfeitosSonoros.text = textosUI.textoVolumeEfeitosSonoros;
-        this.textoIdioma.text = textosUI.textoIdioma;
-
         this.textoPerguntaSobrescreverOSave.text = textosUI.textoPerguntaSobrescreverOSave;
         this.textoNaoSobrescreverSave.text = textosUI.textoNaoSobrescreverSave;
         this.textoSimSobrescreverSave.text = textosUI.textoSimSobrescreverSave;
@@ -61,5 +57,7 @@ public class MudarIdiomaMenuDePausa : MonoBehaviour
 
         generalManager.Hud.MenuDePausa.GetMenuSalvar.SetNomeSlot(textosUI.textoNomeSlot);
         generalManager.Hud.MenuDePausa.GetMenuSalvar.SetNomeSlotVazio(textosUI.textoNomeSlotVazio);
+
+        mudarIdiomaMenuDeOpcoes.TrocarIdioma(textosUI, generalManager);
     }
 }
