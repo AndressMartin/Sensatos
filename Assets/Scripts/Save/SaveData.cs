@@ -231,8 +231,6 @@ public class SaveData
         saveAtual.inventarioSave.AtualizarInventarioSave(player.Inventario, player.InventarioMissao);
 
         saveAtual.flags = Flags.GetFlagList;
-
-        Debug.Log("Save atualizado");
     }
 
     public static void AtualizarInventarioRespawn(Player player)

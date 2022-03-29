@@ -10,6 +10,7 @@ public class MenuSalvar : MonoBehaviour
     //Componentes
     [SerializeField] private SaveSlot[] saveSlots;
     [SerializeField] private PainelDeEscolha opcoesSobrescreverSave;
+    [SerializeField] private PainelDeEscolha painelSaveSucesso;
 
     //Enuns
     public enum Menu { Inicio, ConfirmandoSobrescreverSave, SaveSucesso, SaveFalhou }
@@ -26,6 +27,17 @@ public class MenuSalvar : MonoBehaviour
     private Menu menuAtual;
 
     private bool iniciado = false;
+
+    //Setters
+    public void SetNomeSlot(string novoTexto)
+    {
+        nomeSlot = novoTexto;
+    }
+
+    public void SetNomeSlotVazio(string novoTexto)
+    {
+        nomeSlotVazio = novoTexto;
+    }
 
     void Start()
     {
@@ -59,6 +71,22 @@ public class MenuSalvar : MonoBehaviour
         {
             case Menu.Inicio:
                 opcoesSobrescreverSave.gameObject.SetActive(false);
+                painelSaveSucesso.gameObject.SetActive(false);
+                break;
+
+            case Menu.ConfirmandoSobrescreverSave:
+                opcoesSobrescreverSave.gameObject.SetActive(true);
+                painelSaveSucesso.gameObject.SetActive(false);
+                break;
+
+            case Menu.SaveSucesso:
+                opcoesSobrescreverSave.gameObject.SetActive(false);
+                painelSaveSucesso.gameObject.SetActive(true);
+                break;
+
+            case Menu.SaveFalhou:
+                opcoesSobrescreverSave.gameObject.SetActive(false);
+                painelSaveSucesso.gameObject.SetActive(false);
                 break;
         }
     }
@@ -106,8 +134,6 @@ public class MenuSalvar : MonoBehaviour
                 break;
 
             case Menu.ConfirmandoSobrescreverSave:
-                selecao2 = 0;
-
                 ConfirmandoSobrescreverSave();
                 break;
 
@@ -155,6 +181,24 @@ public class MenuSalvar : MonoBehaviour
             generalManager.Hud.MenuDePausa.SetMenuAtual(MenuDePausa.Menu.Inicio);
 
             generalManager.Hud.SonsDeMenus.TocarSom(SonsDeMenus.Som.Voltar);
+        }
+
+        //Confirmar
+        if (InputManager.Confirmar())
+        {
+            if(saveSlots[selecao].SaveExiste == true)
+            {
+                SetMenuAtual(Menu.ConfirmandoSobrescreverSave);
+
+                selecao2 = 0;
+                AtualizarPainelDeEscolha(opcoesSobrescreverSave, selecao2);
+
+                generalManager.Hud.SonsDeMenus.TocarSom(SonsDeMenus.Som.Confirmar);
+            }
+            else
+            {
+                SalvarJogo(selecao + 1);
+            }
         }
     }
 
@@ -206,7 +250,7 @@ public class MenuSalvar : MonoBehaviour
                     break;
 
                 case 1:
-                    //Fazer algo
+                    SalvarJogo(selecao + 1);
 
                     generalManager.Hud.SonsDeMenus.TocarSom(SonsDeMenus.Som.Confirmar);
                     break;
@@ -231,6 +275,17 @@ public class MenuSalvar : MonoBehaviour
 
             generalManager.Hud.SonsDeMenus.TocarSom(SonsDeMenus.Som.Confirmar);
         }
+    }
+
+    private void SalvarJogo(int slot)
+    {
+        SaveManager.instance.SalvarJogo(slot);
+
+        SetMenuAtual(Menu.SaveSucesso);
+
+        AtualizarPainelDeEscolha(painelSaveSucesso, 0);
+
+        generalManager.Hud.SonsDeMenus.TocarSom(SonsDeMenus.Som.SalvouComSucesso);
     }
 
     private void AtualizarPainelDeEscolha(PainelDeEscolha painelDeEscolha, int selecao)

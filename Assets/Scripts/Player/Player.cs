@@ -605,8 +605,6 @@ public class Player : EntityModel
 
         //Atualizar a HUD
         generalManager.Hud.AtualizarPlayerHUD();
-
-        Debug.Log("Save carregado");
     }
 
     private void ChangeCollision(Collision2D collision, bool ignorarColisao)

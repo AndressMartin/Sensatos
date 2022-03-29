@@ -27,6 +27,9 @@ public class MenuDePausa : MonoBehaviour
     private int selecao;
     private int selecao2;
 
+    //Getters
+    public MenuSalvar GetMenuSalvar => menuSalvar;
+
     //Setters
     public void SetMenuAtual(Menu menuAtual)
     {

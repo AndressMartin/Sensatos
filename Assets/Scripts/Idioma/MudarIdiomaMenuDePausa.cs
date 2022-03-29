@@ -27,6 +27,13 @@ public class MudarIdiomaMenuDePausa : MonoBehaviour
     [SerializeField] private TMP_Text textoVolumeEfeitosSonoros;
     [SerializeField] private TMP_Text textoIdioma;
 
+    //Menu de Salvar
+    [SerializeField] private TMP_Text textoPerguntaSobrescreverOSave;
+    [SerializeField] private TMP_Text textoNaoSobrescreverSave;
+    [SerializeField] private TMP_Text textoSimSobrescreverSave;
+    [SerializeField] private TMP_Text textoSaveSucesso;
+    [SerializeField] private TMP_Text textoContinuarSaveSucesso;
+
     public void TrocarIdioma(MudarIdiomaUI.TextosUI textosUI, GeneralManagerScript generalManager)
     {
         this.tituloPausa.text = textosUI.tituloPausa;
@@ -45,5 +52,14 @@ public class MudarIdiomaMenuDePausa : MonoBehaviour
         this.textoVolumeMusica.text = textosUI.textoVolumeMusica;
         this.textoVolumeEfeitosSonoros.text = textosUI.textoVolumeEfeitosSonoros;
         this.textoIdioma.text = textosUI.textoIdioma;
+
+        this.textoPerguntaSobrescreverOSave.text = textosUI.textoPerguntaSobrescreverOSave;
+        this.textoNaoSobrescreverSave.text = textosUI.textoNaoSobrescreverSave;
+        this.textoSimSobrescreverSave.text = textosUI.textoSimSobrescreverSave;
+        this.textoSaveSucesso.text = textosUI.textoSaveSucesso;
+        this.textoContinuarSaveSucesso.text = textosUI.textoContinuarSaveSucesso;
+
+        generalManager.Hud.MenuDePausa.GetMenuSalvar.SetNomeSlot(textosUI.textoNomeSlot);
+        generalManager.Hud.MenuDePausa.GetMenuSalvar.SetNomeSlotVazio(textosUI.textoNomeSlotVazio);
     }
 }

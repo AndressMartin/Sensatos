@@ -67,11 +67,18 @@ public class SaveManager : MonoBehaviour
         Save.Salvar(slot);
     }
 
-    public void CarregarJogo(int slot)
+    public bool CarregarJogo(int slot)
     {
-        Save.Carregar(slot);
+        bool carregarSucesso = Save.Carregar(slot);
+
+        if(carregarSucesso == false)
+        {
+            return carregarSucesso;
+        }
 
         onGameLoaded?.Invoke();
+
+        return carregarSucesso;
     }
 
     public void AutoSave()

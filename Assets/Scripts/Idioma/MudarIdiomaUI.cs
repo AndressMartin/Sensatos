@@ -69,6 +69,15 @@ public class MudarIdiomaUI : MonoBehaviour
         public string textoVolumeMusica;
         public string textoVolumeEfeitosSonoros;
         public string textoIdioma;
+
+        //Menu de Salvar
+        public string textoPerguntaSobrescreverOSave;
+        public string textoNaoSobrescreverSave;
+        public string textoSimSobrescreverSave;
+        public string textoSaveSucesso;
+        public string textoContinuarSaveSucesso;
+        public string textoNomeSlot;
+        public string textoNomeSlotVazio;
     }
 
     //Instancia da classe com os textos
