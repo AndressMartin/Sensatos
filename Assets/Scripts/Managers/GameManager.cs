@@ -53,6 +53,28 @@ public class GameManager : MonoBehaviour
         Destroy(idiomaManager);
     }
 
+    public void IniciarNovoJogo()
+    {
+        SaveData.ResetarSaveFile();
+
+        ResetarVariaveisDoJogo();
+
+        IniciarJogo();
+    }
+
+    public void IniciarJogo()
+    {
+        LevelLoaderScript.Instance.CarregarNivel("Mapa_Teste_2");
+    }
+
+    private void ResetarVariaveisDoJogo()
+    {
+        FindObjectOfType<GeneralManagerScript>().Player.ResetarPlayer();
+        FindObjectOfType<IniciadorDoPlayer>().SetarVariaveis();
+
+        Flags.ResetarFlags();
+    }
+
     private IEnumerator contadorDeTempo()
     {
         yield return new WaitForSecondsRealtime(1);

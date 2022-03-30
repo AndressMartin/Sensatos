@@ -29,12 +29,17 @@ public class Flags : MonoBehaviour
         //Inicia a lista de flags
         if (flags == null)
         {
-            flags = new bool[System.Enum.GetValues(typeof(Flag)).Length];
+            ResetarFlags();
+        }
+    }
 
-            for (int i = 0; i < flags.Length; i++)
-            {
-                flags[i] = false;
-            }
+    public static void ResetarFlags()
+    {
+        flags = new bool[System.Enum.GetValues(typeof(Flag)).Length];
+
+        for (int i = 0; i < flags.Length; i++)
+        {
+            flags[i] = false;
         }
     }
 

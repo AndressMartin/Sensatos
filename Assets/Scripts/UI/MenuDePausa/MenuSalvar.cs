@@ -13,7 +13,7 @@ public class MenuSalvar : MonoBehaviour
     [SerializeField] private PainelDeEscolha painelSaveSucesso;
 
     //Enuns
-    public enum Menu { Inicio, ConfirmandoSobrescreverSave, SaveSucesso, SaveFalhou }
+    public enum Menu { Inicio, ConfirmandoSobrescreverSave, SaveSucesso }
 
     //Variaveis
     private int selecao;
@@ -83,11 +83,6 @@ public class MenuSalvar : MonoBehaviour
                 opcoesSobrescreverSave.gameObject.SetActive(false);
                 painelSaveSucesso.gameObject.SetActive(true);
                 break;
-
-            case Menu.SaveFalhou:
-                opcoesSobrescreverSave.gameObject.SetActive(false);
-                painelSaveSucesso.gameObject.SetActive(false);
-                break;
         }
     }
 
@@ -107,7 +102,6 @@ public class MenuSalvar : MonoBehaviour
             {
                 saveSlots[i].ZerarInformacoes(nomeSlotVazio);
             }
-            
         }
 
         SetMenuAtual(Menu.Inicio);
@@ -138,10 +132,6 @@ public class MenuSalvar : MonoBehaviour
                 break;
 
             case Menu.SaveSucesso:
-                ConfirmarParaVoltar();
-                break;
-
-            case Menu.SaveFalhou:
                 ConfirmarParaVoltar();
                 break;
         }
@@ -260,16 +250,8 @@ public class MenuSalvar : MonoBehaviour
 
     private void ConfirmarParaVoltar()
     {
-        //Voltar
-        if (InputManager.Voltar())
-        {
-            generalManager.Hud.MenuDePausa.SetMenuAtual(MenuDePausa.Menu.Inicio);
-
-            generalManager.Hud.SonsDeMenus.TocarSom(SonsDeMenus.Som.Confirmar);
-        }
-
-        //Confirmar
-        if (InputManager.Confirmar())
+        //Continuar
+        if (InputManager.Voltar() || InputManager.Confirmar())
         {
             generalManager.Hud.MenuDePausa.SetMenuAtual(MenuDePausa.Menu.Inicio);
 

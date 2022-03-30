@@ -237,4 +237,9 @@ public class SaveData
     {
         inventarioRespawn.AtualizarInventarioSave(player.Inventario, player.InventarioMissao);
     }
+
+    public static void ResetarSaveFile()
+    {
+        saveAtual = new SaveFile();
+    }
 }

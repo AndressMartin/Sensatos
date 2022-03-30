@@ -319,7 +319,7 @@ public class MenuDePausa : MonoBehaviour
                     break;
 
                 case 1:
-                    //Fazer algo
+                    LevelLoaderScript.Instance.CarregarNivel("MenuPrincipal");
 
                     generalManager.Hud.SonsDeMenus.TocarSom(SonsDeMenus.Som.Confirmar);
                     break;

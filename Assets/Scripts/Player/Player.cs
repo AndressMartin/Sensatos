@@ -74,6 +74,12 @@ public class Player : EntityModel
     public float TempoRecarregarMax => tempoRecarregarMax;
     public bool RapidFire => inventario.ArmaSlot[inventario.ArmaAtual].RapidFire;
 
+    //Setters
+    public void SetVidaMaxima(int novaVidaMaxima)
+    {
+        vidaMaxima = novaVidaMaxima;
+    }
+
     void Start()
     {
         //Eventos
@@ -602,9 +608,16 @@ public class Player : EntityModel
 
         inventario.CarregarSave(SaveData.SaveAtual.inventarioSave);
         inventarioMissao.CarregarSave(SaveData.SaveAtual.inventarioSave);
+    }
 
-        //Atualizar a HUD
-        generalManager.Hud.AtualizarPlayerHUD();
+    public void ResetarPlayer()
+    {
+        vidaMaxima = 0;
+        vidaMax = vidaMaxima;
+        vida = vidaMax;
+
+        inventario.ResetarInventario();
+        inventarioMissao.ResetarInventario();
     }
 
     private void ChangeCollision(Collision2D collision, bool ignorarColisao)

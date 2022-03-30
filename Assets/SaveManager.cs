@@ -83,9 +83,9 @@ public class SaveManager : MonoBehaviour
 
     public void AutoSave()
     {
-        if(Save.SaveAtual != 0)
+        if(Save.SaveAtual > 0)
         {
-            Save.Salvar(Save.SaveAtual);
+            SalvarJogo(Save.SaveAtual);
         }
     }
 }

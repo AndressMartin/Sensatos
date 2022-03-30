@@ -32,7 +32,7 @@ public class MudarIdiomaMenuDePausa : MonoBehaviour
 
     private void Start()
     {
-        mudarIdiomaMenuDeOpcoes = GetComponentInChildren<MudarIdiomaMenuDeOpcoes>();
+        mudarIdiomaMenuDeOpcoes = GetComponentInChildren<MudarIdiomaMenuDeOpcoes>(true);
     }
 
     public void TrocarIdioma(MudarIdiomaUI.TextosUI textosUI, GeneralManagerScript generalManager)

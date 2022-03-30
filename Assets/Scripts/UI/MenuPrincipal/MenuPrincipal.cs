@@ -27,6 +27,10 @@ public class MenuPrincipal : MonoBehaviour
     private int selecao;
     private int selecao2;
 
+    //Getters
+    public MenuNovoJogo GetMenuNovoJogo => menuNovoJogo;
+    public MenuCarregarJogo GetMenuCarregarJogo => menuCarregarJogo;
+
     //Setters
     public void SetAtivo(bool ativo)
     {
@@ -81,7 +85,7 @@ public class MenuPrincipal : MonoBehaviour
         }
     }
 
-    private void Awake()
+    private void Start()
     {
         //Managers
         generalManager = FindObjectOfType<GeneralManagerScript>();
@@ -96,6 +100,7 @@ public class MenuPrincipal : MonoBehaviour
 
         telaDoLogo.gameObject.SetActive(true);
 
+        telaInicial.gameObject.SetActive(true);
         menuNovoJogo.gameObject.SetActive(false);
         menuCarregarJogo.gameObject.SetActive(false);
         menuOpcoes.gameObject.SetActive(false);
@@ -106,6 +111,8 @@ public class MenuPrincipal : MonoBehaviour
     {
         AtualizarPainelDeEscolha(opcoesMenuInicial, selecao);
 
+        menuNovoJogo.Iniciar();
+        menuCarregarJogo.Iniciar();
         menuOpcoes.Iniciar();
     }
 
@@ -177,11 +184,15 @@ public class MenuPrincipal : MonoBehaviour
                 case 0:
                     SetMenuAtual(Menu.NovoJogo);
 
+                    menuNovoJogo.IniciarScrool();
+
                     generalManager.Hud.SonsDeMenus.TocarSom(SonsDeMenus.Som.Confirmar);
                     break;
 
                 case 1:
                     SetMenuAtual(Menu.CarregarJogo);
+
+                    menuCarregarJogo.IniciarScrool();
 
                     generalManager.Hud.SonsDeMenus.TocarSom(SonsDeMenus.Som.Confirmar);
                     break;
@@ -208,12 +219,12 @@ public class MenuPrincipal : MonoBehaviour
 
     private void MenuNovoJogo()
     {
-
+        menuNovoJogo.EscolhendoSave();
     }
 
     private void MenuCarregarJogo()
     {
-
+        menuCarregarJogo.EscolhendoSave();
     }
 
     private void MenuOpcoes()
@@ -297,5 +308,15 @@ public class MenuPrincipal : MonoBehaviour
     private void FecharOJogo()
     {
         Application.Quit();
+    }
+
+    public void IniciarNovoJogo()
+    {
+        GameManager.instance.IniciarNovoJogo();
+    }
+
+    public void IniciarJogo()
+    {
+        GameManager.instance.IniciarJogo();
     }
 }

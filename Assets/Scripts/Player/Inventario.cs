@@ -364,4 +364,34 @@ public class Inventario : MonoBehaviour
         //Roupa atual
         roupaAtual = roupasDeCamuflagem[inventarioSave.roupaAtual];
     }
+
+    public void ResetarInventario()
+    {
+        dinheiro = 0;
+
+        //Lista de armas
+        armas.Clear();
+
+        //Armas equipadas
+        armaSlot[0] = null;
+        armaSlot[1] = null;
+
+        //Lista de itens
+        for (int i = 0; i < itens.Length; i++)
+        {
+            if (itens[i].ID != Listas.instance.ListaDeItens.GetID["ItemVazio"])
+            {
+                RemoverItem(itens[i]);
+            }
+        }
+
+        //Atalhos
+        for (int i = 0; i < atalhosDeItens.Length; i++)
+        {
+            RemoverAtalho(i);
+        }
+
+        //Lista de roupas
+        roupasDeCamuflagem.Clear();
+    }
 }

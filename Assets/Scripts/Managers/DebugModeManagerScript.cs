@@ -10,7 +10,6 @@ public class DebugModeManagerScript : MonoBehaviour
 
     //Componentes
     private DebugModeUIScript debugModeUI;
-    private Player player;
 
     //Variaveis
     [SerializeField] private List<ArmaDeFogo> armasIniciais;
@@ -27,7 +26,6 @@ public class DebugModeManagerScript : MonoBehaviour
 
         //Componentes
         debugModeUI = FindObjectOfType<DebugModeUIScript>();
-        player = FindObjectOfType<Player>();
 
         //Variaveis
         fps = 0;
@@ -49,19 +47,19 @@ public class DebugModeManagerScript : MonoBehaviour
         //Tomar dano
         if (Input.GetKeyDown(KeyCode.F))
         {
-            player.TomarDano(0, 2, 0, new Vector2(UnityEngine.Random.Range(-1f, 1f), UnityEngine.Random.Range(-1f, 1f)));
+            generalManager.Player.TomarDano(0, 2, 0, new Vector2(UnityEngine.Random.Range(-1f, 1f), UnityEngine.Random.Range(-1f, 1f)));
         }
 
         //Ativar/Desativar o modo de combate
         if (Input.GetKeyDown(KeyCode.O))
         {
-            player.SetModoDeCombate(!(player.ModoDeCombate));
+            generalManager.Player.SetModoDeCombate(!(generalManager.Player.ModoDeCombate));
         }
 
         //Fazer um checkpoint
         if (Input.GetKeyDown(KeyCode.G))
         {
-            generalManager.RespawnManager.SetCheckpoint(player.transform.position, player.GetDirecao);
+            generalManager.RespawnManager.SetCheckpoint(generalManager.Player.transform.position, generalManager.Player.GetDirecao);
         }
 
         //Respawnar
@@ -73,7 +71,7 @@ public class DebugModeManagerScript : MonoBehaviour
         //Ativar Lockdown
         if (Input.GetKeyUp(KeyCode.L))
         {
-            generalManager.LockDownManager.AtivarLockDown(player.transform.position);
+            generalManager.LockDownManager.AtivarLockDown(generalManager.Player.transform.position);
         }
 
         //Desativar Lockdown
@@ -117,12 +115,12 @@ public class DebugModeManagerScript : MonoBehaviour
 
         foreach(ArmaDeFogo arma in armasIniciais)
         {
-            player.Inventario.AdicionarArma(arma);
+            generalManager.Player.Inventario.AdicionarArma(arma);
         }
 
         foreach (RoupaDeCamuflagem roupa in roupasIniciais)
         {
-            player.Inventario.AdicionarRoupa(roupa);
+            generalManager.Player.Inventario.AdicionarRoupa(roupa);
         }
 
         foreach (Item item in itensIniciais)
@@ -130,21 +128,21 @@ public class DebugModeManagerScript : MonoBehaviour
             switch (item.Tipo)
             {
                 case Item.TipoItem.Consumivel:
-                    player.Inventario.AdicionarItem(item);
+                    generalManager.Player.Inventario.AdicionarItem(item);
                     break;
 
                 case Item.TipoItem.Ferramenta:
-                    player.Inventario.AdicionarItem(item);
+                    generalManager.Player.Inventario.AdicionarItem(item);
                     break;
 
                 case Item.TipoItem.ItemChave:
                     ItemChave itemChave = (ItemChave)item;
-                    player.InventarioMissao.AdicionarItem(itemChave);
+                    generalManager.Player.InventarioMissao.AdicionarItem(itemChave);
                     break;
             }
         }
 
-        player.SetRespawn(player.transform.position, player.GetDirecao);
+        generalManager.Player.SetRespawn(generalManager.Player.transform.position, generalManager.Player.GetDirecao);
 
         generalManager.Hud.AtualizarPlayerHUD();
     }

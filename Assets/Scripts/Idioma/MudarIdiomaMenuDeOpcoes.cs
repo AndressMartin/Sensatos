@@ -21,4 +21,13 @@ public class MudarIdiomaMenuDeOpcoes : MonoBehaviour
         this.textoVolumeEfeitosSonoros.text = textosUI.textoVolumeEfeitosSonoros;
         this.textoIdioma.text = textosUI.textoIdioma;
     }
+
+    public void TrocarIdioma(MudarIdiomaMenuPrincipal.TextosMenuPrincipal textosMenuPrincipal, GeneralManagerScript generalManager)
+    {
+        this.tituloOpcoes.text = textosMenuPrincipal.tituloOpcoes;
+
+        this.textoVolumeMusica.text = textosMenuPrincipal.textoVolumeMusica;
+        this.textoVolumeEfeitosSonoros.text = textosMenuPrincipal.textoVolumeEfeitosSonoros;
+        this.textoIdioma.text = textosMenuPrincipal.textoIdioma;
+    }
 }
