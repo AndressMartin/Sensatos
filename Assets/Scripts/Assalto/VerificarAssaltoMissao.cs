@@ -14,11 +14,40 @@ public static class VerificarAssaltoMissao
     [SerializeField] private static List<Missao> missoesPrincipais_Cumprir = new List<Missao>();
     [SerializeField] private static List<Missao> missoesSecundarias_Cumprir = new List<Missao>();
 
+    public static void AtivarInvativarMissoes(Missao.Estado estado)
+    {
+        foreach (var item in missaoPrincipais)
+        {
+            if (estado == Missao.Estado.Ativa && Flags.GetFlag(item.GetFlag))
+            {
+                item.SetEstado(Missao.Estado.Concluida);
+            }
+            else
+            {
+                item.SetEstado(estado);
+            }
+        }
+        foreach (var item in missaoSecundaria)
+        {
+            if (estado == Missao.Estado.Ativa && Flags.GetFlag(item.GetFlag))
+            {
+                item.SetEstado(Missao.Estado.Concluida);
+            }
+            else
+            {
+                item.SetEstado(estado);
+            }
+        }
+
+    }
     public static void SetarAssalto(Assalto _assalto)
     {
+        AtivarInvativarMissoes(Missao.Estado.Inativa);
         nomeAssalto = _assalto.GetNomeAssalto;
         missaoPrincipais = _assalto.GetMissaoPrincipal;
         missaoSecundaria = _assalto.GetMissaoSecundaria;
+        AtivarInvativarMissoes(Missao.Estado.Ativa);
+
     }
     public static bool VerificarAssalto(Assalto _assalto,Player player)
     {
@@ -48,37 +77,41 @@ public static class VerificarAssaltoMissao
     {
         foreach (var missaoPr in missaoPrincipais)
         {
-            if(_missao.Nome == missaoPr.Nome)
+            if (_missao.GetEstado != Missao.Estado.Inativa) 
             {
-                if(_missao.GetEstado == Missao.Estado.Concluida)
+                if (_missao.Nome == missaoPr.Nome)
                 {
-                    // olha so vc ja councluiu a missão muito obrigado
-                    Debug.Log("olha so vc ja councluiu a missão muito obrigado");
-                    break;
-                }
-                else if (_missao is Missao_ColetarItem)
-                {
-                    var _missao_Item = _missao as Missao_ColetarItem;
-
-                    if(VerificarItem(_missao_Item.GetItemDeMissao,player))
+                    if (Flags.GetFlag(_missao.GetFlag))
                     {
-                        // obrigado por entregar os itens aqui sua recompensa
-                        Debug.Log("obrigado por entregar os itens aqui sua recompensa");
+                        // olha so vc ja councluiu a missão muito obrigado
+                        Debug.Log("olha so vc ja councluiu a missão muito obrigado");
                         break;
                     }
-                    else
+                    else if (_missao is Missao_ColetarItem)
                     {
-                        if(player.InventarioMissao.ProcurarQuantidadeItem(_missao_Item.GetItemDeMissao) > 0)
+                        var _missao_Item = _missao as Missao_ColetarItem;
+
+                        if (VerificarItem(_missao_Item.GetItemDeMissao, player))
                         {
-                            //esse iten agora eu preciso de mais dele
-                            Debug.Log("esse iten agora eu preciso de mais dele");
+                            // obrigado por entregar os itens aqui sua recompensa
+                            Debug.Log("obrigado por entregar os itens aqui sua recompensa");
+                            _missao_Item.SetarFlag(true);
                             break;
                         }
                         else
                         {
-                            //voce precisa coletar os itens
-                            Debug.Log("voce precisa coletar os itens");
-                            break;
+                            if (player.InventarioMissao.ProcurarQuantidadeItem(_missao_Item.GetItemDeMissao) > 0)
+                            {
+                                //esse iten agora eu preciso de mais dele
+                                Debug.Log("esse iten agora eu preciso de mais dele");
+                                break;
+                            }
+                            else
+                            {
+                                //voce precisa coletar os itens
+                                Debug.Log("voce precisa coletar os itens");
+                                break;
+                            }
                         }
                     }
                 }

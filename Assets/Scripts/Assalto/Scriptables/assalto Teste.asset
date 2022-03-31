@@ -9,13 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aac3ba11cb1167d42aed93bc667679af, type: 3}
-  m_Name: Missao_Item
+  m_Script: {fileID: 11500000, guid: b3b4866ce76d18b4e9ecb2d22f67b300, type: 3}
+  m_Name: assalto Teste
   m_EditorClassIdentifier: 
-  nome: missao1
-  descricao: 
-  flagCorrespondente: 3
-  estado: 1
-  id: 1
-  itemColetavel: {fileID: 11400000, guid: fc08d21d4bdeef6459f5236895e34ddf, type: 2}
-  quantidadeItensCompletarMissao: 1
+  nomeAssalto: TEste Colet Item
+  missaoPrincipais:
+  - {fileID: 11400000, guid: 501cf6a43ad9a444f83e6412fe71cc27, type: 2}
+  missaoSecundaria: []

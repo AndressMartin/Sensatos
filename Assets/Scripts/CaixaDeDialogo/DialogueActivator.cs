@@ -39,4 +39,8 @@ public class DialogueActivator : MonoBehaviour
             }
         }
     }
+    public void SetDialogo(DialogueObject dialogo)
+    {
+        dialogueObject = dialogo;
+    }
 }

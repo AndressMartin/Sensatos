@@ -17,19 +17,13 @@ public class DebugFazerAssalto : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Keypad1))
         {
-            VerificarAssaltoMissao.SetarAssalto(mapaAssalto01);
             generalManagerScript.AssaltoManager.SetarAssalto(mapaAssalto01);
         }
-
-    }
-
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        if(collision.CompareTag("Player"))
+        if (Input.GetKeyDown(KeyCode.Keypad2))
         {
-            
-            
+            generalManagerScript.AssaltoManager.SetarAssalto(mapaAssalto02);
         }
-         
     }
+
+
 }

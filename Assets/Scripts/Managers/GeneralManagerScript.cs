@@ -20,6 +20,7 @@ public class GeneralManagerScript : MonoBehaviour
     private PathfinderManagerScript pathfinderManager;
     private DebugModeManagerScript debugModeManager;
     private AssaltoManager assaltoManager;
+    private NpcManager npcManager;
 
     //Componentes
     private Player player;
@@ -45,6 +46,7 @@ public class GeneralManagerScript : MonoBehaviour
     public HUDScript Hud => hud;
     public DialogueUI DialogueUI => dialogueUI;
     public AssaltoManager AssaltoManager => assaltoManager;
+    public NpcManager NpcManager => npcManager;
 
     private void Awake()
     {
@@ -64,6 +66,7 @@ public class GeneralManagerScript : MonoBehaviour
         pathfinderManager = FindObjectOfType<PathfinderManagerScript>();
         debugModeManager = FindObjectOfType<DebugModeManagerScript>();
         assaltoManager = FindObjectOfType<AssaltoManager>();
+        npcManager = FindObjectOfType<NpcManager>();
         //Componentes
         player = FindObjectOfType<Player>();
         hud = FindObjectOfType<HUDScript>();
