@@ -13,7 +13,7 @@ public class MenuSalvar : MonoBehaviour
     [SerializeField] private PainelDeEscolha painelSaveSucesso;
 
     //Enuns
-    public enum Menu { Inicio, ConfirmandoSobrescreverSave, SaveSucesso, SaveFalhou }
+    public enum Menu { Inicio, ConfirmandoSobrescreverSave, SaveSucesso }
 
     //Variaveis
     private int selecao;
@@ -21,8 +21,14 @@ public class MenuSalvar : MonoBehaviour
 
     private SaveData.SaveFile informacoesSave = new SaveData.SaveFile();
 
-    [SerializeField] private string nomeSlot;
-    [SerializeField] private string nomeSlotVazio;
+    private string nomeSlot = "Espaço de Salvamento";
+    private string nomeSlotVazio = "Espaço de Salvamento Vazio";
+
+    [SerializeField] private string nomeSlotPortugues;
+    [SerializeField] private string nomeSlotVazioPortugues;
+
+    [SerializeField] private string nomeSlotIngles;
+    [SerializeField] private string nomeSlotVazioIngles;
 
     private Menu menuAtual;
 
@@ -54,11 +60,17 @@ public class MenuSalvar : MonoBehaviour
         //Managers
         generalManager = FindObjectOfType<GeneralManagerScript>();
 
+        //Adicionar a funcao de trocar idioma ao evento do Idioma Manager
+        generalManager.IdiomaManager.EventoTrocarIdioma.AddListener(TrocarIdioma);
+
         //Variaveis
         selecao = 0;
         selecao2 = 0;
 
         menuAtual = Menu.Inicio;
+
+        //Trocar o idioma uma vez para iniciar o objeto com o idioma correto
+        TrocarIdioma();
 
         iniciado = true;
     }
@@ -83,11 +95,6 @@ public class MenuSalvar : MonoBehaviour
                 opcoesSobrescreverSave.gameObject.SetActive(false);
                 painelSaveSucesso.gameObject.SetActive(true);
                 break;
-
-            case Menu.SaveFalhou:
-                opcoesSobrescreverSave.gameObject.SetActive(false);
-                painelSaveSucesso.gameObject.SetActive(false);
-                break;
         }
     }
 
@@ -107,7 +114,6 @@ public class MenuSalvar : MonoBehaviour
             {
                 saveSlots[i].ZerarInformacoes(nomeSlotVazio);
             }
-            
         }
 
         SetMenuAtual(Menu.Inicio);
@@ -138,10 +144,6 @@ public class MenuSalvar : MonoBehaviour
                 break;
 
             case Menu.SaveSucesso:
-                ConfirmarParaVoltar();
-                break;
-
-            case Menu.SaveFalhou:
                 ConfirmarParaVoltar();
                 break;
         }
@@ -260,16 +262,8 @@ public class MenuSalvar : MonoBehaviour
 
     private void ConfirmarParaVoltar()
     {
-        //Voltar
-        if (InputManager.Voltar())
-        {
-            generalManager.Hud.MenuDePausa.SetMenuAtual(MenuDePausa.Menu.Inicio);
-
-            generalManager.Hud.SonsDeMenus.TocarSom(SonsDeMenus.Som.Confirmar);
-        }
-
-        //Confirmar
-        if (InputManager.Confirmar())
+        //Continuar
+        if (InputManager.Voltar() || InputManager.Confirmar())
         {
             generalManager.Hud.MenuDePausa.SetMenuAtual(MenuDePausa.Menu.Inicio);
 
@@ -291,5 +285,21 @@ public class MenuSalvar : MonoBehaviour
     private void AtualizarPainelDeEscolha(PainelDeEscolha painelDeEscolha, int selecao)
     {
         painelDeEscolha.Selecionar(selecao);
+    }
+
+    private void TrocarIdioma()
+    {
+        switch (IdiomaManager.GetIdiomaEnum)
+        {
+            case IdiomaManager.Idioma.Portugues:
+                nomeSlot = nomeSlotPortugues;
+                nomeSlotVazio = nomeSlotVazioPortugues;
+                break;
+
+            case IdiomaManager.Idioma.Ingles:
+                nomeSlot = nomeSlotIngles;
+                nomeSlotVazio = nomeSlotVazioIngles;
+                break;
+        }
     }
 }

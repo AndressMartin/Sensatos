@@ -97,4 +97,10 @@ public class InventarioMissao : MonoBehaviour
             itens[itens.Count - 1].SetQuantidade(item.quantidade);
         }
     }
+
+    public void ResetarInventario()
+    {
+        //Lista de itens
+        itens.Clear();
+    }
 }

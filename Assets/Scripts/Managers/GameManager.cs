@@ -7,16 +7,30 @@ public class GameManager : MonoBehaviour
     //Instancia do singleton
     public static GameManager instance = null;
 
+    //Enuns
+    public enum Modo { Cidade, Assalto }
+    public enum Capitulo { Inicio, Assalto1 }
+
     //Variaveis
     private float tempoDeJogo = 0;
 
+    private Modo modoDeJogo;
+    private Capitulo capituloAtual;
+
     //Getters
     public float TempoDeJogo => tempoDeJogo;
+    public Modo ModoDeJogo => modoDeJogo;
+    public Capitulo CapituloAtual => capituloAtual;
 
     //Setters
     public void SetTempoDeJogo(float novoTempo)
     {
         tempoDeJogo = novoTempo;
+    }
+
+    public void SetCapituloAtual(Capitulo novoCapituloAtual)
+    {
+        capituloAtual = novoCapituloAtual;
     }
 
     private void Awake()
@@ -44,6 +58,10 @@ public class GameManager : MonoBehaviour
 
     private void FuncoesInicias()
     {
+        //Variaveis
+        modoDeJogo = Modo.Cidade;
+        capituloAtual = Capitulo.Inicio;
+
         //Carrega as configuracoes do arquivo quando o jogo se inicia
         SaveConfiguracoes.CarregarConfiguracoes();
 
@@ -51,6 +69,30 @@ public class GameManager : MonoBehaviour
         IdiomaManager idiomaManager = gameObject.AddComponent<IdiomaManager>() as IdiomaManager;
         idiomaManager.SetIdioma(SaveConfiguracoes.configuracoes.idioma);
         Destroy(idiomaManager);
+    }
+
+    public void IniciarNovoJogo()
+    {
+        SaveData.ResetarSaveFile();
+
+        ResetarVariaveisDoJogo();
+
+        IniciarJogo();
+    }
+
+    public void IniciarJogo()
+    {
+        LevelLoaderScript.Instance.CarregarNivel("Mapa_Teste_2");
+    }
+
+    private void ResetarVariaveisDoJogo()
+    {
+        FindObjectOfType<GeneralManagerScript>().Player.ResetarPlayer();
+        FindObjectOfType<IniciadorDoPlayer>().SetarVariaveis();
+
+        capituloAtual = Capitulo.Inicio;
+        Missoes.ResetarEstadosDasMissoes();
+        Flags.ResetarFlags();
     }
 
     private IEnumerator contadorDeTempo()

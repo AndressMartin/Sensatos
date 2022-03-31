@@ -36,6 +36,7 @@ public class MenuDoInventario : MonoBehaviour
     [SerializeField] private SelecaoMenu[] botoesDeMenus;
 
     //Getters
+    public GeneralManagerScript GeneralManager => generalManager;
     public MenuDasArmas MenuDasArmas => menuDasArmas;
     public MenuDosItens MenuDosItens => menuDosItens;
     public MenuDasRoupas MenuDasRoupas => menuDasRoupas;

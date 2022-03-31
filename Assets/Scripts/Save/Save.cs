@@ -73,8 +73,14 @@ public static class Save
 
         string texto;
 
-        texto = File.ReadAllText(caminhoDoArquivo);
-
+        try
+        {
+            texto = File.ReadAllText(caminhoDoArquivo);
+        }
+        catch(FileNotFoundException)
+        {
+            texto = null;
+        }
 
         if (texto != null)
         {
@@ -118,6 +124,8 @@ public static class Save
     {
         GameManager.instance.SetTempoDeJogo(save.informacoesSave.tempoDeJogo);
 
+        GameManager.instance.SetCapituloAtual(save.capituloAtual);
+        Missoes.PassarInformacoesSave(save);
         Flags.PassarInformacoesSave(save);
     }
 }

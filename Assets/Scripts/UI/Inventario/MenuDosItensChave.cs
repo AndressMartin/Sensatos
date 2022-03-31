@@ -24,9 +24,15 @@ public class MenuDosItensChave : MonoBehaviour
 
     private float barraDeRolagemAlturaInicial;
 
-    [SerializeField] private string nomeSemItens;
     [SerializeField] private Sprite imagemSemItens;
-    [SerializeField] private string descricaoSemItens;
+    private string nomeSemItens = "Sem Itens";
+    private string descricaoSemItens = "Você ainda não possui nenhum item chave!";
+
+    [SerializeField] private string nomeSemItensPortugues;
+    [SerializeField] private string descricaoSemItensPortugues;
+
+    [SerializeField] private string nomeSemItensIngles;
+    [SerializeField] private string descricaoSemItensIngles;
 
     private bool iniciado = false;
 
@@ -56,6 +62,9 @@ public class MenuDosItensChave : MonoBehaviour
         //Managers
         generalManager = FindObjectOfType<GeneralManagerScript>();
 
+        //Adicionar a funcao de trocar idioma ao evento do Idioma Manager
+        generalManager.IdiomaManager.EventoTrocarIdioma.AddListener(TrocarIdioma);
+
         //Variaveis
         selecao = 0;
         scrool = 0;
@@ -67,6 +76,9 @@ public class MenuDosItensChave : MonoBehaviour
             listaSlot.Iniciar();
             listaSlot.ZerarInformacoes();
         }
+
+        //Trocar o idioma uma vez para iniciar o objeto com o idioma correto
+        TrocarIdioma();
 
         iniciado = true;
     }
@@ -194,6 +206,22 @@ public class MenuDosItensChave : MonoBehaviour
             generalManager.Hud.MenuDoInventario.SetMenuAtual(MenuDoInventario.Menu.Inicio);
 
             generalManager.Hud.SonsDeMenus.TocarSom(SonsDeMenus.Som.Voltar);
+        }
+    }
+
+    private void TrocarIdioma()
+    {
+        switch (IdiomaManager.GetIdiomaEnum)
+        {
+            case IdiomaManager.Idioma.Portugues:
+                nomeSemItens = nomeSemItensPortugues;
+                descricaoSemItens = descricaoSemItensPortugues;
+                break;
+
+            case IdiomaManager.Idioma.Ingles:
+                nomeSemItens = nomeSemItensIngles;
+                descricaoSemItens = descricaoSemItensIngles;
+                break;
         }
     }
 }

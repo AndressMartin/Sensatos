@@ -86,18 +86,6 @@ public class MenuOpcoes : MonoBehaviour
             }
         }
 
-        //Voltar
-        if (InputManager.Voltar())
-        {
-            //Salva as configuracoes do jogo
-            SaveConfiguracoes.AtualizarConfiguracoes();
-            SaveConfiguracoes.SalvarConfiguracoes();
-
-            generalManager.Hud.MenuDePausa.SetMenuAtual(MenuDePausa.Menu.Inicio);
-
-            generalManager.Hud.SonsDeMenus.TocarSom(SonsDeMenus.Som.Voltar);
-        }
-
         //Rodar as funcoes da opcao
         opcoes[selecao].NaOpcao(generalManager);
     }

@@ -31,8 +31,15 @@ public class SelecaoRoupa : SelecaoDoInventario
 
     public override void Confirmar(MenuDoInventario menuDoInventario)
     {
-        menuDoInventario.SetMenuAtual(MenuDoInventario.Menu.Roupa);
-        menuDoInventario.MenuDasRoupas.IniciarScrool();
+        if (GameManager.instance.ModoDeJogo == GameManager.Modo.Cidade)
+        {
+            menuDoInventario.SetMenuAtual(MenuDoInventario.Menu.Roupa);
+            menuDoInventario.MenuDasRoupas.IniciarScrool();
+        }
+        else
+        {
+            menuDoInventario.GeneralManager.Hud.SonsDeMenus.TocarSom(SonsDeMenus.Som.Falha);
+        }
     }
 
     public void ZerarInformacoes()

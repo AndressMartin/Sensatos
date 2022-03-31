@@ -18,4 +18,12 @@ public class PainelDeEscolha : MonoBehaviour
 
         opcoes[escolha].Selecionado(true);
     }
+
+    public void SemSelecao()
+    {
+        foreach (OpcaoSlot opcao in opcoes)
+        {
+            opcao.Selecionado(false);
+        }
+    }
 }

@@ -14,6 +14,8 @@ public class SaveData
         public int vidaMaxima;
         public InventarioSave inventarioSave = new InventarioSave();
 
+        public GameManager.Capitulo capituloAtual;
+        public Missao.Estado[] estadoDasMissoes;
         public bool[] flags;
     }
 
@@ -230,11 +232,18 @@ public class SaveData
         saveAtual.vidaMaxima = player.VidaMaxima;
         saveAtual.inventarioSave.AtualizarInventarioSave(player.Inventario, player.InventarioMissao);
 
+        saveAtual.capituloAtual = GameManager.instance.CapituloAtual;
+        saveAtual.estadoDasMissoes = Missoes.GetEstadoMissaoList;
         saveAtual.flags = Flags.GetFlagList;
     }
 
     public static void AtualizarInventarioRespawn(Player player)
     {
         inventarioRespawn.AtualizarInventarioSave(player.Inventario, player.InventarioMissao);
+    }
+
+    public static void ResetarSaveFile()
+    {
+        saveAtual = new SaveFile();
     }
 }
