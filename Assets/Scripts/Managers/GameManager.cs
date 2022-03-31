@@ -7,16 +7,30 @@ public class GameManager : MonoBehaviour
     //Instancia do singleton
     public static GameManager instance = null;
 
+    //Enuns
+    public enum Modo { Cidade, Assalto }
+    public enum Capitulo { Inicio, Assalto1 }
+
     //Variaveis
     private float tempoDeJogo = 0;
 
+    private Modo modoDeJogo;
+    private Capitulo capituloAtual;
+
     //Getters
     public float TempoDeJogo => tempoDeJogo;
+    public Modo ModoDeJogo => modoDeJogo;
+    public Capitulo CapituloAtual => capituloAtual;
 
     //Setters
     public void SetTempoDeJogo(float novoTempo)
     {
         tempoDeJogo = novoTempo;
+    }
+
+    public void SetCapituloAtual(Capitulo novoCapituloAtual)
+    {
+        capituloAtual = novoCapituloAtual;
     }
 
     private void Awake()
@@ -44,6 +58,10 @@ public class GameManager : MonoBehaviour
 
     private void FuncoesInicias()
     {
+        //Variaveis
+        modoDeJogo = Modo.Cidade;
+        capituloAtual = Capitulo.Inicio;
+
         //Carrega as configuracoes do arquivo quando o jogo se inicia
         SaveConfiguracoes.CarregarConfiguracoes();
 
@@ -72,6 +90,7 @@ public class GameManager : MonoBehaviour
         FindObjectOfType<GeneralManagerScript>().Player.ResetarPlayer();
         FindObjectOfType<IniciadorDoPlayer>().SetarVariaveis();
 
+        Missoes.ResetarEstadosDasMissoes();
         Flags.ResetarFlags();
     }
 

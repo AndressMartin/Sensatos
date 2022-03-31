@@ -222,11 +222,19 @@ public class MenuDePausa : MonoBehaviour
                     break;
 
                 case 1:
-                    SetMenuAtual(Menu.Salvar);
+                    if(GameManager.instance.ModoDeJogo == GameManager.Modo.Cidade)
+                    {
+                        SetMenuAtual(Menu.Salvar);
 
-                    menuSalvar.IniciarScrool();
+                        menuSalvar.IniciarScrool();
 
-                    generalManager.Hud.SonsDeMenus.TocarSom(SonsDeMenus.Som.Confirmar);
+                        generalManager.Hud.SonsDeMenus.TocarSom(SonsDeMenus.Som.Confirmar);
+                    }
+                    else
+                    {
+                        generalManager.Hud.SonsDeMenus.TocarSom(SonsDeMenus.Som.Falha);
+                    }
+                    
                     break;
 
                 case 2:

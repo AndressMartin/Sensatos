@@ -91,14 +91,14 @@ public class MenuPrincipal : MonoBehaviour
         generalManager = FindObjectOfType<GeneralManagerScript>();
 
         //Variaveis
-        ativo = true;
+        ativo = false;
         menuAtual = Menu.Inicio;
         selecao = 0;
         selecao2 = 0;
 
         IniciarComponentes();
 
-        //telaDoLogo.gameObject.SetActive(true);
+        telaDoLogo.gameObject.SetActive(true);
 
         telaInicial.gameObject.SetActive(true);
         menuNovoJogo.gameObject.SetActive(false);

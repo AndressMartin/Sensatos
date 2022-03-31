@@ -10,6 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 8116657155858343829}
   - component: {fileID: 8164811324265513960}
+  - component: {fileID: 3323743863933331365}
+  - component: {fileID: 2393263651078082590}
   - component: {fileID: 5577645986089980915}
   m_Layer: 0
   m_Name: GameManager
@@ -42,6 +44,34 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2a77ffc55595ebb4bb06e7f218867fd0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3323743863933331365
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8654927992598386979}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c795e478c605df74c87d9edec46a41d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  listaDeArmas: {fileID: 11400000, guid: 6733b6399042dc641813a2eba1722a1d, type: 2}
+  listaDeItens: {fileID: 11400000, guid: 07f358178ff12934da897677aa450f35, type: 2}
+  listaDeRoupas: {fileID: 11400000, guid: dfdb76f531a0a0d4987ceac11fbed584, type: 2}
+  listaDeMissoes: {fileID: 11400000, guid: 9edbfe4f000d8a446afea1f7fa4d14f6, type: 2}
+--- !u!114 &2393263651078082590
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8654927992598386979}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea7380eb8d4e0bd4593c9a5b9592be3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &5577645986089980915

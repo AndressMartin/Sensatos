@@ -11,11 +11,13 @@ public class Listas : MonoBehaviour
     [SerializeField] private ListaDeArmas listaDeArmas;
     [SerializeField] private ListaDeItens listaDeItens;
     [SerializeField] private ListaDeRoupas listaDeRoupas;
+    [SerializeField] private ListaDeMissoes listaDeMissoes;
 
     //Getters
     public ListaDeArmas ListaDeArmas => listaDeArmas;
     public ListaDeItens ListaDeItens => listaDeItens;
     public ListaDeRoupas ListaDeRoupas => listaDeRoupas;
+    public ListaDeMissoes ListaDeMissoes => listaDeMissoes;
 
     private void Awake()
     {
@@ -37,5 +39,6 @@ public class Listas : MonoBehaviour
         listaDeArmas.Iniciar();
         listaDeItens.Iniciar();
         listaDeRoupas.Iniciar();
+        listaDeMissoes.Iniciar();
     }
 }
