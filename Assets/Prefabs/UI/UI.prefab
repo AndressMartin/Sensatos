@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 700864800803910918}
   - component: {fileID: 700864800803910917}
   - component: {fileID: 1345658172}
-  - component: {fileID: 4743988057636975963}
   m_Layer: 5
   m_Name: UI
   m_TagString: Untagged
@@ -130,59 +129,6 @@ MonoBehaviour:
   playerUI: {fileID: 684794805}
   barraDeVisaoDoInimigo: {fileID: 5691894432049421449}
   sonsDeMenus: {fileID: 5868010983437239543}
---- !u!114 &4743988057636975963
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 700864800803910916}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f724dffbf746b774cb6f570bc8efcf36, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  textoLockdown: {fileID: 3948535252553246505}
-  textosUI:
-    textoLockdown: 
-    tituloArmas: 
-    tituloAtalhos: 
-    tituloInventario: 
-    tituloMelhorias: 
-    tituloItensChave: 
-    tituloMissoes: 
-    tituloConquistas: 
-    textoUsar: 
-    textoAdicionarAosAtalhos: 
-    textoAlterarAPosicao: 
-    textoJogarFora: 
-    textoRemoverDosAtalhos: 
-    textoAlterarAPosicaoAtalho: 
-    textoPerguntaJogarFora: 
-    textoNao: 
-    textoSim: 
-    nomeSemItens: 
-    descricaoSemItens: 
-    tituloPausa: 
-    tituloSalvar: 
-    tituloOpcoes: 
-    textoContinuar: 
-    textoSalvar: 
-    textoOpcoes: 
-    textoMenuPrincipal: 
-    textoPerguntaSairParaOMenuPrincipal: 
-    textoNaoMenuPrincipal: 
-    textoSimMenuPrincipal: 
-    textoVolumeMusica: 
-    textoVolumeEfeitosSonoros: 
-    textoIdioma: 
-    textoPerguntaSobrescreverOSave: 
-    textoNaoSobrescreverSave: 
-    textoSimSobrescreverSave: 
-    textoSaveSucesso: 
-    textoContinuarSaveSucesso: 
-    textoNomeSlot: 
-    textoNomeSlotVazio: 
 --- !u!1001 &1086163792655630797
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -798,6 +744,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d6954077ccc496c458c9cb9cb85912ff, type: 3}
+--- !u!224 &215547107675464353 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 4248239545501051706, guid: d6954077ccc496c458c9cb9cb85912ff, type: 3}
+  m_PrefabInstance: {fileID: 4037760362366405019}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &2250799590140735962 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2825291770138359873, guid: d6954077ccc496c458c9cb9cb85912ff, type: 3}
@@ -809,11 +760,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2414148d8667e2741ab54a6f45197719, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!224 &215547107675464353 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 4248239545501051706, guid: d6954077ccc496c458c9cb9cb85912ff, type: 3}
-  m_PrefabInstance: {fileID: 4037760362366405019}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4048228452158426665
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1032,6 +978,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bc026398bbe3bd745b81ae055fc223e5, type: 3}
+--- !u!224 &8243545698012882591 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 3834729790108220805, guid: bc026398bbe3bd745b81ae055fc223e5, type: 3}
+  m_PrefabInstance: {fileID: 5138967057098070810}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &8432726431717651456 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3627182539263717146, guid: bc026398bbe3bd745b81ae055fc223e5, type: 3}
@@ -1041,22 +992,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 55d459ba221443f4ca8a647254aa4fc0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!224 &8243545698012882591 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 3834729790108220805, guid: bc026398bbe3bd745b81ae055fc223e5, type: 3}
-  m_PrefabInstance: {fileID: 5138967057098070810}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &3948535252553246505 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8186775202236529715, guid: bc026398bbe3bd745b81ae055fc223e5, type: 3}
-  m_PrefabInstance: {fileID: 5138967057098070810}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &6282073352527040618

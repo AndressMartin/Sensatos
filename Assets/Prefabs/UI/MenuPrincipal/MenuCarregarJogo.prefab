@@ -134,8 +134,10 @@ MonoBehaviour:
   - {fileID: 8467687048550716529}
   opcoesCarregarSave: {fileID: 1814941015201941155}
   painelCarregarFalhou: {fileID: 1814941015216177239}
-  nomeSlot: "Espa\xE7o de Salvamento"
-  nomeSlotVazio: "Espa\xE7o de Salvamento Vazio"
+  nomeSlotPortugues: "Espa\xE7o de Salvamento"
+  nomeSlotVazioPortugues: "Espa\xE7o de Salvamento Vazio"
+  nomeSlotIngles: Save Slot
+  nomeSlotVazioIngles: Empty Save Slot
 --- !u!1 &1814941014454666833
 GameObject:
   m_ObjectHideFlags: 0
@@ -212,6 +214,7 @@ GameObject:
   - component: {fileID: 1814941014880321024}
   - component: {fileID: 1814941014880321026}
   - component: {fileID: 1814941014880321025}
+  - component: {fileID: 2793387213393216465}
   m_Layer: 5
   m_Name: PerguntaCarregarOSave
   m_TagString: Untagged
@@ -335,6 +338,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &2793387213393216465
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1814941014880321279}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79701fdbf3aab944fae7931eae9a0644, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textoPortugues: "Voc\xEA deseja carregar este espa\xE7o de salvamento?\r"
+  textoIngles: Do you want to load this save slot?
 --- !u!1 &1814941015049713564
 GameObject:
   m_ObjectHideFlags: 0
@@ -594,6 +611,7 @@ GameObject:
   - component: {fileID: 1814941015963457734}
   - component: {fileID: 1814941015963457736}
   - component: {fileID: 1814941015963457735}
+  - component: {fileID: 9018791584139837794}
   m_Layer: 5
   m_Name: TextoFalhaCarregarJogo
   m_TagString: Untagged
@@ -717,6 +735,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &9018791584139837794
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1814941015963457733}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79701fdbf3aab944fae7931eae9a0644, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textoPortugues: Houve uma falha ao tentar carregar o jogo!
+  textoIngles: There was a failure when trying to load the game!
 --- !u!1 &1814941015994714762
 GameObject:
   m_ObjectHideFlags: 0
@@ -728,6 +760,7 @@ GameObject:
   - component: {fileID: 1814941015994714763}
   - component: {fileID: 1814941015994714765}
   - component: {fileID: 1814941015994714764}
+  - component: {fileID: 8400419287294063498}
   m_Layer: 5
   m_Name: TituloCarregarJogo
   m_TagString: Untagged
@@ -851,6 +884,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &8400419287294063498
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1814941015994714762}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79701fdbf3aab944fae7931eae9a0644, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textoPortugues: Carregar Jogo
+  textoIngles: Load Game
 --- !u!1 &1814941016025745155
 GameObject:
   m_ObjectHideFlags: 0
@@ -1006,6 +1053,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4076656170635661305, guid: efde6f14efb64d34cb7c8f181475fc03, type: 3}
+      propertyPath: textoIngles
+      value: Yes
+      objectReference: {fileID: 0}
+    - target: {fileID: 4076656170635661305, guid: efde6f14efb64d34cb7c8f181475fc03, type: 3}
+      propertyPath: textoPortugues
+      value: Sim
+      objectReference: {fileID: 0}
     - target: {fileID: 5493611963832948025, guid: efde6f14efb64d34cb7c8f181475fc03, type: 3}
       propertyPath: m_Name
       value: Opcao (1)
@@ -1032,11 +1087,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: efde6f14efb64d34cb7c8f181475fc03, type: 3}
---- !u!224 &1230913721920331788 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 593035609315320234, guid: efde6f14efb64d34cb7c8f181475fc03, type: 3}
-  m_PrefabInstance: {fileID: 1814941014210806182}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &5007608787615756057 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6652219713644703423, guid: efde6f14efb64d34cb7c8f181475fc03, type: 3}
@@ -1048,6 +1098,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c568340f13b55134f9a13028139093c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!224 &1230913721920331788 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 593035609315320234, guid: efde6f14efb64d34cb7c8f181475fc03, type: 3}
+  m_PrefabInstance: {fileID: 1814941014210806182}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1814941014520360399
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1145,6 +1200,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7a08a4f68a1c13640ba344c29a904721, type: 3}
+--- !u!224 &5085908859372660502 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 6898160124493204185, guid: 7a08a4f68a1c13640ba344c29a904721, type: 3}
+  m_PrefabInstance: {fileID: 1814941014520360399}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &8467687049348123889 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7830831478288671038, guid: 7a08a4f68a1c13640ba344c29a904721, type: 3}
@@ -1156,11 +1216,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24380277e802e87498bc2490407bfd76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!224 &5085908859372660502 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 6898160124493204185, guid: 7a08a4f68a1c13640ba344c29a904721, type: 3}
-  m_PrefabInstance: {fileID: 1814941014520360399}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1814941014546360389
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1371,6 +1426,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7a08a4f68a1c13640ba344c29a904721, type: 3}
+--- !u!224 &5085908860153364374 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 6898160124493204185, guid: 7a08a4f68a1c13640ba344c29a904721, type: 3}
+  m_PrefabInstance: {fileID: 1814941014765172047}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &8467687048550716529 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7830831478288671038, guid: 7a08a4f68a1c13640ba344c29a904721, type: 3}
@@ -1382,11 +1442,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24380277e802e87498bc2490407bfd76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!224 &5085908860153364374 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 6898160124493204185, guid: 7a08a4f68a1c13640ba344c29a904721, type: 3}
-  m_PrefabInstance: {fileID: 1814941014765172047}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1814941015437841715
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1477,6 +1532,14 @@ PrefabInstance:
     - target: {fileID: 593035609315320234, guid: efde6f14efb64d34cb7c8f181475fc03, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4076656170635661305, guid: efde6f14efb64d34cb7c8f181475fc03, type: 3}
+      propertyPath: textoIngles
+      value: Continue
+      objectReference: {fileID: 0}
+    - target: {fileID: 4076656170635661305, guid: efde6f14efb64d34cb7c8f181475fc03, type: 3}
+      propertyPath: textoPortugues
+      value: Continuar
       objectReference: {fileID: 0}
     - target: {fileID: 5493611963832948025, guid: efde6f14efb64d34cb7c8f181475fc03, type: 3}
       propertyPath: m_Name
@@ -1611,6 +1674,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4076656170635661305, guid: efde6f14efb64d34cb7c8f181475fc03, type: 3}
+      propertyPath: textoIngles
+      value: No
+      objectReference: {fileID: 0}
+    - target: {fileID: 4076656170635661305, guid: efde6f14efb64d34cb7c8f181475fc03, type: 3}
+      propertyPath: textoPortugues
+      value: "N\xE3o"
+      objectReference: {fileID: 0}
     - target: {fileID: 5493611963832948025, guid: efde6f14efb64d34cb7c8f181475fc03, type: 3}
       propertyPath: m_Name
       value: Opcao
@@ -1637,11 +1708,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: efde6f14efb64d34cb7c8f181475fc03, type: 3}
---- !u!224 &1230913722669842835 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 593035609315320234, guid: efde6f14efb64d34cb7c8f181475fc03, type: 3}
-  m_PrefabInstance: {fileID: 1814941016026144825}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &5007608788205883014 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6652219713644703423, guid: efde6f14efb64d34cb7c8f181475fc03, type: 3}
@@ -1653,3 +1719,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c568340f13b55134f9a13028139093c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!224 &1230913722669842835 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 593035609315320234, guid: efde6f14efb64d34cb7c8f181475fc03, type: 3}
+  m_PrefabInstance: {fileID: 1814941016026144825}
+  m_PrefabAsset: {fileID: 0}

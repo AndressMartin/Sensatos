@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1152469388041055844}
   - component: {fileID: 9047032890311099476}
   - component: {fileID: 5330121097685595960}
+  - component: {fileID: 3331137042402872098}
   m_Layer: 5
   m_Name: TituloOpcoesTxt
   m_TagString: Untagged
@@ -134,6 +135,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &3331137042402872098
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 248874627329293562}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79701fdbf3aab944fae7931eae9a0644, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textoPortugues: "Op\xE7\xF5es"
+  textoIngles: Options
 --- !u!1 &432798028396834592
 GameObject:
   m_ObjectHideFlags: 0
@@ -1305,6 +1320,7 @@ GameObject:
   - component: {fileID: 4197373253688137397}
   - component: {fileID: 7800267588931552005}
   - component: {fileID: 7648605963527521054}
+  - component: {fileID: 5631932419027924532}
   m_Layer: 5
   m_Name: TextoVolumeEfeitosSonoros
   m_TagString: Untagged
@@ -1428,6 +1444,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &5631932419027924532
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7043268665188142226}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79701fdbf3aab944fae7931eae9a0644, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textoPortugues: 'Volume dos Efeitos Sonoros:'
+  textoIngles: 'Sound Effects Volume:'
 --- !u!1 &7212882474373325796
 GameObject:
   m_ObjectHideFlags: 0
@@ -1439,6 +1469,7 @@ GameObject:
   - component: {fileID: 643051326638771243}
   - component: {fileID: 5870931417822824196}
   - component: {fileID: 541621460347485406}
+  - component: {fileID: 8917276391174310869}
   m_Layer: 5
   m_Name: TextoIdioma
   m_TagString: Untagged
@@ -1562,6 +1593,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &8917276391174310869
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7212882474373325796}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79701fdbf3aab944fae7931eae9a0644, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textoPortugues: 'Idioma:'
+  textoIngles: 'Language:'
 --- !u!1 &7293975507226741119
 GameObject:
   m_ObjectHideFlags: 0
@@ -1573,6 +1618,7 @@ GameObject:
   - component: {fileID: 2608624627043025653}
   - component: {fileID: 7994903045950660014}
   - component: {fileID: 3248096026027253717}
+  - component: {fileID: 4908918430211582829}
   m_Layer: 5
   m_Name: TextoVolumeMusica
   m_TagString: Untagged
@@ -1696,6 +1742,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &4908918430211582829
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7293975507226741119}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79701fdbf3aab944fae7931eae9a0644, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textoPortugues: "Volume das M\xFAsicas:"
+  textoIngles: 'Music Volume:'
 --- !u!1 &7531655341590525902
 GameObject:
   m_ObjectHideFlags: 0
@@ -1782,7 +1842,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2084956370288835107}
   - component: {fileID: 6877103426965345034}
-  - component: {fileID: 26438489596685079}
   m_Layer: 5
   m_Name: MenuOpcoes
   m_TagString: Untagged
@@ -1827,19 +1886,3 @@ MonoBehaviour:
   - {fileID: 3110241046984027561}
   - {fileID: 4203011180457145245}
   - {fileID: 3888486629911103265}
---- !u!114 &26438489596685079
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7832425462470266303}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8d727f0dd6613e244a8ec51e60b68ce8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  tituloOpcoes: {fileID: 5330121097685595960}
-  textoVolumeMusica: {fileID: 3248096026027253717}
-  textoVolumeEfeitosSonoros: {fileID: 7648605963527521054}
-  textoIdioma: {fileID: 541621460347485406}

@@ -351,6 +351,8 @@ public class Player : EntityModel
         {
             inventario.ArmaSlot[inventario.ArmaAtual].Recarregar();
             FinalizarRecarregamento();
+
+            sonsDoJogador.TocarSom(SonsDoJogador.Som.TerminarDeRecarregarArma);
         }
     }
 

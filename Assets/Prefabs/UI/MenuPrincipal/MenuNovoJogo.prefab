@@ -104,6 +104,7 @@ GameObject:
   - component: {fileID: 3909406430604383770}
   - component: {fileID: 3909406430604383768}
   - component: {fileID: 3909406430604383769}
+  - component: {fileID: 4971459515949358024}
   m_Layer: 5
   m_Name: PerguntaSobrescreverOSave
   m_TagString: Untagged
@@ -227,6 +228,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &4971459515949358024
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3909406430604383771}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79701fdbf3aab944fae7931eae9a0644, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textoPortugues: "Voc\xEA deseja sobrescrever este espa\xE7o de salvamento?\r"
+  textoIngles: Do you want to overwrite this save slot?
 --- !u!1 &3909406430934170892
 GameObject:
   m_ObjectHideFlags: 0
@@ -251,7 +266,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3909406430934170892}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -286,8 +301,10 @@ MonoBehaviour:
   continuarSemSalvar: {fileID: 3909406432408138173}
   opcoesSobrescreverSave: {fileID: 3909406430560761084}
   opcoesContinuarSemSalvar: {fileID: 3909406431872624980}
-  nomeSlot: "Espa\xE7o de Salvamento"
-  nomeSlotVazio: "Espa\xE7o de Salvamento Vazio"
+  nomeSlotPortugues: "Espa\xE7o de Salvamento"
+  nomeSlotVazioPortugues: "Espa\xE7o de Salvamento Vazio"
+  nomeSlotIngles: Save Slot
+  nomeSlotVazioIngles: Empty Save Slot
 --- !u!1 &3909406431135426474
 GameObject:
   m_ObjectHideFlags: 0
@@ -662,6 +679,7 @@ GameObject:
   - component: {fileID: 3909406432277701823}
   - component: {fileID: 3909406432277701821}
   - component: {fileID: 3909406432277701822}
+  - component: {fileID: 6447219130256162772}
   m_Layer: 5
   m_Name: PerguntaContinuarSemSalvar
   m_TagString: Untagged
@@ -786,6 +804,25 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &6447219130256162772
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3909406432277701816}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79701fdbf3aab944fae7931eae9a0644, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textoPortugues: "Voc\xEA deseja iniciar o jogo sem salvar?\nVoc\xEA ainda podera
+    salvar o jogo atrav\xE9s do menu de pausa quando n\xE3o estiver realizando um
+    assalto."
+  textoIngles: 'Do you want to start the game without saving?
+
+    You can still
+    save the game in the pause menu when not doing a heist.'
 --- !u!1 &3909406432493009351
 GameObject:
   m_ObjectHideFlags: 0
@@ -797,6 +834,7 @@ GameObject:
   - component: {fileID: 3909406432493009350}
   - component: {fileID: 3909406432493009348}
   - component: {fileID: 3909406432493009349}
+  - component: {fileID: 8304109563292554372}
   m_Layer: 5
   m_Name: TituloNovoJogo
   m_TagString: Untagged
@@ -920,6 +958,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &8304109563292554372
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3909406432493009351}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79701fdbf3aab944fae7931eae9a0644, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textoPortugues: Novo Jogo
+  textoIngles: New Game
 --- !u!1001 &3909406430427011703
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1124,6 +1176,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4076656170635661305, guid: efde6f14efb64d34cb7c8f181475fc03, type: 3}
+      propertyPath: textoIngles
+      value: Yes
+      objectReference: {fileID: 0}
+    - target: {fileID: 4076656170635661305, guid: efde6f14efb64d34cb7c8f181475fc03, type: 3}
+      propertyPath: textoPortugues
+      value: Sim
+      objectReference: {fileID: 0}
     - target: {fileID: 5493611963832948025, guid: efde6f14efb64d34cb7c8f181475fc03, type: 3}
       propertyPath: m_Name
       value: Opcao (1)
@@ -1256,6 +1316,14 @@ PrefabInstance:
     - target: {fileID: 593035609315320234, guid: efde6f14efb64d34cb7c8f181475fc03, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4076656170635661305, guid: efde6f14efb64d34cb7c8f181475fc03, type: 3}
+      propertyPath: textoIngles
+      value: No
+      objectReference: {fileID: 0}
+    - target: {fileID: 4076656170635661305, guid: efde6f14efb64d34cb7c8f181475fc03, type: 3}
+      propertyPath: textoPortugues
+      value: "N\xE3o"
       objectReference: {fileID: 0}
     - target: {fileID: 5493611963832948025, guid: efde6f14efb64d34cb7c8f181475fc03, type: 3}
       propertyPath: m_Name
@@ -1616,6 +1684,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4076656170635661305, guid: efde6f14efb64d34cb7c8f181475fc03, type: 3}
+      propertyPath: textoIngles
+      value: No
+      objectReference: {fileID: 0}
+    - target: {fileID: 4076656170635661305, guid: efde6f14efb64d34cb7c8f181475fc03, type: 3}
+      propertyPath: textoPortugues
+      value: "N\xE3o"
+      objectReference: {fileID: 0}
     - target: {fileID: 5493611963832948025, guid: efde6f14efb64d34cb7c8f181475fc03, type: 3}
       propertyPath: m_Name
       value: Opcao
@@ -1749,6 +1825,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4076656170635661305, guid: efde6f14efb64d34cb7c8f181475fc03, type: 3}
+      propertyPath: textoIngles
+      value: Continue Without Saving
+      objectReference: {fileID: 0}
+    - target: {fileID: 4076656170635661305, guid: efde6f14efb64d34cb7c8f181475fc03, type: 3}
+      propertyPath: textoPortugues
+      value: Continuar Sem Salvar
+      objectReference: {fileID: 0}
     - target: {fileID: 5493611963832948025, guid: efde6f14efb64d34cb7c8f181475fc03, type: 3}
       propertyPath: m_Name
       value: ContinuarSemSalvar
@@ -1775,11 +1859,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: efde6f14efb64d34cb7c8f181475fc03, type: 3}
---- !u!1 &8825993787542676608 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5493611963832948025, guid: efde6f14efb64d34cb7c8f181475fc03, type: 3}
-  m_PrefabInstance: {fileID: 3909406432408138169}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &7642730589043613446 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6652219713644703423, guid: efde6f14efb64d34cb7c8f181475fc03, type: 3}
@@ -1794,6 +1873,11 @@ MonoBehaviour:
 --- !u!224 &4502441641209352211 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 593035609315320234, guid: efde6f14efb64d34cb7c8f181475fc03, type: 3}
+  m_PrefabInstance: {fileID: 3909406432408138169}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &8825993787542676608 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5493611963832948025, guid: efde6f14efb64d34cb7c8f181475fc03, type: 3}
   m_PrefabInstance: {fileID: 3909406432408138169}
   m_PrefabAsset: {fileID: 0}
 --- !u!114 &3909406432408138173
@@ -1900,6 +1984,14 @@ PrefabInstance:
     - target: {fileID: 593035609315320234, guid: efde6f14efb64d34cb7c8f181475fc03, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4076656170635661305, guid: efde6f14efb64d34cb7c8f181475fc03, type: 3}
+      propertyPath: textoIngles
+      value: Yes
+      objectReference: {fileID: 0}
+    - target: {fileID: 4076656170635661305, guid: efde6f14efb64d34cb7c8f181475fc03, type: 3}
+      propertyPath: textoPortugues
+      value: Sim
       objectReference: {fileID: 0}
     - target: {fileID: 5493611963832948025, guid: efde6f14efb64d34cb7c8f181475fc03, type: 3}
       propertyPath: m_Name

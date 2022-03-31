@@ -365,7 +365,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d6bc40ff15266f4e9bc2086a08b4389, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direcao: 0
   vidaInicial: 100
   direcaoMovimento: 0
   modoMovimento: 0
@@ -396,14 +395,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemVazio: {fileID: 11400000, guid: e1addeb751f3b97408efcaa7e3f59793, type: 2}
-  itens: []
-  armas:
-  - {fileID: 7703806124257995746, guid: 74b17ffc4bfc3144d8c2041820ad2f94, type: 3}
-  - {fileID: 81589876889633317, guid: b35e4543861f8ab49bb9b2505f0e2867, type: 3}
-  roupasDeCamuflagem: []
-  armaSlot:
-  - {fileID: 0}
-  - {fileID: 0}
 --- !u!114 &7187578302697251405
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -434,6 +425,7 @@ MonoBehaviour:
   textosArma:
     nome: 
     descricao: 
+    melhorias: []
 --- !u!114 &8916929928765734730
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -466,6 +458,7 @@ MonoBehaviour:
   morte: {fileID: 8300000, guid: eb084eeca5a384b43a2643d0bc6dae89, type: 3}
   semMunicao: {fileID: 8300000, guid: ad072c9506c3db748b8c7361ed9706c6, type: 3}
   recarregarArma: {fileID: 8300000, guid: 0aa16d1f5b3220943abecf9ce06b1b6d, type: 3}
+  terminarDeRecarregarArma: {fileID: 8300000, guid: 1428ec1bdcf1cdd45b7f774e57f9ad50, type: 3}
   trocarDeArma: {fileID: 8300000, guid: 8f624ff9f725a5e4a80af5ddaaca22e2, type: 3}
   usarOAlicate: {fileID: 8300000, guid: c00a6cee1f426374783fc49750bb0894, type: 3}
 --- !u!1 &7035996260120561340

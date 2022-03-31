@@ -91,14 +91,14 @@ public class MenuPrincipal : MonoBehaviour
         generalManager = FindObjectOfType<GeneralManagerScript>();
 
         //Variaveis
-        ativo = false;
+        ativo = true;
         menuAtual = Menu.Inicio;
         selecao = 0;
         selecao2 = 0;
 
         IniciarComponentes();
 
-        telaDoLogo.gameObject.SetActive(true);
+        //telaDoLogo.gameObject.SetActive(true);
 
         telaInicial.gameObject.SetActive(true);
         menuNovoJogo.gameObject.SetActive(false);
@@ -206,6 +206,12 @@ public class MenuPrincipal : MonoBehaviour
                     break;
 
                 case 3:
+                    //Tela de Creditos
+
+                    generalManager.Hud.SonsDeMenus.TocarSom(SonsDeMenus.Som.Confirmar);
+                    break;
+
+                case 4:
                     SetMenuAtual(Menu.ConfirmacaoParaSairDoJogo);
 
                     selecao2 = 0;
