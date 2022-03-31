@@ -90,6 +90,7 @@ public class GameManager : MonoBehaviour
         FindObjectOfType<GeneralManagerScript>().Player.ResetarPlayer();
         FindObjectOfType<IniciadorDoPlayer>().SetarVariaveis();
 
+        capituloAtual = Capitulo.Inicio;
         Missoes.ResetarEstadosDasMissoes();
         Flags.ResetarFlags();
     }
