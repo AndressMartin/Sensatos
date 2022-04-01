@@ -14,13 +14,13 @@ public static class VerificarAssaltoMissao
     [SerializeField] private static List<Missao> missoesPrincipais_Cumprir = new List<Missao>();
     [SerializeField] private static List<Missao> missoesSecundarias_Cumprir = new List<Missao>();
 
-    public static void AtivarInvativarMissoes(Missao.Estado estado)
+    public static void AtivarInvativarMissoes(Missoes.Estado estado)
     {
         foreach (var item in missaoPrincipais)
         {
-            if (estado == Missao.Estado.Ativa && Flags.GetFlag(item.GetFlag))
+            if (estado == Missoes.Estado.Ativa && Flags.GetFlag(item.GetFlag))
             {
-                item.SetEstado(Missao.Estado.Concluida);
+                item.SetEstado(Missoes.Estado.Concluida);
             }
             else
             {
@@ -29,9 +29,9 @@ public static class VerificarAssaltoMissao
         }
         foreach (var item in missaoSecundaria)
         {
-            if (estado == Missao.Estado.Ativa && Flags.GetFlag(item.GetFlag))
+            if (estado == Missoes.Estado.Ativa && Flags.GetFlag(item.GetFlag))
             {
-                item.SetEstado(Missao.Estado.Concluida);
+                item.SetEstado(Missoes.Estado.Concluida);
             }
             else
             {
@@ -42,11 +42,11 @@ public static class VerificarAssaltoMissao
     }
     public static void SetarAssalto(Assalto _assalto)
     {
-        AtivarInvativarMissoes(Missao.Estado.Inativa);
+        AtivarInvativarMissoes(Missoes.Estado.Inativa);
         nomeAssalto = _assalto.GetNomeAssalto;
         missaoPrincipais = _assalto.GetMissaoPrincipal;
         missaoSecundaria = _assalto.GetMissaoSecundaria;
-        AtivarInvativarMissoes(Missao.Estado.Ativa);
+        AtivarInvativarMissoes(Missoes.Estado.Ativa);
 
     }
     public static bool VerificarAssalto(Assalto _assalto,Player player)
@@ -77,7 +77,7 @@ public static class VerificarAssaltoMissao
     {
         foreach (var missaoPr in missaoPrincipais)
         {
-            if (_missao.GetEstado != Missao.Estado.Inativa) 
+            if (_missao.GetEstado != Missoes.Estado.Inativa) 
             {
                 if (_missao.Nome == missaoPr.Nome)
                 {
@@ -122,7 +122,7 @@ public static class VerificarAssaltoMissao
     {
         foreach (Missao item in _listaMissoes)
         {
-            if (item.GetEstado != Missao.Estado.Concluida)
+            if (item.GetEstado != Missoes.Estado.Concluida)
             {
                 _listaMissoes_Cumprir.Add(item);
             }

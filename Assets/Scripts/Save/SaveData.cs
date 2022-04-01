@@ -15,7 +15,7 @@ public class SaveData
         public InventarioSave inventarioSave = new InventarioSave();
 
         public GameManager.Capitulo capituloAtual;
-        public Missao.Estado[] estadoDasMissoes;
+        public Missoes.Estado[] estadoDasMissoes;
         public bool[] flags;
     }
 

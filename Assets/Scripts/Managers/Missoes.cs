@@ -4,19 +4,22 @@ using UnityEngine;
 
 public class Missoes : MonoBehaviour
 {
+    //Enuns
+    public enum Estado { Inativa, Ativa, Concluida }
+
     //Variaveis
-    private static Missao.Estado[] estadosDasMissoes;
+    private static Estado[] estadosDasMissoes;
 
     //Getters
-    public static Missao.Estado GetEstadoMissao(int indice)
+    public static Estado GetEstadoMissao(int indice)
     {
         return estadosDasMissoes[indice];
     }
 
-    public static Missao.Estado[] GetEstadoMissaoList => estadosDasMissoes;
+    public static Estado[] GetEstadoMissaoList => estadosDasMissoes;
 
     //Setters
-    public static void SetEstadoMissao(int indice, Missao.Estado estado)
+    public static void SetEstadoMissao(int indice, Estado estado)
     {
         estadosDasMissoes[indice] = estado;
     }
@@ -32,11 +35,11 @@ public class Missoes : MonoBehaviour
 
     public static void ResetarEstadosDasMissoes()
     {
-        estadosDasMissoes = new Missao.Estado[Listas.instance.ListaDeMissoes.TamanhoListaDeMissoes];
+        estadosDasMissoes = new Estado[Listas.instance.ListaDeMissoes.TamanhoListaDeMissoes];
 
         for (int i = 0; i < estadosDasMissoes.Length; i++)
         {
-            estadosDasMissoes[i] = Missao.Estado.Inativa;
+            estadosDasMissoes[i] = Estado.Inativa;
         }
     }
 
