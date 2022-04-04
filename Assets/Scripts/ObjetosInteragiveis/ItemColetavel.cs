@@ -14,6 +14,7 @@ public class ItemColetavel : ObjetoInteragivel
     //Variaveis
     [SerializeField] private Item item;
     [SerializeField] private AudioClip somAoSerColetado;
+    [SerializeField] private bool itemUnico;
 
     private bool itemFoiColetado;
 
@@ -37,6 +38,11 @@ public class ItemColetavel : ObjetoInteragivel
 
         //Se adicionar a lista de objetos interagiveis do ObjectManager
         generalManager.ObjectManager.AdicionarAosObjetosInteragiveis(this);
+
+        if(itemUnico == true)
+        {
+            ConferirSeOItemEstaNoInventario();
+        }
 
         SetRespawn();
     }
@@ -119,5 +125,31 @@ public class ItemColetavel : ObjetoInteragivel
         ativo = false;
         spriteRenderer.enabled = false;
         boxCollider2D.enabled = false;
+    }
+
+    private void ConferirSeOItemEstaNoInventario()
+    {
+        if(item is ItemChave)
+        {
+            foreach (ItemChave itemNoInventario in generalManager.Player.InventarioMissao.Itens)
+            {
+                if (item.ID == itemNoInventario.ID)
+                {
+                    Desativar();
+                    break;
+                }
+            }
+        }
+        else
+        {
+            foreach(Item itemNoInventario in generalManager.Player.Inventario.Itens)
+            {
+                if(item.ID == itemNoInventario.ID)
+                {
+                    Desativar();
+                    break;
+                }
+            }
+        }
     }
 }
