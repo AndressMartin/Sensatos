@@ -79,7 +79,7 @@ public static class VerificarAssaltoMissao
         {
             if (_missao.GetEstado != Missoes.Estado.Inativa) 
             {
-                if (_missao.Nome == missaoPr.Nome)
+                if (_missao.GetId == missaoPr.GetId)
                 {
                     if (Flags.GetFlag(_missao.GetFlag))
                     {

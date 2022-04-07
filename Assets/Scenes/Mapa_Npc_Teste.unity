@@ -967,7 +967,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
+    oldSize: {x: 2.56, y: 2.56}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -1940,6 +1940,50 @@ Transform:
   m_Father: {fileID: 225104399}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &577178811
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 577178813}
+  - component: {fileID: 577178812}
+  m_Layer: 0
+  m_Name: DialogoCocluido
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &577178812
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 577178811}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f407ce48a656e044b7d39160467b389, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogueList: []
+--- !u!4 &577178813
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 577178811}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 866423304}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &578093542
 GameObject:
   m_ObjectHideFlags: 0
@@ -2097,6 +2141,50 @@ Transform:
   m_Children: []
   m_Father: {fileID: 581419277}
   m_RootOrder: 16
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &630513909
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 630513911}
+  - component: {fileID: 630513910}
+  m_Layer: 0
+  m_Name: DialogoInativo
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &630513910
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 630513909}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f407ce48a656e044b7d39160467b389, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogueList: []
+--- !u!4 &630513911
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 630513909}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 866423304}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &643664287
 GameObject:
@@ -2674,14 +2762,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9c6684d23501ea4e8ca44efb26e8208, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tes:
-    missao: {fileID: 0}
-    dialogo: {fileID: 0}
-  npcStruct:
-  - missao: {fileID: 11400000, guid: 501cf6a43ad9a444f83e6412fe71cc27, type: 2}
-    dialogo: {fileID: 866423308}
-  - missao: {fileID: 11400000, guid: 0ecf7b7c774c03944add356ad21a0c49, type: 2}
-    dialogo: {fileID: 866423307}
+  missaoEstadoDialogo:
+    missao: {fileID: 11400000, guid: 501cf6a43ad9a444f83e6412fe71cc27, type: 2}
+    testes:
+    - estado: 0
+      dialogo: {fileID: 630513910}
+    - estado: 1
+      dialogo: {fileID: 876234558}
+    - estado: 2
+      dialogo: {fileID: 577178812}
+  missao: {fileID: 0}
+  lista: {fileID: 0}
 --- !u!4 &866423304
 Transform:
   m_ObjectHideFlags: 0
@@ -2692,7 +2783,10 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -8.55, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 577178813}
+  - {fileID: 876234559}
+  - {fileID: 630513911}
   m_Father: {fileID: 0}
   m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2751,6 +2845,50 @@ MonoBehaviour:
   dialogueList:
   - {fileID: 11400000, guid: 6a4e093915a95054d8774d9a16856dea, type: 2}
   - {fileID: 11400000, guid: 34e8dacdec6ff3b499e1ac00a7f1b7c3, type: 2}
+--- !u!1 &876234557
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 876234559}
+  - component: {fileID: 876234558}
+  m_Layer: 0
+  m_Name: DialogoAtivo
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &876234558
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 876234557}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f407ce48a656e044b7d39160467b389, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogueList: []
+--- !u!4 &876234559
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 876234557}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 866423304}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &902366992
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -38908,6 +39046,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8839212653183834622, guid: 99d67192208c0ff46b473a2f9036b097, type: 3}
+      propertyPath: listaDeMissoes
+      value: 
+      objectReference: {fileID: 11400000, guid: 9edbfe4f000d8a446afea1f7fa4d14f6, type: 2}
     - target: {fileID: 8839212653183834623, guid: 99d67192208c0ff46b473a2f9036b097, type: 3}
       propertyPath: m_Name
       value: Listas

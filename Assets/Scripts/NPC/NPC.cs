@@ -9,10 +9,11 @@ public class NPC : MonoBehaviour
     //Managers
     private GeneralManagerScript generalManager;
 
-    //Variaveis
-    [SerializeField] private NpcStruct tes;
 
-    [SerializeField] public List<NpcStruct> npcStruct;
+    //Variaveis
+    [SerializeField] private NpcStruct missaoEstadoDialogo;
+    [SerializeField] private Missao missao;
+    [SerializeField] private DialogueList lista;
 
     DialogueActivator dialogueActivator;
     private void Start()
@@ -30,6 +31,7 @@ public class NPC : MonoBehaviour
     {
         if(collision.CompareTag("Player"))
         {
+
             //Interagir(collision.GetComponent<Player>());
         }
     }
@@ -43,34 +45,35 @@ public class NPC : MonoBehaviour
     public void ReceberAssaltoDoManager(Assalto assalto)
     {
         bool exit=false;
-        tes.Zerar();
+        //missao = null;
+        //lista=null;
+        //TrocarDialogo(null);
         for (int i = 0; i < assalto.GetMissaoPrincipal.Count; i++)
-        {
-            if (exit)
+        {        
+            if (assalto.GetMissaoPrincipal[i].GetId == missaoEstadoDialogo.GetMissao.GetId)
             {
+                Debug.Log("Entrei no fi");
+                exit = true;
+                missao = assalto.GetMissaoPrincipal[i];
+
+                Debug.Log("Teste " + missaoEstadoDialogo.GetEstadoDialogo.Count);
+                foreach (var item in missaoEstadoDialogo.GetEstadoDialogo)
+                {
+                    /*Debug.Log("primeiro "+ item.GetEstado+"\nsegundo "+missao.GetEstado);
+                    if(item.GetEstado == missao.GetEstado)
+                    {
+                        Debug.Log("Sas");
+                        lista = item.GetDialogueList;
+                        TrocarDialogo(lista.GetDialogueList[0]);
+                    }*/
+                }
+
                 break;
             }
-            else
-            {
-                for (int x = 0; i < npcStruct.Count; i++)
-                {
-                    Debug.Log("Quantidade no struct: " + npcStruct.Count);
-                    Debug.Log("Missao: " + assalto.GetMissaoPrincipal[i].Nome + " Struct: " + npcStruct[x].GetMissao.Nome);
-                    if (exit)
-                    {
-                        break;
-                    }
-                    
-                    else if (assalto.GetMissaoPrincipal[i].Nome == npcStruct[x].GetMissao.Nome)
-                    {
-                        Debug.Log("Entrei no fi");
-                        tes = npcStruct[x];
-                        exit = true;
-                    }
-                }
-            }
+                
         }
     }
+    
 
    
 }
@@ -78,13 +81,18 @@ public class NPC : MonoBehaviour
 public struct NpcStruct
 {
     [SerializeField] private Missao missao;
-    [SerializeField] private DialogueList dialogo;
+    [SerializeField] private List<EstadoDIalogo> testes;
 
     public Missao GetMissao => missao;
+    public List<EstadoDIalogo> GetEstadoDialogo => testes;
+
+}
+[Serializable] 
+public struct EstadoDIalogo
+{
+    [SerializeField] private Missoes.Estado estado;
+    [SerializeField] private DialogueList dialogo;
     public DialogueList GetDialogueList => dialogo;
-    public void Zerar()
-    {
-        missao = null;
-        dialogo = null;
-    }
+    public Missoes.Estado GetEstado => estado;
+
 }
