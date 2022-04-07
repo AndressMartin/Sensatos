@@ -41,7 +41,7 @@ public class ItemColetavel : ObjetoInteragivel
 
         if(itemUnico == true)
         {
-            ConferirSeOItemEstaNoInventario();
+            StartCoroutine(ConferirSeOItemEstaNoInventario());
         }
 
         SetRespawn();
@@ -127,8 +127,10 @@ public class ItemColetavel : ObjetoInteragivel
         boxCollider2D.enabled = false;
     }
 
-    private void ConferirSeOItemEstaNoInventario()
+    private IEnumerator ConferirSeOItemEstaNoInventario()
     {
+        yield return null;
+
         if(item is ItemChave)
         {
             foreach (ItemChave itemNoInventario in generalManager.Player.InventarioMissao.Itens)
@@ -151,5 +153,7 @@ public class ItemColetavel : ObjetoInteragivel
                 }
             }
         }
+
+        SetRespawn();
     }
 }
