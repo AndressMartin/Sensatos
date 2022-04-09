@@ -21,7 +21,6 @@ public class Missoes : MonoBehaviour
     //Setters
     public static void SetEstadoMissao(int indice, Estado estado)
     {
-        Debug.Log("Entrou aqui");
         estadosDasMissoes[indice] = estado;
     }
 

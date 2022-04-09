@@ -11,7 +11,7 @@ public class NPC : MonoBehaviour
 
 
     //Variaveis
-    [SerializeField] private NpcStruct missaoEstadoDialogo;
+    [SerializeField] private List<NpcStruct> listaMissao;
     [SerializeField] private Missao missao;
     [SerializeField] private DialogueList lista;
 
@@ -29,48 +29,63 @@ public class NPC : MonoBehaviour
     }
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if(collision.CompareTag("Player"))
+        if (enabled)
         {
-
-            //Interagir(collision.GetComponent<Player>());
+            if (collision.CompareTag("Player"))
+            {
+                Interagir(collision.GetComponent<Player>());
+            }
         }
     }
-    /*public override void Interagir(Player player)
+    public void Interagir(Player player)
     {
-        foreach (var item in listaAtualMissoesNpc)
+        VerificarAssaltoMissao.VerificarMissao(missao, player);
+
+        /*foreach (var item in listaMissao.GetEstadoDialogo)
         {
-            VerificarAssaltoMissao.VerificarMissao(item.GetMissao, player);
-        }
-    }*/
-    public void ReceberAssaltoDoManager(Assalto assalto)
-    {
-        bool exit=false;
-        //missao = null;
-        //lista=null;
-        //TrocarDialogo(null);
-        for (int i = 0; i < assalto.GetMissaoPrincipal.Count; i++)
-        {        
-            if (assalto.GetMissaoPrincipal[i].GetId == missaoEstadoDialogo.GetMissao.GetId)
+            if (item.GetEstado == missao.GetEstado)
             {
-                Debug.Log("Entrei no fi");
-                exit = true;
-                missao = assalto.GetMissaoPrincipal[i];
-
-                Debug.Log("Teste " + missaoEstadoDialogo.GetEstadoDialogo.Count);
-                foreach (var item in missaoEstadoDialogo.GetEstadoDialogo)
-                {
-                    /*Debug.Log("primeiro "+ item.GetEstado+"\nsegundo "+missao.GetEstado);
-                    if(item.GetEstado == missao.GetEstado)
-                    {
-                        Debug.Log("Sas");
-                        lista = item.GetDialogueList;
-                        TrocarDialogo(lista.GetDialogueList[0]);
-                    }*/
-                }
-
+                lista = item.GetDialogueList;
+                TrocarDialogo(lista.GetDialogueList[0]);
                 break;
             }
-                
+        }   */
+    }
+    public void ReceberAssaltoDoManager(Assalto assalto)
+    {
+        if (missao != null)
+        {
+            VerificarAssaltoMissao.VerificarMissao(missao, generalManager.Player);
+        }
+
+        lista = null;
+        //tenta primeiro com missao principal, se npc n tiver missao principal desse assalto vai pra secundaria
+        MudarDialogoConformeMissao(assalto.GetMissaoPrincipal);
+        if (lista == null)
+        {
+            MudarDialogoConformeMissao(assalto.GetMissaoSecundaria);
+        }
+
+    }
+    void MudarDialogoConformeMissao(List<Missao> _missoes)
+    {
+        for (int i = 0; i < _missoes.Count; i++)
+        {
+            foreach (var listaMissoesPropria in listaMissao)
+            {
+                if(_missoes[i].GetId == listaMissoesPropria.GetMissao.GetId)
+                {
+                    foreach (var item in listaMissoesPropria.GetEstadoDialogo)
+                    {     
+                        if (item.GetEstado == missao.GetEstado)
+                        {
+                            lista = item.GetDialogueList;
+                            TrocarDialogo(lista.GetDialogueList[0]);
+                            break;
+                        }  
+                    }
+                }
+            }          
         }
     }
     

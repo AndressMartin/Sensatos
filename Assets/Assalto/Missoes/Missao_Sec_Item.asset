@@ -9,9 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ebcf0d4957d31ae45887addb33133492, type: 3}
-  m_Name: ListaDeMissoes
+  m_Script: {fileID: 11500000, guid: aac3ba11cb1167d42aed93bc667679af, type: 3}
+  m_Name: Missao_Sec_Item
   m_EditorClassIdentifier: 
-  missoes:
-  - {fileID: 11400000, guid: 501cf6a43ad9a444f83e6412fe71cc27, type: 2}
-  - {fileID: 11400000, guid: 0ecf7b7c774c03944add356ad21a0c49, type: 2}
+  nome: missao2
+  descricao: 
+  flagCorrespondente: 0
+  id: 2
+  itemColetavel: {fileID: 11400000, guid: 793d42d3188cfb24cbee38caa21266d6, type: 2}
+  quantidadeItensCompletarMissao: 2

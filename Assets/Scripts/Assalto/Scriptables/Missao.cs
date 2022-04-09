@@ -13,7 +13,6 @@ public class Missao : ScriptableObject
     public string Nome => nome;
     public string Descricao => descricao;
     public Missoes.Estado GetEstado => Missoes.GetEstadoMissao(Listas.instance.ListaDeMissoes.GetIndice[this.name]); //Pega o estado da lista de estados de missoes, com o indice da lista de missoes
-    public Flags.Flag GetFlag => flagCorrespondente;
     public int GetId => id;
 
     //Setters

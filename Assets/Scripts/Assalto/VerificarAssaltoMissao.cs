@@ -18,30 +18,21 @@ public static class VerificarAssaltoMissao
     {
         foreach (var item in missaoPrincipais)
         {
-            if (estado == Missoes.Estado.Ativa && Flags.GetFlag(item.GetFlag))
-            {
-                item.SetEstado(Missoes.Estado.Concluida);
-            }
-            else
-            {
-                item.SetEstado(estado);
-            }
+
+            item.SetEstado(estado);
+            
         }
         foreach (var item in missaoSecundaria)
         {
-            if (estado == Missoes.Estado.Ativa && Flags.GetFlag(item.GetFlag))
-            {
-                item.SetEstado(Missoes.Estado.Concluida);
-            }
-            else
-            {
-                item.SetEstado(estado);
-            }
+            
+            item.SetEstado(estado);
+            
         }
 
     }
     public static void SetarAssalto(Assalto _assalto)
     {
+        //desativo missoes e depois ativos as missoes atuais
         AtivarInvativarMissoes(Missoes.Estado.Inativa);
         nomeAssalto = _assalto.GetNomeAssalto;
         missaoPrincipais = _assalto.GetMissaoPrincipal;
@@ -81,7 +72,7 @@ public static class VerificarAssaltoMissao
             {
                 if (_missao.GetId == missaoPr.GetId)
                 {
-                    if (Flags.GetFlag(_missao.GetFlag))
+                    if (_missao.GetEstado == Missoes.Estado.Concluida)
                     {
                         // olha so vc ja councluiu a missão muito obrigado
                         Debug.Log("olha so vc ja councluiu a missão muito obrigado");
@@ -94,7 +85,6 @@ public static class VerificarAssaltoMissao
                         if (VerificarItem(_missao_Item.GetItemDeMissao, player))
                         {
                             // obrigado por entregar os itens aqui sua recompensa
-                            Debug.Log("obrigado por entregar os itens aqui sua recompensa");
                             _missao_Item.SetarFlag(true);
                             break;
                         }
@@ -103,13 +93,11 @@ public static class VerificarAssaltoMissao
                             if (player.InventarioMissao.ProcurarQuantidadeItem(_missao_Item.GetItemDeMissao) > 0)
                             {
                                 //esse iten agora eu preciso de mais dele
-                                Debug.Log("esse iten agora eu preciso de mais dele");
                                 break;
                             }
                             else
                             {
                                 //voce precisa coletar os itens
-                                Debug.Log("voce precisa coletar os itens");
                                 break;
                             }
                         }
