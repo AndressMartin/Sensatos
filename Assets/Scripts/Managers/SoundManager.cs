@@ -4,17 +4,36 @@ using UnityEngine;
 
 public class SoundManager : MonoBehaviour
 {
+    //Managers
+    private GeneralManagerScript generalManager;
+
+    //Componentes
     private AudioSource audioSource;
     private AudioSource audioSourceIgnorandoPause;
 
+    //Variaveis
+    private static int volume;
+
+    //Getters
+    public static int Volume => volume;
+
     void Start()
     {
+        //Managers
+        generalManager = FindObjectOfType<GeneralManagerScript>();
+
+        //Componentes
         audioSource = GetComponent<AudioSource>();
 
         audioSourceIgnorandoPause = gameObject.AddComponent<AudioSource>() as AudioSource;
         audioSourceIgnorandoPause.ignoreListenerPause = true;
 
         CopiarAudioSource(audioSourceIgnorandoPause, audioSource);
+
+        //Variaveis
+        volume = SaveConfiguracoes.configuracoes.volumeEfeitosSonoros;
+
+        StartCoroutine(SetVolumeInicial(volume));
     }
 
     public void TocarSom(AudioClip som)
@@ -49,5 +68,28 @@ public class SoundManager : MonoBehaviour
         audioSource.rolloffMode = audioSource2.rolloffMode;
         audioSource.minDistance = audioSource2.minDistance;
         audioSource.maxDistance = audioSource2.maxDistance;
+    }
+
+    public void SetVolume(int novoVolume)
+    {
+        volume = novoVolume;
+        audioSource.volume = (float)volume / 100;
+        audioSourceIgnorandoPause.volume = (float)volume / 100;
+
+        generalManager.Player?.SomDosTiros.SetVolume(volume);
+
+        if(generalManager.ObjectManager != null)
+        {
+            foreach (Enemy inimigo in generalManager.ObjectManager.ListaInimigos)
+            {
+                inimigo.SomDosTiros.SetVolume(volume);
+            }
+        }
+    }
+
+    private IEnumerator SetVolumeInicial(int novoVolume)
+    {
+        yield return null;
+        SetVolume(novoVolume);
     }
 }

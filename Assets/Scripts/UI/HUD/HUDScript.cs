@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,18 +8,46 @@ public class HUDScript : MonoBehaviour
     //Componentes
     private Canvas canvas;
     [SerializeField] private Camera cameraAtiva;
+    [SerializeField] private PlayerHUD playerHUD;
     [SerializeField] private MenuDoInventario menuDoInventario;
+    [SerializeField] private MenuDePausa menuDePausa;
     [SerializeField] private LockDownUI lockDownUI;
     [SerializeField] private PlayerUIScript playerUI;
     [SerializeField] private BarraDeVisaoDoInimigo barraDeVisaoDoInimigo;
 
+    [SerializeField] private SonsDeMenus sonsDeMenus;
+
+    //Enuns
+    public enum Menu { Nenhum, Pausa, Inventario }
+
+    //Variaveis
+    private Menu menuAberto;
+
     //Getters
+    public MenuDoInventario MenuDoInventario => menuDoInventario;
+    public MenuDePausa MenuDePausa => menuDePausa;
     public BarraDeVisaoDoInimigo BarraDeVisaoDoInimigo => barraDeVisaoDoInimigo;
+    public SonsDeMenus SonsDeMenus => sonsDeMenus;
+    public Menu MenuAberto => menuAberto;
+
+    //Setters
+    public void SetMenuAberto(Menu menuAberto)
+    {
+        this.menuAberto = menuAberto;
+    }
 
     private void Start()
     {
+        //Variaveis
+        menuAberto = Menu.Nenhum;
+
         LockDownUIAtiva(false);
         BarraDeRecarregamentoAtiva(false);
+    }
+
+    public void AtualizarPlayerHUD()
+    {
+        playerHUD.AtualizarInformacoes();
     }
 
     public void BarraDeRecarregamentoAtiva(bool ativa)
@@ -46,49 +75,16 @@ public class HUDScript : MonoBehaviour
         lockDownUI.gameObject.SetActive(ativa);
     }
 
-    public void AtualizarTempoLockDown(float tempo)
+    public void AtualizarTempoLockDown(float tempoEmSegundos)
     {
-        int tempoTemp = (int)(tempo * 100.0f);
-        char[] tempoString = tempoTemp.ToString().ToCharArray();
+        TimeSpan tempo = TimeSpan.FromSeconds((double)tempoEmSegundos);
 
-        string textoFinal = "";
+        //Exemplo: string tempoString = tempo.ToString(@"hh\:mm\:ss\:fff");
 
-        for(int i = 0; i < tempoString.Length; i++)
-        {
-            if(tempoString.Length < 4 && i == 0)
-            {
-                textoFinal += "0";
-            }
+        //As barras antes dos 2 pontos serve para indicar que eles sao um caractere a ser incluido no resultado da string, e nao uma parte da formatacao do texto
+        string tempoString = tempo.ToString(@"ss\:ff");
 
-            if (tempoString.Length < 3 && i == 0)
-            {
-                textoFinal += "0";
-            }
-
-            if (i == 0 && tempoString.Length <= 2)
-            {
-                textoFinal += ":";
-            }
-
-            if(i == 0 && tempoString.Length <= 1)
-            {
-                textoFinal += "0";
-            }
-
-            textoFinal += tempoString[i];
-
-            if(i == 1 && tempoString.Length >= 4)
-            {
-                textoFinal += ":";
-            }
-
-            if (i == 0 && tempoString.Length == 3)
-            {
-                textoFinal += ":";
-            }
-        }
-
-        lockDownUI.AtualizarTempo(textoFinal);
+        lockDownUI.AtualizarTempo(tempoString);
     }
 
     public void AbrirOInventario()

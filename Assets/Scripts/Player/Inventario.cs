@@ -5,54 +5,97 @@ using UnityEngine.Events;
 
 public class Inventario : MonoBehaviour
 {
+    //Managers
+    private GeneralManagerScript generalManager;
+
     //Componentes
-    private Player player;
+    private MudarIdiomaItensDoInventario mudarIdiomaItensDoInventario;
 
     //Variaveis
     [SerializeField] private Item itemVazio;
 
-    [SerializeField] private Item[] itens = new Item[9];
-    private Item[] atalhosDeItens = new Item[4];
+    private static Item[] itens;
+    private static Item[] atalhosDeItens;
 
-    [SerializeField] private List<ArmaDeFogo> armas = new List<ArmaDeFogo>();
-    [SerializeField] private List<RoupaDeCamuflagem> roupasDeCamuflagem = new List<RoupaDeCamuflagem>();
+    private static List<ArmaDeFogo> armas = new List<ArmaDeFogo>();
+    private static List<RoupaDeCamuflagem> roupasDeCamuflagem = new List<RoupaDeCamuflagem>();
 
-    [SerializeField] private ArmaDeFogo[] armaSlot = new ArmaDeFogo[2];
+    private static ArmaDeFogo[] armaSlot = new ArmaDeFogo[2];
     private int armaAtual;
 
-    private RoupaDeCamuflagem roupaAtual;
-    private Item itemAtual;
+    private static RoupaDeCamuflagem roupaAtual;
+    private static Item itemAtual;
 
-    private int dinheiro;
+    private static int dinheiro = 0;
 
     //Getters
     public Item[] Itens => itens;
     public Item[] AtalhosDeItens => atalhosDeItens;
     public List<ArmaDeFogo> Armas => armas;
+    public List<RoupaDeCamuflagem> RoupasDeCamuflagem => roupasDeCamuflagem;
     public ArmaDeFogo[] ArmaSlot => armaSlot;
     public int ArmaAtual => armaAtual;
     public RoupaDeCamuflagem RoupaAtual => roupaAtual;
     public Item ItemAtual => itemAtual;
     public int Dinheiro => dinheiro;
 
-    void Start()
+    //Setters
+    public void SetRoupaAtual(RoupaDeCamuflagem roupa)
     {
-        //Componentes
-        player = GetComponentInParent<Player>();
+        roupaAtual = roupa;
+    }
 
+    public void SetDinheiro(int novoDinheiro)
+    {
+        dinheiro = novoDinheiro;
+    }
+
+    private void Awake()
+    {
         //Criar o inventario de itens
-        for (int i = 0; i < itens.Length; i++)
+        if (itens == null)
         {
-            itens[i] = ScriptableObject.Instantiate(itemVazio);
+            itens = new Item[9];
+
+            for (int i = 0; i < itens.Length; i++)
+            {
+                itens[i] = ScriptableObject.Instantiate(itemVazio);
+                itens[i].name = itemVazio.name;
+            }
         }
 
         //Criar a array dos atalhos
-        for (int i = 0; i < atalhosDeItens.Length; i++)
+        if (atalhosDeItens == null)
         {
-            atalhosDeItens[i] = itemVazio;
+            atalhosDeItens = new Item[4];
+
+            for (int i = 0; i < atalhosDeItens.Length; i++)
+            {
+                atalhosDeItens[i] = itemVazio;
+            }
         }
+    }
+
+    void Start()
+    {
+        //Managers
+        generalManager = FindObjectOfType<GeneralManagerScript>();
+
+        //Adicionar a funcao de trocar idioma ao evento do Idioma Manager
+        generalManager.IdiomaManager.EventoTrocarIdioma.AddListener(TrocarIdioma);
+
+        //Componentes
+        mudarIdiomaItensDoInventario = GetComponent<MudarIdiomaItensDoInventario>();
 
         armaAtual = 0;
+
+        //Trocar o idioma uma vez para iniciar os objetos com o idioma correto
+        TrocarIdioma();
+    }
+
+    public void Respawn()
+    {
+        CarregarSave(SaveData.InventarioRespawn);
     }
 
     private void SetarArmasEquipadas()
@@ -72,10 +115,15 @@ public class Inventario : MonoBehaviour
     {
         //Cria uma nova instancia do scriptable object e a adiciona no inventario
         Item novoItem = ScriptableObject.Instantiate(item);
+        novoItem.name = item.name;
 
-        for(int i = 0; i < itens.Length; i++)
+        novoItem.Iniciar();
+
+        mudarIdiomaItensDoInventario.TrocarIdioma(novoItem);
+
+        for (int i = 0; i < itens.Length; i++)
         {
-            if(itens[i].ID == 0)
+            if(itens[i].ID == Listas.instance.ListaDeItens.GetID["ItemVazio"])
             {
                 Destroy(itens[i]);
                 itens[i] = novoItem;
@@ -86,14 +134,49 @@ public class Inventario : MonoBehaviour
         return false;
     }
 
+    //Adiciona os itens de um arquivo de save
+    private void AdicionarItem(Item item, int indice)
+    {
+        //Cria uma nova instancia do scriptable object e a adiciona no inventario
+        Item novoItem = ScriptableObject.Instantiate(item);
+        novoItem.name = item.name;
+
+        novoItem.Iniciar();
+
+        mudarIdiomaItensDoInventario.TrocarIdioma(novoItem);
+
+        if (itens[indice].ID == Listas.instance.ListaDeItens.GetID["ItemVazio"])
+        {
+            Destroy(itens[indice]);
+        }
+        else
+        {
+            RemoverItem(itens[indice]);
+        }
+
+        itens[indice] = novoItem;
+    }
+
     public void RemoverItem(Item item)
     {
+        //Procura o item nos atalhos para remove-lo
+        for (int i = 0; i < atalhosDeItens.Length; i++)
+        {
+            if (atalhosDeItens[i] == item)
+            {
+                atalhosDeItens[i] = itemVazio;
+                break;
+            }
+        }
+
+        //Procura o item no inventario para destrui-lo
         for (int i = 0; i < itens.Length; i++)
         {
             if (itens[i] == item)
             {
                 Destroy(itens[i]);
                 itens[i] = ScriptableObject.Instantiate(itemVazio);
+                itens[i].name = itemVazio.name;
                 return;
             }
         }
@@ -101,16 +184,31 @@ public class Inventario : MonoBehaviour
         Debug.LogWarning("O item para ser excluido nao foi encontrado!");
     }
 
-    public void MoverItem(int indice1, int indice2)
+    public void MoverItem(int indiceOrigem, int indiceDestino)
     {
-        Item itemTemp = itens[indice2];
+        if(indiceOrigem == indiceDestino)
+        {
+            return;
+        }
 
-        itens[indice2] = itens[indice1];
-        itens[indice1] = itemTemp;
+        Item itemTemp = itens[indiceDestino];
+
+        itens[indiceDestino] = itens[indiceOrigem];
+        itens[indiceOrigem] = itemTemp;
     }
 
     public void AdicionarAtalho(int indice, Item item)
     {
+        //Confere se o item ja nao esta em algum atalho, se estiver, troca a posicao dele com a do atalho selecionado
+        for (int i = 0; i < atalhosDeItens.Length; i++)
+        {
+            if (atalhosDeItens[i] == item)
+            {
+                MoverAtalho(i, indice);
+                return;
+            }
+        }
+
         atalhosDeItens[indice] = item;
     }
 
@@ -119,18 +217,29 @@ public class Inventario : MonoBehaviour
         atalhosDeItens[indice] = itemVazio;
     }
 
-    public void MoverAtalho(int indice1, int indice2)
+    public void MoverAtalho(int indiceOrigem, int indiceDestino)
     {
-        Item itemTemp = atalhosDeItens[indice2];
+        if (indiceOrigem == indiceDestino)
+        {
+            return;
+        }
 
-        atalhosDeItens[indice2] = atalhosDeItens[indice1];
-        atalhosDeItens[indice1] = itemTemp;
+        Item itemTemp = atalhosDeItens[indiceDestino];
+
+        atalhosDeItens[indiceDestino] = atalhosDeItens[indiceOrigem];
+        atalhosDeItens[indiceOrigem] = itemTemp;
     }
 
-    public void AddArma(ArmaDeFogo arma)
+    public void AdicionarArma(ArmaDeFogo arma)
     {
         //Cria uma nova instancia do scriptable object e a adiciona no inventario
         ArmaDeFogo novaArma = ScriptableObject.Instantiate(arma);
+        novaArma.name = arma.name;
+
+        novaArma.AdicionarMunicao(novaArma.GetStatus.MunicaoMax + novaArma.GetStatus.MunicaoMaxCartucho);
+
+        mudarIdiomaItensDoInventario.TrocarIdioma(novaArma);
+
         armas.Add(novaArma);
 
         if(armas.Count <= 2)
@@ -139,10 +248,14 @@ public class Inventario : MonoBehaviour
         }
     }
 
-    public void AddRoupa(RoupaDeCamuflagem roupa)
+    public void AdicionarRoupa(RoupaDeCamuflagem roupa)
     {
         //Cria uma nova instancia do scriptable object e a adiciona no inventario
         RoupaDeCamuflagem novaRoupa = ScriptableObject.Instantiate(roupa);
+        novaRoupa.name = roupa.name;
+
+        mudarIdiomaItensDoInventario.TrocarIdioma(novaRoupa);
+
         roupasDeCamuflagem.Add(novaRoupa);
 
         if (roupasDeCamuflagem.Count <= 1)
@@ -154,11 +267,6 @@ public class Inventario : MonoBehaviour
     public void SetarItemAtual(Item item)
     {
         itemAtual = item;
-    }
-
-    public void UsarItemAtual()
-    {
-        itemAtual?.Usar(player);
     }
 
     public void TrocarArma()
@@ -178,36 +286,112 @@ public class Inventario : MonoBehaviour
         }
     }
 
-    public void TrocarArmaDoInventario(ArmaDeFogo arma, GameObject objectThatCalled)
+    private void TrocarIdioma()
     {
-        /*
-        ArmaDeFogo weaponToBeBenched = objectThatCalled.GetComponent<WeaponFrame>().GetSavedElement() as ArmaDeFogo;
-        int temporaryIndex = arma.index; //E.g. temp = 7
-        arma.index = weaponToBeBenched.index; //E.g. arma7 = 1
-        weaponToBeBenched.index = temporaryIndex; //E.g. arma1 = 7
-        if (arma.index == 0) armaSlot1 = arma;
-        else if (arma.index == 1) armaSlot2 = arma;
-        else Debug.LogError("WARNING: SWITCHING WEAPONS IN INVENTORY WENT WRONG.");
-        ReSort();
-        */
+        foreach (ArmaDeFogo arma in armas)
+        {
+            mudarIdiomaItensDoInventario.TrocarIdioma(arma);
+        }
+
+        foreach (Item item in itens)
+        {
+            mudarIdiomaItensDoInventario.TrocarIdioma(item);
+        }
+
+        foreach (RoupaDeCamuflagem roupa in roupasDeCamuflagem)
+        {
+            mudarIdiomaItensDoInventario.TrocarIdioma(roupa);
+        }
     }
 
-    public void ReSort()
+    public void CarregarSave(SaveData.InventarioSave inventarioSave)
     {
-        /*
-        List<ArmaDeFogo> armasTemp = new List<ArmaDeFogo>();
-        foreach (var arma in armas)
-        {
-            //Debug.Log(arma.index);
-            if (armasTemp.Count >= arma.index) armasTemp.Insert(arma.index, arma);
-            else armasTemp.Add(arma);
-        }
+        dinheiro = inventarioSave.dinheiro;
+
+        //Lista de armas
         armas.Clear();
-        foreach (var arma in armasTemp)
+
+        foreach(SaveData.ArmaDeFogoSave arma in inventarioSave.armas)
         {
-            armas.Add(arma);
+            AdicionarArma(Listas.instance.ListaDeArmas.GetArma[arma.id]);
+
+            armas[armas.Count - 1].SetNivelMelhoria(arma.nivelMelhoria);
+            armas[armas.Count - 1].SetMunicoes(arma.municao, arma.municaoCartucho);
         }
-        hasSortedWeapons.Invoke();
-        */
+
+        //Armas equipadas
+        armaSlot[0] = null;
+        armaSlot[1] = null;
+
+        if(armas.Count > 0)
+        {
+            armaSlot[0] = armas[inventarioSave.armaSlot[0]];
+            armaSlot[1] = armas[inventarioSave.armaSlot[1]];
+        }
+
+        //Lista de itens
+        for(int i = 0; i < inventarioSave.itens.Length; i++)
+        {
+            AdicionarItem(Listas.instance.ListaDeItens.GetItem[inventarioSave.itens[i].id], i);
+
+            if(itens[i].ID != Listas.instance.ListaDeItens.GetID["ItemVazio"])
+            {
+                itens[i].SetQuantidadeDeUsos(inventarioSave.itens[i].quantidadeDeUsos);
+            }
+        }
+
+        //Atalhos
+        for (int i = 0; i < inventarioSave.atalhosDeItens.Length; i++)
+        {
+            if(inventarioSave.atalhosDeItens[i] < 0)
+            {
+                RemoverAtalho(i);
+            }
+            else
+            {
+                AdicionarAtalho(i, itens[inventarioSave.atalhosDeItens[i]]);
+            }
+        }
+
+        //Lista de roupas
+        roupasDeCamuflagem.Clear();
+
+        foreach (int roupa in inventarioSave.roupasDeCamuflagem)
+        {
+            AdicionarRoupa(Listas.instance.ListaDeRoupas.GetRoupa[roupa]);
+        }
+
+        //Roupa atual
+        roupaAtual = roupasDeCamuflagem[inventarioSave.roupaAtual];
+    }
+
+    public void ResetarInventario()
+    {
+        dinheiro = 0;
+
+        //Lista de armas
+        armas.Clear();
+
+        //Armas equipadas
+        armaSlot[0] = null;
+        armaSlot[1] = null;
+
+        //Lista de itens
+        for (int i = 0; i < itens.Length; i++)
+        {
+            if (itens[i].ID != Listas.instance.ListaDeItens.GetID["ItemVazio"])
+            {
+                RemoverItem(itens[i]);
+            }
+        }
+
+        //Atalhos
+        for (int i = 0; i < atalhosDeItens.Length; i++)
+        {
+            RemoverAtalho(i);
+        }
+
+        //Lista de roupas
+        roupasDeCamuflagem.Clear();
     }
 }

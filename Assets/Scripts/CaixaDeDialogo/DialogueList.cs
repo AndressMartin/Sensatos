@@ -1,10 +1,13 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[Serializable]
 public class DialogueList : MonoBehaviour
 {
     [SerializeField] private List<DialogueObject> dialogueList;
+    public List<DialogueObject> GetDialogueList => dialogueList;
 
     public DialogueObject GetDialogueObject(string nome)
     {

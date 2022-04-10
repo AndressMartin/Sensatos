@@ -13,9 +13,16 @@ public class ItemColetavel : ObjetoInteragivel
 
     //Variaveis
     [SerializeField] private Item item;
+    [SerializeField] private AudioClip somAoSerColetado;
+    [SerializeField] private bool itemUnico;
+
+    private bool itemFoiColetado;
 
     //Variaveis de respawn
     private bool ativoRespawn;
+
+    //Getter
+    public Item GetItem => item;
 
     void Start()
     {
@@ -27,10 +34,15 @@ public class ItemColetavel : ObjetoInteragivel
         boxCollider2D = GetComponent<BoxCollider2D>();
 
         //Variaveis
-        ativo = true;
+        itemFoiColetado = false;
 
         //Se adicionar a lista de objetos interagiveis do ObjectManager
         generalManager.ObjectManager.AdicionarAosObjetosInteragiveis(this);
+
+        if(itemUnico == true)
+        {
+            StartCoroutine(ConferirSeOItemEstaNoInventario());
+        }
 
         SetRespawn();
     }
@@ -53,24 +65,38 @@ public class ItemColetavel : ObjetoInteragivel
 
     public override void Interagir(Player player)
     {
+        itemFoiColetado = false;
+
         if(item != null)
         {
+            if(somAoSerColetado != null)
+            {
+                generalManager.SoundManager.TocarSom(somAoSerColetado);
+            }
+
             switch(item.Tipo)
             {
                 case Item.TipoItem.Consumivel:
                     AdicionarAoInventario(player);
-                    Desativar();
                     break;
 
                 case Item.TipoItem.Ferramenta:
                     AdicionarAoInventario(player);
-                    Desativar();
                     break;
 
                 case Item.TipoItem.ItemChave:
                     AdicionarAoInventarioMissao(player);
-                    Desativar();
                     break;
+            }
+
+            if(itemFoiColetado == true)
+            {
+                Desativar();
+            }
+            else
+            {
+                //Substituir pela funcao que vai dar ao jogador a opcao de escolher um item para colocar este no lugar ou nao.
+                Debug.LogWarning("Nao havia espaco no inventario para adicionar o item");
             }
         }
         else
@@ -81,12 +107,17 @@ public class ItemColetavel : ObjetoInteragivel
 
     private void AdicionarAoInventario(Player player)
     {
-        player.Inventario.AdicionarItem(item);
+        itemFoiColetado = player.Inventario.AdicionarItem(item);
     }
 
     private void AdicionarAoInventarioMissao(Player player)
     {
-        player.InventarioMissao.Add(item);
+        ItemChave itemChave = (ItemChave)item;
+
+        player.InventarioMissao.AdicionarItem(itemChave);
+        itemFoiColetado = true;
+
+        VerificarAssaltoMissao.VerificarItem(item, player);
     }
 
     private void Desativar()
@@ -94,5 +125,35 @@ public class ItemColetavel : ObjetoInteragivel
         ativo = false;
         spriteRenderer.enabled = false;
         boxCollider2D.enabled = false;
+    }
+
+    private IEnumerator ConferirSeOItemEstaNoInventario()
+    {
+        yield return null;
+
+        if(item is ItemChave)
+        {
+            foreach (ItemChave itemNoInventario in generalManager.Player.InventarioMissao.Itens)
+            {
+                if (item.ID == itemNoInventario.ID)
+                {
+                    Desativar();
+                    break;
+                }
+            }
+        }
+        else
+        {
+            foreach(Item itemNoInventario in generalManager.Player.Inventario.Itens)
+            {
+                if(item.ID == itemNoInventario.ID)
+                {
+                    Desativar();
+                    break;
+                }
+            }
+        }
+
+        SetRespawn();
     }
 }

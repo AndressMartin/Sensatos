@@ -18,7 +18,7 @@ public class Porta : ObjetoInteragivel
     public enum Estado { NaoLockdown, Lockdown }
 
     //Variaveis
-    [SerializeField] private Chave chave;
+    [SerializeField] private ItemChave chave;
     private bool aberto;
     private bool trancado;
 
@@ -103,13 +103,11 @@ public class Porta : ObjetoInteragivel
         if(trancado)
         {
             //Verifica se ha uma chave nos itens do jogador e se alguma delas tem o id igual ao da chave que destranca a porta
-            List<Item> listaItens = player.InventarioMissao.Itens;
-            foreach(Item item in listaItens)
+            foreach(ItemChave item in player.InventarioMissao.Itens)
             {
-                if(item is Chave)
+                if(item is ItemChave)
                 {
-                    Chave chave = (Chave)item;
-                    if(chave.IDChave == this.chave.IDChave)
+                    if(item.ID == this.chave.ID)
                     {
                         Destrancar();
                     }

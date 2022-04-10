@@ -27,7 +27,6 @@ public class PlayerInput : MonoBehaviour
     {
         if (generalManager.PauseManager.PermitirInput == true)
         {
-            ComandosMenu();
             if (generalManager.PauseManager.JogoPausado == false)
             {
                 ComandosGameplay();
@@ -40,23 +39,6 @@ public class PlayerInput : MonoBehaviour
         }
     }
 
-    //Comandos de menus, como pausar o jogo
-    void ComandosMenu()
-    {
-        //Pausar o jogo
-        if (Input.GetKeyDown(KeyCode.Backspace))
-        {
-            if(generalManager.PauseManager.JogoPausado == false)
-            {
-                generalManager.PauseManager.Pausar(true);
-            }
-            else
-            {
-                generalManager.PauseManager.Pausar(false);
-            }
-        }
-    }
-
     //Comandos da gameplay principal
     void ComandosGameplay()
     {
@@ -65,89 +47,96 @@ public class PlayerInput : MonoBehaviour
             if(player.ModoDeCombate == true)
             {
                 //Trocar arma
-                if (Input.GetKeyDown(KeyCode.Q))
+                if (InputManager.TrocarArma())
                 {
                     inventario.TrocarArma();
                     player.AtualizarArma();
+
+                    generalManager.Hud.AtualizarPlayerHUD();
                 }
 
                 //Atirar
                 if(player.Inventario.ArmaSlot[inventario.ArmaAtual] != null)
                 {
-                    if (player.RapidFire == true)
+                    if (player.RapidFire == true && player.TemMunicao() == true)
                     {
-                        if (Input.GetButton("Atirar"))
+                        if (InputManager.AtirarComRapidFire())
                         {
                             player.Atirar();
+                            generalManager.Hud.AtualizarPlayerHUD();
                         }
                     }
                     else
                     {
-                        if (Input.GetKeyDown(KeyCode.Space))
+                        if (InputManager.Atirar())
                         {
                             player.Atirar();
+                            generalManager.Hud.AtualizarPlayerHUD();
                         }
                     }
                 }
 
                 //Recarregar
-                if (Input.GetKeyDown(KeyCode.R))
+                if (InputManager.RecarregarArma())
                 {
                     player.Recarregar();
                 }
 
                 //Atacar
-                if (Input.GetKeyDown(KeyCode.F))
+                if (InputManager.AtaqueFisico())
                 {
                     player.Atacar();
                 }
 
                 //Usar o item no atalho 1
-                if (Input.GetKeyDown(KeyCode.Keypad1) || Input.GetKeyDown(KeyCode.Alpha1))
+                if (InputManager.Atalho1())
                 {
                     player.UsarItemAtalho(0);
                 }
 
                 //Usar o item no atalho 2
-                if (Input.GetKeyDown(KeyCode.Keypad2) || Input.GetKeyDown(KeyCode.Alpha2))
+                if (InputManager.Atalho2())
                 {
                     player.UsarItemAtalho(1);
                 }
 
                 //Usar o item no atalho 3
-                if (Input.GetKeyDown(KeyCode.Keypad3) || Input.GetKeyDown(KeyCode.Alpha3))
+                if (InputManager.Atalho3())
                 {
                     player.UsarItemAtalho(2);
                 }
 
                 //Usar o item no atalho 4
-                if (Input.GetKeyDown(KeyCode.Keypad4) || Input.GetKeyDown(KeyCode.Alpha4))
+                if (InputManager.Atalho4())
                 {
                     player.UsarItemAtalho(3);
                 }
             }
 
             //Botão de interação
-            if (Input.GetKeyDown(KeyCode.E))
+            if (InputManager.Interagir())
             {
                 player.Interagir();
             }
 
-            //Ativar o strafing
-            if (Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.X))
+            //Ativar o lockstrafe
+            if (InputManager.Lockstrafe())
             {
                 if (player.modoMovimento != Player.ModoMovimento.Strafing)
                 {
                     player.modoMovimento = Player.ModoMovimento.Strafing;
                 }
-                else
+            }
+            else
+            {
+                if (player.modoMovimento == Player.ModoMovimento.Strafing)
                 {
                     player.modoMovimento = Player.ModoMovimento.Normal;
                 }
             }
 
             //Andar sorrateiramente
-            if (Input.GetKeyDown(KeyCode.LeftControl) || Input.GetKeyDown(KeyCode.C))
+            if (InputManager.AndarSorrateiramente())
             {
                 if (player.modoMovimento != Player.ModoMovimento.AndandoSorrateiramente)
                 {

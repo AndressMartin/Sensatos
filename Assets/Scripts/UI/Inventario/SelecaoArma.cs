@@ -34,14 +34,16 @@ public class SelecaoArma : SelecaoDoInventario
 
     public override void Confirmar(MenuDoInventario menuDoInventario)
     {
-        menuDoInventario.SetMenuAtual(MenuDoInventario.Menu.Arma);
-        menuDoInventario.MenuDasArmas.AtualizarPosicaoDoScroolDasArmas(transform.position.y);
-        menuDoInventario.MenuDasArmas.IniciarScrool(indiceArmaAtual);
-    }
-
-    public override void Voltar(MenuDoInventario menuDoInventario)
-    {
-        //Nada
+        if (GameManager.instance.ModoDeJogo == GameManager.Modo.Cidade)
+        {
+            menuDoInventario.SetMenuAtual(MenuDoInventario.Menu.Arma);
+            menuDoInventario.MenuDasArmas.AtualizarPosicaoDoScroolDasArmas(transform.position.y);
+            menuDoInventario.MenuDasArmas.IniciarScrool(indiceArmaAtual);
+        }
+        else
+        {
+            menuDoInventario.GeneralManager.Hud.SonsDeMenus.TocarSom(SonsDeMenus.Som.Falha);
+        }
     }
 
     public void ZerarInformacoes()

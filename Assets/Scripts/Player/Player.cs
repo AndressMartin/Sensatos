@@ -15,6 +15,9 @@ public class Player : EntityModel
     private AtaqueFisico ataqueHitBox;
     private PlayerSound sound;
     private PontaArmaPlayerScript pontaArma;
+    private SomDosTiros somDosTiros;
+    private SonsDoJogador sonsDoJogador;
+
     private Inventario inventario;
     private InventarioMissao inventarioMissao;
 
@@ -23,6 +26,7 @@ public class Player : EntityModel
     public enum Estado { Normal, TomandoDano, Atacando, UsandoItem, Morto };
 
     //Variaveis
+    private static int vidaMaxima = 0;
     [SerializeField] private int vidaInicial;
 
     public Direcao direcaoMovimento;
@@ -57,18 +61,31 @@ public class Player : EntityModel
     //Getters
     public GeneralManagerScript GeneralManager => generalManager;
     public AnimacaoJogador Animacao => animacao;
+    public SomDosTiros SomDosTiros => somDosTiros;
+    public SonsDoJogador SonsDoJogador => sonsDoJogador;
     public Inventario Inventario => inventario;
     public InventarioMissao InventarioMissao => inventarioMissao;
     public int Vida => vida;
     public int VidaMax => vidaMax;
+    public int VidaMaxima => vidaMaxima;
     public bool ModoDeCombate => modoDeCombate;
     public Estado GetEstado => estado;
     public float TempoRecarregar => tempoRecarregar;
     public float TempoRecarregarMax => tempoRecarregarMax;
     public bool RapidFire => inventario.ArmaSlot[inventario.ArmaAtual].RapidFire;
 
+    //Setters
+    public void SetVidaMaxima(int novaVidaMaxima)
+    {
+        vidaMaxima = novaVidaMaxima;
+    }
+
     void Start()
     {
+        //Eventos
+        SaveManager.instance.OnSavingGame.AddListener(AtualizarSaveFile);
+        SaveManager.instance.OnGameLoaded.AddListener(CarregarSaveFile);
+
         //Managers
         generalManager = FindObjectOfType<GeneralManagerScript>();
 
@@ -80,12 +97,22 @@ public class Player : EntityModel
         ataqueHitBox = GetComponentInChildren<AtaqueFisico>();
         sound = FindObjectOfType<PlayerSound>();
         pontaArma = GetComponentInChildren<PontaArmaPlayerScript>();
+        somDosTiros = GetComponentInChildren<SomDosTiros>();
+        sonsDoJogador = GetComponent<SonsDoJogador>();
+
         inventario = GetComponent<Inventario>();
         inventarioMissao = GetComponent<InventarioMissao>();
 
         //Variaveis
-        vida = vidaInicial;
-        vidaMax = vidaInicial;
+
+        if(vidaMaxima == 0)
+        {
+            vidaMaxima = vidaInicial;
+        }
+
+        vidaMax = vidaMaxima;
+        vida = vidaMax;
+
         raioPassos = 1.5f;
 
         modoDeCombate = true;
@@ -112,7 +139,7 @@ public class Player : EntityModel
         tempoSoftlock = 0;
         tempoSoftlockMax = 10f;
 
-        SetRespawn();
+        SetRespawn(transform.position, direcao);
     }
 
     void Update()
@@ -158,26 +185,27 @@ public class Player : EntityModel
         }
     }
 
-    private void SetRespawn()
-    {
-        posicaoRespawn = transform.position;
-        direcaoRespawn = direcao;
-    }
-
     public void SetRespawn(Vector2 posicao, Direcao direcao)
     {
         posicaoRespawn = posicao;
         direcaoRespawn = direcao;
+
+        SaveData.AtualizarInventarioRespawn(this);
     }
 
     public void Respawn()
     {
-        vida = vidaInicial;
+        vida = vidaMax;
         transform.position = posicaoRespawn;
         ChangeDirection(direcaoRespawn);
         playerMovement.ResetarVariaveisDeControle();
 
+        inventario.Respawn();
+        inventarioMissao.Respawn();
+
         ResetarVariaveisDeControle();
+
+        generalManager.Hud.AtualizarPlayerHUD();
     }
 
     private void ResetarVariaveisDeControle()
@@ -242,10 +270,10 @@ public class Player : EntityModel
                 break;
 
             case Estado.UsandoItem:
-                if (animacao.AnimacaoAtual != inventario.ItemAtual.GetNomeAnimacao() + "Usando")
+                if (animacao.AnimacaoAtual != inventario.ItemAtual.GetNomeAnimacao + "Usando")
                 {
                     animacao.AtualizarArmaBracos("");
-                    animacao.TrocarAnimacao(inventario.ItemAtual.GetNomeAnimacao() + "Usando");
+                    animacao.TrocarAnimacao(inventario.ItemAtual.GetNomeAnimacao + "Usando");
                 }
                 break;
         }
@@ -276,6 +304,8 @@ public class Player : EntityModel
         {
             estado = Estado.Atacando;
             animacao.AtualizarArmaBracos("");
+
+            sonsDoJogador.TocarSom(SonsDoJogador.Som.AtaqueFisico);
         }
     }
 
@@ -294,7 +324,6 @@ public class Player : EntityModel
             {
                 if (recarregando == false)
                 {
-                    GerarSom(inventario.ArmaSlot[inventario.ArmaAtual].RaioDoSomDoTiro, true);
                     inventario.ArmaSlot[inventario.ArmaAtual].Atirar(this, generalManager.BulletManager, pontaArma.transform.position, VetorDirecao(direcao), Alvo.Enemy);
                     animacao.AtualizarArmaBracos(inventario.ArmaSlot[inventario.ArmaAtual].NomeAnimacao);
                 }
@@ -309,6 +338,8 @@ public class Player : EntityModel
             recarregando = true;
             tempoRecarregar = 0;
             tempoRecarregarMax = inventario.ArmaSlot[inventario.ArmaAtual].GetStatus.TempoParaRecarregar;
+
+            sonsDoJogador.TocarSom(SonsDoJogador.Som.RecarregarArma);
         }
     }
 
@@ -320,6 +351,8 @@ public class Player : EntityModel
         {
             inventario.ArmaSlot[inventario.ArmaAtual].Recarregar();
             FinalizarRecarregamento();
+
+            sonsDoJogador.TocarSom(SonsDoJogador.Som.TerminarDeRecarregarArma);
         }
     }
 
@@ -327,11 +360,18 @@ public class Player : EntityModel
     {
         recarregando = false;
         generalManager.Hud.BarraDeRecarregamentoAtiva(false);
+
+        generalManager.Hud.AtualizarPlayerHUD();
     }
 
     public void SemMunicao()
     {
-        Debug.Log("Sem Municao!");
+        sonsDoJogador.TocarSom(SonsDoJogador.Som.SemMunicao);
+    }
+
+    public bool TemMunicao()
+    {
+        return inventario.ArmaSlot[inventario.ArmaAtual].MunicaoCartucho > 0;
     }
 
     private void CadenciaTiro()
@@ -354,24 +394,39 @@ public class Player : EntityModel
 
     public void AtualizarArma()
     {
-        if(recarregando == true)
+        if (inventario.Armas.Count < 2)
+        {
+            return;
+        }
+
+        if (recarregando == true)
         {
             FinalizarRecarregamento();
         }
         AtualizarPontaDaArma();
         animacao.AtualizarArmaBracos(inventario.ArmaSlot[inventario.ArmaAtual].NomeAnimacao);
+
+        sonsDoJogador.TocarSom(SonsDoJogador.Som.TrocarDeArma);
+    }
+
+    public void GerarSomDoTiro()
+    {
+        GerarSom(inventario.ArmaSlot[inventario.ArmaAtual].RaioDoSomDoTiro, true);
+        somDosTiros.TocarSom(inventario.ArmaSlot[inventario.ArmaAtual].GetStatus.SomDoTiro);
     }
 
     public void UsarItem(Item item)
     {
-        //Arrumar - Ele deve usar o item passado pelo inventario ou atalho e nao o atual!!!
-        inventario.UsarItemAtual();
+        item.Usar(this);
+        generalManager.Hud.AtualizarPlayerHUD();
     }
 
     public void UsarItemAtalho(int atalho)
     {
-        //Arrumar - UsarItem(atalho[atalho])
-        inventario.UsarItemAtual();
+        if (inventario.AtalhosDeItens[atalho].ID != Listas.instance.ListaDeItens.GetID["ItemVazio"])
+        {
+            UsarItem(inventario.AtalhosDeItens[atalho]);
+        }
     }
 
     public void AnimacaoItem(Item item)
@@ -383,13 +438,15 @@ public class Player : EntityModel
     public void UsarItemGameplay()
     {
         inventario.ItemAtual.UsarNaGameplay(this);
+        generalManager.Hud.AtualizarPlayerHUD();
     }
 
     public override void TomarDano(int _dano, float _knockBack, float _knockBackTrigger, Vector2 _direcaoKnockBack)
     {
         if (!imune && estado != Estado.Morto)
         {
-            
+            vida -= _dano;
+
             if (generalManager.DialogueUI.IsOpen == true)
             {
                 generalManager.DialogueUI.ForcedCloseDialogueBox();
@@ -402,17 +459,20 @@ public class Player : EntityModel
 
             if (vida <= 0)
             {
+                vida = 0;
                 Morrer();
             }
             else
             {
-                vida -= _dano;
-
                 imune = true;
                 tempoImune = 0;
                 estado = Estado.TomandoDano;
                 KnockBack(_knockBack, _direcaoKnockBack);
+
+                sonsDoJogador.TocarSom(SonsDoJogador.Som.Dano);
             }
+
+            generalManager.Hud.AtualizarPlayerHUD();
         }
     }
 
@@ -431,6 +491,8 @@ public class Player : EntityModel
         animacao.AtualizarDirecao(direcao, direcaoMovimento);
 
         FinalizarRecarregamento();
+
+        sonsDoJogador.TocarSom(SonsDoJogador.Som.Morte);
     }
 
     public void GerarSom(float raio, bool somTiro)
@@ -533,6 +595,31 @@ public class Player : EntityModel
             imune = false;
             tempoImune = 0;
         }
+    }
+
+    private void AtualizarSaveFile()
+    {
+        SaveData.AtualizarSaveFile(this);
+    }
+
+    private void CarregarSaveFile()
+    {
+        vidaMaxima = SaveData.SaveAtual.vidaMaxima;
+        vidaMax = vidaMaxima;
+        vida = vidaMax;
+
+        inventario.CarregarSave(SaveData.SaveAtual.inventarioSave);
+        inventarioMissao.CarregarSave(SaveData.SaveAtual.inventarioSave);
+    }
+
+    public void ResetarPlayer()
+    {
+        vidaMaxima = 0;
+        vidaMax = vidaMaxima;
+        vida = vidaMax;
+
+        inventario.ResetarInventario();
+        inventarioMissao.ResetarInventario();
     }
 
     private void ChangeCollision(Collision2D collision, bool ignorarColisao)

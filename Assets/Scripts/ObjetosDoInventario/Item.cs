@@ -8,20 +8,33 @@ public class Item : ItemDoInventario
     public enum TipoItem { Consumivel, Ferramenta, ItemChave };
 
     //Variaveis
-    [SerializeField] protected int id;
+    protected int quantidadeDeUsos = 0;
 
     //Getters
-    public virtual int ID => id;
+    public virtual int ID => Listas.instance.ListaDeItens.GetID[this.name];
     public virtual TipoItem Tipo => TipoItem.Consumivel;
+    virtual public string GetNomeAnimacao => "";
+    public int QuantidadeDeUsos => quantidadeDeUsos;
+
+    //Setters
+    public void SetQuantidadeDeUsos(int quantidadeDeUsos)
+    {
+        this.quantidadeDeUsos = quantidadeDeUsos;
+    }
+
+    virtual public void Iniciar()
+    {
+        //Nada.
+    }
 
     virtual public void Usar(Player player)
     {
         //Nada.
     }
 
-    virtual public void UsarNoInventario(Player player)
+    virtual public bool UsarNoInventario(Player player)
     {
-        //Nada.
+        return false;
     }
 
     virtual public void UsarNaGameplay(Player player)
@@ -29,13 +42,8 @@ public class Item : ItemDoInventario
         //Nada.
     }
 
-    virtual public string GetNomeAnimacao()
+    public void JogarFora(Player player)
     {
-        return "";
-    }
-
-    public void JogarFora()
-    {
-        //Alguma coisa
+        player.Inventario.RemoverItem(this);
     }
 }

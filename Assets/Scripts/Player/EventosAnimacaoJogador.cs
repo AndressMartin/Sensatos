@@ -29,4 +29,9 @@ public class EventosAnimacaoJogador : MonoBehaviour
     {
         player.UsarItemGameplay();
     }
+
+    public void TocarSomAlitace()
+    {
+        player.SonsDoJogador.TocarSom(SonsDoJogador.Som.UsarOAlicate);
+    }
 }

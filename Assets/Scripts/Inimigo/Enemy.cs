@@ -19,6 +19,9 @@ public class Enemy : EntityModel
     private BoxCollider2D hitboxDano;
     private Rigidbody2D rb;
     private IAEnemy ia_Enemy;
+    private SomDosTiros somDosTiros;
+    private SonsDoInimigo sonsDoInimigo;
+
     private Player player;
 
     //Variaveis
@@ -26,6 +29,9 @@ public class Enemy : EntityModel
 
     [SerializeField] private int vidaInicial;
     [SerializeField] private float velocidadeAnimacaoCorrendo;
+
+    [SerializeField] private Color corEfeitoTomandoDano;
+    [SerializeField] private float velocidadeEfeitoTomandoDano;
 
     private int zona;
 
@@ -66,6 +72,8 @@ public class Enemy : EntityModel
     public InventarioEnemy GetInventarioEnemy => inventario;
     public EnemyMovement GetEnemyMovement => enemyMovement;
     public IAEnemy GetIAEnemy => ia_Enemy;
+    public SomDosTiros SomDosTiros => somDosTiros;
+    public SonsDoInimigo SonsDoInimigo => sonsDoInimigo;
     public Vector2 VetorVelocidade => vetorVelocidade;
 
     //Setters
@@ -107,8 +115,10 @@ public class Enemy : EntityModel
         colisao = GetComponent<BoxCollider2D>();
         hitboxDano = transform.Find("HitboxDano").GetComponent<BoxCollider2D>();
         rb = GetComponent<Rigidbody2D>();
+        somDosTiros = GetComponentInChildren<SomDosTiros>();
+        sonsDoInimigo = GetComponent<SonsDoInimigo>();
 
-        player = FindObjectOfType<Player>();
+        player = generalManager.Player;
 
         //Variaveis
         vida = vidaInicial;
@@ -200,7 +210,10 @@ public class Enemy : EntityModel
         hitboxDano.enabled = true;
         rb.bodyType = RigidbodyType2D.Dynamic;
 
+        animacao.AtivarSpriteRenderers();
         animacao.SetVelocidade(1);
+
+        somDosTiros.PararSom();
 
         ResetarVariaveisDeControle();
     }
@@ -263,7 +276,7 @@ public class Enemy : EntityModel
     {
         animacao.AtualizarDirecao(direcao, direcao);
 
-        if(animacao.AnimacaoAtual == "Andando" && enemyMovement.GetVelocidade > enemyMovement.GetVelocidadeModoNormal)
+        if (animacao.AnimacaoAtual == "Andando" && enemyMovement.GetVelocidade > enemyMovement.GetVelocidadeModoNormal)
         {
             animacao.SetVelocidade(velocidadeAnimacaoCorrendo);
         }
@@ -313,6 +326,7 @@ public class Enemy : EntityModel
             animacao.AtualizarArmaBracos(inventario.ArmaSlot.NomeAnimacao);
 
             SetCadenciaTiro(inventario.ArmaSlot.GetStatus.CadenciaDosTiros);
+            somDosTiros.TocarSom(inventario.ArmaSlot.GetStatus.SomDoTiro);
             return true;
         }   
         return false;
@@ -329,21 +343,27 @@ public class Enemy : EntityModel
 
     public void TomarDanoFisico(int _dano, float _knockBack, float _knockBackTrigger, Direcao _direcao)
     {
-        if (ia_Enemy.GetEstadoDeteccaoPlayer != IAEnemy.EstadoDeteccaoPlayer.PlayerDetectado)
+        if (morto == false && estado == Estado.Normal)
         {
-            StealthKill(_direcao);
-        }
-        else
-        {
-            Debug.Log("Entrei");
-            TomarDano(_dano, _knockBack, _knockBackTrigger, VetorDirecao(_direcao));
+            if (ia_Enemy.GetEstadoDeteccaoPlayer != IAEnemy.EstadoDeteccaoPlayer.PlayerDetectado)
+            {
+                StealthKill(_direcao);
+            }
+            else
+            {
+                TomarDano(_dano, _knockBack, _knockBackTrigger, VetorDirecao(_direcao));
+            }
+
+            generalManager.Player.SonsDoJogador.TocarSom(SonsDoJogador.Som.AcertoAtaqueFisico);
         }
     }
 
     public override void TomarDano(int _dano, float _knockBack, float _knockBackTrigger, Vector2 _direcaoKnockBack)
     {
-        if(estado == Estado.Normal)
+        if(morto == false && estado == Estado.Normal)
         {
+            vida -= _dano;
+
             if (vida <= 0)
             {
                 animacao.SetVelocidade(1);
@@ -353,7 +373,6 @@ public class Enemy : EntityModel
             }
             else
             {
-                vida -= _dano;
                 ia_Enemy.ReceberDano();
 
                 knockBackTrigger += _knockBackTrigger;
@@ -365,6 +384,8 @@ public class Enemy : EntityModel
                     estado = Estado.TomandoDano;
                     KnockBack(_knockBack, _direcaoKnockBack);
                 }
+
+                EfeitoTomandoDano();
             }
         } 
     }
@@ -402,6 +423,8 @@ public class Enemy : EntityModel
         rb.bodyType = RigidbodyType2D.Kinematic;
 
         animacao.AtualizarDirecao(direcao, direcao);
+
+        sonsDoInimigo.TocarSom(SonsDoInimigo.Som.Morte);
     }
 
     public void AnimacaoDesaparecendo()
@@ -553,6 +576,11 @@ public class Enemy : EntityModel
         {
             StartCoroutine(SeDesativarNoLockdownCorrotina());
         }
+    }
+
+    private void EfeitoTomandoDano()
+    {
+        animacao.SetTintSolidEffect(corEfeitoTomandoDano, velocidadeEfeitoTomandoDano);
     }
 
     private IEnumerator SeDesativarNoLockdownCorrotina()

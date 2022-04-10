@@ -123,7 +123,7 @@ public class IAEnemy : MonoBehaviour
         inventarioEnemy = GetComponent<InventarioEnemy>();
 
         var barraDeVisaoTemp = Instantiate(generalManager.Hud.BarraDeVisaoDoInimigo.gameObject);
-        barraDeVisaoTemp.GetComponent<RectTransform>().SetParent(generalManager.Hud.transform, false);
+        barraDeVisaoTemp.GetComponent<RectTransform>().SetParent(generalManager.Hud.BarraDeVisaoDoInimigo.transform.parent, false);
         barraDeVisaoTemp.gameObject.SetActive(true);
 
         barraDeVisao = barraDeVisaoTemp.GetComponent<BarraDeVisaoDoInimigo>();
@@ -282,6 +282,8 @@ public class IAEnemy : MonoBehaviour
     {
         barraDeVisao.AtivarIconeDeAlerta();
         barraDeVisao.AtualizarBarraDeVisao(tempoEntrarEmModoAlerta, tempoEntrarEmModoAlertaMax);
+
+        enemy.SonsDoInimigo.TocarSom(SonsDoInimigo.Som.Alerta);
     }
 
     protected virtual void StateMachine()

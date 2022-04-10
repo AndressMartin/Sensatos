@@ -6,7 +6,10 @@ using UnityEngine;
 
 public class RoupaDeCamuflagem : ItemDoInventario
 {
+    //Variaveis
     [SerializeField] private float fatorDePercepcao;
 
+    //Getters
+    public virtual int ID => Listas.instance.ListaDeRoupas.GetID[this.name];
     public float FatorDePercepcao => fatorDePercepcao;
 }

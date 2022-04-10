@@ -13,13 +13,14 @@ MonoBehaviour:
   m_Name: 512
   m_EditorClassIdentifier: 
   imagemInventario: {fileID: 21300000, guid: 474c61c513e8ff54aab5f13ea4b91be0, type: 3}
-  nome: 38
+  nome: 512
   descricao: Gohan pega o 38 do pai 2.
   nomeAnimacao: Arma1
   raioDoSomDoTiro: 5
   rapidFire: 1
   statusBase:
     projetil: {fileID: 8583994499093954915, guid: f4376ad71d743964f8fad577b404e7d2, type: 3}
+    somDoTiro: {fileID: 8300000, guid: 4d2f41dcef6d6a64e9e0d206d28317bb, type: 3}
     dano: 15
     velocidadeProjetil: 8
     knockBack: 3
@@ -28,13 +29,14 @@ MonoBehaviour:
     cadenciaDosTiros: 0.4
     tempoParaRecarregar: 1
     municaoMaxCartucho: 5
-    municaoMax: 60
+    municaoMax: 10
   melhorias:
   - imagemMelhoria: {fileID: 0}
     nome: Carregador Estendido
     descricao: Mais balas!!!! Uau.
     status:
       projetil: {fileID: 8583994499093954915, guid: f4376ad71d743964f8fad577b404e7d2, type: 3}
+      somDoTiro: {fileID: 8300000, guid: 4d2f41dcef6d6a64e9e0d206d28317bb, type: 3}
       dano: 15
       velocidadeProjetil: 8
       knockBack: 3
@@ -49,6 +51,22 @@ MonoBehaviour:
     descricao: Gotta go fast!
     status:
       projetil: {fileID: 8583994499093954915, guid: f4376ad71d743964f8fad577b404e7d2, type: 3}
+      somDoTiro: {fileID: 8300000, guid: 4d2f41dcef6d6a64e9e0d206d28317bb, type: 3}
+      dano: 15
+      velocidadeProjetil: 10
+      knockBack: 3
+      knockBackTrigger: 0
+      distanciaMaxProjetil: 10
+      cadenciaDosTiros: 0.2
+      tempoParaRecarregar: 1
+      municaoMaxCartucho: 10
+      municaoMax: 60
+  - imagemMelhoria: {fileID: 0}
+    nome: Balas do Sonic 2
+    descricao: Vrau!
+    status:
+      projetil: {fileID: 8583994499093954915, guid: f4376ad71d743964f8fad577b404e7d2, type: 3}
+      somDoTiro: {fileID: 8300000, guid: 4d2f41dcef6d6a64e9e0d206d28317bb, type: 3}
       dano: 15
       velocidadeProjetil: 10
       knockBack: 3

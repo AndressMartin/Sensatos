@@ -6,7 +6,7 @@ public class SomDosTiros : MonoBehaviour
 {
     private AudioSource audioSource;
 
-    void Start()
+    void Awake()
     {
         audioSource = GetComponent<AudioSource>();
     }
@@ -17,8 +17,18 @@ public class SomDosTiros : MonoBehaviour
         audioSource.Play();
     }
 
+    public void PararSom()
+    {
+        audioSource.Stop();
+    }
+
     private void SetSom(AudioClip som)
     {
         this.audioSource.clip = som;
+    }
+
+    public void SetVolume(int volume)
+    {
+        audioSource.volume = (float)volume / 100;
     }
 }

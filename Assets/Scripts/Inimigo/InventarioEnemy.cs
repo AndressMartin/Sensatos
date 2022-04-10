@@ -18,6 +18,7 @@ public class InventarioEnemy : MonoBehaviour
     {
         //Cria uma nova instancia do scriptable object e a adiciona no inventario
         ArmaDeFogo novaArma = ScriptableObject.Instantiate(arma);
+        novaArma.name = arma.name;
         armaSlot = novaArma;
     }
 }

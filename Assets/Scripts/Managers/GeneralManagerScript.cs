@@ -5,6 +5,7 @@ using UnityEngine;
 public class GeneralManagerScript : MonoBehaviour
 {
     //Managers
+    private IdiomaManager idiomaManager;
     private MusicManager musicManager;
     private SoundManager soundManager;
     private PauseManagerScript pauseManager;
@@ -18,6 +19,8 @@ public class GeneralManagerScript : MonoBehaviour
     private ZoneManagerScript zoneManager;
     private PathfinderManagerScript pathfinderManager;
     private DebugModeManagerScript debugModeManager;
+    private AssaltoManager assaltoManager;
+    private NpcManager npcManager;
 
     //Componentes
     private Player player;
@@ -25,6 +28,7 @@ public class GeneralManagerScript : MonoBehaviour
     private DialogueUI dialogueUI;
 
     //Getters
+    public IdiomaManager IdiomaManager => idiomaManager;
     public MusicManager MusicManager => musicManager;
     public SoundManager SoundManager => soundManager;
     public PauseManagerScript PauseManager => pauseManager;
@@ -41,10 +45,13 @@ public class GeneralManagerScript : MonoBehaviour
     public Player Player => player;
     public HUDScript Hud => hud;
     public DialogueUI DialogueUI => dialogueUI;
+    public AssaltoManager AssaltoManager => assaltoManager;
+    public NpcManager NpcManager => npcManager;
 
     private void Awake()
     {
         //Managers
+        idiomaManager = FindObjectOfType<IdiomaManager>();
         musicManager = FindObjectOfType<MusicManager>();
         soundManager = FindObjectOfType<SoundManager>();
         pauseManager = FindObjectOfType<PauseManagerScript>();
@@ -58,7 +65,8 @@ public class GeneralManagerScript : MonoBehaviour
         zoneManager = FindObjectOfType<ZoneManagerScript>();
         pathfinderManager = FindObjectOfType<PathfinderManagerScript>();
         debugModeManager = FindObjectOfType<DebugModeManagerScript>();
-
+        assaltoManager = FindObjectOfType<AssaltoManager>();
+        npcManager = FindObjectOfType<NpcManager>();
         //Componentes
         player = FindObjectOfType<Player>();
         hud = FindObjectOfType<HUDScript>();

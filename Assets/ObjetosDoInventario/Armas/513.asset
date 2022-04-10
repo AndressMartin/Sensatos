@@ -13,13 +13,14 @@ MonoBehaviour:
   m_Name: 513
   m_EditorClassIdentifier: 
   imagemInventario: {fileID: 21300000, guid: bf45384915468174a977bfdf3ee8d304, type: 3}
-  nome: 12
+  nome: 513
   descricao: Arma de fogo melee 2.
   nomeAnimacao: Arma2
   raioDoSomDoTiro: 10
   rapidFire: 0
   statusBase:
     projetil: {fileID: -3273666588168549129, guid: cde5861db3c7034458bf0dc15e2300b4, type: 3}
+    somDoTiro: {fileID: 8300000, guid: 223c02718fda69847b46ec22db0eb4ba, type: 3}
     dano: 25
     velocidadeProjetil: 0
     knockBack: 5
@@ -29,4 +30,19 @@ MonoBehaviour:
     tempoParaRecarregar: 1.5
     municaoMaxCartucho: 8
     municaoMax: 24
-  melhorias: []
+  melhorias:
+  - imagemMelhoria: {fileID: 0}
+    nome: Melhoria Divina
+    descricao: Aaaaaahhh.
+    status:
+      projetil: {fileID: -3273666588168549129, guid: cde5861db3c7034458bf0dc15e2300b4, type: 3}
+      somDoTiro: {fileID: 8300000, guid: 223c02718fda69847b46ec22db0eb4ba, type: 3}
+      dano: 0
+      velocidadeProjetil: 0
+      knockBack: 0
+      knockBackTrigger: 0
+      distanciaMaxProjetil: 0
+      cadenciaDosTiros: 0
+      tempoParaRecarregar: 0
+      municaoMaxCartucho: 0
+      municaoMax: 0

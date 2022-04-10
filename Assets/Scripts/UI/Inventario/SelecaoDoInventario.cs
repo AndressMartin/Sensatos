@@ -9,7 +9,6 @@ public abstract class SelecaoDoInventario : MonoBehaviour
     public SelecaoStruct Selecao => selecao;
 
     public abstract void Confirmar(MenuDoInventario menuDoInventario);
-    public abstract void Voltar(MenuDoInventario menuDoInventario);
     public abstract void Selecionado(bool selecionado);
 
     [System.Serializable]

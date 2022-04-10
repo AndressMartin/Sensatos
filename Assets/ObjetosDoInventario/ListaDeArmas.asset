@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 306fd89fd8c50d84598f3c2d1ec606a0, type: 3}
+  m_Name: ListaDeArmas
+  m_EditorClassIdentifier: 
+  armas:
+  - {fileID: 11400000, guid: 3231560774442e74ba7bb14338d05829, type: 2}
+  - {fileID: 11400000, guid: d7b87461518b6154884ad3ae22a317f3, type: 2}
+  - {fileID: 11400000, guid: 62bd5dd608bedfa409b4767518854ce8, type: 2}
+  - {fileID: 11400000, guid: e8523372dabd3c94a9e0f89ac83ad977, type: 2}
