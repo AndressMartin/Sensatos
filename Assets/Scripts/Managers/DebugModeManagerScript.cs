@@ -93,6 +93,12 @@ public class DebugModeManagerScript : MonoBehaviour
             SaveManager.instance.CarregarJogo(1);
             Debug.Log("O save no slot 1 foi carregado.");
         }
+
+        //Ir para o mapa de testes
+        if (Input.GetKeyUp(KeyCode.C))
+        {
+            LevelLoaderScript.Instance.CarregarNivel("Assalto_Teste");
+        }
     }
 
     private void ContadorDeFPS()

@@ -16,6 +16,7 @@ public class Porta : ObjetoInteragivel
     //Enums
     public enum TipoPorta { Simples, Normal, Contencao }
     public enum Estado { NaoLockdown, Lockdown }
+    public enum Direcao { F, L }
 
     //Variaveis
     [SerializeField] private ItemChave chave;
@@ -27,7 +28,9 @@ public class Porta : ObjetoInteragivel
     private bool abertoRespawn;
 
     [SerializeField] private TipoPorta tipoPorta;
-    [SerializeField] private Estado estado;
+    private Estado estado;
+
+    [SerializeField] private Direcao direcao;
 
     //Getters
     public bool Trancado => trancado;
@@ -67,6 +70,8 @@ public class Porta : ObjetoInteragivel
         {
             gameObject.layer = LayerMask.NameToLayer("GridsComColisao");
         }
+
+        animacao.TrocarAnimacao("Fechada", direcao);
 
         SetRespawn();
         Respawn();
@@ -166,7 +171,7 @@ public class Porta : ObjetoInteragivel
         aberto = true;
         if (animacao.AnimacaoAtual != "Aberta")
         {
-            animacao.TrocarAnimacao("Aberta");
+            animacao.TrocarAnimacao("Aberta", direcao);
         }
         PortaAberta(aberto);
     }
@@ -176,7 +181,7 @@ public class Porta : ObjetoInteragivel
         aberto = false;
         if (animacao.AnimacaoAtual != "Fechada")
         {
-            animacao.TrocarAnimacao("Fechada");
+            animacao.TrocarAnimacao("Fechada", direcao);
         }
         PortaAberta(aberto);
     }

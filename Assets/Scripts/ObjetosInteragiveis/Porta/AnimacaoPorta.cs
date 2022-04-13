@@ -19,9 +19,9 @@ public class AnimacaoPorta : MonoBehaviour
     }
 
     //Troca a animacao atual
-    public void TrocarAnimacao(string animacao)
+    public void TrocarAnimacao(string animacao, Porta.Direcao direcao)
     {
-        animacaoAtual = animacao;
+        animacaoAtual = animacao + "_" + direcao.ToString();
         porta.Play(animacaoAtual);
     }
 }
