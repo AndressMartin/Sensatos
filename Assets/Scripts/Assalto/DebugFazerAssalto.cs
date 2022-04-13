@@ -8,6 +8,8 @@ public class DebugFazerAssalto : MonoBehaviour
 
     [SerializeField] private Assalto mapaAssalto01;
     [SerializeField] private Assalto mapaAssalto02;
+    [SerializeField] private Assalto mapaAssalto03;
+
     private void Start()
     {
         generalManagerScript = FindObjectOfType<GeneralManagerScript>();
@@ -22,6 +24,10 @@ public class DebugFazerAssalto : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Keypad2))
         {
             generalManagerScript.AssaltoManager.SetarAssalto(mapaAssalto02);
+        }
+        if (Input.GetKeyDown(KeyCode.Keypad3))
+        {
+            generalManagerScript.AssaltoManager.SetarAssalto(mapaAssalto03);
         }
     }
 

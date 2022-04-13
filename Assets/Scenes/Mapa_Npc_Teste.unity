@@ -2262,7 +2262,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialogueList:
-  - {fileID: 11400000, guid: 49abc44f77e85fd43a486ff1f4de97dc, type: 2}
+  - {fileID: 11400000, guid: 96abfaf33617002498bbcb9aab1fe022, type: 2}
 --- !u!114 &671923342 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5094197750638079181, guid: 018a02b521dc0db40b63fa053bad2e32, type: 3}
@@ -2769,7 +2769,9 @@ GameObject:
   - component: {fileID: 866423304}
   - component: {fileID: 866423306}
   - component: {fileID: 866423305}
+  - component: {fileID: 866423307}
   - component: {fileID: 866423303}
+  - component: {fileID: 866423308}
   - component: {fileID: 866423302}
   - component: {fileID: 866423301}
   m_Layer: 0
@@ -2877,8 +2879,14 @@ MonoBehaviour:
       dialogo: {fileID: 876234558}
     - estado: 0
       dialogo: {fileID: 630513910}
-  missao: {fileID: 0}
-  lista: {fileID: 0}
+  - missao: {fileID: 11400000, guid: 0ecf7b7c774c03944add356ad21a0c49, type: 2}
+    testes:
+    - estado: 2
+      dialogo: {fileID: 1033169285}
+    - estado: 1
+      dialogo: {fileID: 1188543472}
+    - estado: 0
+      dialogo: {fileID: 648512199}
 --- !u!4 &866423304
 Transform:
   m_ObjectHideFlags: 0
@@ -2920,6 +2928,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6572f7b1c3a2fcc4e9d8d51b6221ed13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &866423307
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 866423300}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9423e859547c1148a85744e9397d53d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  missaoAtual: {fileID: 0}
+  listaDialogoAtual: {fileID: 0}
+  listaDialogoSemMissao: {fileID: 866423308}
+--- !u!114 &866423308
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 866423300}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f407ce48a656e044b7d39160467b389, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogueList:
+  - {fileID: 11400000, guid: 0346573dd107c2d41b21028e1625a4f6, type: 2}
+  - {fileID: 11400000, guid: 2c74dd2d347cb4e4eba4edc55ef35600, type: 2}
 --- !u!1 &876234557
 GameObject:
   m_ObjectHideFlags: 0
@@ -6970,7 +7008,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialogueList:
-  - {fileID: 11400000, guid: 71b70a796d1ddd145bbcf74474a48e47, type: 2}
+  - {fileID: 11400000, guid: 1593bb3140c93134fa9d8c9ad7e8ba4f, type: 2}
 --- !u!4 &1033169286
 Transform:
   m_ObjectHideFlags: 0
@@ -7295,7 +7333,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialogueList:
-  - {fileID: 11400000, guid: 2c74dd2d347cb4e4eba4edc55ef35600, type: 2}
+  - {fileID: 11400000, guid: 6baad50a4ef23964da22931d2446b239, type: 2}
 --- !u!1001 &1193803661
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -27270,6 +27308,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mapaAssalto01: {fileID: 11400000, guid: 2875c8033a7593d4cbebe8f912b3621d, type: 2}
   mapaAssalto02: {fileID: 11400000, guid: 44e3022eeca4df64dbcc20334fccc4a9, type: 2}
+  mapaAssalto03: {fileID: 11400000, guid: 38569d3e725562c46bd5637668e2b35d, type: 2}
 --- !u!4 &1357515142
 Transform:
   m_ObjectHideFlags: 0

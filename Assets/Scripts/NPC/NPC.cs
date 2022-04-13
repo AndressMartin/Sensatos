@@ -1,32 +1,86 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NPC : MonoBehaviour
+public class Npc : MonoBehaviour
 {
-
+    [SerializeField] private Missao missaoAtual;
+    [SerializeField] private DialogueList listaDialogoAtual;
+    [SerializeField] private DialogueList listaDialogoSemMissao;
     //Managers
     private GeneralManagerScript generalManager;
-
-
-    //Variaveis
-    [SerializeField] private List<NpcStruct> listaMissao;
-    [SerializeField] private Missao missao;
-    [SerializeField] private DialogueList lista;
-
     DialogueActivator dialogueActivator;
-    private void Start()
+
+    NpcMissao npcMissao;
+
+    public Missao GetMissaoAtual => missaoAtual;
+    void Start()
     {
+        npcMissao = gameObject.GetComponent<NpcMissao>();
+        npcMissao.Iniciar(this);
+       
         generalManager = FindObjectOfType<GeneralManagerScript>();
         generalManager.NpcManager.AddList(this);
 
         dialogueActivator = GetComponent<DialogueActivator>();
+        
     }
-    public void TrocarDialogo(DialogueObject dialogo)
+    public void TrocarDialogo(DialogueList _list)
     {
-        dialogueActivator.SetDialogo(dialogo);
+        listaDialogoAtual = _list;
+        dialogueActivator.SetDialogo(_list.GetDialogueList[0]);
     }
+    public void TrocarMissaoAtual(Missao _missao)
+    {
+        missaoAtual = _missao;
+    }
+    public void ReceberAssaltoDoManager(Assalto assalto)
+    {
+        bool value = false;
+        //Verifica se possui o assalto que recebeu tem alguma missao sua
+        foreach (var item in assalto.GetMissaoPrincipal)
+        {
+            foreach (var item2 in npcMissao.GetListaMissao)
+            {
+                if (item.GetId == item2.GetMissao.GetId)
+                {
+                    value = true;
+                }
+            }
+            
+        }
+        foreach (var item in assalto.GetMissaoSecundaria)
+        {
+            foreach (var item2 in npcMissao.GetListaMissao)
+            {
+                if (item.GetId == item2.GetMissao.GetId)
+                {
+                    value = true;
+                }
+            }
+
+        }
+
+        if(!value)
+        {
+            missaoAtual = null;
+            listaDialogoAtual = listaDialogoSemMissao;
+            TrocarDialogo(listaDialogoAtual);
+        }
+
+        else
+        {          
+            listaDialogoAtual = null;
+            //tenta primeiro com missao principal, se npc n tiver missao principal desse assalto vai pra secundaria
+            npcMissao.MudarDialogoConformeMissao(assalto.GetMissaoPrincipal);
+            if (listaDialogoAtual == null)
+            {
+                npcMissao.MudarDialogoConformeMissao(assalto.GetMissaoSecundaria);
+            }
+            VerificarAssaltoMissao.VerificarMissao(missaoAtual, generalManager.Player);
+        }
+    }
+
     private void OnTriggerStay2D(Collider2D collision)
     {
         if (enabled)
@@ -39,7 +93,7 @@ public class NPC : MonoBehaviour
     }
     public void Interagir(Player player)
     {
-        VerificarAssaltoMissao.VerificarMissao(missao, player);
+        VerificarAssaltoMissao.VerificarMissao(missaoAtual, player);
 
         /*foreach (var item in listaMissao.GetEstadoDialogo)
         {
@@ -51,63 +105,4 @@ public class NPC : MonoBehaviour
             }
         }   */
     }
-    public void ReceberAssaltoDoManager(Assalto assalto)
-    {
-        if (missao != null)
-        {
-            VerificarAssaltoMissao.VerificarMissao(missao, generalManager.Player);
-        }
-
-        lista = null;
-        //tenta primeiro com missao principal, se npc n tiver missao principal desse assalto vai pra secundaria
-        MudarDialogoConformeMissao(assalto.GetMissaoPrincipal);
-        if (lista == null)
-        {
-            MudarDialogoConformeMissao(assalto.GetMissaoSecundaria);
-        }
-
-    }
-    void MudarDialogoConformeMissao(List<Missao> _missoes)
-    {
-        for (int i = 0; i < _missoes.Count; i++)
-        {
-            foreach (var listaMissoesPropria in listaMissao)
-            {
-                if(_missoes[i].GetId == listaMissoesPropria.GetMissao.GetId)
-                {
-                    foreach (var item in listaMissoesPropria.GetEstadoDialogo)
-                    {     
-                        if (item.GetEstado == missao.GetEstado)
-                        {
-                            lista = item.GetDialogueList;
-                            TrocarDialogo(lista.GetDialogueList[0]);
-                            break;
-                        }  
-                    }
-                }
-            }          
-        }
-    }
-    
-
-   
-}
-[Serializable]
-public struct NpcStruct
-{
-    [SerializeField] private Missao missao;
-    [SerializeField] private List<EstadoDIalogo> testes;
-
-    public Missao GetMissao => missao;
-    public List<EstadoDIalogo> GetEstadoDialogo => testes;
-
-}
-[Serializable] 
-public struct EstadoDIalogo
-{
-    [SerializeField] private Missoes.Estado estado;
-    [SerializeField] private DialogueList dialogo;
-    public DialogueList GetDialogueList => dialogo;
-    public Missoes.Estado GetEstado => estado;
-
 }
