@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Npc : MonoBehaviour
+public class NPC : MonoBehaviour
 {
     [SerializeField] private Missao missaoAtual;
     [SerializeField] private DialogueList listaDialogoAtual;

@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class NpcManager : MonoBehaviour
 {
-    [SerializeField] private List<Npc> npcs = new List<Npc>();
+    [SerializeField] private List<NPC> npcs = new List<NPC>();
     
-    public List<Npc> GetNpcs => npcs;
+    public List<NPC> GetNpcs => npcs;
 
-    public void AddList(Npc _npc)
+    public void AddList(NPC _npc)
     {
         npcs.Add(_npc);
     }
-    public void RemoveList(Npc _npc)
+    public void RemoveList(NPC _npc)
     {
         npcs.Remove(_npc);
     }

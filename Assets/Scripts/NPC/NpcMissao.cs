@@ -11,8 +11,8 @@ public class NpcMissao : MonoBehaviour
     //Variaveis
     [SerializeField] private List<NpcStruct> listaMissao;
     public List<NpcStruct> GetListaMissao => listaMissao;
-    Npc npc;
-    public void Iniciar(Npc _npc)
+    NPC npc;
+    public void Iniciar(NPC _npc)
     {
         npc = _npc;
     }
