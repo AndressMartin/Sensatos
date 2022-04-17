@@ -446,10 +446,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 748605927}
     m_Modifications:
-    - target: {fileID: 1646256503, guid: 665a3ed511110984f94c7154b7282e1c, type: 3}
-      propertyPath: m_Controller
-      value: 
-      objectReference: {fileID: 9100000, guid: 7fa67ac75b04d684894fa51b0b5ec7d7, type: 2}
     - target: {fileID: 6396907321734714340, guid: 665a3ed511110984f94c7154b7282e1c, type: 3}
       propertyPath: m_Name
       value: Porta_V2
@@ -1226,7 +1222,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 854754849}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.73498, y: 3.100739, z: 0}
+  m_LocalPosition: {x: 1, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 921480640}
@@ -4632,11 +4628,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6297625325533714494, guid: 6712e26531f27d54d88d74c08c419556, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -3.7349796
+      value: -5
       objectReference: {fileID: 0}
     - target: {fileID: 6297625325533714494, guid: 6712e26531f27d54d88d74c08c419556, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -4.100739
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6297625325533714494, guid: 6712e26531f27d54d88d74c08c419556, type: 3}
       propertyPath: m_LocalPosition.z
@@ -6099,7 +6095,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8003618298857930454, guid: 83506c14bf685914bad042623edb7cd3, type: 3}
       propertyPath: vidaInicial
-      value: 500
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 8916929928718140114, guid: 83506c14bf685914bad042623edb7cd3, type: 3}
       propertyPath: m_RootOrder
