@@ -564,7 +564,7 @@ public class IAEnemy : MonoBehaviour
     }
     protected virtual void SomPassos()
     {
-        if (FuncVerificarArea(ref tempoVerificandoSomPassos, tempoVerificandoSomPassosMax))
+        if (OlharCostas(ref tempoVerificandoSomPassos, tempoVerificandoSomPassosMax))
         {
             somPasso = false;
             //Debug.Log("ouvi alguns passos");
@@ -728,6 +728,33 @@ public class IAEnemy : MonoBehaviour
             return FuncVerificarArea(ref tempo, tempoMax);            
         }
         return false;
+    }
+    protected bool OlharCostas(ref float tempo, float tempoMax)
+    {
+        if(tempo == 0)
+        {
+            Debug.Log("Entrando");
+            switch (enemy.GetDirecao)
+            {
+                case EntityModel.Direcao.Baixo:
+                    enemy.ChangeDirection(EntityModel.Direcao.Cima);
+
+                    break;
+                case EntityModel.Direcao.Esquerda:
+                    enemy.ChangeDirection(EntityModel.Direcao.Direita);
+
+                    break;
+                case EntityModel.Direcao.Cima:
+                    enemy.ChangeDirection(EntityModel.Direcao.Baixo);
+                    break;
+
+                case EntityModel.Direcao.Direita:
+                    enemy.ChangeDirection(EntityModel.Direcao.Esquerda);
+                    break;
+            }
+        }
+        enemyMovement.ZerarVelocidade();
+        return Contador(ref tempo, tempoMax);
     }
     protected bool FuncVerificarArea(ref float tempo, float tempoMax) // func que retorna se terminou de verificar a area
     {
@@ -900,9 +927,9 @@ public class IAEnemy : MonoBehaviour
         }
         else
         {
-            somPasso = true;
-
-            tempoVerificandoSomPassos = 0;
+            if (!somPasso)
+                tempoVerificandoSomPassos = 0;
+            somPasso = true;     
         }
         tempoImpedirSoftlock = 0;
 
