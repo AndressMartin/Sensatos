@@ -29,15 +29,15 @@ public class Player : EntityModel
     private static int vidaMaxima = 0;
     [SerializeField] private int vidaInicial;
 
-    public Direcao direcaoMovimento;
-    private float raioPassos;
+    [HideInInspector] public Direcao direcaoMovimento;
+    [SerializeField] private float raioPassos;
 
     private bool modoDeCombate;
 
     //Variaveis de controle
     private Vector3 posAnterior;
 
-    public ModoMovimento modoMovimento;
+    [HideInInspector] public ModoMovimento modoMovimento;
     private Estado estado;
 
     private float tempoTiro;
@@ -112,8 +112,6 @@ public class Player : EntityModel
 
         vidaMax = vidaMaxima;
         vida = vidaMax;
-
-        raioPassos = 1.5f;
 
         modoDeCombate = true;
 
