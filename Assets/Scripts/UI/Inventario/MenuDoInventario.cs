@@ -103,11 +103,7 @@ public class MenuDoInventario : MonoBehaviour
 
         IniciarComponentes();
 
-        telaInicial.gameObject.SetActive(false);
-        menuDasArmas.gameObject.SetActive(false);
-        menuDosItens.gameObject.SetActive(false);
-        menuDasRoupas.gameObject.SetActive(false);
-        menuDosItensChave.gameObject.SetActive(false);
+        FecharOsMenus();
     }
 
     private void IniciarComponentes()
@@ -218,12 +214,9 @@ public class MenuDoInventario : MonoBehaviour
         generalManager.PauseManager.Pausar(false);
         generalManager.PauseManager.SetPermitirInput(true);
 
-        telaInicial.gameObject.SetActive(false);
-        menuDasArmas.gameObject.SetActive(false);
-        menuDosItens.gameObject.SetActive(false);
-        menuDasRoupas.gameObject.SetActive(false);
+        FecharOsMenus();
 
-        if(generalManager.Player.Animacao.ArmaEquipadaVisual != "")
+        if (generalManager.Player.Animacao.ArmaEquipadaVisual != "")
         {
             generalManager.Player.AtualizarArma();
         }
@@ -233,6 +226,15 @@ public class MenuDoInventario : MonoBehaviour
         generalManager.Hud.AtualizarPlayerHUD();
 
         generalManager.Hud.SonsDeMenus.TocarSom(SonsDeMenus.Som.FecharOInventario);
+    }
+
+    private void FecharOsMenus()
+    {
+        telaInicial.gameObject.SetActive(false);
+        menuDasArmas.gameObject.SetActive(false);
+        menuDosItens.gameObject.SetActive(false);
+        menuDasRoupas.gameObject.SetActive(false);
+        menuDosItensChave.gameObject.SetActive(false);
     }
 
     private void MenuInicial()
