@@ -534,10 +534,10 @@ public class Player : EntityModel
                 case "Arma1":
                     offSet = direcao switch
                     {
-                        Direcao.Baixo => new Vector2(-0.284f, 0.787f),
-                        Direcao.Esquerda => new Vector2(-0.486f, 1.224f),
-                        Direcao.Cima => new Vector2(0.283f, 1.56f),
-                        Direcao.Direita => new Vector2(0.486f, 1.224f),
+                        Direcao.Baixo => new Vector2(-0.277f, 0.687f),
+                        Direcao.Esquerda => new Vector2(-0.663f, 1.251f),
+                        Direcao.Cima => new Vector2(0.283f, 1.642f),
+                        Direcao.Direita => new Vector2(0.663f, 1.251f),
                         _ => Vector2.zero,
                     };
                     return offSet;
@@ -545,10 +545,10 @@ public class Player : EntityModel
                 case "Arma2":
                     offSet = direcao switch
                     {
-                        Direcao.Baixo => new Vector2(-0.188f, 0.62f),
-                        Direcao.Esquerda => new Vector2(-0.715f, 1.227f),
-                        Direcao.Cima => new Vector2(0.157f, 1.727f),
-                        Direcao.Direita => new Vector2(0.715f, 1.227f),
+                        Direcao.Baixo => new Vector2(-0.188f, 0.515f),
+                        Direcao.Esquerda => new Vector2(-0.846f, 1.262f),
+                        Direcao.Cima => new Vector2(0.157f, 1.682f),
+                        Direcao.Direita => new Vector2(0.846f, 1.262f),
                         _ => Vector2.zero,
                     };
                     return offSet;
