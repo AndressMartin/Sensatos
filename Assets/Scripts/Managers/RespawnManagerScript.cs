@@ -32,13 +32,6 @@ public class RespawnManagerScript : MonoBehaviour
             inimigo.SetRespawn();
         }
 
-        /*
-        foreach (LockDownButton alarme in generalManager.ObjectManager.ListaAlarmes)
-        {
-            alarme.SetRespawn();
-        }
-        */
-
         foreach (Porta porta in generalManager.ObjectManager.ListaPortas)
         {
             porta.SetRespawn();
@@ -79,5 +72,14 @@ public class RespawnManagerScript : MonoBehaviour
         generalManager.EnemyManager.Respawn();
 
         generalManager.PathfinderManager.EscanearPathfinder();
+    }
+
+    public void RespawnarInimigos()
+    {
+        foreach (Enemy inimigo in generalManager.ObjectManager.ListaInimigos)
+        {
+            inimigo.SetMortoRespawn(false);
+            inimigo.Respawn();
+        }
     }
 }

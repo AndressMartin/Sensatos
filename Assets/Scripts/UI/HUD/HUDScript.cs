@@ -11,6 +11,7 @@ public class HUDScript : MonoBehaviour
     [SerializeField] private PlayerHUD playerHUD;
     [SerializeField] private MenuDoInventario menuDoInventario;
     [SerializeField] private MenuDePausa menuDePausa;
+    [SerializeField] private MenuGameOver menuGameOver;
     [SerializeField] private LockDownUI lockDownUI;
     [SerializeField] private PlayerUIScript playerUI;
     [SerializeField] private BarraDeVisaoDoInimigo barraDeVisaoDoInimigo;
@@ -26,6 +27,7 @@ public class HUDScript : MonoBehaviour
     //Getters
     public MenuDoInventario MenuDoInventario => menuDoInventario;
     public MenuDePausa MenuDePausa => menuDePausa;
+    public MenuGameOver MenuGameOver => menuGameOver;
     public BarraDeVisaoDoInimigo BarraDeVisaoDoInimigo => barraDeVisaoDoInimigo;
     public SonsDeMenus SonsDeMenus => sonsDeMenus;
     public Menu MenuAberto => menuAberto;

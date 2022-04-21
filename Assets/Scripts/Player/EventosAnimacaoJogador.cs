@@ -4,11 +4,16 @@ using UnityEngine;
 
 public class EventosAnimacaoJogador : MonoBehaviour
 {
+    //Managers
+    private GeneralManagerScript generalManager;
+
+    //Componentes
     private Player player;
 
     // Start is called before the first frame update
     void Start()
     {
+        generalManager = FindObjectOfType<GeneralManagerScript>();
         player = transform.parent.GetComponent<Player>();
     }
 
@@ -22,6 +27,11 @@ public class EventosAnimacaoJogador : MonoBehaviour
     public void FinalizarAnimacao()
     {
         player.FinalizarAnimacao();
+    }
+
+    public void IniciarMenuGameOver()
+    {
+        generalManager.Hud.MenuGameOver.IniciarMenuGameOver();
     }
 
     //Chama a funcao UsarItemGameplay do item atual

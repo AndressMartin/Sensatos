@@ -18,6 +18,7 @@ public class GeneralManagerScript : MonoBehaviour
     private LockDownManagerScript lockDownManager;
     private ZoneManagerScript zoneManager;
     private PathfinderManagerScript pathfinderManager;
+    private AssaltoInfo assaltoInfo;
     private DebugModeManagerScript debugModeManager;
     private AssaltoManager assaltoManager;
     private NpcManager npcManager;
@@ -41,6 +42,7 @@ public class GeneralManagerScript : MonoBehaviour
     public LockDownManagerScript LockDownManager => lockDownManager;
     public ZoneManagerScript ZoneManager => zoneManager;
     public PathfinderManagerScript PathfinderManager => pathfinderManager;
+    public AssaltoInfo AssaltoInfo => assaltoInfo;
     public DebugModeManagerScript DebugModeManager => debugModeManager;
     public Player Player => player;
     public HUDScript Hud => hud;
@@ -64,6 +66,7 @@ public class GeneralManagerScript : MonoBehaviour
         lockDownManager = FindObjectOfType<LockDownManagerScript>();
         zoneManager = FindObjectOfType<ZoneManagerScript>();
         pathfinderManager = FindObjectOfType<PathfinderManagerScript>();
+        assaltoInfo = FindObjectOfType<AssaltoInfo>();
         debugModeManager = FindObjectOfType<DebugModeManagerScript>();
         assaltoManager = FindObjectOfType<AssaltoManager>();
         npcManager = FindObjectOfType<NpcManager>();
