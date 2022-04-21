@@ -14,12 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nome: missao2
   descricao: 
-  flagCorrespondente: 2
-  id: 3
   recompensa: 0
   tipoRecompensa: 0
   itemRecompesa: {fileID: 0}
-  quantidadeItem: 0
+  quantidadeItensRecompensa: 0
   eventoRecompensa:
     m_PersistentCalls:
       m_Calls:
@@ -36,4 +34,4 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   itemColetavel: {fileID: 11400000, guid: 793d42d3188cfb24cbee38caa21266d6, type: 2}
-  quantidadeItensCompletarMissao: 2
+  quantidadeItensCompletarMissao: 3

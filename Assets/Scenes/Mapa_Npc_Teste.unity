@@ -2876,6 +2876,33 @@ MonoBehaviour:
       dialogo: {fileID: 876234558}
     - estado: 0
       dialogo: {fileID: 630513910}
+    eventosRecompensa:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 0}
+          m_TargetAssemblyTypeName: 
+          m_MethodName: 
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: 
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 0}
+          m_TargetAssemblyTypeName: 
+          m_MethodName: 
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: 
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
   - missao: {fileID: 11400000, guid: 0ecf7b7c774c03944add356ad21a0c49, type: 2}
     testes:
     - estado: 2
@@ -2884,6 +2911,9 @@ MonoBehaviour:
       dialogo: {fileID: 1188543472}
     - estado: 0
       dialogo: {fileID: 648512199}
+    eventosRecompensa:
+      m_PersistentCalls:
+        m_Calls: []
 --- !u!4 &866423304
 Transform:
   m_ObjectHideFlags: 0
@@ -2955,6 +2985,7 @@ MonoBehaviour:
   dialogueList:
   - {fileID: 11400000, guid: 0346573dd107c2d41b21028e1625a4f6, type: 2}
   - {fileID: 11400000, guid: 2c74dd2d347cb4e4eba4edc55ef35600, type: 2}
+  - {fileID: 11400000, guid: 531b0db74058b8e48bfc6879d9201c4b, type: 2}
 --- !u!95 &866423309
 Animator:
   serializedVersion: 3

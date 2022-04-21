@@ -10,6 +10,7 @@ public class NPCDialogo : ObjetoInteragivel
     private DialogueActivator dialogo;
     private NPC npc;
 
+    int cont=0;
     private void Start()
     {
         //Managers
@@ -45,12 +46,24 @@ public class NPCDialogo : ObjetoInteragivel
             else if (npc.GetMissaoAtual.GetEstado == Missoes.Estado.Concluida)
             {
                 npc.Interagir(player);
+                dialogo.SetDialogo(npc.GetDialogueListAtual.GetDialogueList[cont]);
                 dialogo.ShowDialogue(player.GeneralManager);
+
+                Contador();
             }
         }
         else
         {
+            dialogo.SetDialogo(npc.GetDialogueListAtual.GetDialogueList[cont]);
             dialogo.ShowDialogue(player.GeneralManager);
+
+            Contador(); 
         }
+    }
+    void Contador()
+    {
+        cont++;
+        if (cont >= npc.GetDialogueListAtual.GetDialogueList.Count)
+            cont = 0;
     }
 }

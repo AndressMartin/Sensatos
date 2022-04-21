@@ -16,6 +16,7 @@ public class NPC : MonoBehaviour
 
     public Missao GetMissaoAtual => missaoAtual;
     public NpcMissao GetNpcMissao => npcMissao;
+    public DialogueList GetDialogueListAtual=>listaDialogoAtual;
     void Start()
     {
         npcMissao = gameObject.GetComponent<NpcMissao>();

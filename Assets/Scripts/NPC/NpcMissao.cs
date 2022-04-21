@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class NpcMissao : MonoBehaviour
 {
@@ -79,6 +80,7 @@ public struct NpcStruct
 {
     [SerializeField] private Missao missao;
     [SerializeField] private List<EstadoDIalogo> testes;
+    [SerializeField] private UnityEvent eventosRecompensa;
 
     public Missao GetMissao => missao;
     public List<EstadoDIalogo> GetMissaoEstado => testes;
