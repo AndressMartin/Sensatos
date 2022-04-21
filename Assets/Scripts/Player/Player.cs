@@ -636,4 +636,15 @@ public class Player : EntityModel
             }
         }
     }
+    public void ReceberItemRecompensa(Item item)
+    {
+        if (item as ItemChave)
+        {
+            inventarioMissao.AdicionarItem((ItemChave)item);
+        }
+        else
+        {
+            inventario.AdicionarItem(item);
+        }
+    }
 }

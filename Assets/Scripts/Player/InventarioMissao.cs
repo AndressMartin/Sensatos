@@ -64,17 +64,16 @@ public class InventarioMissao : MonoBehaviour
         Destroy(item);
     }
 
-    public int ProcurarQuantidadeItem(Item _item)
+    public int ProcurarQuantidadeItem(ItemChave _item)
     {
-        int i = 0;
-        foreach (var x in itens)
+        foreach (var item in itens)
         {
-            if (x.ID == _item.ID)
+            if(item.ID == _item.ID)
             {
-                i++;
+                return item.Quantidade;
             }
         }
-        return i;
+        return 0;
     }
 
     private void TrocarIdioma()

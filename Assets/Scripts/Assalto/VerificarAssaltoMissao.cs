@@ -14,30 +14,12 @@ public static class VerificarAssaltoMissao
     [SerializeField] private static List<Missao> missoesPrincipais_Cumprir = new List<Missao>();
     [SerializeField] private static List<Missao> missoesSecundarias_Cumprir = new List<Missao>();
 
-    public static void AtivarInvativarMissoes(Missoes.Estado estado)
-    {
-        foreach (var item in missaoPrincipais)
-        {
-
-            item.SetEstado(estado);
-            
-        }
-        foreach (var item in missaoSecundaria)
-        {
-            
-            item.SetEstado(estado);
-            
-        }
-
-    }
     public static void SetarAssalto(Assalto _assalto)
     {
-        //desativo missoes e depois ativos as missoes atuais
-        AtivarInvativarMissoes(Missoes.Estado.Inativa);
+        //desativo as missoes
         nomeAssalto = _assalto.GetNomeAssalto;
         missaoPrincipais = _assalto.GetMissaoPrincipal;
         missaoSecundaria = _assalto.GetMissaoSecundaria;
-        AtivarInvativarMissoes(Missoes.Estado.Ativa);
 
     }
     public static bool VerificarAssalto(Assalto _assalto,Player player)
@@ -64,43 +46,79 @@ public static class VerificarAssaltoMissao
             return false;
         }
     }
-    public static void VerificarMissao(Missao _missao, Player player)
+    public static void VerificarMissao(Missao _missao, Player player,NpcMissao npcMissao)
     {
         foreach (var missaoPr in missaoPrincipais)
-        {
-            if (_missao.GetEstado != Missoes.Estado.Inativa) 
+        {      
+            if (_missao.GetId == missaoPr.GetId)
             {
-                if (_missao.GetId == missaoPr.GetId)
+                if (_missao.GetEstado == Missoes.Estado.Concluida)//Verifica se a missao ja foi concluida
                 {
-                    if (_missao.GetEstado == Missoes.Estado.Concluida)
+                    // olha so vc ja councluiu a missão muito obrigado
+                    Debug.Log("olha so vc ja councluiu a missão muito obrigado");
+                    break;
+                }
+                else if (_missao is Missao_ColetarItem)//conclui a missao, passa a recompensa e muda o estado
+                {
+                    var _missao_Item = _missao as Missao_ColetarItem;
+
+                    if (VerificarItem(_missao_Item.GetItemDeMissao, player))
                     {
-                        // olha so vc ja councluiu a missão muito obrigado
-                        Debug.Log("olha so vc ja councluiu a missão muito obrigado");
+                        if (_missao.GetEstado == Missoes.Estado.Ativa)
+                        {
+                            _missao_Item.SetarFlag(true);
+                            npcMissao.TrocarDialogoMissao(_missao);
+                            // obrigado por entregar os itens aqui sua recompensa
+                            if (_missao_Item.GetRecompensa)
+                            {
+                                //Colocar evento recompensa,
+                                switch (_missao_Item.GetTipoRecompensa)
+                                {
+                                    case Missao.Recompensa.item:
+                                        _missao_Item.PlayerRecerberRecompensaItem(player);
+                                        break;
+                                    case Missao.Recompensa.evento:
+                                        _missao_Item.PlayerRecerberRecompensaEvento(player);
+                                        break;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            npcMissao.TrocarDialogoMissao(_missao);
+                            _missao.SetEstado(Missoes.Estado.Ativa);
+                        }
                         break;
                     }
-                    else if (_missao is Missao_ColetarItem)
+                    else
                     {
-                        var _missao_Item = _missao as Missao_ColetarItem;
-
-                        if (VerificarItem(_missao_Item.GetItemDeMissao, player))
+                        if(_missao.GetEstado == Missoes.Estado.Inativa)
                         {
-                            // obrigado por entregar os itens aqui sua recompensa
-                            _missao_Item.SetarFlag(true);
+                            //esse iten agora eu preciso de mais dele
+                            Debug.Log("Inativo");
+                            npcMissao.TrocarDialogoMissao(_missao);
+                            _missao.SetEstado(Missoes.Estado.Ativa);
+                            break;
+                        }
+                        else if (_missao.GetEstado == Missoes.Estado.Ativa)
+                        {
+                            //voce precisa coletar os itens
+                            Debug.Log("Ativo");
+                            npcMissao.TrocarDialogoMissao(_missao);
+                            break;
+                        }
+                        /*if (player.InventarioMissao.ProcurarQuantidadeItem(_missao_Item.GetItemDeMissao) > 0)
+                        {
+                            npcMissao.TrocarDialogo(_missao);
                             break;
                         }
                         else
                         {
-                            if (player.InventarioMissao.ProcurarQuantidadeItem(_missao_Item.GetItemDeMissao) > 0)
-                            {
-                                //esse iten agora eu preciso de mais dele
-                                break;
-                            }
-                            else
-                            {
-                                //voce precisa coletar os itens
-                                break;
-                            }
-                        }
+
+                            npcMissao.TrocarDialogo(_missao);
+                            _missao.SetEstado(Missoes.Estado.Ativa);
+                            break;
+                        }*/
                     }
                 }
             }
@@ -133,7 +151,7 @@ public static class VerificarAssaltoMissao
         _listaMissoes_temp.Clear();
     }
 
-    public static bool VerificarItem(Item item,Player player)
+    public static bool VerificarItem(ItemChave item,Player player)
     {
         Missao_ColetarItem missaoTemp=null;
         foreach (var ms in missaoPrincipais)
@@ -141,6 +159,7 @@ public static class VerificarAssaltoMissao
             if((Missao_ColetarItem)ms)
             {
                 missaoTemp = (Missao_ColetarItem)ms;
+                break;
             }
         }
         foreach (var ms in missaoSecundaria)
@@ -148,6 +167,7 @@ public static class VerificarAssaltoMissao
             if ((Missao_ColetarItem)ms)
             {
                 missaoTemp = (Missao_ColetarItem)ms;
+                break;
             }
         }
 
@@ -158,13 +178,10 @@ public static class VerificarAssaltoMissao
                 if(player.InventarioMissao.ProcurarQuantidadeItem(item) < missaoTemp.GetquantidadeItensCompletarMissao)
                 {
                     //AtualizaHud
-                    //Debug.Log("Falta macas ainda");
                     return false;
                 }
                 else
                 {
-                    //Debug.Log("Coletaste todas as macas");
-
                     //AtualizaHud
                     //Ativar Flag Missao Completa
                     return true;

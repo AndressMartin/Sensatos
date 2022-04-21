@@ -5,9 +5,6 @@ using UnityEngine;
 
 public class NpcMissao : MonoBehaviour
 {
-
-   
-
     //Variaveis
     [SerializeField] private List<NpcStruct> listaMissao;
     public List<NpcStruct> GetListaMissao => listaMissao;
@@ -24,7 +21,7 @@ public class NpcMissao : MonoBehaviour
             {
                 if(_missoes[i].GetId == listaMissoesPropria.GetMissao.GetId)
                 {
-                    foreach (var item in listaMissoesPropria.GetEstadoDialogo)
+                    foreach (var item in listaMissoesPropria.GetMissaoEstado)
                     {
                         npc.TrocarMissaoAtual(listaMissoesPropria.GetMissao);
                         if (item.GetEstado == npc.GetMissaoAtual.GetEstado)
@@ -35,6 +32,41 @@ public class NpcMissao : MonoBehaviour
                     }
                 }
             }          
+        }
+    }
+    public void TrocarDialogoMissao(Missao _missao)
+    {
+        foreach (var listaMissoesPropria in listaMissao)
+        {
+            if (_missao.GetId == listaMissoesPropria.GetMissao.GetId)
+            {
+                foreach (var item in listaMissoesPropria.GetMissaoEstado)
+                {
+                    npc.TrocarMissaoAtual(listaMissoesPropria.GetMissao);
+                    if (item.GetEstado == npc.GetMissaoAtual.GetEstado)
+                    {
+                        TrocarDialogo(item.GetListaDialogo);
+                        break;
+                    }
+                }
+            }
+        }
+    }
+    public void TrocarDialogoMissaoEspecifico(Missao _missao,Missoes.Estado estado)
+    {
+        foreach (var listaMissoesPropria in listaMissao)
+        {
+            if (_missao.GetId == listaMissoesPropria.GetMissao.GetId)
+            {
+                foreach (var item in listaMissoesPropria.GetMissaoEstado)
+                {
+                    if (item.GetEstado == estado)
+                    {
+                        TrocarDialogo(item.GetListaDialogo);
+                        break;
+                    }
+                }
+            }
         }
     }
     public void TrocarDialogo(DialogueList dialogo)
@@ -49,7 +81,7 @@ public struct NpcStruct
     [SerializeField] private List<EstadoDIalogo> testes;
 
     public Missao GetMissao => missao;
-    public List<EstadoDIalogo> GetEstadoDialogo => testes;
+    public List<EstadoDIalogo> GetMissaoEstado => testes;
 
 }
 [Serializable] 

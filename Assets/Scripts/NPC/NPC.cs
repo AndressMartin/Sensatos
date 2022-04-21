@@ -12,8 +12,10 @@ public class NPC : MonoBehaviour
     DialogueActivator dialogueActivator;
 
     NpcMissao npcMissao;
+    Assalto assaltoAtual;
 
     public Missao GetMissaoAtual => missaoAtual;
+    public NpcMissao GetNpcMissao => npcMissao;
     void Start()
     {
         npcMissao = gameObject.GetComponent<NpcMissao>();
@@ -21,9 +23,12 @@ public class NPC : MonoBehaviour
        
         generalManager = FindObjectOfType<GeneralManagerScript>();
         generalManager.NpcManager.AddList(this);
-
         dialogueActivator = GetComponent<DialogueActivator>();
-        
+
+        missaoAtual = null;
+        listaDialogoAtual = listaDialogoSemMissao;
+        TrocarDialogo(listaDialogoAtual);
+
     }
     public void TrocarDialogo(DialogueList _list)
     {
@@ -36,48 +41,58 @@ public class NPC : MonoBehaviour
     }
     public void ReceberAssaltoDoManager(Assalto assalto)
     {
-        bool value = false;
-        //Verifica se possui o assalto que recebeu tem alguma missao sua
-        foreach (var item in assalto.GetMissaoPrincipal)
+        if(assaltoAtual != assalto)
         {
-            foreach (var item2 in npcMissao.GetListaMissao)
+            assaltoAtual = assalto;
+            bool value = false;
+            //Verifica se possui o assalto que recebeu tem alguma missao sua
+            foreach (var item in assalto.GetMissaoPrincipal)
             {
-                if (item.GetId == item2.GetMissao.GetId)
+                foreach (var item2 in npcMissao.GetListaMissao)
                 {
-                    value = true;
+                    if (item.GetId == item2.GetMissao.GetId)
+                    {
+                        value = true;
+                    }
                 }
             }
-            
-        }
-        foreach (var item in assalto.GetMissaoSecundaria)
-        {
-            foreach (var item2 in npcMissao.GetListaMissao)
+            foreach (var item in assalto.GetMissaoSecundaria)
             {
-                if (item.GetId == item2.GetMissao.GetId)
+                foreach (var item2 in npcMissao.GetListaMissao)
                 {
-                    value = true;
+                    if (item.GetId == item2.GetMissao.GetId)
+                    {
+                        value = true;
+                    }
                 }
             }
 
-        }
+            if (!value)
+            {
+                missaoAtual = null;
+                listaDialogoAtual = listaDialogoSemMissao;
+                TrocarDialogo(listaDialogoAtual);
+            }
 
-        if(!value)
-        {
-            missaoAtual = null;
-            listaDialogoAtual = listaDialogoSemMissao;
-            TrocarDialogo(listaDialogoAtual);
+            else
+            {
+                listaDialogoAtual = null;
+                //tenta primeiro com missao principal, se npc n tiver missao principal desse assalto vai pra secundaria
+                npcMissao.MudarDialogoConformeMissao(assalto.GetMissaoPrincipal);
+                if (listaDialogoAtual == null)
+                {
+                    npcMissao.MudarDialogoConformeMissao(assalto.GetMissaoSecundaria);
+                }
+                if (missaoAtual.GetEstado != Missoes.Estado.Concluida)
+                {
+                    VerificarAssaltoMissao.VerificarMissao(missaoAtual, generalManager.Player,npcMissao);
+                }
+            }
         }
-
+        
         else
-        {          
-            listaDialogoAtual = null;
-            //tenta primeiro com missao principal, se npc n tiver missao principal desse assalto vai pra secundaria
-            npcMissao.MudarDialogoConformeMissao(assalto.GetMissaoPrincipal);
-            if (listaDialogoAtual == null)
-            {
-                npcMissao.MudarDialogoConformeMissao(assalto.GetMissaoSecundaria);
-            }
-            VerificarAssaltoMissao.VerificarMissao(missaoAtual, generalManager.Player);
+        {
+            print("São iguaos");
         }
     }
 
@@ -87,22 +102,28 @@ public class NPC : MonoBehaviour
         {
             if (collision.CompareTag("Player"))
             {
-                Interagir(collision.GetComponent<Player>());
+                //Interagir(collision.GetComponent<Player>());
             }
         }
     }
     public void Interagir(Player player)
     {
-        VerificarAssaltoMissao.VerificarMissao(missaoAtual, player);
-
-        /*foreach (var item in listaMissao.GetEstadoDialogo)
+        if (missaoAtual != null)
         {
-            if (item.GetEstado == missao.GetEstado)
+            if (missaoAtual.GetEstado == Missoes.Estado.Concluida)
             {
-                lista = item.GetDialogueList;
-                TrocarDialogo(lista.GetDialogueList[0]);
-                break;
+                listaDialogoAtual = listaDialogoSemMissao;
+                TrocarDialogo(listaDialogoAtual);
             }
-        }   */
+            else
+            {
+                VerificarAssaltoMissao.VerificarMissao(missaoAtual, player, npcMissao);
+            }
+            
+        }
+        else
+        {
+            
+        }
     }
 }
