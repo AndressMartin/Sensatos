@@ -8,8 +8,6 @@ public class Missao : ScriptableObject
     //Variaveis
     [SerializeField] protected string nome;
     [SerializeField] protected string descricao;
-    [SerializeField] private Flags.Flag flagCorrespondente;
-    [SerializeField] private int id;
     [SerializeField] private bool recompensa;
     [SerializeField] private Recompensa tipoRecompensa;
     [SerializeField] private Item itemRecompesa;
@@ -20,7 +18,7 @@ public class Missao : ScriptableObject
     public string Nome => nome;
     public string Descricao => descricao;
     public Missoes.Estado GetEstado => Missoes.GetEstadoMissao(Listas.instance.ListaDeMissoes.GetIndice[this.name]); //Pega o estado da lista de estados de missoes, com o indice da lista de missoes
-    public int GetId => id;
+    public int GetId => Listas.instance.ListaDeMissoes.GetIndice[this.name];
     public bool GetRecompensa => recompensa;
     public Recompensa GetTipoRecompensa => tipoRecompensa;
 
@@ -35,15 +33,6 @@ public class Missao : ScriptableObject
         //Nada
     }
 
-    public void SetarFlag(bool valor)
-    {
-        if(valor)
-        {
-            SetEstado(Missoes.Estado.Concluida);
-        }
-
-        Flags.SetFlag(flagCorrespondente, valor);
-    }
     public void PlayerRecerberRecompensaItem(Player player)
     {
         for (int i = 0; i < quantidadeItensRecompensa; i++)

@@ -66,7 +66,7 @@ public static class VerificarAssaltoMissao
                     {
                         if (_missao.GetEstado == Missoes.Estado.Ativa)
                         {
-                            _missao_Item.SetarFlag(true);
+                            _missao_Item.SetEstado(Missoes.Estado.Concluida);
                             npcMissao.TrocarDialogoMissao(_missao);
                             // obrigado por entregar os itens aqui sua recompensa
                             if (_missao_Item.GetRecompensa)

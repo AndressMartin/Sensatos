@@ -2,14 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TesteDialogo : ObjetoInteragivel
+public class NPCDialogo : ObjetoInteragivel
 {
     //Managers
     private GeneralManagerScript generalManager;
 
     private DialogueActivator dialogo;
     private NPC npc;
-    private bool jaPassei;
 
     private void Start()
     {

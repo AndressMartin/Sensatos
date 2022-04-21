@@ -34,23 +34,11 @@ public class LockDownButton : MonoBehaviour
 
     public void DesativarLockDown()
     {
-        CorBotao(false);
+        //Nada
     }
 
     public void ReceberLockDown()
     {
-        CorBotao(true);
-    }
-
-    void CorBotao(bool ativo)
-    {
-        if (ativo)
-        {
-            spriteRenderer.color = Color.green;
-        }
-        else
-        {
-            spriteRenderer.color = Color.blue;
-        }
+        //Nada
     }
 }
