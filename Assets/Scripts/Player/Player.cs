@@ -630,7 +630,7 @@ public class Player : EntityModel
     {
         if (imune)
         {
-            if (collision.gameObject.GetComponent<Enemy>())
+            if (collision.gameObject.CompareTag("Enemy"))
             {
                 ChangeCollision(collision, true);
             }
