@@ -34,7 +34,7 @@ public class NPC : MonoBehaviour
 
         listaDialogoAtual = listaDialogoSemMissao;
 
-        NpcDialogo.TrocarDialogoComponenteLista(listaDialogoAtual);
+        NpcDialogo.TrocarDialogoComponenteLista(listaDialogoAtual.GetDialogueList[0]);
 
         missaoAtual = null;
     }
@@ -75,7 +75,7 @@ public class NPC : MonoBehaviour
             {
                 missaoAtual = null;
                 listaDialogoAtual = listaDialogoSemMissao;
-                NpcDialogo.TrocarDialogoComponenteLista(listaDialogoAtual);
+                NpcDialogo.TrocarDialogoComponenteLista(listaDialogoAtual.GetDialogueList[0]);
             }
 
             else
@@ -111,7 +111,7 @@ public class NPC : MonoBehaviour
             if (missaoAtual.GetEstado == Missoes.Estado.Concluida)
             {
                 listaDialogoAtual = listaDialogoSemMissao;
-                NpcDialogo.TrocarDialogoComponenteLista(listaDialogoAtual);
+                NpcDialogo.TrocarDialogoComponenteLista(listaDialogoAtual.GetDialogueList[0]);
             }
             else if (missaoAtual.GetEstado == Missoes.Estado.Ativa)
             {

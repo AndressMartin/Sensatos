@@ -55,9 +55,9 @@ public class NPCDialogo : ObjetoInteragivel
         Contador();
 
     }
-    public void TrocarDialogoComponenteLista(DialogueList _list)
+    public void TrocarDialogoComponenteLista(DialogueObject _list)
     {
-        dialogueActivator.SetDialogo(_list.GetDialogueList[0]);
+        dialogueActivator.SetDialogo(_list);
     }
     public void TrocarDialogoMissaoEspecifico(Missao _missao, Missoes.Estado estado)
     {

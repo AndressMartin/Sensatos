@@ -24,8 +24,8 @@ public struct NpcStruct
 public struct EstadoDIalogo
 {
     [SerializeField] private Missoes.Estado estado;
-    [SerializeField] private DialogueList dialogo;
-    public DialogueList GetListaDialogo => dialogo;
+    [SerializeField] private DialogueObject dialogo;
+    public DialogueObject GetListaDialogo => dialogo;
     public Missoes.Estado GetEstado => estado;
 
 }
