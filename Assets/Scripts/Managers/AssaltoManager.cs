@@ -7,7 +7,7 @@ public class AssaltoManager : MonoBehaviour
     private GeneralManagerScript generalManagerScript;
 
     [SerializeField] private Assalto assaltoAtual;
-
+    public Assalto GetAssaltoAtual => assaltoAtual;
     private void Start()
     {
         generalManagerScript = transform.parent.GetComponentInChildren<GeneralManagerScript>();
