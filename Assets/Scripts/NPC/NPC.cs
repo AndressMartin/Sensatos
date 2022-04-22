@@ -4,38 +4,41 @@ using UnityEngine;
 
 public class NPC : MonoBehaviour
 {
+    
+    //Managers
+    private GeneralManagerScript generalManager;
+
+    //Componentes
+    NPCDialogo NpcDialogo;
+    NpcMissao npcMissao;
+
+    //Variaveis
+    Assalto assaltoAtual;
     [SerializeField] private Missao missaoAtual;
     [SerializeField] private DialogueList listaDialogoAtual;
     [SerializeField] private DialogueList listaDialogoSemMissao;
-    //Managers
-    private GeneralManagerScript generalManager;
-    DialogueActivator dialogueActivator;
-
-    NpcMissao npcMissao;
-    Assalto assaltoAtual;
 
     public Missao GetMissaoAtual => missaoAtual;
     public NpcMissao GetNpcMissao => npcMissao;
+    public DialogueList GetDialogueListSemMissao => listaDialogoSemMissao;
     public DialogueList GetDialogueListAtual=>listaDialogoAtual;
+    public GeneralManagerScript GetGeneralManager => generalManager;
     void Start()
     {
-        npcMissao = gameObject.GetComponent<NpcMissao>();
-        npcMissao.Iniciar(this);
-       
         generalManager = FindObjectOfType<GeneralManagerScript>();
+        NpcDialogo = GetComponent<NPCDialogo>();
+        npcMissao = GetComponent<NpcMissao>();
+
         generalManager.NpcManager.AddList(this);
-        dialogueActivator = GetComponent<DialogueActivator>();
+        NpcDialogo.Iniciar(this);
+
+        listaDialogoAtual = listaDialogoSemMissao;
+
+        NpcDialogo.TrocarDialogoComponenteLista(listaDialogoAtual);
 
         missaoAtual = null;
-        listaDialogoAtual = listaDialogoSemMissao;
-        TrocarDialogo(listaDialogoAtual);
+    }
 
-    }
-    public void TrocarDialogo(DialogueList _list)
-    {
-        listaDialogoAtual = _list;
-        dialogueActivator.SetDialogo(_list.GetDialogueList[0]);
-    }
     public void TrocarMissaoAtual(Missao _missao)
     {
         missaoAtual = _missao;
@@ -72,17 +75,17 @@ public class NPC : MonoBehaviour
             {
                 missaoAtual = null;
                 listaDialogoAtual = listaDialogoSemMissao;
-                TrocarDialogo(listaDialogoAtual);
+                NpcDialogo.TrocarDialogoComponenteLista(listaDialogoAtual);
             }
 
             else
             {
                 listaDialogoAtual = null;
                 //tenta primeiro com missao principal, se npc n tiver missao principal desse assalto vai pra secundaria
-                npcMissao.MudarDialogoConformeMissao(assalto.GetMissaoPrincipal);
+                NpcDialogo.TrocarDialogoConformeMissao(assalto.GetMissaoPrincipal);
                 if (listaDialogoAtual == null)
                 {
-                    npcMissao.MudarDialogoConformeMissao(assalto.GetMissaoSecundaria);
+                    NpcDialogo.TrocarDialogoConformeMissao(assalto.GetMissaoSecundaria);
                 }
                 if (missaoAtual.GetEstado != Missoes.Estado.Concluida)
                 {
@@ -97,16 +100,10 @@ public class NPC : MonoBehaviour
         }
     }
 
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        if (enabled)
-        {
-            if (collision.CompareTag("Player"))
-            {
-                //Interagir(collision.GetComponent<Player>());
-            }
-        }
-    }
+    /// <summary>
+    /// Verifica o estado da missao e atualiza o dialogo do Npc
+    /// </summary>
+    /// <param name="player"></param>
     public void Interagir(Player player)
     {
         if (missaoAtual != null)
@@ -114,17 +111,21 @@ public class NPC : MonoBehaviour
             if (missaoAtual.GetEstado == Missoes.Estado.Concluida)
             {
                 listaDialogoAtual = listaDialogoSemMissao;
-                TrocarDialogo(listaDialogoAtual);
+                NpcDialogo.TrocarDialogoComponenteLista(listaDialogoAtual);
             }
-            else
+            else if (missaoAtual.GetEstado == Missoes.Estado.Ativa)
             {
                 VerificarAssaltoMissao.VerificarMissao(missaoAtual, player, npcMissao);
+                NpcDialogo.TrocarDialogoMissaoEspecifico(missaoAtual, missaoAtual.GetEstado);
+
             }
-            
-        }
-        else
-        {
-            
+            else if (missaoAtual.GetEstado == Missoes.Estado.Inativa)
+            {
+                VerificarAssaltoMissao.VerificarMissao(missaoAtual, player, npcMissao);
+                NpcDialogo.TrocarDialogoMissaoEspecifico(missaoAtual, Missoes.Estado.Ativa);
+            }
+
+
         }
     }
 }

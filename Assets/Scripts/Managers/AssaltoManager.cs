@@ -16,6 +16,6 @@ public class AssaltoManager : MonoBehaviour
     {
         assaltoAtual = _assalto;
         generalManagerScript.NpcManager.PassarAssalto(_assalto);
-        VerificarAssaltoMissao.SetarAssalto(assaltoAtual);
+        VerificarAssaltoMissao.SetarAssalto(assaltoAtual,generalManagerScript.Player);
     }
 }

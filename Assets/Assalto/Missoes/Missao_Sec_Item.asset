@@ -14,24 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nome: missao2
   descricao: 
-  recompensa: 0
-  tipoRecompensa: 0
-  itemRecompesa: {fileID: 0}
-  quantidadeItensRecompensa: 0
-  eventoRecompensa:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
   itemColetavel: {fileID: 11400000, guid: 793d42d3188cfb24cbee38caa21266d6, type: 2}
   quantidadeItensCompletarMissao: 3
