@@ -149,7 +149,7 @@ public class Enemy : EntityModel
 
     void Update()
     { 
-        if(generalManager.PauseManager.JogoPausado == false)
+        if(generalManager.PauseManager.JogoPausado == false && generalManager.Player.GetEstado != Player.Estado.Morto)
         {
             RotinasDoInimigo();
         }

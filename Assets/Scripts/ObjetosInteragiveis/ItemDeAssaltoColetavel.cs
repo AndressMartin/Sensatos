@@ -61,9 +61,14 @@ public class ItemDeAssaltoColetavel : ObjetoInteragivel
                 generalManager.SoundManager.TocarSom(somAoSerColetado);
             }
 
-            generalManager.AssaltoInfo.AdicionarItemDeAssalto(item);
-
             Desativar();
+
+
+            //Cria uma nova instancia do scriptable object e a adiciona no inventario
+            ItemDeAssalto novoItem = ScriptableObject.Instantiate(item);
+            novoItem.name = item.name;
+
+            generalManager.AssaltoInfo.AdicionarItemDeAssalto(novoItem);
         }
         else
         {

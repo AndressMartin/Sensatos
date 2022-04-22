@@ -17,6 +17,8 @@ public class RespawnManagerScript : MonoBehaviour
     {
         generalManager.Player.SetRespawn(posicao, direcao);
 
+        generalManager.AssaltoInfo.SetRespawn();
+
         foreach (ObjetoInteragivel objetoInteragivel in generalManager.ObjectManager.ListaObjetosInteragiveis)
         {
             objetoInteragivel.SetRespawn();
@@ -41,6 +43,8 @@ public class RespawnManagerScript : MonoBehaviour
     public void Respawn()
     {
         generalManager.Player.Respawn();
+
+        generalManager.AssaltoInfo.Respawn();
 
         foreach (ObjetoInteragivel objetoInteragivel in generalManager.ObjectManager.ListaObjetosInteragiveis)
         {

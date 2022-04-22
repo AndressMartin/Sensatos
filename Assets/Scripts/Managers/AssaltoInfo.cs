@@ -21,7 +21,7 @@ public class AssaltoInfo : MonoBehaviour
     private List<ItemDeAssalto> itensSecundariosRespawn;
 
     //Getters
-    public bool ItemPrincipalPego => itemPrincipal;
+    public bool ItemPrincipalPego => itemPrincipalColetado;
 
     void Start()
     {
@@ -33,6 +33,7 @@ public class AssaltoInfo : MonoBehaviour
 
         //Variaveis
         itensSecundarios = new List<ItemDeAssalto>();
+        itensSecundariosRespawn = new List<ItemDeAssalto>();
         itemPrincipalColetado = false;
 
         //Trocar o idioma uma vez para iniciar os objetos com o idioma correto
@@ -43,17 +44,41 @@ public class AssaltoInfo : MonoBehaviour
 
     public void SetRespawn()
     {
-        itensSecundariosRespawn = itensSecundarios;
+        itensSecundariosRespawn.Clear();
+
+        foreach (ItemDeAssalto item in itensSecundarios)
+        {
+            //Cria uma nova instancia do scriptable object e a adiciona no inventario
+            ItemDeAssalto novoItem = ScriptableObject.Instantiate(item);
+            novoItem.name = item.name;
+
+            novoItem.TrocarIdioma();
+            novoItem.SetQuantidade(item.Quantidade);
+
+            itensSecundariosRespawn.Add(novoItem);
+        }
     }
 
     public void Respawn()
     {
-        itensSecundarios = itensSecundariosRespawn;
+        itensSecundarios.Clear();
+
+        foreach (ItemDeAssalto item in itensSecundariosRespawn)
+        {
+            //Cria uma nova instancia do scriptable object e a adiciona no inventario
+            ItemDeAssalto novoItem = ScriptableObject.Instantiate(item);
+            novoItem.name = item.name;
+
+            novoItem.TrocarIdioma();
+            novoItem.SetQuantidade(item.Quantidade);
+
+            itensSecundarios.Add(novoItem);
+        }
     }
 
     public void AdicionarItemDeAssalto(ItemDeAssalto item)
     {
-        if(item == itemPrincipal)
+        if(item.name == itemPrincipal.name)
         {
             if(itemPrincipalColetado == false)
             {
@@ -65,7 +90,7 @@ public class AssaltoInfo : MonoBehaviour
             //Confere se o item ja esta na lista de itens secundarios, se estiver, adiciona um ao numero do item
             foreach (ItemDeAssalto itemNaLista in itensSecundarios)
             {
-                if (item == itemNaLista)
+                if (item.name == itemNaLista.name)
                 {
                     itemNaLista.SetQuantidade(itemNaLista.Quantidade + 1);
                     return;
@@ -95,7 +120,32 @@ public class AssaltoInfo : MonoBehaviour
         generalManager.RespawnManager.SetCheckpoint(posicaoDoCheckpoint, direcaoDoCheckpoint);
     }
 
-    private void TrocarIdioma()
+    public void FinalizarOAssalto()
+    {
+        CalcularDinheiroGanho();
+
+        generalManager.Hud.MenuFimDoAssalto.IniciarMenuFimDoAssalto();
+    }
+
+    private void CalcularDinheiroGanho()
+    {
+        int dinheiroSaqueExtra = 0;
+
+        //Calcula o dinheiro ganho com os itens secundarios
+        foreach (ItemDeAssalto item in itensSecundarios)
+        {
+            dinheiroSaqueExtra += item.Valor * item.Quantidade;
+        }
+
+        //Soma o valor do dinheiro ganho ao dinheiro do player
+        generalManager.Player.Inventario.SetDinheiro(generalManager.Player.Inventario.Dinheiro + itemPrincipal.Valor + dinheiroSaqueExtra);
+
+        //Atualiza os valores de dinheiro no menu do fim do assalto
+        generalManager.Hud.MenuFimDoAssalto.AtualizarDinheiro(itemPrincipal.Valor, dinheiroSaqueExtra);
+    }
+
+
+        private void TrocarIdioma()
     {
         itemPrincipal.TrocarIdioma();
 

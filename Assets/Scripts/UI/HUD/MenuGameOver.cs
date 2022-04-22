@@ -204,6 +204,9 @@ public class MenuGameOver : MonoBehaviour
 
     public void IniciarMenuGameOver()
     {
+        generalManager.Hud.SetMenuAberto(HUDScript.Menu.GameOver);
+        generalManager.PauseManager.SetPermitirInput(false);
+
         selecao = 0;
         selecao2 = 0;
 
@@ -216,6 +219,8 @@ public class MenuGameOver : MonoBehaviour
 
     public void DesativarMenuGameOver()
     {
+        generalManager.Hud.SetMenuAberto(HUDScript.Menu.Nenhum);
+
         ativo = false;
         animacao.Play("Vazio");
         menu.gameObject.SetActive(false);
