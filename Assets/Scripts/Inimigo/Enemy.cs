@@ -393,7 +393,6 @@ public class Enemy : EntityModel
     public override void KnockBack(float _knockBack, Vector2 _direcaoKnockBack)
     {
         enemyMovement.KnockBack(_knockBack, _direcaoKnockBack);
-        Debug.Log("toamndo knock "+_knockBack+" Vetor "+_direcaoKnockBack);
     }
 
     private void KnockBackTriggerTempo()

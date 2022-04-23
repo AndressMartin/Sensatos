@@ -11,7 +11,7 @@ public class AnimacaoPorta : MonoBehaviour
     //Getters
     public string AnimacaoAtual => animacaoAtual;
 
-    void Start()
+    void Awake()
     {
         porta = GetComponent<Animator>();
         portaSprite = GetComponent<SpriteRenderer>();

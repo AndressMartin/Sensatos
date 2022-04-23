@@ -37,7 +37,7 @@ public class Porta : ObjetoInteragivel
     public TipoPorta GetTipoPorta => tipoPorta;
     public Estado GetEstado => estado;
 
-    void Start()
+    private void Awake()
     {
         //Managers
         generalManager = FindObjectOfType<GeneralManagerScript>();
@@ -47,7 +47,10 @@ public class Porta : ObjetoInteragivel
         colisao = GetComponent<BoxCollider2D>();
         hitBoxTiro = transform.Find("HitBoxTiro").GetComponent<BoxCollider2D>();
         hitBoxVisao = transform.Find("HitBoxVisao").GetComponent<BoxCollider2D>();
+    }
 
+    void Start()
+    {
         //Variaveis
         estado = Estado.NaoLockdown;
 
