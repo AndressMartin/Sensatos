@@ -733,24 +733,28 @@ public class IAEnemy : MonoBehaviour
     {
         if(tempo == 0)
         {
-            Debug.Log("Entrando");
-            switch (enemy.GetDirecao)
+            float DistanciaX,
+              DistanciaY;
+
+            DistanciaX = generalManager.Player.transform.position.x - transform.position.x;
+            DistanciaY = generalManager.Player.transform.position.y - transform.position.y;
+
+            if (DistanciaX > 0.6)
             {
-                case EntityModel.Direcao.Baixo:
-                    enemy.ChangeDirection(EntityModel.Direcao.Cima);
+                enemy.ChangeDirection(EntityModel.Direcao.Direita);
+            }
+            else if (DistanciaX < -0.6)
+            {
+                enemy.ChangeDirection(EntityModel.Direcao.Esquerda);
+            }
 
-                    break;
-                case EntityModel.Direcao.Esquerda:
-                    enemy.ChangeDirection(EntityModel.Direcao.Direita);
-
-                    break;
-                case EntityModel.Direcao.Cima:
-                    enemy.ChangeDirection(EntityModel.Direcao.Baixo);
-                    break;
-
-                case EntityModel.Direcao.Direita:
-                    enemy.ChangeDirection(EntityModel.Direcao.Esquerda);
-                    break;
+            if (DistanciaY < 0)
+            {
+                enemy.ChangeDirection(EntityModel.Direcao.Baixo);
+            }
+            else
+            {
+                enemy.ChangeDirection(EntityModel.Direcao.Cima);
             }
         }
         enemyMovement.ZerarVelocidade();
