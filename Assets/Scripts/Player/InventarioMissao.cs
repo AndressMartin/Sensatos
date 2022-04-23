@@ -60,8 +60,15 @@ public class InventarioMissao : MonoBehaviour
 
     public void RemoverItem(ItemChave item)
     {
-        itens.Remove(item);
-        Destroy(item);
+        //Procura um item com o mesmo ID do que foi passado no inventario para destrui-lo
+        for (int i = 0; i < itens.Count; i++)
+        {
+            if (itens[i].ID == item.ID)
+            {
+                Itens.Remove(itens[i]);
+                return;
+            }
+        }
     }
 
     public int ProcurarQuantidadeItem(ItemChave _item)

@@ -11,6 +11,7 @@ public class AssaltoInfo : MonoBehaviour
     //Variaveis
     [SerializeField] private ItemDeAssalto itemPrincipal;
     [SerializeField] private List<ItemDeAssalto> itensSecundarios;
+    [SerializeField] private List<ItemChave> itensParaExcluirNoFimDoAssalto;
     [SerializeField] private Vector2 posicaoDoCheckpoint;
     [SerializeField] private EntityModel.Direcao direcaoDoCheckpoint;
     [SerializeField] private UnityEvent eventosItemPrincipalColetado;
@@ -124,6 +125,8 @@ public class AssaltoInfo : MonoBehaviour
     {
         CalcularDinheiroGanho();
 
+        ItensParaExcluirNoFimDoAssalto();
+
         generalManager.Hud.MenuFimDoAssalto.IniciarMenuFimDoAssalto();
     }
 
@@ -144,8 +147,16 @@ public class AssaltoInfo : MonoBehaviour
         generalManager.Hud.MenuFimDoAssalto.AtualizarDinheiro(itemPrincipal.Valor, dinheiroSaqueExtra);
     }
 
+    private void ItensParaExcluirNoFimDoAssalto()
+    {
+        foreach(ItemChave item in itensParaExcluirNoFimDoAssalto)
+        {
+            generalManager.Player.InventarioMissao.RemoverItem(item);
+        }
+    }
 
-        private void TrocarIdioma()
+
+    private void TrocarIdioma()
     {
         itemPrincipal.TrocarIdioma();
 
