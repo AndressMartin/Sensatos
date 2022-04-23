@@ -33,7 +33,7 @@ public class PlayerMovement : MonoBehaviour
 
         //Variaveis
         velocidadeAndando = 5;
-        velocidadeAndandoSorrateiramente = 2.5f;
+        velocidadeAndandoSorrateiramente = 3f;
         velocidade = velocidadeAndando;
 
         //Variaveis de controle
