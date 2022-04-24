@@ -653,10 +653,10 @@ MonoBehaviour:
     onPickedResponse:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 347007243}
-          m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-          m_MethodName: SetActive
-          m_Mode: 6
+        - m_Target: {fileID: 1092738126}
+          m_TargetAssemblyTypeName: NpcRecompensa, Assembly-CSharp
+          m_MethodName: PassarItemPlayer
+          m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -698,8 +698,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9423e859547c1148a85744e9397d53d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  missaoAtual: {fileID: 0}
-  listaDialogoAtual: {fileID: 0}
   listaDialogoSemMissao: {fileID: 347007247}
 --- !u!114 &347007251
 MonoBehaviour:
@@ -909,10 +907,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemRecompensaList:
-  - itemRecompensa: {fileID: 11400000, guid: fc08d21d4bdeef6459f5236895e34ddf, type: 2}
-    quantidadeitem: 5
   - itemRecompensa: {fileID: 11400000, guid: 793d42d3188cfb24cbee38caa21266d6, type: 2}
-    quantidadeitem: 6
+    quantidadeitem: 1
 --- !u!4 &363446755
 Transform:
   m_ObjectHideFlags: 0
@@ -1223,7 +1219,7 @@ PrefabInstance:
     - target: {fileID: 2466371015003547471, guid: ad9419e4686d98548937b4e9f0f4c1b6, type: 3}
       propertyPath: item
       value: 
-      objectReference: {fileID: 11400000, guid: 793d42d3188cfb24cbee38caa21266d6, type: 2}
+      objectReference: {fileID: 11400000, guid: fc08d21d4bdeef6459f5236895e34ddf, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ad9419e4686d98548937b4e9f0f4c1b6, type: 3}
 --- !u!1 &781887182
@@ -1400,7 +1396,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1445155862}
-  - {fileID: 1555938454}
   m_Father: {fileID: 0}
   m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1441,8 +1436,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9423e859547c1148a85744e9397d53d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  missaoAtual: {fileID: 0}
-  listaDialogoAtual: {fileID: 0}
   listaDialogoSemMissao: {fileID: 866423308}
 --- !u!114 &866423308
 MonoBehaviour:
@@ -1492,12 +1485,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c9066802fc20074782c7b3ae1d6b503, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogueObject: {fileID: 11400000, guid: 71b70a796d1ddd145bbcf74474a48e47, type: 2}
+  dialogueObject: {fileID: 11400000, guid: 13cc9aeddfc5c084c8d7938c312736fa, type: 2}
   events:
     name: 
     onPickedResponse:
       m_PersistentCalls:
         m_Calls:
+        - m_Target: {fileID: 866423307}
+          m_TargetAssemblyTypeName: NPC, Assembly-CSharp
+          m_MethodName: CompletarMissao
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
         - m_Target: {fileID: 363446754}
           m_TargetAssemblyTypeName: NpcRecompensa, Assembly-CSharp
           m_MethodName: PassarItemPlayer
@@ -2173,7 +2178,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c19ae78ff5a9dd14aac0fa3cdf23a1f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemRecompensaList: []
+  itemRecompensaList:
+  - itemRecompensa: {fileID: 11400000, guid: 2b2b5ab398318654db342a3fd9840b75, type: 2}
+    quantidadeitem: 1
 --- !u!1001 &1150368631
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2232,7 +2239,7 @@ PrefabInstance:
     - target: {fileID: 2466371015003547471, guid: ad9419e4686d98548937b4e9f0f4c1b6, type: 3}
       propertyPath: item
       value: 
-      objectReference: {fileID: 11400000, guid: 793d42d3188cfb24cbee38caa21266d6, type: 2}
+      objectReference: {fileID: 11400000, guid: fc08d21d4bdeef6459f5236895e34ddf, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ad9419e4686d98548937b4e9f0f4c1b6, type: 3}
 --- !u!1 &1160105242
@@ -21444,37 +21451,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3493272189830346839, guid: 8120571509c337c4699ecd0da34184b3, type: 3}
   m_PrefabInstance: {fileID: 3493272188881673934}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1555938453
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1555938454}
-  m_Layer: 0
-  m_Name: Missao02
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1555938454
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1555938453}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 866423304}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1560695866
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -23681,7 +23657,7 @@ PrefabInstance:
     - target: {fileID: 2466371015003547471, guid: ad9419e4686d98548937b4e9f0f4c1b6, type: 3}
       propertyPath: item
       value: 
-      objectReference: {fileID: 11400000, guid: 793d42d3188cfb24cbee38caa21266d6, type: 2}
+      objectReference: {fileID: 11400000, guid: fc08d21d4bdeef6459f5236895e34ddf, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ad9419e4686d98548937b4e9f0f4c1b6, type: 3}
 --- !u!1 &2085771009

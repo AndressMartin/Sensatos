@@ -14,8 +14,8 @@ public class NPC : MonoBehaviour
 
     //Variaveis
     Assalto assaltoAtual;
-    [SerializeField] private Missao missaoAtual;
-    [SerializeField] private DialogueList listaDialogoAtual;
+    private Missao missaoAtual;
+    private DialogueList listaDialogoAtual;
     [SerializeField] private DialogueList listaDialogoSemMissao;
 
     public Missao GetMissaoAtual => missaoAtual;
@@ -127,5 +127,9 @@ public class NPC : MonoBehaviour
 
 
         }
+    }
+    public void CompletarMissao()
+    {
+        missaoAtual.SetEstado(Missoes.Estado.Concluida);
     }
 }
