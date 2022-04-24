@@ -10,8 +10,6 @@ public class LockDownButton : MonoBehaviour
     //Componentes
     SpriteRenderer spriteRenderer;
 
-    [SerializeField] private SpriteRenderer referenciaPosicao;
-
     private void Start()
     {
         //Managers
@@ -20,7 +18,7 @@ public class LockDownButton : MonoBehaviour
         //Componentes
         spriteRenderer = GetComponent<SpriteRenderer>();
 
-        referenciaPosicao.gameObject.SetActive(false);
+        spriteRenderer.enabled = false;
 
         //Se adicionar a lista de objetos interagiveis do ObjectManager
         generalManager.ObjectManager.AdicionarAosAlarmes(this);
