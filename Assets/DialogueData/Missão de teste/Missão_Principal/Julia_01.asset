@@ -10,10 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 71dc2b686cd518144986ef63d2ca13a3, type: 3}
-  m_Name: Teste_02_01
+  m_Name: Julia_01
   m_EditorClassIdentifier: 
   dialogue:
   - portrait: {fileID: 0}
-    text: "Voc\xEA sabia que os tit\xE3s em Ataque dos Tit\xE3s foram baseados em
-      pessoas b\xEAbadas\r\n"
-  responses: []
+    text: "Bem vindo a cidade, voc\xEA deve ser novo por aqui..."
+  - portrait: {fileID: 0}
+    text: "Me chamo J\xFAlia e adoro desenhos japoneses."
+  responses:
+  - responseText: 
+    dialogueObject: {fileID: 11400000, guid: be203e5263e7c9e47aeb172e79eb13b2, type: 2}

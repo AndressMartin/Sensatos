@@ -10,10 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 71dc2b686cd518144986ef63d2ca13a3, type: 3}
-  m_Name: Teste_02_01
+  m_Name: RedJulia_05_r03
   m_EditorClassIdentifier: 
   dialogue:
   - portrait: {fileID: 0}
-    text: "Voc\xEA sabia que os tit\xE3s em Ataque dos Tit\xE3s foram baseados em
-      pessoas b\xEAbadas\r\n"
-  responses: []
+    text: Ora, ora, parece que alguem foi pesquisar na internet.
+  - portrait: {fileID: 0}
+    text: "Que vergonha em Jonas... esperava mais de voc\xEA.\n\n"
+  responses:
+  - responseText: 
+    dialogueObject: {fileID: 11400000, guid: 13cc9aeddfc5c084c8d7938c312736fa, type: 2}

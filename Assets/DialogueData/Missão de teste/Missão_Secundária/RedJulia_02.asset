@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71dc2b686cd518144986ef63d2ca13a3, type: 3}
+  m_Name: RedJulia_02
+  m_EditorClassIdentifier: 
+  dialogue:
+  - portrait: {fileID: 0}
+    text: 'Primeira pergunta ! '
+  - portrait: {fileID: 0}
+    text: "O que \xE9 um NPC ?"
+  responses:
+  - responseText: "\xC9 uma marca de carro."
+    dialogueObject: {fileID: 11400000, guid: 27ec248598307914c93b92164a6b767e, type: 2}
+  - responseText: "Significa N\xE3o foi Poss\xEDvel Conectar."
+    dialogueObject: {fileID: 11400000, guid: 27ec248598307914c93b92164a6b767e, type: 2}
+  - responseText: "\xC9 um personagem de N\xC3O jogavel."
+    dialogueObject: {fileID: 11400000, guid: d55533124140856419912d1195d02d69, type: 2}

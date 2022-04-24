@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71dc2b686cd518144986ef63d2ca13a3, type: 3}
+  m_Name: RedJulia_03
+  m_EditorClassIdentifier: 
+  dialogue:
+  - portrait: {fileID: 0}
+    text: "Muito bom... vamos para a pr\xF3xima, so faltam mais 2 perguntas."
+  - portrait: {fileID: 0}
+    text: "Qual \xE9 o atalho para salvar em quase todos os programas."
+  responses:
+  - responseText: Escrever save no teclado.
+    dialogueObject: {fileID: 11400000, guid: 27ec248598307914c93b92164a6b767e, type: 2}
+  - responseText: Usar Ctrl + S.
+    dialogueObject: {fileID: 11400000, guid: 21efe291fbf7b4243b719b791330c977, type: 2}
+  - responseText: "N\xE3o precisa salvar, \xE9 s\xF3 fechar o programa."
+    dialogueObject: {fileID: 11400000, guid: 27ec248598307914c93b92164a6b767e, type: 2}
