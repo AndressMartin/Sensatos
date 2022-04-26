@@ -12,7 +12,8 @@ public class GameManager : MonoBehaviour
     public enum Capitulo { Inicio, Assalto1 }
 
     //Variaveis
-    private float tempoDeJogo = 0;
+    private float tempoDeJogo;
+    private int assaltosLiberados;
 
     private Modo modoDeJogo;
     private Capitulo capituloAtual;
@@ -21,11 +22,17 @@ public class GameManager : MonoBehaviour
     public float TempoDeJogo => tempoDeJogo;
     public Modo ModoDeJogo => modoDeJogo;
     public Capitulo CapituloAtual => capituloAtual;
+    public int AssaltosLiberados => assaltosLiberados;
 
     //Setters
     public void SetTempoDeJogo(float novoTempo)
     {
         tempoDeJogo = novoTempo;
+    }
+
+    public void SetAssaltosLiberados(int novoAssaltosLiberados)
+    {
+        assaltosLiberados = novoAssaltosLiberados;
     }
 
     public void SetCapituloAtual(Capitulo novoCapituloAtual)
@@ -59,6 +66,8 @@ public class GameManager : MonoBehaviour
     private void FuncoesInicias()
     {
         //Variaveis
+        tempoDeJogo = 0;
+        assaltosLiberados = 1;
         modoDeJogo = Modo.Cidade;
         capituloAtual = Capitulo.Inicio;
 
@@ -90,6 +99,8 @@ public class GameManager : MonoBehaviour
         FindObjectOfType<GeneralManagerScript>().Player.ResetarPlayer();
         FindObjectOfType<IniciadorDoPlayer>().SetarVariaveis();
 
+        tempoDeJogo = 0;
+        assaltosLiberados = 0;
         capituloAtual = Capitulo.Inicio;
         Missoes.ResetarEstadosDasMissoes();
         Flags.ResetarFlags();

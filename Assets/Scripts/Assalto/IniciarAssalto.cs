@@ -18,7 +18,7 @@ public class IniciarAssalto : ObjetoInteragivel
 
         if (generalManagerScript.AssaltoManager.GetAssaltoAtual != null)
         {
-            foreach (var missao in generalManagerScript.AssaltoManager.GetAssaltoAtual.GetMissaoPrincipal)
+            foreach (var missao in generalManagerScript.AssaltoManager.GetAssaltoAtual.GetMissoesPrincipais)
             {
                 if (missao.GetEstado != Missoes.Estado.Concluida)
                 {
@@ -26,7 +26,7 @@ public class IniciarAssalto : ObjetoInteragivel
                     break;
                 }
             }
-            foreach (var missao in generalManagerScript.AssaltoManager.GetAssaltoAtual.GetMissaoSecundaria)
+            foreach (var missao in generalManagerScript.AssaltoManager.GetAssaltoAtual.GetMissoesSecundarias)
             {
                 if (missao.GetEstado != Missoes.Estado.Concluida)
                 {

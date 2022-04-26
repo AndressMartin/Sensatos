@@ -123,6 +123,7 @@ public static class Save
     private static void PassarInformacoesDoSave(SaveData.SaveFile save)
     {
         GameManager.instance.SetTempoDeJogo(save.informacoesSave.tempoDeJogo);
+        GameManager.instance.SetAssaltosLiberados(save.assaltosLiberados);
 
         GameManager.instance.SetCapituloAtual(save.capituloAtual);
         Missoes.PassarInformacoesSave(save);

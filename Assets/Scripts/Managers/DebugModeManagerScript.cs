@@ -94,10 +94,10 @@ public class DebugModeManagerScript : MonoBehaviour
             Debug.Log("O save no slot 1 foi carregado.");
         }
 
-        //Ir para o mapa de testes
+        //Liberar mais assaltos
         if (Input.GetKeyUp(KeyCode.C))
         {
-            LevelLoaderScript.Instance.CarregarNivel("Assalto_Teste");
+            GameManager.instance.SetAssaltosLiberados(GameManager.instance.AssaltosLiberados + 1);
         }
     }
 

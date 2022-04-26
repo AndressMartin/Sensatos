@@ -24,9 +24,9 @@ public static class VerificarAssaltoMissao
     }
     public static void VerificarAssalto(Assalto _assalto,Player player)
     {
-        nomeAssalto = _assalto.GetNomeAssalto;
-        missaoPrincipais = _assalto.GetMissaoPrincipal;
-        missaoSecundaria = _assalto.GetMissaoSecundaria;
+        nomeAssalto = _assalto.Nome;
+        missaoPrincipais = _assalto.GetMissoesPrincipais;
+        missaoSecundaria = _assalto.GetMissoesSecundarias;
 
         List<Missao> missoesTemp = new List<Missao>();
         missoesTemp = null;

@@ -50,7 +50,7 @@ public class NPC : MonoBehaviour
             assaltoAtual = assalto;
             bool value = false;
             //Verifica se possui o assalto que recebeu tem alguma missao sua
-            foreach (var item in assalto.GetMissaoPrincipal)
+            foreach (var item in assalto.GetMissoesPrincipais)
             {
                 foreach (var item2 in npcMissao.GetListaMissao)
                 {
@@ -60,7 +60,7 @@ public class NPC : MonoBehaviour
                     }
                 }
             }
-            foreach (var item in assalto.GetMissaoSecundaria)
+            foreach (var item in assalto.GetMissoesSecundarias)
             {
                 foreach (var item2 in npcMissao.GetListaMissao)
                 {
@@ -82,10 +82,10 @@ public class NPC : MonoBehaviour
             {
                 listaDialogoAtual = null;
                 //tenta primeiro com missao principal, se npc n tiver missao principal desse assalto vai pra secundaria
-                NpcDialogo.TrocarDialogoConformeMissao(assalto.GetMissaoPrincipal);
+                NpcDialogo.TrocarDialogoConformeMissao(assalto.GetMissoesPrincipais);
                 if (listaDialogoAtual == null)
                 {
-                    NpcDialogo.TrocarDialogoConformeMissao(assalto.GetMissaoSecundaria);
+                    NpcDialogo.TrocarDialogoConformeMissao(assalto.GetMissoesSecundarias);
                 }
                 if (missaoAtual.GetEstado != Missoes.Estado.Concluida)
                 {

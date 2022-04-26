@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1329021909772683582}
   - component: {fileID: 1329021909772683583}
+  - component: {fileID: 4103755833602595771}
   m_Layer: 0
   m_Name: AssaltoManager
   m_TagString: Untagged
@@ -27,6 +28,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -43,4 +45,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38144b5dc8b1c914dbc5ad13aa8bd046, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  assaltoAtual: {fileID: 0}
+  assaltos:
+  - {fileID: 11400000, guid: 2875c8033a7593d4cbebe8f912b3621d, type: 2}
+  - {fileID: 11400000, guid: 44e3022eeca4df64dbcc20334fccc4a9, type: 2}
+--- !u!114 &4103755833602595771
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1329021909772683581}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2ed155f83a4ef14085fb7d2c0df1fb9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  missaoTexto:
+    nome: 
+    descricao: 

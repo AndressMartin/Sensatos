@@ -9,9 +9,9 @@ public class ListaSlot : MonoBehaviour
     //Componentes
     [SerializeField] private TMP_Text nome;
     [SerializeField] private TMP_Text numero;
-    [SerializeField] private Image imagemConquista;
+    [SerializeField] private Image imagem;
 
-    private Image imagem;
+    private Image imagemFundo;
 
     //Variaveis
     private bool iniciado = false;
@@ -28,7 +28,7 @@ public class ListaSlot : MonoBehaviour
             return;
         }
 
-        imagem = GetComponent<Image>();
+        imagemFundo = GetComponent<Image>();
 
         iniciado = true;
     }
@@ -37,9 +37,9 @@ public class ListaSlot : MonoBehaviour
     {
         nome.text = "";
         numero.text = "";
-        imagemConquista.sprite = null;
+        imagem.sprite = null;
         numero.gameObject.SetActive(false);
-        imagemConquista.gameObject.SetActive(false);
+        imagem.gameObject.SetActive(false);
     }
 
     public void AtualizarNome(string texto)
@@ -55,21 +55,21 @@ public class ListaSlot : MonoBehaviour
 
     public void AtualizarImagem(Sprite imagem)
     {
-        this.imagemConquista.sprite = imagem;
-        this.imagemConquista.gameObject.SetActive(true);
+        this.imagem.sprite = imagem;
+        this.imagem.gameObject.SetActive(true);
     }
 
     public void Selecionado(bool selecionado)
     {
         if (selecionado == true)
         {
-            imagem.color = Color.blue;
+            imagemFundo.color = Color.blue;
             nome.color = Color.white;
             numero.color = Color.white;
         }
         else
         {
-            imagem.color = Color.white;
+            imagemFundo.color = Color.white;
             nome.color = Color.black;
             numero.color = Color.black;
         }

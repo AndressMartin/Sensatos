@@ -13,6 +13,7 @@ public class HUDScript : MonoBehaviour
     [SerializeField] private MenuDePausa menuDePausa;
     [SerializeField] private MenuGameOver menuGameOver;
     [SerializeField] private MenuFimDoAssalto menuFimDoAssalto;
+    [SerializeField] private MenuEscolherAssalto menuEscolherAssalto;
     [SerializeField] private LockDownUI lockDownUI;
     [SerializeField] private PlayerUIScript playerUI;
     [SerializeField] private BarraDeVisaoDoInimigo barraDeVisaoDoInimigo;
@@ -20,7 +21,7 @@ public class HUDScript : MonoBehaviour
     [SerializeField] private SonsDeMenus sonsDeMenus;
 
     //Enuns
-    public enum Menu { Nenhum, Pausa, Inventario, GameOver, FimDoAssalto }
+    public enum Menu { Nenhum, Pausa, Inventario, GameOver, FimDoAssalto, EscolherAssalto }
 
     //Variaveis
     private Menu menuAberto;
@@ -30,6 +31,7 @@ public class HUDScript : MonoBehaviour
     public MenuDePausa MenuDePausa => menuDePausa;
     public MenuGameOver MenuGameOver => menuGameOver;
     public MenuFimDoAssalto MenuFimDoAssalto => menuFimDoAssalto;
+    public MenuEscolherAssalto MenuEscolherAssalto => menuEscolherAssalto;
     public BarraDeVisaoDoInimigo BarraDeVisaoDoInimigo => barraDeVisaoDoInimigo;
     public SonsDeMenus SonsDeMenus => sonsDeMenus;
     public Menu MenuAberto => menuAberto;

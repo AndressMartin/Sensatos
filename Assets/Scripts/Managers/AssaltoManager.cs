@@ -4,18 +4,57 @@ using UnityEngine;
 
 public class AssaltoManager : MonoBehaviour
 {
-    private GeneralManagerScript generalManagerScript;
+    //Managers
+    private GeneralManagerScript generalManager;
 
-    [SerializeField] private Assalto assaltoAtual;
+    //Componentes
+    private MudarIdiomaMissao mudarIdiomaMissao;
+
+    //Variaveis
+    private static Assalto assaltoAtual;
+    [SerializeField] private List<Assalto> assaltos;
+
+    //Getters
     public Assalto GetAssaltoAtual => assaltoAtual;
+    public List<Assalto> Assaltos => assaltos;
+
     private void Start()
     {
-        generalManagerScript = transform.parent.GetComponentInChildren<GeneralManagerScript>();
+        //Managers
+        generalManager = FindObjectOfType<GeneralManagerScript>();
+
+        //Componentes
+        mudarIdiomaMissao = GetComponent<MudarIdiomaMissao>();
+
+        //Adicionar a funcao de trocar idioma ao evento do Idioma Manager
+        generalManager.IdiomaManager.EventoTrocarIdioma.AddListener(TrocarIdioma);
+
+        //Trocar o idioma uma vez para iniciar os objetos com o idioma correto
+        TrocarIdioma();
     }
+
     public void SetarAssalto(Assalto _assalto)
     {
         assaltoAtual = _assalto;
-        generalManagerScript.NpcManager.PassarAssalto(_assalto);
-        VerificarAssaltoMissao.SetarAssalto(assaltoAtual,generalManagerScript.Player);
+        generalManager.NpcManager.PassarAssalto(_assalto);
+        VerificarAssaltoMissao.SetarAssalto(assaltoAtual,generalManager.Player);
+    }
+
+    private void TrocarIdioma()
+    {
+        foreach (Assalto assalto in assaltos)
+        {
+            assalto.TrocarIdioma();
+
+            foreach (Missao missao in assalto.GetMissoesPrincipais)
+            {
+                mudarIdiomaMissao.AtualizarIdioma(missao);
+            }
+
+            foreach (Missao missao in assalto.GetMissoesSecundarias)
+            {
+                mudarIdiomaMissao.AtualizarIdioma(missao);
+            }
+        }
     }
 }

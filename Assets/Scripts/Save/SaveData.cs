@@ -14,6 +14,7 @@ public class SaveData
         public int vidaMaxima;
         public InventarioSave inventarioSave = new InventarioSave();
 
+        public int assaltosLiberados;
         public GameManager.Capitulo capituloAtual;
         public Missoes.Estado[] estadoDasMissoes;
         public bool[] flags;
@@ -228,6 +229,8 @@ public class SaveData
     {
         saveAtual.informacoesSave.tempoDeJogo = GameManager.instance.TempoDeJogo;
         saveAtual.informacoesSave.data = new SerializableDateTime(DateTime.Now);
+
+        saveAtual.assaltosLiberados = GameManager.instance.AssaltosLiberados;
 
         saveAtual.vidaMaxima = player.VidaMaxima;
         saveAtual.inventarioSave.AtualizarInventarioSave(player.Inventario, player.InventarioMissao);
