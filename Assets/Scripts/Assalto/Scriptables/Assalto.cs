@@ -10,12 +10,14 @@ public class Assalto : ScriptableObject
 
     [SerializeField] private string nomePortugues;
     [SerializeField] private string nomeIngles;
+    [SerializeField] private string nomeDaCena;
     [SerializeField] private Sprite imagem;
     [SerializeField] private List<Missao> missoesPrincipais = new List<Missao>();
     [SerializeField] private List<Missao> missoesSecundarias = new List<Missao>();
 
     //Getters
     public string Nome => nome;
+    public string NomeDaCena => nomeDaCena;
     public Sprite Imagem => imagem;
     public List<Missao> GetMissoesPrincipais => missoesPrincipais;
     public List<Missao> GetMissoesSecundarias => missoesSecundarias;

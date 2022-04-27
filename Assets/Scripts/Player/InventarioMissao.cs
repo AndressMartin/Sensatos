@@ -36,6 +36,11 @@ public class InventarioMissao : MonoBehaviour
         CarregarSave(SaveData.InventarioRespawn);
     }
 
+    public void CarregarInventarioAntesDoAssalto()
+    {
+        CarregarSave(SaveData.InventarioAntesDoAssalto);
+    }
+
     public void AdicionarItem(ItemChave item)
     {
         //Confere se o item ja esta na lista de itens chave, se estiver, adiciona um ao numero do item

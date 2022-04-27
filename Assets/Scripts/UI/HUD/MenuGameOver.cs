@@ -250,6 +250,7 @@ public class MenuGameOver : MonoBehaviour
 
     public void VoltarParaACidade()
     {
-        LevelLoaderScript.Instance.CarregarNivel("MenuPrincipal");
+        generalManager.Player.CarregarInventarioAntesDoAssalto();
+        LevelLoaderScript.Instance.CarregarNivel(GameManager.instance.NomesDeCenas.Cidade);
     }
 }

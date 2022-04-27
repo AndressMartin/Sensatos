@@ -107,6 +107,6 @@ public class MenuFimDoAssalto : MonoBehaviour
 
     public void VoltarParaACidade()
     {
-        LevelLoaderScript.Instance.CarregarNivel("Mapa_Teste_2");
+        LevelLoaderScript.Instance.CarregarNivel(GameManager.instance.NomesDeCenas.Cidade);
     }
 }

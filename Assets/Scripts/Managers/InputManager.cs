@@ -38,12 +38,12 @@ public static class InputManager
 
     public static bool Confirmar()
     {
-        return Input.GetKeyDown(KeyCode.Space);
+        return Input.GetKeyDown(KeyCode.Z);
     }
 
     public static bool Voltar()
     {
-        return Input.GetKeyDown(KeyCode.E);
+        return Input.GetKeyDown(KeyCode.X);
     }
 
     public static bool Pausar()
@@ -58,7 +58,7 @@ public static class InputManager
 
     public static bool AvancarDialogo()
     {
-        return Input.GetKeyDown(KeyCode.E);
+        return Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.Z);
     }
 
     #endregion
@@ -97,7 +97,7 @@ public static class InputManager
 
     public static bool RecarregarArma()
     {
-        return Input.GetKeyDown(KeyCode.W);
+        return Input.GetKeyDown(KeyCode.R);
     }
 
     public static bool TrocarArma()

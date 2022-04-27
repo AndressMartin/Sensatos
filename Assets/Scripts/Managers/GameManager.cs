@@ -7,6 +7,9 @@ public class GameManager : MonoBehaviour
     //Instancia do singleton
     public static GameManager instance = null;
 
+    //Componentes
+    private NomesDeCenas nomesDeCenas;
+
     //Enuns
     public enum Modo { Cidade, Assalto }
     public enum Capitulo { Inicio, Assalto1 }
@@ -19,6 +22,7 @@ public class GameManager : MonoBehaviour
     private Capitulo capituloAtual;
 
     //Getters
+    public NomesDeCenas NomesDeCenas => nomesDeCenas;
     public float TempoDeJogo => tempoDeJogo;
     public Modo ModoDeJogo => modoDeJogo;
     public Capitulo CapituloAtual => capituloAtual;
@@ -55,6 +59,9 @@ public class GameManager : MonoBehaviour
 
         //Caso o objeto esteja sendo criado pela primeira vez, marca ela para nao ser destruido em mudancas de cenas
         DontDestroyOnLoad(transform.gameObject);
+
+        //Componentes
+        nomesDeCenas = GetComponent<NomesDeCenas>();
 
         //Inicia o contador de tempo
         StartCoroutine(contadorDeTempo());

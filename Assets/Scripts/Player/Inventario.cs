@@ -98,6 +98,11 @@ public class Inventario : MonoBehaviour
         CarregarSave(SaveData.InventarioRespawn);
     }
 
+    public void CarregarInventarioAntesDoAssalto()
+    {
+        CarregarSave(SaveData.InventarioAntesDoAssalto);
+    }
+
     private void SetarArmasEquipadas()
     {
         if(armas.Count >= 1)

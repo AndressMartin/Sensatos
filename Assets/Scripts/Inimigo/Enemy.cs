@@ -153,6 +153,11 @@ public class Enemy : EntityModel
         {
             RotinasDoInimigo();
         }
+        else if (generalManager.Player.GetEstado == Player.Estado.Morto)
+        {
+            enemyMovement.ZerarVelocidade();
+            Animar();
+        }
     }
 
     private void FixedUpdate()

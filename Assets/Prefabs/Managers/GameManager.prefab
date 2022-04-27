@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3323743863933331365}
   - component: {fileID: 2393263651078082590}
   - component: {fileID: 5577645986089980915}
+  - component: {fileID: 5147144601267735876}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -30,6 +31,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -86,3 +88,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 581925f12da1cbf45b7bbc75dd7de582, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &5147144601267735876
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8654927992598386979}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c92e63f032f78940adedcb3181cdca3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cidade: Mapa_Npc_Teste

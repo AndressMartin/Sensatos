@@ -238,9 +238,27 @@ public class MenuEscolherAssalto : MonoBehaviour
         //Confirmar
         if (InputManager.Confirmar())
         {
-            //IniciarComecarAssalto();
+            if (generalManager.AssaltoManager.GetAssaltoAtual == generalManager.AssaltoManager.Assaltos[selecao])
+            {
+                if (generalManager.AssaltoManager.Assaltos[selecao].MissoesPrincipaisConcluidas() == true)
+                {
+                    IniciarComecarAssalto();
 
-            generalManager.Hud.SonsDeMenus.TocarSom(SonsDeMenus.Som.Confirmar);
+                    generalManager.Hud.SonsDeMenus.TocarSom(SonsDeMenus.Som.Confirmar);
+                }
+                else
+                {
+                    generalManager.Hud.SonsDeMenus.TocarSom(SonsDeMenus.Som.Falha);
+                }
+            }
+            else
+            {
+                generalManager.AssaltoManager.SetarAssalto(generalManager.AssaltoManager.Assaltos[selecao]);
+
+                AtualizarTela();
+
+                generalManager.Hud.SonsDeMenus.TocarSom(SonsDeMenus.Som.Confirmar);
+            }
         }
     }
 
@@ -284,7 +302,8 @@ public class MenuEscolherAssalto : MonoBehaviour
 
     public void ComecarAssalto()
     {
-        LevelLoaderScript.Instance.CarregarNivel("Assalto_Teste");
+        generalManager.Player.SetInventarioAntesDoAssalto();
+        LevelLoaderScript.Instance.CarregarNivel(generalManager.AssaltoManager.GetAssaltoAtual.NomeDaCena);
     }
 
     public void TrocarIdioma()

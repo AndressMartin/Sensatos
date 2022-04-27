@@ -221,6 +221,17 @@ public class Player : EntityModel
         FinalizarRecarregamento();
     }
 
+    public void SetInventarioAntesDoAssalto()
+    {
+        SaveData.AtualizarInventarioAntesDoAssalto(this);
+    }
+
+    public void CarregarInventarioAntesDoAssalto()
+    {
+        inventario.CarregarInventarioAntesDoAssalto();
+        inventarioMissao.CarregarInventarioAntesDoAssalto();
+    }
+
     private bool PosicaoDiferente(Vector3 posAnterior, Vector3 posAtual)
     {
         return Mathf.Abs(posAtual.x - posAnterior.x) > 0.01f || Mathf.Abs(posAtual.y - posAnterior.y) > 0.01f;

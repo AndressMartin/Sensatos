@@ -81,14 +81,14 @@ public class DebugModeManagerScript : MonoBehaviour
         }
 
         //Salvar o jogo
-        if (Input.GetKeyUp(KeyCode.Z))
+        if (Input.GetKeyUp(KeyCode.V))
         {
             SaveManager.instance.SalvarJogo(1);
             Debug.Log("O jogo foi salvo no slot 1.");
         }
 
         //Carregar o jogo
-        if (Input.GetKeyUp(KeyCode.X))
+        if (Input.GetKeyUp(KeyCode.B))
         {
             SaveManager.instance.CarregarJogo(1);
             Debug.Log("O save no slot 1 foi carregado.");

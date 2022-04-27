@@ -214,10 +214,12 @@ public class SaveData
     //Instancia das classes
     private static SaveFile saveAtual = new SaveFile();
     private static InventarioSave inventarioRespawn = new InventarioSave();
+    private static InventarioSave inventarioAntesDoAssalto = new InventarioSave();
 
     //Getters
     public static SaveFile SaveAtual => saveAtual;
     public static InventarioSave InventarioRespawn => inventarioRespawn;
+    public static InventarioSave InventarioAntesDoAssalto => inventarioAntesDoAssalto;
 
     //Setters
     public static void SetSaveAtual(SaveFile save)
@@ -243,6 +245,11 @@ public class SaveData
     public static void AtualizarInventarioRespawn(Player player)
     {
         inventarioRespawn.AtualizarInventarioSave(player.Inventario, player.InventarioMissao);
+    }
+
+    public static void AtualizarInventarioAntesDoAssalto(Player player)
+    {
+        inventarioAntesDoAssalto.AtualizarInventarioSave(player.Inventario, player.InventarioMissao);
     }
 
     public static void ResetarSaveFile()
