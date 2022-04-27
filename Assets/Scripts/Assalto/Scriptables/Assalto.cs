@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Assalto")]
+[CreateAssetMenu(menuName = "Assaltos/Assalto")]
 public class Assalto : ScriptableObject
 {
     //Variaveis

@@ -39,6 +39,11 @@ public class GameManager : MonoBehaviour
         assaltosLiberados = novoAssaltosLiberados;
     }
 
+    public void SetModoDeJogo(Modo novoModoDeJogo)
+    {
+        modoDeJogo = novoModoDeJogo;
+    }
+
     public void SetCapituloAtual(Capitulo novoCapituloAtual)
     {
         capituloAtual = novoCapituloAtual;
@@ -98,7 +103,7 @@ public class GameManager : MonoBehaviour
 
     public void IniciarJogo()
     {
-        LevelLoaderScript.Instance.CarregarNivel("Mapa_Teste_2");
+        LevelLoaderScript.Instance.CarregarNivel(nomesDeCenas.Cidade);
     }
 
     private void ResetarVariaveisDoJogo()

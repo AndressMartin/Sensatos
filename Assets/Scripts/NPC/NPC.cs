@@ -23,6 +23,7 @@ public class NPC : MonoBehaviour
     public DialogueList GetDialogueListSemMissao => listaDialogoSemMissao;
     public DialogueList GetDialogueListAtual=>listaDialogoAtual;
     public GeneralManagerScript GetGeneralManager => generalManager;
+
     void Start()
     {
         generalManager = FindObjectOfType<GeneralManagerScript>();

@@ -7,9 +7,10 @@ public class NpcRecompensa : MonoBehaviour
 {
     NPC npc;
     [SerializeField] private List<Recompensa> itemRecompensaList;
+
     private void Start()
     {
-        npc=transform.root.GetComponent<NPC>();
+        npc = GetComponentInParent<NPC>();
     }
     public void PassarItemPlayer()
     {
