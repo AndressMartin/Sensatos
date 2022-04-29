@@ -26798,53 +26798,6 @@ MonoBehaviour:
   - {fileID: 1496330674}
   - {fileID: 1702063283}
   - {fileID: 490963852}
---- !u!1 &1357515140
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1357515142}
-  - component: {fileID: 1357515141}
-  m_Layer: 0
-  m_Name: Teste
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1357515141
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1357515140}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b9f6ec5146df47149a8a4b776fce0c34, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mapaAssalto01: {fileID: 11400000, guid: 2875c8033a7593d4cbebe8f912b3621d, type: 2}
-  mapaAssalto02: {fileID: 11400000, guid: 44e3022eeca4df64dbcc20334fccc4a9, type: 2}
-  mapaAssalto03: {fileID: 11400000, guid: 38569d3e725562c46bd5637668e2b35d, type: 2}
---- !u!4 &1357515142
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1357515140}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 10
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1389934669 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1281963047238720326, guid: 993152c3fb1a02a43a65ff0ce924dd81, type: 3}
@@ -34585,7 +34538,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &2000904026
 BoxCollider2D:
