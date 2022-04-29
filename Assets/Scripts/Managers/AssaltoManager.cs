@@ -49,7 +49,6 @@ public class AssaltoManager : MonoBehaviour
     {
         assaltoAtual = _assalto;
         generalManager.NpcManager.PassarAssalto(_assalto);
-        VerificarAssaltoMissao.SetarAssalto(assaltoAtual,generalManager.Player);
     }
 
     private void TrocarIdioma()

@@ -90,7 +90,7 @@ public class NPC : MonoBehaviour
                 }
                 if (missaoAtual.GetEstado != Missoes.Estado.Concluida)
                 {
-                    VerificarAssaltoMissao.VerificarMissao(missaoAtual, generalManager.Player,npcMissao);
+                    VerificarAssaltoMissao.VerificarMissao(missaoAtual, generalManager);
                 }
             }
         }
@@ -116,13 +116,13 @@ public class NPC : MonoBehaviour
             }
             else if (missaoAtual.GetEstado == Missoes.Estado.Ativa)
             {
-                VerificarAssaltoMissao.VerificarMissao(missaoAtual, player, npcMissao);
+                VerificarAssaltoMissao.VerificarMissao(missaoAtual, generalManager);
                 NpcDialogo.TrocarDialogoMissaoEspecifico(missaoAtual, missaoAtual.GetEstado);
 
             }
             else if (missaoAtual.GetEstado == Missoes.Estado.Inativa)
             {
-                VerificarAssaltoMissao.VerificarMissao(missaoAtual, player, npcMissao);
+                VerificarAssaltoMissao.VerificarMissao(missaoAtual, generalManager);
                 NpcDialogo.TrocarDialogoMissaoEspecifico(missaoAtual, Missoes.Estado.Ativa);
             }
 
