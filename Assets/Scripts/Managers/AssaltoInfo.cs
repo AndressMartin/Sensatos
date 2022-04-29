@@ -83,7 +83,7 @@ public class AssaltoInfo : MonoBehaviour
         {
             if(itemPrincipalColetado == false)
             {
-                ItemPrincipalColetado();
+                IniciarTelaItemPrincipalColetado();
             }
         }
         else
@@ -106,7 +106,12 @@ public class AssaltoInfo : MonoBehaviour
         }
     }
 
-    private void ItemPrincipalColetado()
+    private void IniciarTelaItemPrincipalColetado()
+    {
+        generalManager.Hud.TelaItemPrincipalPego.IniciarTela(itemPrincipal);
+    }
+
+    public void ItemPrincipalColetado()
     {
         itemPrincipalColetado = true;
 

@@ -411,6 +411,71 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1a37e3f3fbeeb7c4e8930c148d682602, type: 3}
+--- !u!1001 &584437375
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1399893842}
+    m_Modifications:
+    - target: {fileID: 1329021909772683581, guid: 60f0266d4ccd4774391c0523f75926ca, type: 3}
+      propertyPath: m_Name
+      value: AssaltoManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 1329021909772683581, guid: 60f0266d4ccd4774391c0523f75926ca, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1329021909772683582, guid: 60f0266d4ccd4774391c0523f75926ca, type: 3}
+      propertyPath: m_RootOrder
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1329021909772683582, guid: 60f0266d4ccd4774391c0523f75926ca, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1329021909772683582, guid: 60f0266d4ccd4774391c0523f75926ca, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1329021909772683582, guid: 60f0266d4ccd4774391c0523f75926ca, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1329021909772683582, guid: 60f0266d4ccd4774391c0523f75926ca, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1329021909772683582, guid: 60f0266d4ccd4774391c0523f75926ca, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1329021909772683582, guid: 60f0266d4ccd4774391c0523f75926ca, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1329021909772683582, guid: 60f0266d4ccd4774391c0523f75926ca, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1329021909772683582, guid: 60f0266d4ccd4774391c0523f75926ca, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1329021909772683582, guid: 60f0266d4ccd4774391c0523f75926ca, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1329021909772683582, guid: 60f0266d4ccd4774391c0523f75926ca, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1329021909772683583, guid: 60f0266d4ccd4774391c0523f75926ca, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 60f0266d4ccd4774391c0523f75926ca, type: 3}
 --- !u!1 &652126068
 GameObject:
   m_ObjectHideFlags: 0
@@ -476,7 +541,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1399893842}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &656787318
 PrefabInstance:
@@ -700,6 +765,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bf730fcd06e83f04b9f65d04eae28058, type: 3}
+--- !u!4 &791967123 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1329021909772683582, guid: 60f0266d4ccd4774391c0523f75926ca, type: 3}
+  m_PrefabInstance: {fileID: 584437375}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &810340511
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1541,6 +1611,7 @@ MonoBehaviour:
   menuDePausa: {fileID: 0}
   menuGameOver: {fileID: 0}
   menuFimDoAssalto: {fileID: 0}
+  menuEscolherAssalto: {fileID: 0}
   lockDownUI: {fileID: 0}
   playerUI: {fileID: 0}
   barraDeVisaoDoInimigo: {fileID: 0}
@@ -1770,6 +1841,7 @@ Transform:
   - {fileID: 315698796}
   - {fileID: 1496790603}
   - {fileID: 810340512}
+  - {fileID: 791967123}
   - {fileID: 652126071}
   m_Father: {fileID: 0}
   m_RootOrder: 2

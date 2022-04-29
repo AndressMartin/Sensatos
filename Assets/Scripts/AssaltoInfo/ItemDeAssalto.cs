@@ -14,11 +14,14 @@ public class ItemDeAssalto : ScriptableObject
 
     [SerializeField] private int valor;
 
+    [SerializeField] private Sprite imagem;
+
     private int quantidade = 0;
 
     //Getters
     public string Nome => nome;
     public int Valor => valor;
+    public Sprite Imagem => imagem;
     public int Quantidade => quantidade;
 
     //Setters

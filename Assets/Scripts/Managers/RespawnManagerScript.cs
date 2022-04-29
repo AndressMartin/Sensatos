@@ -82,8 +82,11 @@ public class RespawnManagerScript : MonoBehaviour
     {
         foreach (Enemy inimigo in generalManager.ObjectManager.ListaInimigos)
         {
-            inimigo.SetMortoRespawn(false);
-            inimigo.Respawn();
+            if(inimigo.Morto == true)
+            {
+                inimigo.SetMortoRespawn(false);
+                inimigo.Respawn();
+            }
         }
     }
 }
