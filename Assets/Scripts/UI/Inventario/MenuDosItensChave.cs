@@ -25,8 +25,8 @@ public class MenuDosItensChave : MonoBehaviour
     private float barraDeRolagemAlturaInicial;
 
     [SerializeField] private Sprite imagemSemItens;
-    private string nomeSemItens = "Sem Itens";
-    private string descricaoSemItens = "Você ainda não possui nenhum item chave!";
+    private string nomeSemItens = "";
+    private string descricaoSemItens = "";
 
     [SerializeField] private string nomeSemItensPortugues;
     [SerializeField] private string descricaoSemItensPortugues;
@@ -35,17 +35,6 @@ public class MenuDosItensChave : MonoBehaviour
     [SerializeField] private string descricaoSemItensIngles;
 
     private bool iniciado = false;
-
-    //Setters
-    public void SetNomeSemItens(string novoTexto)
-    {
-        nomeSemItens = novoTexto;
-    }
-
-    public void SetDescricaoSemItens(string novoTexto)
-    {
-        descricaoSemItens = novoTexto;
-    }
 
     void Start()
     {

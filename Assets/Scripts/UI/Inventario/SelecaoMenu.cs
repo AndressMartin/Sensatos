@@ -43,7 +43,8 @@ public class SelecaoMenu : SelecaoDoInventario
                 break;
 
             case Menu.Missoes:
-                //menuDoInventario.SetMenuAtual(MenuDoInventario.Menu.Missoes);
+                menuDoInventario.SetMenuAtual(MenuDoInventario.Menu.Missoes);
+                menuDoInventario.MenuDasMissoes.IniciarScrool();
                 break;
 
             case Menu.Conquistas:

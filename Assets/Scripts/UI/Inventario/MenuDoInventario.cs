@@ -18,6 +18,7 @@ public class MenuDoInventario : MonoBehaviour
     [SerializeField] private MenuDosItens menuDosItens;
     [SerializeField] private MenuDasRoupas menuDasRoupas;
     [SerializeField] private MenuDosItensChave menuDosItensChave;
+    [SerializeField] private MenuDasMissoes menuDasMissoes;
 
     //Enums
     public enum Menu { Inicio, Arma, Item, Atalho, Roupa, ItensChave, Missoes, Conquistas}
@@ -41,6 +42,7 @@ public class MenuDoInventario : MonoBehaviour
     public MenuDosItens MenuDosItens => menuDosItens;
     public MenuDasRoupas MenuDasRoupas => menuDasRoupas;
     public MenuDosItensChave MenuDosItensChave => menuDosItensChave;
+    public MenuDasMissoes MenuDasMissoes => menuDasMissoes;
     public SelecaoItem[] ItemSlots => itemSlots;
     public SelecaoAtalho[] AtalhoSlots => atalhoSlots;
     public float PosicaoXBarraDeExplicacaoItens => armaSlots[0].transform.position.x - (Colisao.GetWorldRect(armaSlots[0].GetComponent<RectTransform>()).size.x / 2);
@@ -58,6 +60,7 @@ public class MenuDoInventario : MonoBehaviour
                 menuDosItens.gameObject.SetActive(false);
                 menuDasRoupas.gameObject.SetActive(false);
                 menuDosItensChave.gameObject.SetActive(false);
+                menuDasMissoes.gameObject.SetActive(false);
                 AtualizarInformacoes();
                 break;
 
@@ -79,6 +82,10 @@ public class MenuDoInventario : MonoBehaviour
 
             case Menu.ItensChave:
                 menuDosItensChave.gameObject.SetActive(true);
+                break;
+
+            case Menu.Missoes:
+                menuDasMissoes.gameObject.SetActive(true);
                 break;
         }
     }
@@ -112,6 +119,7 @@ public class MenuDoInventario : MonoBehaviour
         menuDosItens.Iniciar();
         menuDasRoupas.Iniciar();
         menuDosItensChave.Iniciar();
+        menuDasMissoes.Iniciar();
 
         foreach (SelecaoArma arma in armaSlots)
         {
@@ -187,6 +195,10 @@ public class MenuDoInventario : MonoBehaviour
             case Menu.ItensChave:
                 MenuItensChave();
                 break;
+
+            case Menu.Missoes:
+                MenuMissoes();
+                break;
         }
     }
 
@@ -235,6 +247,7 @@ public class MenuDoInventario : MonoBehaviour
         menuDosItens.gameObject.SetActive(false);
         menuDasRoupas.gameObject.SetActive(false);
         menuDosItensChave.gameObject.SetActive(false);
+        menuDasMissoes.gameObject.SetActive(false);
     }
 
     private void MenuInicial()
@@ -319,6 +332,11 @@ public class MenuDoInventario : MonoBehaviour
     private void MenuItensChave()
     {
         menuDosItensChave.MenuItensChave();
+    }
+
+    private void MenuMissoes()
+    {
+        menuDasMissoes.MenuMissoes();
     }
 
     private void AtualizarInformacoes()

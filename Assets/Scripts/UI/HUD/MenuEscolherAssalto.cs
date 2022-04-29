@@ -172,8 +172,6 @@ public class MenuEscolherAssalto : MonoBehaviour
         {
             if (i < generalManager.AssaltoManager.Assaltos[selecao].GetMissoesPrincipais.Count)
             {
-                missoes[i].ZerarInformacoes();
-
                 missoes[i].AtualizarNome(generalManager.AssaltoManager.Assaltos[selecao].GetMissoesPrincipais[i].Nome);
 
                 if(generalManager.AssaltoManager.Assaltos[selecao].GetMissoesPrincipais[i].GetEstado == Missoes.Estado.Concluida)
