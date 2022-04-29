@@ -31,6 +31,7 @@ public class EnemyVisionScript : MonoBehaviour
     private Enemy enemy;
     private VisaoCircularEnemy visaoCircularEnemy;
     private PolygonCollider2D polygonCollider;
+    private FieldOfView fieldOfView;
 
     //Getters
     public bool GetVendoPlayer => vendoPlayer;
@@ -50,6 +51,7 @@ public class EnemyVisionScript : MonoBehaviour
         //Debug.Log("tenho "+visaoCircularEnemy);
         polygonCollider = GetComponent<PolygonCollider2D>();
         enemy = GetComponentInParent<Enemy>();
+        fieldOfView = GetComponentInChildren<FieldOfView>();
 
         visaoCircularEnemy.ValorRaioInicial(raioVisaoCircular);
 
@@ -96,24 +98,36 @@ public class EnemyVisionScript : MonoBehaviour
                 v1 = new Vector2(offSetOrigemX - offSet, offSetOrigemY);
                 v2 = new Vector2((offSetOrigemX - offSet - larguraVisao), (offSetOrigemY + alturaVisao));
                 v3 = new Vector2((offSetOrigemX - offSet - larguraVisao), (offSetOrigemY - alturaVisao));
+
+                fieldOfView.SetOrigin(v1);
+                fieldOfView.SetDirection(Vector2.down);
                 break;
 
             case EntityModel.Direcao.Direita:
                 v1 = new Vector2(offSetOrigemX + offSet, offSetOrigemY);
                 v2 = new Vector2((offSetOrigemX + offSet + larguraVisao), (offSetOrigemY + alturaVisao));
                 v3 = new Vector2((offSetOrigemX + offSet + larguraVisao), (offSetOrigemY - alturaVisao));
+
+                fieldOfView.SetOrigin(v1);
+                fieldOfView.SetDirection(Vector2.up);
                 break;
 
             case EntityModel.Direcao.Cima:
                 v1 = new Vector2(offSetOrigemX, offSetOrigemY + offSet);
                 v2 = new Vector2((offSetOrigemX - alturaVisao), (offSetOrigemY + offSet + larguraVisao));
                 v3 = new Vector2((offSetOrigemX + alturaVisao), (offSetOrigemY + offSet + larguraVisao));
+
+                fieldOfView.SetOrigin(v1);
+                fieldOfView.SetDirection(Vector2.left);
                 break;
 
             case EntityModel.Direcao.Baixo:
                 v1 = new Vector2(offSetOrigemX, offSetOrigemY - offSet);
                 v2 = new Vector2((offSetOrigemX + alturaVisao), (offSetOrigemY - offSet - larguraVisao));
                 v3 = new Vector2((offSetOrigemX - alturaVisao), (offSetOrigemY - offSet - larguraVisao));
+
+                fieldOfView.SetOrigin(v1);
+                fieldOfView.SetDirection(Vector2.right);
                 break;
 
         }

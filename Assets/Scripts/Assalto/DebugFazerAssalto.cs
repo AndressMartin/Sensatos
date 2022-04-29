@@ -14,6 +14,7 @@ public class DebugFazerAssalto : MonoBehaviour
     {
         generalManagerScript = FindObjectOfType<GeneralManagerScript>();
         //assaltoManager = generalManagerScript.AssaltoManager();
+
     }
     private void Update()
     {
