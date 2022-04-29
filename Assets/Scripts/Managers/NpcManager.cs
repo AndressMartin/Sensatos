@@ -18,9 +18,16 @@ public class NpcManager : MonoBehaviour
     }
     public void PassarAssalto(Assalto _assalto)
     {
+        StartCoroutine(PassarAssaltoCorrotina(_assalto));
+    }
+
+    private IEnumerator PassarAssaltoCorrotina(Assalto assalto)
+    {
+        yield return null;
+
         foreach (var item in npcs)
         {
-            item.ReceberAssaltoDoManager(_assalto);
+            item.ReceberAssaltoDoManager(assalto);
         }
     }
 }

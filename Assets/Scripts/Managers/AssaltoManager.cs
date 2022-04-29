@@ -18,6 +18,12 @@ public class AssaltoManager : MonoBehaviour
     public Assalto GetAssaltoAtual => assaltoAtual;
     public List<Assalto> Assaltos => assaltos;
 
+    //Setters
+    static public void SetAssaltoAtual(Assalto novoAssaltoAtual)
+    {
+        assaltoAtual = novoAssaltoAtual;
+    }
+
     private void Start()
     {
         //Managers
@@ -28,6 +34,12 @@ public class AssaltoManager : MonoBehaviour
 
         //Adicionar a funcao de trocar idioma ao evento do Idioma Manager
         generalManager.IdiomaManager.EventoTrocarIdioma.AddListener(TrocarIdioma);
+
+        //Setar o Assalto Atual, se ele nao for nulo
+        if(assaltoAtual != null)
+        {
+            SetarAssalto(assaltoAtual);
+        }
 
         //Trocar o idioma uma vez para iniciar os objetos com o idioma correto
         TrocarIdioma();

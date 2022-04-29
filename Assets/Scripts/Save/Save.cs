@@ -124,8 +124,8 @@ public static class Save
     {
         GameManager.instance.SetTempoDeJogo(save.informacoesSave.tempoDeJogo);
         GameManager.instance.SetAssaltosLiberados(save.assaltosLiberados);
-
         GameManager.instance.SetCapituloAtual(save.capituloAtual);
+
         Missoes.PassarInformacoesSave(save);
         Flags.PassarInformacoesSave(save);
     }

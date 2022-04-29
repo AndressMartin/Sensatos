@@ -46,8 +46,6 @@ public static class VerificarAssaltoMissao
             {
                 if (_missao.GetEstado == Missoes.Estado.Inativa)
                 {
-                    //esse iten agora eu preciso de mais dele
-                    Debug.Log("Inativo");
                     _missao.SetEstado(Missoes.Estado.Ativa);
                 }
                 else if (_missao.GetEstado == Missoes.Estado.Ativa)

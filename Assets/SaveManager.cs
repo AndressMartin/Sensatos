@@ -78,6 +78,20 @@ public class SaveManager : MonoBehaviour
 
         onGameLoaded?.Invoke();
 
+        //Assalto Atual
+        if (SaveData.SaveAtual.assaltoAtual >= 0)
+        {
+            GeneralManagerScript generalManager = FindObjectOfType<GeneralManagerScript>();
+            print("GeneralManager: " + generalManager);
+            print("Assalto Manager: " + generalManager.AssaltoManager);
+
+            AssaltoManager.SetAssaltoAtual(FindObjectOfType<GeneralManagerScript>().AssaltoManager.Assaltos[SaveData.SaveAtual.assaltoAtual]);
+        }
+        else
+        {
+            AssaltoManager.SetAssaltoAtual(null);
+        }
+
         return carregarSucesso;
     }
 

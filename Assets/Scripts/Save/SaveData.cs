@@ -16,6 +16,9 @@ public class SaveData
 
         public int assaltosLiberados;
         public GameManager.Capitulo capituloAtual;
+
+        public int assaltoAtual;
+
         public Missoes.Estado[] estadoDasMissoes;
         public bool[] flags;
     }
@@ -232,12 +235,25 @@ public class SaveData
         saveAtual.informacoesSave.tempoDeJogo = GameManager.instance.TempoDeJogo;
         saveAtual.informacoesSave.data = new SerializableDateTime(DateTime.Now);
 
-        saveAtual.assaltosLiberados = GameManager.instance.AssaltosLiberados;
-
         saveAtual.vidaMaxima = player.VidaMaxima;
         saveAtual.inventarioSave.AtualizarInventarioSave(player.Inventario, player.InventarioMissao);
 
+        saveAtual.assaltosLiberados = GameManager.instance.AssaltosLiberados;
         saveAtual.capituloAtual = GameManager.instance.CapituloAtual;
+
+        saveAtual.assaltoAtual = -1;
+        if(player.GeneralManager.AssaltoManager.GetAssaltoAtual != null)
+        {
+            for (int i = 0; i < player.GeneralManager.AssaltoManager.Assaltos.Count; i++)
+            {
+                if(player.GeneralManager.AssaltoManager.Assaltos[i] == player.GeneralManager.AssaltoManager.GetAssaltoAtual)
+                {
+                    saveAtual.assaltoAtual = i;
+                    break;
+                }
+            }
+        }
+
         saveAtual.estadoDasMissoes = Missoes.GetEstadoMissaoList;
         saveAtual.flags = Flags.GetFlagList;
     }
