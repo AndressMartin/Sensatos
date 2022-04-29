@@ -10,7 +10,6 @@ public class NPCDialogo : ObjetoInteragivel
     private DialogueActivator dialogueActivator;
     private NPC npc;
 
-    int cont=0;
     public void Iniciar(NPC _npc)
     {
         npc = _npc;
@@ -18,7 +17,6 @@ public class NPCDialogo : ObjetoInteragivel
         dialogueActivator = GetComponent<DialogueActivator>();
 
         generalManager.ObjectManager.AdicionarAosObjetosInteragiveis(this);
-
     }
 
     public override void Interagir(Player player)
@@ -39,13 +37,13 @@ public class NPCDialogo : ObjetoInteragivel
             else if (npc.GetMissaoAtual.GetEstado == Missoes.Estado.Concluida)
             {
                 npc.Interagir(player);
-                TrocarDialogoComponenteListaIndexExpecifico(npc.GetDialogueListSemMissao,cont);
+                TrocarDialogoComponenteListaIndexExpecifico(npc.GetDialogueListSemMissao,npc.RetornarDialogoGenericoAtual().GetCont);
                 dialogueActivator.ShowDialogue(player.GeneralManager);
             }
         }
         else
         {
-            TrocarDialogoComponenteListaIndexExpecifico(npc.GetDialogueListSemMissao, cont);
+            TrocarDialogoComponenteListaIndexExpecifico(npc.GetDialogueListSemMissao, npc.RetornarDialogoGenericoAtual().GetCont);
             dialogueActivator.ShowDialogue(player.GeneralManager);
         }
     }
@@ -100,8 +98,6 @@ public class NPCDialogo : ObjetoInteragivel
 
     void Contador()
     {
-        cont++;
-        if (cont >= npc.GetDialogueListAtual.GetDialogueList.Count)
-            cont = 0;
+        npc.RetornarDialogoGenericoAtual().addCont();
     }
 }

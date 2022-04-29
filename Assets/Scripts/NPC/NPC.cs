@@ -12,16 +12,17 @@ public class NPC : MonoBehaviour
     NPCDialogo NpcDialogo;
     NpcMissao npcMissao;
 
+
     //Variaveis
     Assalto assaltoAtual;
     private Missao missaoAtual;
     private DialogueList listaDialogoAtual;
-    [SerializeField] private DialogueList listaDialogoSemMissao;
+    [SerializeField] List<CapituloDialogoNpc> capituloDialogoNpc;
+
 
     public Missao GetMissaoAtual => missaoAtual;
     public NpcMissao GetNpcMissao => npcMissao;
-    public DialogueList GetDialogueListSemMissao => listaDialogoSemMissao;
-    public DialogueList GetDialogueListAtual=>listaDialogoAtual;
+    public DialogueList GetDialogueListSemMissao => RetornarDialogoGenericoAtual().GetDialogueList;
     public GeneralManagerScript GetGeneralManager => generalManager;
 
     void Start()
@@ -33,7 +34,12 @@ public class NPC : MonoBehaviour
         generalManager.NpcManager.AddList(this);
         NpcDialogo.Iniciar(this);
 
-        listaDialogoAtual = listaDialogoSemMissao;
+        foreach (var item in capituloDialogoNpc)
+        {
+            item.InicializarContador();
+        }
+
+        listaDialogoAtual = RetornarDialogoGenericoAtual().GetDialogueList;
 
         NpcDialogo.TrocarDialogoComponenteLista(listaDialogoAtual.GetDialogueList[0]);
 
@@ -75,7 +81,7 @@ public class NPC : MonoBehaviour
             if (!value)
             {
                 missaoAtual = null;
-                listaDialogoAtual = listaDialogoSemMissao;
+                listaDialogoAtual = RetornarDialogoGenericoAtual().GetDialogueList;
                 NpcDialogo.TrocarDialogoComponenteLista(listaDialogoAtual.GetDialogueList[0]);
             }
 
@@ -111,7 +117,7 @@ public class NPC : MonoBehaviour
         {
             if (missaoAtual.GetEstado == Missoes.Estado.Concluida)
             {
-                listaDialogoAtual = listaDialogoSemMissao;
+                listaDialogoAtual = RetornarDialogoGenericoAtual().GetDialogueList;
                 NpcDialogo.TrocarDialogoComponenteLista(listaDialogoAtual.GetDialogueList[0]);
             }
             else if (missaoAtual.GetEstado == Missoes.Estado.Ativa)
@@ -125,12 +131,45 @@ public class NPC : MonoBehaviour
                 VerificarAssaltoMissao.VerificarMissao(missaoAtual, generalManager);
                 NpcDialogo.TrocarDialogoMissaoEspecifico(missaoAtual, Missoes.Estado.Ativa);
             }
-
-
         }
     }
     public void CompletarMissao()
     {
         missaoAtual.SetEstado(Missoes.Estado.Concluida);
+    }
+
+    public CapituloDialogoNpc RetornarDialogoGenericoAtual()
+    {
+        foreach (var item in capituloDialogoNpc)
+        {
+            if (item.GetCapitulo == GameManager.instance.CapituloAtual)
+            {
+                return item;
+            }
+        }
+        return null;
+    }
+}
+[System.Serializable]
+public class CapituloDialogoNpc
+{
+    [SerializeField]private GameManager.Capitulo capitulo;
+    [SerializeField]private DialogueList dialogueList;
+
+    private int cont = 0;
+    private int contMax;
+
+    public GameManager.Capitulo GetCapitulo => capitulo;
+    public DialogueList GetDialogueList => dialogueList;
+    public int GetCont => cont;
+    public void InicializarContador()
+    {
+        contMax = dialogueList.GetDialogueList.Count;
+    }
+    public void addCont()
+    {
+        cont++;
+        if (cont >= contMax)
+            cont = 0;
     }
 }
