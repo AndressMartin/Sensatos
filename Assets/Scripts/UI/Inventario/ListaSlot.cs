@@ -74,4 +74,11 @@ public class ListaSlot : MonoBehaviour
             numero.color = Color.black;
         }
     }
+
+    public void SelecionadoCor(Color corLetra, Color corFundo)
+    {
+        imagemFundo.color = corFundo;
+        nome.color = corLetra;
+        numero.color = corLetra;
+    }
 }

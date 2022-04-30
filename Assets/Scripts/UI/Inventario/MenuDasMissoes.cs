@@ -25,7 +25,7 @@ public class MenuDasMissoes : MonoBehaviour
 
     private float barraDeRolagemAlturaInicial;
 
-    private List<Missao> listaDeMissoes = new List<Missao>();
+    private List<ReferenciaMissao> listaDeMissoes = new List<ReferenciaMissao>();
 
     private string nomeSemMissoes = "";
     private string descricaoSemMissoes = "";
@@ -82,8 +82,8 @@ public class MenuDasMissoes : MonoBehaviour
 
     private void AtualizarInformacoesDaMissao()
     {
-        nomeDaMissao.text = listaDeMissoes[selecao].Nome;
-        descricaoDaMissao.text = listaDeMissoes[selecao].Descricao;
+        nomeDaMissao.text = listaDeMissoes[selecao].Missao.Nome;
+        descricaoDaMissao.text = listaDeMissoes[selecao].Missao.Descricao;
     }
 
     private void AtualizarScroolDasMissoes()
@@ -96,9 +96,9 @@ public class MenuDasMissoes : MonoBehaviour
             }
             else
             {
-                missoes[i].AtualizarNome(listaDeMissoes[scrool + i].Nome);
+                missoes[i].AtualizarNome(listaDeMissoes[scrool + i].Missao.Nome);
 
-                if (listaDeMissoes[scrool + i].GetEstado == Missoes.Estado.Concluida)
+                if (listaDeMissoes[scrool + i].Missao.GetEstado == Missoes.Estado.Concluida)
                 {
                     missoes[i].AtualizarImagem(imagemMissaoConcluida);
                 }
@@ -107,13 +107,18 @@ public class MenuDasMissoes : MonoBehaviour
                     missoes[i].AtualizarImagem(imagemMissaoNaoConcluida);
                 }
 
+                //Muda a cor do slot de acordo com o tipo da missao
+                if(listaDeMissoes[scrool + i].TipoMissao == ReferenciaMissao.Tipo.Principal)
+                {
+                    missoes[i].SelecionadoCor(Color.black, Color.red);
+                }
+                else
+                {
+                    missoes[i].SelecionadoCor(Color.black, Color.yellow);
+                }
+
                 missoes[i].gameObject.SetActive(true);
             }
-        }
-
-        foreach (ListaSlot missao in missoes)
-        {
-            missao.Selecionado(false);
         }
 
         missoes[selecao - scrool].Selecionado(true);
@@ -136,20 +141,20 @@ public class MenuDasMissoes : MonoBehaviour
 
         //Criar a lista com as missoes principais e as secundarias que ja foram ativadas
         listaDeMissoes.Clear();
-        listaDeMissoes = new List<Missao>();
+        listaDeMissoes = new List<ReferenciaMissao>();
 
         if(generalManager.AssaltoManager.GetAssaltoAtual != null)
         {
             foreach (Missao missao in generalManager.AssaltoManager.GetAssaltoAtual.GetMissoesPrincipais)
             {
-                listaDeMissoes.Add(missao);
+                listaDeMissoes.Add(new ReferenciaMissao(missao, ReferenciaMissao.Tipo.Principal));
             }
 
             foreach (Missao missao in generalManager.AssaltoManager.GetAssaltoAtual.GetMissoesSecundarias)
             {
                 if (missao.GetEstado != Missoes.Estado.Inativa)
                 {
-                    listaDeMissoes.Add(missao);
+                    listaDeMissoes.Add(new ReferenciaMissao(missao, ReferenciaMissao.Tipo.Secundaria));
                 }
             }
         }
@@ -240,6 +245,26 @@ public class MenuDasMissoes : MonoBehaviour
                 nomeSemMissoes = nomeSemMissoesIngles;
                 descricaoSemMissoes = descricaoSemMissoesIngles;
                 break;
+        }
+    }
+
+    private struct ReferenciaMissao
+    {
+        //Enuns
+        public enum Tipo { Principal, Secundaria}
+
+        //Variaveis
+        private Missao missao;
+        private Tipo tipoMissao;
+
+        //Getters
+        public Missao Missao => missao;
+        public Tipo TipoMissao => tipoMissao;
+
+        public ReferenciaMissao(Missao missao, Tipo tipoMissao)
+        {
+            this.missao = missao;
+            this.tipoMissao = tipoMissao;
         }
     }
 }

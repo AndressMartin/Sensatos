@@ -94,10 +94,6 @@ public class NPC : MonoBehaviour
                 {
                     NpcDialogo.TrocarDialogoConformeMissao(assalto.GetMissoesSecundarias);
                 }
-                if (missaoAtual.GetEstado != Missoes.Estado.Concluida)
-                {
-                    VerificarAssaltoMissao.VerificarMissao(missaoAtual, generalManager);
-                }
             }
         }
         

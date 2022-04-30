@@ -7,7 +7,7 @@ public class Missao : ScriptableObject
 {
     //Variaveis
     [SerializeField] protected string nome;
-    [SerializeField] protected string descricao;
+    [SerializeField] [TextArea(3, 6)] protected string descricao;
 
     //Getters
     public string Nome => nome;
