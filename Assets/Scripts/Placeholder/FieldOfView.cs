@@ -6,30 +6,46 @@ public class FieldOfView : MonoBehaviour
 {
     [SerializeField] private LayerMask layerMask;
     private Mesh mesh;
+    private MeshRenderer meshRenderer;
     private Vector3 origin;
     private float startingAngle;
     private float fov;
     private float viewDistance;
-    public GameObject objeto;
 
+    private Enemy pai;
+
+    public void SetPai(Enemy enemy)
+    {
+        pai = enemy;
+    }
 
     void Start()
     {
         mesh = new Mesh();
+
+        meshRenderer = GetComponent<MeshRenderer>();
+        meshRenderer.sortingLayerName = "Default";
+        meshRenderer.sortingOrder = -1;
+
         GetComponent<MeshFilter>().mesh = mesh;
+
         origin = Vector3.zero;
         fov = 90;
-        viewDistance = 50f;
-
+        viewDistance = 6f;
     }
-    private void Update()
-    {
-        SetOrigin(objeto.transform.position);
-        SetDirection(objeto.transform.right);
 
-    }
     private void LateUpdate()
     {
+        if(pai != null)
+        {
+            meshRenderer.enabled = pai.gameObject.activeSelf;
+
+            if(pai.gameObject.activeSelf == false)
+            {
+                return;
+            }
+        }
+
         int rayCount = 50;
         float angle = startingAngle;
         float angleIncrease = fov / rayCount;
@@ -48,7 +64,6 @@ public class FieldOfView : MonoBehaviour
         for (int i = 0; i <= rayCount; i++)
         {
             Vector3 vertex;
-            Debug.DrawRay(origin, GetVectorFromAngle(angle),Color.green);
             RaycastHit2D raycastHit2D = Physics2D.Raycast(origin, GetVectorFromAngle(angle), viewDistance, layerMask);
             if (raycastHit2D.collider == null)
             {
@@ -86,9 +101,16 @@ public class FieldOfView : MonoBehaviour
     {
         this.origin = origin;
     }
+
     public void SetDirection(Vector3 direction)
     {
         startingAngle =  GetAngleFromVectorFloat(direction) - fov/2f ;
+    }
+
+    public void SetArea(float fov, float viewDistance)
+    {
+        this.fov = fov;
+        this.viewDistance = viewDistance;
     }
 
     Vector3 GetVectorFromAngle(float angle)

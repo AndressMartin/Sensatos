@@ -51,7 +51,6 @@ public class EnemyVisionScript : MonoBehaviour
         //Debug.Log("tenho "+visaoCircularEnemy);
         polygonCollider = GetComponent<PolygonCollider2D>();
         enemy = GetComponentInParent<Enemy>();
-        fieldOfView = GetComponentInChildren<FieldOfView>();
 
         visaoCircularEnemy.ValorRaioInicial(raioVisaoCircular);
 
@@ -60,6 +59,15 @@ public class EnemyVisionScript : MonoBehaviour
         v1 = new Vector2(offSetOrigemX, offSetOrigemY);
 
         MudarVisao(false);
+
+        //Field of View
+        GeneralManagerScript generalManager = FindObjectOfType<GeneralManagerScript>();
+
+        GameObject novoFieldOfView = Instantiate(generalManager.FieldView);
+        novoFieldOfView.transform.parent = generalManager.FieldView.transform.parent;
+
+        fieldOfView = novoFieldOfView.GetComponent<FieldOfView>();
+        fieldOfView.SetPai(enemy);
     }
 
     public void Main()
@@ -67,6 +75,7 @@ public class EnemyVisionScript : MonoBehaviour
         vendoPlayerCircular=visaoCircularEnemy.VendoPlayer;
         direcao = enemy.GetDirecao;
         MudarDirecaoConeVisao();
+        AtualizarFieldView();
     }
 
     public void ResetarVariaveisDeControle()
@@ -99,7 +108,7 @@ public class EnemyVisionScript : MonoBehaviour
                 v2 = new Vector2((offSetOrigemX - offSet - larguraVisao), (offSetOrigemY + alturaVisao));
                 v3 = new Vector2((offSetOrigemX - offSet - larguraVisao), (offSetOrigemY - alturaVisao));
 
-                fieldOfView.SetOrigin(v1);
+                fieldOfView.SetOrigin((Vector2)enemy.transform.position + v1);
                 fieldOfView.SetDirection(Vector2.down);
                 break;
 
@@ -108,7 +117,7 @@ public class EnemyVisionScript : MonoBehaviour
                 v2 = new Vector2((offSetOrigemX + offSet + larguraVisao), (offSetOrigemY + alturaVisao));
                 v3 = new Vector2((offSetOrigemX + offSet + larguraVisao), (offSetOrigemY - alturaVisao));
 
-                fieldOfView.SetOrigin(v1);
+                fieldOfView.SetOrigin((Vector2)enemy.transform.position + v1);
                 fieldOfView.SetDirection(Vector2.up);
                 break;
 
@@ -117,7 +126,7 @@ public class EnemyVisionScript : MonoBehaviour
                 v2 = new Vector2((offSetOrigemX - alturaVisao), (offSetOrigemY + offSet + larguraVisao));
                 v3 = new Vector2((offSetOrigemX + alturaVisao), (offSetOrigemY + offSet + larguraVisao));
 
-                fieldOfView.SetOrigin(v1);
+                fieldOfView.SetOrigin((Vector2)enemy.transform.position + v1);
                 fieldOfView.SetDirection(Vector2.left);
                 break;
 
@@ -126,7 +135,7 @@ public class EnemyVisionScript : MonoBehaviour
                 v2 = new Vector2((offSetOrigemX + alturaVisao), (offSetOrigemY - offSet - larguraVisao));
                 v3 = new Vector2((offSetOrigemX - alturaVisao), (offSetOrigemY - offSet - larguraVisao));
 
-                fieldOfView.SetOrigin(v1);
+                fieldOfView.SetOrigin((Vector2)enemy.transform.position + v1);
                 fieldOfView.SetDirection(Vector2.right);
                 break;
 
@@ -146,6 +155,20 @@ public class EnemyVisionScript : MonoBehaviour
         {
             SairModoPatrulha();
             controle = false;
+        }
+    }
+
+    private void AtualizarFieldView()
+    {
+        //fieldOfView.SetOrigin(enemy.transform.position);
+        //fieldOfView.SetArea(fov, viewDistance);
+    }
+
+    public void FieldOfViewAtiva(bool ativa)
+    {
+        if(fieldOfView != null)
+        {
+            fieldOfView.gameObject.SetActive(ativa);
         }
     }
 

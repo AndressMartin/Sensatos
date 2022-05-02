@@ -27,6 +27,7 @@ public class GeneralManagerScript : MonoBehaviour
     private Player player;
     private HUDScript hud;
     private DialogueUI dialogueUI;
+    private GameObject fieldView;
 
     //Getters
     public IdiomaManager IdiomaManager => idiomaManager;
@@ -47,6 +48,7 @@ public class GeneralManagerScript : MonoBehaviour
     public Player Player => player;
     public HUDScript Hud => hud;
     public DialogueUI DialogueUI => dialogueUI;
+    public GameObject FieldView => fieldView;
     public AssaltoManager AssaltoManager => assaltoManager;
     public NpcManager NpcManager => npcManager;
 
@@ -70,9 +72,11 @@ public class GeneralManagerScript : MonoBehaviour
         debugModeManager = FindObjectOfType<DebugModeManagerScript>();
         assaltoManager = FindObjectOfType<AssaltoManager>();
         npcManager = FindObjectOfType<NpcManager>();
+
         //Componentes
         player = FindObjectOfType<Player>();
         hud = FindObjectOfType<HUDScript>();
         dialogueUI = FindObjectOfType<DialogueUI>();
+        fieldView = FindObjectOfType<FieldOfView>(true)?.gameObject;
     }
 }

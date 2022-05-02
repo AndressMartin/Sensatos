@@ -153,7 +153,7 @@ public class Enemy : EntityModel
         {
             RotinasDoInimigo();
         }
-        else if (generalManager.Player.GetEstado == Player.Estado.Morto)
+        else if (generalManager.Player.GetEstado == Player.Estado.Morto && morto == false)
         {
             enemyMovement.ZerarVelocidade();
             Animar();
@@ -274,6 +274,19 @@ public class Enemy : EntityModel
             KnockBackTriggerTempo();
 
             CadenciaTiro();
+
+            if(ia_Enemy.GetEstadoDeteccaoPlayer != IAEnemy.EstadoDeteccaoPlayer.PlayerDetectado)
+            {
+                enemyVision.FieldOfViewAtiva(true);
+            }
+            else
+            {
+                enemyVision.FieldOfViewAtiva(false);
+            }
+        }
+        else
+        {
+            enemyVision.FieldOfViewAtiva(false);
         }
     }
 
