@@ -455,13 +455,13 @@ public class IAEnemy : MonoBehaviour
                             {
                                 MudarEnumIndoAtivarLockdown();
                             }
-                            Debug.Log("Perdi o player De vista, indo na sua ultima posicao");
+                            //Debug.Log("Perdi o player De vista, indo na sua ultima posicao");
                             //O inimigo pode ficar preso procurando a ultima posicao do jogador nesta parte do codigo!!! ****
                         }
                         else
                         {
                             tomeiDano = false;
-                            Debug.Log("tempo " + tempoEsquecerPlayer);
+                            //Debug.Log("tempo " + tempoEsquecerPlayer);
                             inimigoEstados = InimigoEstados.AndandoUltimaPosicaoPlayerConhecida;
                         }
                     }

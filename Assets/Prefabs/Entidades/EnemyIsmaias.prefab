@@ -685,15 +685,14 @@ MonoBehaviour:
   mask:
     serializedVersion: 2
     m_Bits: 64
-  larguraVisaoNormal: 4
-  alturaVisaoNormal: 4
-  larguraVisaoAlerta: 5
-  alturaVisaoAlerta: 5
+  fovNormal: 90
+  distanciaNormal: 6
+  fovAlerta: 100
+  distanciaAlerta: 7
   raioVisaoCircular: 8
   offSet: 0.75
   vendoPlayer: 0
   vendoPlayerCircular: 0
-  tempo: 0
   intervaloDeTempo: 0.2
 --- !u!60 &6297625326220625048
 PolygonCollider2D:

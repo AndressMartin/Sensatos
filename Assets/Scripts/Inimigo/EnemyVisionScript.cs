@@ -8,12 +8,13 @@ public class EnemyVisionScript : MonoBehaviour
 
     //variaveis
     [SerializeField] LayerMask mask;
-    [SerializeField] private float larguraVisaoNormal, alturaVisaoNormal;
-    [SerializeField] private float larguraVisaoAlerta, alturaVisaoAlerta;
+    [SerializeField] private float fovNormal, distanciaNormal;
+    [SerializeField] private float fovAlerta, distanciaAlerta;
     [SerializeField] private float raioVisaoCircular;
     [SerializeField] private float offSet;
+ 
+    private float fov, distancia;
     private float offSetOrigemX, offSetOrigemY;
-
     private float larguraVisao, alturaVisao;
 
     Vector2 v1, v2 = new Vector2(0, 0), v3 = new Vector2(0, 0);
@@ -22,9 +23,10 @@ public class EnemyVisionScript : MonoBehaviour
     //Variaveis de controle
     [SerializeField] private bool vendoPlayer;
     [SerializeField] private bool vendoPlayerCircular;
-    [SerializeField] private float tempo;
     [SerializeField] private float intervaloDeTempo;
 
+
+    private float tempo;
     bool controle;
 
     //Componentes
@@ -39,8 +41,9 @@ public class EnemyVisionScript : MonoBehaviour
 
     void Start()
     {
-        larguraVisao = larguraVisaoNormal;
-        alturaVisao = alturaVisaoNormal;
+
+        fov = fovNormal;
+        distancia = distanciaNormal;
 
         offSetOrigemX = 0;
         offSetOrigemY = 0;
@@ -68,31 +71,33 @@ public class EnemyVisionScript : MonoBehaviour
 
         fieldOfView = novoFieldOfView.GetComponent<FieldOfView>();
         fieldOfView.SetPai(enemy);
+        //fieldOfView.SetArea(fov, distancia);
     }
-
+    
     public void Main()
     {
         vendoPlayerCircular=visaoCircularEnemy.VendoPlayer;
         direcao = enemy.GetDirecao;
         MudarDirecaoConeVisao();
         AtualizarFieldView();
+        AtualizarPollygonCollider();
     }
 
     public void ResetarVariaveisDeControle()
     {
-        larguraVisao = larguraVisaoNormal;
-        alturaVisao = alturaVisaoNormal;
+        fov = fovNormal;
+        distancia = distanciaNormal;
         vendoPlayer = false;
     }
     public void EntrarModoPatrulha()
     {
-        larguraVisao = larguraVisaoAlerta;
-        alturaVisao = alturaVisaoAlerta;
+        fov = fovAlerta;
+        distancia = distanciaAlerta;
     }
     public void SairModoPatrulha()
     {
-        larguraVisao = larguraVisaoNormal;
-        alturaVisao = alturaVisaoNormal;
+        fov = fovNormal;
+        distancia = distanciaNormal;
     }
     void ZerarVariaveis()
     {
@@ -139,8 +144,7 @@ public class EnemyVisionScript : MonoBehaviour
                 fieldOfView.SetDirection(Vector2.right);
                 break;
 
-        }
-        polygonCollider.points = new[] { v1, v2, v3 };
+        }      
         //float h2 = (larguraConeVisao - pontoX) * (larguraConeVisao - pontoX) + (alturaConeVisao - pontoY) * (alturaConeVisao - pontoY);
 
     }
@@ -160,8 +164,8 @@ public class EnemyVisionScript : MonoBehaviour
 
     private void AtualizarFieldView()
     {
-        //fieldOfView.SetOrigin(enemy.transform.position);
-        //fieldOfView.SetArea(fov, viewDistance);
+        fieldOfView.SetOrigin(enemy.transform.position);
+        fieldOfView.SetArea(fov, distancia);
     }
 
     public void FieldOfViewAtiva(bool ativa)
@@ -170,6 +174,42 @@ public class EnemyVisionScript : MonoBehaviour
         {
             fieldOfView.gameObject.SetActive(ativa);
         }
+    }
+    void AtualizarPollygonCollider()
+    {
+        if(!fieldOfView.gameObject.activeSelf)
+        {
+            polygonCollider.enabled = false;
+            return;
+        }
+        if (fieldOfView == null)
+        {
+            return;
+        }
+        else
+        {
+            if (fieldOfView.GetMesh != null)
+            {
+                polygonCollider.enabled = true;
+
+                var axs = fieldOfView.GetMesh.vertices;
+
+                Vector2[] ListaPontosMesh = new Vector2[axs.Length];
+
+                for (int i = 0; i < axs.Length; i++)
+                {
+                    Vector2 ponto = axs[i];
+                    var pontoCorrigido = ponto - ((Vector2)enemy.transform.position);
+                    ListaPontosMesh.SetValue(pontoCorrigido, i);
+                }
+
+                polygonCollider.points = ListaPontosMesh;
+                return;
+            }
+            
+        }
+
+        
     }
 
     private void OnTriggerStay2D(Collider2D collision)

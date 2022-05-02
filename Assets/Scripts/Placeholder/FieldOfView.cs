@@ -13,6 +13,7 @@ public class FieldOfView : MonoBehaviour
     private float viewDistance;
 
     private Enemy pai;
+    public Mesh GetMesh => mesh;
 
     public void SetPai(Enemy enemy)
     {
@@ -30,8 +31,7 @@ public class FieldOfView : MonoBehaviour
         GetComponent<MeshFilter>().mesh = mesh;
 
         origin = Vector3.zero;
-        fov = 90;
-        viewDistance = 6f;
+
     }
 
     private void LateUpdate()
@@ -51,7 +51,7 @@ public class FieldOfView : MonoBehaviour
         float angleIncrease = fov / rayCount;
 
 
-        print(origin);
+        //print(origin);
 
         Vector3[] vertices = new Vector3[rayCount + 1 + 1];
         Vector2[] uv = new Vector2[vertices.Length];
