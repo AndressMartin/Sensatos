@@ -399,4 +399,17 @@ public class Inventario : MonoBehaviour
         //Lista de roupas
         roupasDeCamuflagem.Clear();
     }
+
+    public bool PossuiArma(ArmaDeFogo arma)
+    {
+        foreach(ArmaDeFogo armaNoInventario in armas)
+        {
+            if(armaNoInventario.ID == arma.ID)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }

@@ -99,6 +99,24 @@ public class DebugModeManagerScript : MonoBehaviour
         {
             GameManager.instance.SetAssaltosLiberados(GameManager.instance.AssaltosLiberados + 1);
         }
+
+        //Liberar a compra das armas e itens
+        if (Input.GetKeyUp(KeyCode.N))
+        {
+            Flags.SetFlag(Flags.Flag.Teste1, true);
+            Flags.SetFlag(Flags.Flag.Teste2, true);
+            Flags.SetFlag(Flags.Flag.Teste3, true);
+            Flags.SetFlag(Flags.Flag.Teste4, true);
+        }
+
+        //Bloquear a compra das armas e itens
+        if (Input.GetKeyUp(KeyCode.M))
+        {
+            Flags.SetFlag(Flags.Flag.Teste1, false);
+            Flags.SetFlag(Flags.Flag.Teste2, false);
+            Flags.SetFlag(Flags.Flag.Teste3, false);
+            Flags.SetFlag(Flags.Flag.Teste4, false);
+        }
     }
 
     private void ContadorDeFPS()

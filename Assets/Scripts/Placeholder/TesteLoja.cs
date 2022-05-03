@@ -7,6 +7,9 @@ public class TesteLoja : ObjetoInteragivel
     //Managers
     private GeneralManagerScript generalManager;
 
+    //Variaveis
+    [SerializeField] private InventarioLoja inventarioLoja;
+
     void Start()
     {
         //Managers
@@ -18,6 +21,6 @@ public class TesteLoja : ObjetoInteragivel
 
     public override void Interagir(Player player)
     {
-        generalManager.Hud.MenuDaLoja.AbrirOMenuDaLoja();
+        generalManager.Hud.MenuDaLoja.AbrirOMenuDaLoja(inventarioLoja);
     }
 }

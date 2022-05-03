@@ -24,6 +24,11 @@ public class MenuDaLoja : MonoBehaviour
 
     private int selecao;
 
+    private InventarioLoja inventarioLoja;
+
+    //Getters
+    public InventarioLoja InventarioLoja => inventarioLoja;
+
     //Setters
     public void SetMenuAtual(Menu menuAtual)
     {
@@ -111,8 +116,11 @@ public class MenuDaLoja : MonoBehaviour
         }
     }
 
-    public void AbrirOMenuDaLoja()
+    public void AbrirOMenuDaLoja(InventarioLoja inventarioLoja)
     {
+        //Seta o inventario da loja como o recebido
+        this.inventarioLoja = inventarioLoja;
+
         generalManager.Hud.SetMenuAberto(HUDScript.Menu.Loja);
         generalManager.PauseManager.Pausar(true);
         generalManager.PauseManager.SetPermitirInput(false);
@@ -127,6 +135,9 @@ public class MenuDaLoja : MonoBehaviour
 
     private void FecharOMenuDaLoja()
     {
+        //Zera o inventario da loja
+        this.inventarioLoja = null;
+
         generalManager.Hud.SetMenuAberto(HUDScript.Menu.Nenhum);
         generalManager.PauseManager.Pausar(false);
         generalManager.PauseManager.SetPermitirInput(true);
@@ -186,7 +197,7 @@ public class MenuDaLoja : MonoBehaviour
                 case 0:
                     SetMenuAtual(Menu.Armas);
 
-                    //menuSalvar.IniciarScrool();
+                    lojaDeArmas.IniciarScrool();
 
                     generalManager.Hud.SonsDeMenus.TocarSom(SonsDeMenus.Som.Confirmar);
 
@@ -220,7 +231,7 @@ public class MenuDaLoja : MonoBehaviour
 
     private void MenuArmas()
     {
-        //menuSalvar.EscolhendoSave();
+        lojaDeArmas.MenuLojaDeArmas();
     }
 
     private void MenuMelhorias()
