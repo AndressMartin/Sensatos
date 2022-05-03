@@ -13,7 +13,9 @@ public class FieldOfView : MonoBehaviour
     private float viewDistance;
 
     private Enemy pai;
+    private List<Vector2> pontos = new List<Vector2>();
     public Mesh GetMesh => mesh;
+    public List<Vector2> GetPontos => pontos;
 
     public void SetPai(Enemy enemy)
     {
@@ -31,7 +33,6 @@ public class FieldOfView : MonoBehaviour
         GetComponent<MeshFilter>().mesh = mesh;
 
         origin = Vector3.zero;
-
     }
 
     private void LateUpdate()
@@ -61,10 +62,15 @@ public class FieldOfView : MonoBehaviour
 
         int vertexIndex = 1;
         int triangleIndex = 0;
+        pontos.Clear();
+        pontos.Add(origin);
         for (int i = 0; i <= rayCount; i++)
         {
             Vector3 vertex;
             RaycastHit2D raycastHit2D = Physics2D.Raycast(origin, GetVectorFromAngle(angle), viewDistance, layerMask);
+
+            pontos.Add(origin + GetVectorFromAngle(angle) * viewDistance);
+            
             if (raycastHit2D.collider == null)
             {
                 // No hit

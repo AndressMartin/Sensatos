@@ -25,6 +25,7 @@ public class EnemyVisionScript : MonoBehaviour
     [SerializeField] private bool vendoPlayerCircular;
     [SerializeField] private float intervaloDeTempo;
 
+    EntityModel.Direcao direcaoAntiga;
 
     private float tempo;
     bool controle;
@@ -41,6 +42,8 @@ public class EnemyVisionScript : MonoBehaviour
 
     void Start()
     {
+        direcaoAntiga = direcao;
+        //transform.Rotate(0, 0, -90);
 
         fov = fovNormal;
         distancia = distanciaNormal;
@@ -78,9 +81,19 @@ public class EnemyVisionScript : MonoBehaviour
     {
         vendoPlayerCircular=visaoCircularEnemy.VendoPlayer;
         direcao = enemy.GetDirecao;
-        MudarDirecaoConeVisao();
         AtualizarFieldView();
-        AtualizarPollygonCollider();
+        MudarDirecaoConeVisao();
+
+        if(enemy.GetIAEnemy.GetEstadoDeteccaoPlayer == IAEnemy.EstadoDeteccaoPlayer.PlayerDetectado)
+        {
+            Vector2[] vectors = new Vector2[1] {new Vector2(0,0)};
+            polygonCollider.points = vectors;
+            vendoPlayer = false;
+        }
+        else
+        {
+            AtualizarPollygonCollider();
+        }
     }
 
     public void ResetarVariaveisDeControle()
@@ -143,8 +156,13 @@ public class EnemyVisionScript : MonoBehaviour
                 fieldOfView.SetOrigin((Vector2)enemy.transform.position + v1);
                 fieldOfView.SetDirection(Vector2.right);
                 break;
+        }
+        if(direcaoAntiga != direcao)
+        {
+            direcaoAntiga = direcao;
+            AtualizarPollygonCollider();
 
-        }      
+        }
         //float h2 = (larguraConeVisao - pontoX) * (larguraConeVisao - pontoX) + (alturaConeVisao - pontoY) * (alturaConeVisao - pontoY);
 
     }
@@ -177,39 +195,17 @@ public class EnemyVisionScript : MonoBehaviour
     }
     void AtualizarPollygonCollider()
     {
-        if(!fieldOfView.gameObject.activeSelf)
+        List<Vector2> temp = new List<Vector2>();
+        for (int i = 0; i < fieldOfView.GetPontos.Count; i++)
         {
-            polygonCollider.enabled = false;
-            return;
+            Vector2 ponto = fieldOfView.GetPontos[i];
+            var pontoCorrigido = ponto - ((Vector2)enemy.transform.position);
+            temp.Add(pontoCorrigido);
         }
-        if (fieldOfView == null)
+        if (polygonCollider != null)
         {
-            return;
+            polygonCollider.points = temp.ToArray();
         }
-        else
-        {
-            if (fieldOfView.GetMesh != null)
-            {
-                polygonCollider.enabled = true;
-
-                var axs = fieldOfView.GetMesh.vertices;
-
-                Vector2[] ListaPontosMesh = new Vector2[axs.Length];
-
-                for (int i = 0; i < axs.Length; i++)
-                {
-                    Vector2 ponto = axs[i];
-                    var pontoCorrigido = ponto - ((Vector2)enemy.transform.position);
-                    ListaPontosMesh.SetValue(pontoCorrigido, i);
-                }
-
-                polygonCollider.points = ListaPontosMesh;
-                return;
-            }
-            
-        }
-
-        
     }
 
     private void OnTriggerStay2D(Collider2D collision)
@@ -229,7 +225,7 @@ public class EnemyVisionScript : MonoBehaviour
             {
                 RaycastHit2D hits;
                 hits = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y),
-                    new Vector2(entityModelTemp.transform.position.x - transform.position.x, entityModelTemp.transform.position.y - transform.position.y), larguraVisao, mask.value);
+                    new Vector2(entityModelTemp.transform.position.x - transform.position.x, entityModelTemp.transform.position.y - transform.position.y), distancia, mask.value);
 
                 if (!hits)
                 {
