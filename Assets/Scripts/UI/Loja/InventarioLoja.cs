@@ -10,6 +10,8 @@ public class InventarioLoja : ScriptableObject
     [SerializeField] private List<ArmaLoja> listaDeArmas;
     [SerializeField] private List<ItemLoja> listaDeItens;
 
+    private bool iniciado = false;
+
     //Getters
     public List<ArmaLoja> ListaDeArmas => listaDeArmas;
     public List<ItemLoja> ListaDeItens => listaDeItens;
@@ -38,6 +40,13 @@ public class InventarioLoja : ScriptableObject
         public Flags.Flag Flag => flag;
 
         //Setters
+        public void IniciarArma()
+        {
+            ArmaDeFogo novaArma = ScriptableObject.Instantiate(arma);
+            novaArma.name = arma.name;
+            this.arma = novaArma;
+        }
+
         public void SetTipo(TipoCompra tipo)
         {
             this.tipo = tipo;
@@ -57,5 +66,33 @@ public class InventarioLoja : ScriptableObject
         public Item Item => item;
         public int Preco => preco;
         public Flags.Flag Flag => flag;
+
+        //Setters
+        public void IniciarItem()
+        {
+            Item novoItem = ScriptableObject.Instantiate(item);
+            novoItem.name = item.name;
+            this.item = novoItem;
+        }
+    }
+
+    public void Iniciar()
+    {
+        if (iniciado == true)
+        {
+            return;
+        }
+
+        foreach (ArmaLoja armaLoja in listaDeArmas)
+        {
+            armaLoja.IniciarArma();
+        }
+
+        foreach (ItemLoja itemLoja in listaDeItens)
+        {
+            itemLoja.IniciarItem();
+        }
+
+        iniciado = true;
     }
 }

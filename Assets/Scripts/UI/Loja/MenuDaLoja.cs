@@ -131,6 +131,11 @@ public class MenuDaLoja : MonoBehaviour
     {
         //Seta o inventario da loja como o recebido
         this.inventarioLoja = inventarioLoja;
+
+        if(this.inventarioLoja != null)
+        {
+            this.inventarioLoja.Iniciar();
+        }
         
         //Atualiza o idioma dos itens da loja
         TrocarIdioma();
