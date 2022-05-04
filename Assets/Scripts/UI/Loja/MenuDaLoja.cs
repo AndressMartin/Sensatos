@@ -11,14 +11,14 @@ public class MenuDaLoja : MonoBehaviour
     [SerializeField] private RectTransform telaInicial;
     [SerializeField] private LojaDeArmas lojaDeArmas;
     [SerializeField] private LojaDeMelhorias lojaDeMelhorias;
-    [SerializeField] private LojaDeFerramentas lojaDeFerramentas;
+    [SerializeField] private LojaDeItens lojaDeItens;
 
     [SerializeField] private PainelDeEscolha opcoesMenuInicial;
 
     private MudarIdiomaItensDoInventario mudarIdiomaItensDoInventario;
 
     //Enums
-    public enum Menu { Inicio, Armas, Melhorias, Ferramentas }
+    public enum Menu { Inicio, Armas, Melhorias, Itens }
 
     //Variaveis
     private bool ativo;
@@ -42,28 +42,28 @@ public class MenuDaLoja : MonoBehaviour
                 telaInicial.gameObject.SetActive(true);
                 lojaDeArmas.gameObject.SetActive(false);
                 lojaDeMelhorias.gameObject.SetActive(false);
-                lojaDeFerramentas.gameObject.SetActive(false);
+                lojaDeItens.gameObject.SetActive(false);
                 break;
 
             case Menu.Armas:
                 telaInicial.gameObject.SetActive(false);
                 lojaDeArmas.gameObject.SetActive(true);
                 lojaDeMelhorias.gameObject.SetActive(false);
-                lojaDeFerramentas.gameObject.SetActive(false);
+                lojaDeItens.gameObject.SetActive(false);
                 break;
 
             case Menu.Melhorias:
                 telaInicial.gameObject.SetActive(false);
                 lojaDeArmas.gameObject.SetActive(false);
                 lojaDeMelhorias.gameObject.SetActive(true);
-                lojaDeFerramentas.gameObject.SetActive(false);
+                lojaDeItens.gameObject.SetActive(false);
                 break;
 
-            case Menu.Ferramentas:
+            case Menu.Itens:
                 telaInicial.gameObject.SetActive(false);
                 lojaDeArmas.gameObject.SetActive(false);
                 lojaDeMelhorias.gameObject.SetActive(false);
-                lojaDeFerramentas.gameObject.SetActive(true);
+                lojaDeItens.gameObject.SetActive(true);
                 break;
         }
     }
@@ -96,7 +96,7 @@ public class MenuDaLoja : MonoBehaviour
     {
         lojaDeArmas.Iniciar();
         lojaDeMelhorias.Iniciar();
-        lojaDeFerramentas.Iniciar();
+        lojaDeItens.Iniciar();
     }
 
     private void Update()
@@ -121,8 +121,8 @@ public class MenuDaLoja : MonoBehaviour
                 MenuMelhorias();
                 break;
 
-            case Menu.Ferramentas:
-                MenuFerramentas();
+            case Menu.Itens:
+                MenuItens();
                 break;
         }
     }
@@ -166,7 +166,7 @@ public class MenuDaLoja : MonoBehaviour
         telaInicial.gameObject.SetActive(false);
         lojaDeArmas.gameObject.SetActive(false);
         lojaDeMelhorias.gameObject.SetActive(false);
-        lojaDeFerramentas.gameObject.SetActive(false);
+        lojaDeItens.gameObject.SetActive(false);
     }
 
     private void MenuInicial()
@@ -227,9 +227,9 @@ public class MenuDaLoja : MonoBehaviour
                     break;
 
                 case 2:
-                    SetMenuAtual(Menu.Ferramentas);
+                    SetMenuAtual(Menu.Itens);
 
-                    //menuOpcoes.IniciarScrool();
+                    lojaDeItens.IniciarScrool();
 
                     generalManager.Hud.SonsDeMenus.TocarSom(SonsDeMenus.Som.Confirmar);
                     break;
@@ -253,9 +253,9 @@ public class MenuDaLoja : MonoBehaviour
         //menuOpcoes.SelecionandoOpcoes();
     }
 
-    private void MenuFerramentas()
+    private void MenuItens()
     {
-        //Algo
+        lojaDeItens.MenuLojaDeItens();
     }
 
     private void AtualizarPainelDeEscolha(PainelDeEscolha painelDeEscolha, int selecao)
