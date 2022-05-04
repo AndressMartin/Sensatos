@@ -58,7 +58,7 @@ public class ItemDeAssaltoColetavel : ObjetoInteragivel
         {
             if (somAoSerColetado != null)
             {
-                generalManager.SoundManager.TocarSom(somAoSerColetado);
+                generalManager.SoundManager.TocarSomIgnorandoPause(somAoSerColetado);
             }
 
             Desativar();

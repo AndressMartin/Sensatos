@@ -11,10 +11,14 @@ public class ItemColetavel : ObjetoInteragivel
     private SpriteRenderer spriteRenderer;
     private BoxCollider2D boxCollider2D;
 
+    //Enuns
+    public enum Tipo { Normal, ItemUnico, ItemLigadoAFlag }
+
     //Variaveis
     [SerializeField] private Item item;
     [SerializeField] private AudioClip somAoSerColetado;
-    [SerializeField] private bool itemUnico;
+    [SerializeField] private Tipo tipo;
+    [SerializeField] private Flags.Flag flag;
 
     private bool itemFoiColetado;
 
@@ -39,9 +43,16 @@ public class ItemColetavel : ObjetoInteragivel
         //Se adicionar a lista de objetos interagiveis do ObjectManager
         generalManager.ObjectManager.AdicionarAosObjetosInteragiveis(this);
 
-        if(itemUnico == true)
+        if(tipo == Tipo.ItemUnico)
         {
             StartCoroutine(ConferirSeOItemEstaNoInventario());
+        }
+        else if(tipo == Tipo.ItemLigadoAFlag)
+        {
+            if(Flags.GetFlag(flag) == true)
+            {
+                Desativar();
+            }
         }
 
         SetRespawn();
@@ -92,6 +103,11 @@ public class ItemColetavel : ObjetoInteragivel
             if(itemFoiColetado == true)
             {
                 Desativar();
+
+                if(tipo == Tipo.ItemLigadoAFlag)
+                {
+                    Flags.SetFlag(flag, true);
+                }
             }
             else
             {
