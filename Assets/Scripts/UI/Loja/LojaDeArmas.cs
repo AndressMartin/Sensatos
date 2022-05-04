@@ -248,13 +248,24 @@ public class LojaDeArmas : MonoBehaviour
 
         AtualizarListaDeArmas();
 
-        if(selecao > listaDeArmas.Count - 1)
+        //Ajusta a selecao e o scrool da lista
+        if (selecao > listaDeArmas.Count - 1)
         {
             selecao = listaDeArmas.Count - 1;
 
-            if (selecao - scrool > armas.Length - 1)
+            if (selecao < 0)
             {
-                scrool += numeroDeColunas;
+                selecao = 0;
+            }
+
+            while (selecao < scrool)
+            {
+                scrool -= numeroDeColunas;
+            }
+
+            if ((selecao - scrool < numeroDeColunas * 2) && (scrool > 0))
+            {
+                scrool -= numeroDeColunas;
             }
         }
 

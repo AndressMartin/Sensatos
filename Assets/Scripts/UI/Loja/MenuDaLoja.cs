@@ -220,7 +220,7 @@ public class MenuDaLoja : MonoBehaviour
                 case 1:
                     SetMenuAtual(Menu.Melhorias);
 
-                    //menuSalvar.IniciarScrool();
+                    lojaDeMelhorias.IniciarScrool();
 
                     generalManager.Hud.SonsDeMenus.TocarSom(SonsDeMenus.Som.Confirmar);
 
@@ -250,7 +250,7 @@ public class MenuDaLoja : MonoBehaviour
 
     private void MenuMelhorias()
     {
-        //menuOpcoes.SelecionandoOpcoes();
+        lojaDeMelhorias.MenuLojaDeMelhorias();
     }
 
     private void MenuItens()

@@ -24,6 +24,7 @@ public class InventarioLoja : ScriptableObject
         [SerializeField] private ArmaDeFogo arma;
         [SerializeField] private int precoArma;
         [SerializeField] private int precoMunicao;
+        [SerializeField] private int[] precoMelhoria;
         private TipoCompra tipo;
 
         [SerializeField] private Flags.Flag flag;
@@ -32,6 +33,7 @@ public class InventarioLoja : ScriptableObject
         public ArmaDeFogo Arma => arma;
         public int PrecoArma => precoArma;
         public int PrecoMunicao => precoMunicao;
+        public int[] PrecoMelhoria => precoMelhoria;
         public TipoCompra Tipo => tipo;
         public Flags.Flag Flag => flag;
 

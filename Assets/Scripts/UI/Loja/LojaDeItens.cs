@@ -115,7 +115,7 @@ public class LojaDeItens : MonoBehaviour
         dinheiroJogador.text = generalManager.Player.Inventario.Dinheiro.ToString();
     }
 
-    private void AtualizarScroolDasArmas()
+    private void AtualizarScroolDosItens()
     {
         for (int i = 0; i < itens.Length; i++)
         {
@@ -168,7 +168,7 @@ public class LojaDeItens : MonoBehaviour
             barraDeRolagem.sizeDelta = new Vector2(barraDeRolagem.sizeDelta.x, barraDeRolagemAlturaInicial);
         }
 
-        AtualizarScroolDasArmas();
+        AtualizarScroolDosItens();
 
         if (listaDeItens.Count > 0)
         {
@@ -184,7 +184,7 @@ public class LojaDeItens : MonoBehaviour
 
     private void AtualizarListaDeItens()
     {
-        //Cria a lista com as armas e municoes disponiveis para comprar
+        //Cria a lista com os itens disponiveis para comprar
         listaDeItens.Clear();
         listaDeItens = new List<InventarioLoja.ItemLoja>();
 
@@ -209,7 +209,7 @@ public class LojaDeItens : MonoBehaviour
         {
             generalManager.Player.Inventario.SetDinheiro(generalManager.Player.Inventario.Dinheiro - (listaDeItens[selecao].Preco));
 
-            AtualizarScroolDasArmas();
+            AtualizarScroolDosItens();
             AtualizarInformacoesDoItem();
 
             generalManager.Hud.SonsDeMenus.TocarSom(SonsDeMenus.Som.Comprar);
@@ -258,7 +258,7 @@ public class LojaDeItens : MonoBehaviour
                     scrool -= numeroDeColunas;
                 }
 
-                AtualizarScroolDasArmas();
+                AtualizarScroolDosItens();
                 AtualizarInformacoesDoItem();
 
                 generalManager.Hud.SonsDeMenus.TocarSom(SonsDeMenus.Som.Movimento2);
@@ -272,7 +272,7 @@ public class LojaDeItens : MonoBehaviour
                     scrool -= numeroDeColunas;
                 }
 
-                AtualizarScroolDasArmas();
+                AtualizarScroolDosItens();
                 AtualizarInformacoesDoItem();
 
                 generalManager.Hud.SonsDeMenus.TocarSom(SonsDeMenus.Som.Movimento2);
@@ -291,7 +291,7 @@ public class LojaDeItens : MonoBehaviour
                     scrool += numeroDeColunas;
                 }
 
-                AtualizarScroolDasArmas();
+                AtualizarScroolDosItens();
                 AtualizarInformacoesDoItem();
 
                 generalManager.Hud.SonsDeMenus.TocarSom(SonsDeMenus.Som.Movimento2);
@@ -305,7 +305,7 @@ public class LojaDeItens : MonoBehaviour
                     scrool += numeroDeColunas;
                 }
 
-                AtualizarScroolDasArmas();
+                AtualizarScroolDosItens();
                 AtualizarInformacoesDoItem();
 
                 generalManager.Hud.SonsDeMenus.TocarSom(SonsDeMenus.Som.Movimento2);
@@ -324,7 +324,7 @@ public class LojaDeItens : MonoBehaviour
                     scrool -= numeroDeColunas;
                 }
 
-                AtualizarScroolDasArmas();
+                AtualizarScroolDosItens();
                 AtualizarInformacoesDoItem();
 
                 generalManager.Hud.SonsDeMenus.TocarSom(SonsDeMenus.Som.Movimento2);
@@ -344,7 +344,7 @@ public class LojaDeItens : MonoBehaviour
                     scrool += numeroDeColunas;
                 }
 
-                AtualizarScroolDasArmas();
+                AtualizarScroolDosItens();
                 AtualizarInformacoesDoItem();
 
                 generalManager.Hud.SonsDeMenus.TocarSom(SonsDeMenus.Som.Movimento2);
