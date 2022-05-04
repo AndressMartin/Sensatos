@@ -44,6 +44,8 @@ public class HUDScript : MonoBehaviour
     public void SetMenuAberto(Menu menuAberto)
     {
         this.menuAberto = menuAberto;
+
+        AtualizarPlayerHUD();
     }
 
     private void Start()

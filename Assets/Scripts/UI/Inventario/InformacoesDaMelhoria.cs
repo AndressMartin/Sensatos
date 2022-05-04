@@ -16,4 +16,16 @@ public class InformacoesDaMelhoria : MonoBehaviour
         nome.text = melhoria.Nome;
         descricao.text = melhoria.Descricao;
     }
+
+    public void MelhoriaAdquirida(bool adquirida)
+    {
+        if(adquirida == true)
+        {
+            imagem.color = Color.white;
+        }
+        else
+        {
+            imagem.color = new Color(0.5f, 0.5f, 0.5f);
+        }
+    }
 }

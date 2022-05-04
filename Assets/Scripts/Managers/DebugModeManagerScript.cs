@@ -103,6 +103,8 @@ public class DebugModeManagerScript : MonoBehaviour
         //Liberar a compra das armas e itens
         if (Input.GetKeyUp(KeyCode.N))
         {
+            generalManager.Player.Inventario.SetDinheiro(generalManager.Player.Inventario.Dinheiro + 5000);
+
             Flags.SetFlag(Flags.Flag.Teste1, true);
             Flags.SetFlag(Flags.Flag.Teste2, true);
             Flags.SetFlag(Flags.Flag.Teste3, true);

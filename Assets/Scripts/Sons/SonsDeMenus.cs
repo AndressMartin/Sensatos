@@ -23,8 +23,10 @@ public class SonsDeMenus : MonoBehaviour
 
     [SerializeField] private AudioClip salvouComSucesso;
 
+    [SerializeField] private AudioClip comprar;
+
     //Enums
-    public enum Som { Pausar, Despausar, AbrirOInventario, FecharOInventario, Movimento1, Movimento2, Confirmar, Voltar, Falha, EquiparArma, EquiparRoupa, SalvouComSucesso };
+    public enum Som { Pausar, Despausar, AbrirOInventario, FecharOInventario, Movimento1, Movimento2, Confirmar, Voltar, Falha, EquiparArma, EquiparRoupa, SalvouComSucesso, Comprar };
 
     private void Start()
     {
@@ -82,6 +84,10 @@ public class SonsDeMenus : MonoBehaviour
 
             case Som.SalvouComSucesso:
                 generalManager.SoundManager.TocarSomIgnorandoPause(salvouComSucesso);
+                break;
+
+            case Som.Comprar:
+                generalManager.SoundManager.TocarSomIgnorandoPause(comprar);
                 break;
         }
     }

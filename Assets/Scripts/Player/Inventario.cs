@@ -412,4 +412,17 @@ public class Inventario : MonoBehaviour
 
         return false;
     }
+
+    public ArmaDeFogo GetArma(ArmaDeFogo arma)
+    {
+        foreach (ArmaDeFogo armaNoInventario in armas)
+        {
+            if (armaNoInventario.ID == arma.ID)
+            {
+                return armaNoInventario;
+            }
+        }
+
+        return null;
+    }
 }

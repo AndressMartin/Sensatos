@@ -15,6 +15,8 @@ public class MenuDaLoja : MonoBehaviour
 
     [SerializeField] private PainelDeEscolha opcoesMenuInicial;
 
+    private MudarIdiomaItensDoInventario mudarIdiomaItensDoInventario;
+
     //Enums
     public enum Menu { Inicio, Armas, Melhorias, Ferramentas }
 
@@ -71,14 +73,23 @@ public class MenuDaLoja : MonoBehaviour
         //Managers
         generalManager = FindObjectOfType<GeneralManagerScript>();
 
+        //Adicionar a funcao de trocar idioma ao evento do Idioma Manager
+        generalManager.IdiomaManager.EventoTrocarIdioma.AddListener(TrocarIdioma);
+
         //Variaveis
         ativo = false;
         menuAtual = Menu.Inicio;
         selecao = 0;
 
+        //Componentes
+        mudarIdiomaItensDoInventario = GetComponent<MudarIdiomaItensDoInventario>();
+
         IniciarComponentes();
 
         FecharOsMenus();
+
+        //Trocar o idioma uma vez para iniciar os objetos com o idioma correto
+        TrocarIdioma();
     }
 
     private void IniciarComponentes()
@@ -120,6 +131,9 @@ public class MenuDaLoja : MonoBehaviour
     {
         //Seta o inventario da loja como o recebido
         this.inventarioLoja = inventarioLoja;
+        
+        //Atualiza o idioma dos itens da loja
+        TrocarIdioma();
 
         generalManager.Hud.SetMenuAberto(HUDScript.Menu.Loja);
         generalManager.PauseManager.Pausar(true);
@@ -247,5 +261,23 @@ public class MenuDaLoja : MonoBehaviour
     private void AtualizarPainelDeEscolha(PainelDeEscolha painelDeEscolha, int selecao)
     {
         painelDeEscolha.Selecionar(selecao);
+    }
+
+    private void TrocarIdioma()
+    {
+        if(inventarioLoja == null)
+        {
+            return;
+        }
+
+        foreach (InventarioLoja.ArmaLoja armaLoja in inventarioLoja.ListaDeArmas)
+        {
+            mudarIdiomaItensDoInventario.TrocarIdioma(armaLoja.Arma);
+        }
+
+        foreach (InventarioLoja.ItemLoja itemLoja in inventarioLoja.ListaDeItens)
+        {
+            mudarIdiomaItensDoInventario.TrocarIdioma(itemLoja.Item);
+        }
     }
 }

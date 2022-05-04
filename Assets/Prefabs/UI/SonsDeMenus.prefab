@@ -27,6 +27,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -60,3 +61,4 @@ MonoBehaviour:
   equiparArma: {fileID: 8300000, guid: 19d296803bc81dc4695fa942fe6e655a, type: 3}
   equiparRoupa: {fileID: 8300000, guid: d05c0418031ae9c4c9269794df34f543, type: 3}
   salvouComSucesso: {fileID: 8300000, guid: 9de25509cd4ac134ea5963d58bfe50fa, type: 3}
+  comprar: {fileID: 8300000, guid: 4ca668fb212ee2e48ab3401f1cbb64fb, type: 3}

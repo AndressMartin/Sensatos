@@ -72,6 +72,15 @@ public class MenuDasArmas : MonoBehaviour
         {
             melhorias[i].gameObject.SetActive(true);
             melhorias[i].AtualizarInformacoes(generalManager.Player.Inventario.Armas[selecao].Melhorias[i]);
+
+            if(generalManager.Player.Inventario.Armas[selecao].NivelMelhoria >= i + 1)
+            {
+                melhorias[i].MelhoriaAdquirida(true);
+            }
+            else
+            {
+                melhorias[i].MelhoriaAdquirida(false);
+            }
         }
     }
 

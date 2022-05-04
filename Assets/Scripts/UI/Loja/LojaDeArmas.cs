@@ -13,6 +13,7 @@ public class LojaDeArmas : MonoBehaviour
 
     [SerializeField] private TMP_Text nomeDaArma;
     [SerializeField] private TMP_Text descricaoDaArma;
+    [SerializeField] private InformacoesDaMelhoria[] melhorias;
 
     [SerializeField] private TMP_Text dinheiroJogador;
 
@@ -29,6 +30,8 @@ public class LojaDeArmas : MonoBehaviour
     private int selecao;
     private int scrool;
 
+    private int quantidadeMunicao;
+
     private Menu menuAtual;
 
     private float barraDeRolagemAlturaInicial;
@@ -39,6 +42,12 @@ public class LojaDeArmas : MonoBehaviour
 
     //Variaveis Fixas
     private readonly int numeroDeColunas = 2;
+
+    //Variaveis de controle
+    private float intervaloInput = 0;
+    private float intervaloInputMax = 0.05f;
+
+    private bool apertouOsBotoes = false;
 
     //Setters
     public void SetMenuAtual(Menu menuAtual)
@@ -75,6 +84,7 @@ public class LojaDeArmas : MonoBehaviour
         //Variaveis
         selecao = 0;
         scrool = 0;
+        quantidadeMunicao = 0;
 
         barraDeRolagemAlturaInicial = barraDeRolagem.sizeDelta.y;
 
@@ -91,6 +101,19 @@ public class LojaDeArmas : MonoBehaviour
     {
         nomeDaArma.text = listaDeArmas[selecao].Arma.Nome;
         descricaoDaArma.text = listaDeArmas[selecao].Arma.Descricao;
+
+        foreach (InformacoesDaMelhoria melhoria in melhorias)
+        {
+            melhoria.gameObject.SetActive(false);
+        }
+
+        for (int i = 0; i < listaDeArmas[selecao].Arma.Melhorias.Count; i++)
+        {
+            melhorias[i].gameObject.SetActive(true);
+            melhorias[i].AtualizarInformacoes(listaDeArmas[selecao].Arma.Melhorias[i]);
+
+            melhorias[i].MelhoriaAdquirida(true);
+        }
 
         dinheiroJogador.text = generalManager.Player.Inventario.Dinheiro.ToString();
     }
@@ -128,9 +151,9 @@ public class LojaDeArmas : MonoBehaviour
         armas[selecao - scrool].Selecionado(true);
 
         //Posicao da Barra de Rolagem
-        if ((armas.Length / numeroDeColunas) < (listaDeArmas.Count / numeroDeColunas))
+        if (armas.Length < listaDeArmas.Count)
         {
-            barraDeRolagem.anchoredPosition = new Vector2(0, (barraDeRolagemAlturaInicial / (listaDeArmas.Count / numeroDeColunas)) * scrool * -1);
+            barraDeRolagem.anchoredPosition = new Vector2(0, (barraDeRolagemAlturaInicial / Mathf.Ceil((float)listaDeArmas.Count / numeroDeColunas)) * (scrool / numeroDeColunas) * -1);
         }
         else
         {
@@ -148,9 +171,9 @@ public class LojaDeArmas : MonoBehaviour
         AtualizarListaDeArmas();
 
         //Tamanho da Barra de Rolagem
-        if ((armas.Length / numeroDeColunas) < (listaDeArmas.Count / numeroDeColunas))
+        if (armas.Length < listaDeArmas.Count)
         {
-            barraDeRolagem.sizeDelta = new Vector2(barraDeRolagem.sizeDelta.x, barraDeRolagemAlturaInicial * ((float)(armas.Length / numeroDeColunas) / (listaDeArmas.Count / numeroDeColunas)));
+            barraDeRolagem.sizeDelta = new Vector2(barraDeRolagem.sizeDelta.x, barraDeRolagemAlturaInicial * (Mathf.Ceil((float)armas.Length / numeroDeColunas) / Mathf.Ceil((float)listaDeArmas.Count / numeroDeColunas)));
         }
         else
         {
@@ -194,6 +217,60 @@ public class LojaDeArmas : MonoBehaviour
         }
     }
 
+    private void IniciarQuantidadeMunicao()
+    {
+        Rect retanguloGlobal = Colisao.GetWorldRect(armas[selecao - scrool].GetComponent<RectTransform>());
+
+        quantidadeMunicao = MaximoDeMunicaoAdicionavel();
+        painelEscolhaQuantidadeMunicao.transform.position = new Vector2(armas[selecao - scrool].transform.position.x, armas[selecao - scrool].transform.position.y - retanguloGlobal.size.y / 2);
+    }
+
+    private void AtualizarPainelQuantidadeMunicao()
+    {
+        quantidadeMunicaoTexto.text = quantidadeMunicao.ToString();
+        precoMunicaoTexto.text = (listaDeArmas[selecao].PrecoMunicao * quantidadeMunicao).ToString();
+    } 
+
+    private int MaximoDeMunicaoAdicionavel()
+    {
+        int valor = 0;
+
+        valor += generalManager.Player.Inventario.GetArma(listaDeArmas[selecao].Arma).GetStatus.MunicaoMax - generalManager.Player.Inventario.GetArma(listaDeArmas[selecao].Arma).Municao;
+        valor += generalManager.Player.Inventario.GetArma(listaDeArmas[selecao].Arma).GetStatus.MunicaoMaxCartucho - generalManager.Player.Inventario.GetArma(listaDeArmas[selecao].Arma).MunicaoCartucho;
+
+        return valor;
+    }
+
+    private void ComprarArma()
+    {
+        generalManager.Player.Inventario.AdicionarArma(listaDeArmas[selecao].Arma);
+        generalManager.Player.Inventario.SetDinheiro(generalManager.Player.Inventario.Dinheiro - listaDeArmas[selecao].PrecoArma);
+
+        AtualizarListaDeArmas();
+
+        if(selecao > listaDeArmas.Count - 1)
+        {
+            selecao = listaDeArmas.Count - 1;
+
+            if (selecao - scrool > armas.Length - 1)
+            {
+                scrool += numeroDeColunas;
+            }
+        }
+
+        AtualizarScroolDasArmas();
+        AtualizarInformacoesDaArma();
+    }
+
+    private void ComprarMunicao()
+    {
+        generalManager.Player.Inventario.GetArma(listaDeArmas[selecao].Arma).AdicionarMunicao(quantidadeMunicao);
+        generalManager.Player.Inventario.SetDinheiro(generalManager.Player.Inventario.Dinheiro - (listaDeArmas[selecao].PrecoMunicao * quantidadeMunicao));
+
+        AtualizarScroolDasArmas();
+        AtualizarInformacoesDaArma();
+    }
+
     public void MenuLojaDeArmas()
     {
         //Executa as funcoes do menu atual
@@ -218,13 +295,27 @@ public class LojaDeArmas : MonoBehaviour
             {
                 selecao -= numeroDeColunas;
 
+                if (selecao < scrool)
+                {
+                    scrool -= numeroDeColunas;
+                }
+
                 AtualizarScroolDasArmas();
                 AtualizarInformacoesDaArma();
+
+                generalManager.Hud.SonsDeMenus.TocarSom(SonsDeMenus.Som.Movimento2);
+            }
+            else if (selecao > 0)
+            {
+                selecao = 0;
 
                 if (selecao < scrool)
                 {
                     scrool -= numeroDeColunas;
                 }
+
+                AtualizarScroolDasArmas();
+                AtualizarInformacoesDaArma();
 
                 generalManager.Hud.SonsDeMenus.TocarSom(SonsDeMenus.Som.Movimento2);
             }
@@ -237,13 +328,27 @@ public class LojaDeArmas : MonoBehaviour
             {
                 selecao += numeroDeColunas;
 
+                if (selecao - scrool > armas.Length - 1)
+                {
+                    scrool += numeroDeColunas;
+                }
+
                 AtualizarScroolDasArmas();
                 AtualizarInformacoesDaArma();
+
+                generalManager.Hud.SonsDeMenus.TocarSom(SonsDeMenus.Som.Movimento2);
+            }
+            else if (selecao < listaDeArmas.Count - 1)
+            {
+                selecao = listaDeArmas.Count - 1;
 
                 if (selecao - scrool > armas.Length - 1)
                 {
                     scrool += numeroDeColunas;
                 }
+
+                AtualizarScroolDasArmas();
+                AtualizarInformacoesDaArma();
 
                 generalManager.Hud.SonsDeMenus.TocarSom(SonsDeMenus.Som.Movimento2);
             }
@@ -256,13 +361,13 @@ public class LojaDeArmas : MonoBehaviour
             {
                 selecao--;
 
-                AtualizarScroolDasArmas();
-                AtualizarInformacoesDaArma();
-
                 if (selecao < scrool)
                 {
                     scrool -= numeroDeColunas;
                 }
+
+                AtualizarScroolDasArmas();
+                AtualizarInformacoesDaArma();
 
                 generalManager.Hud.SonsDeMenus.TocarSom(SonsDeMenus.Som.Movimento2);
             }
@@ -275,13 +380,14 @@ public class LojaDeArmas : MonoBehaviour
             {
                 selecao++;
 
-                AtualizarScroolDasArmas();
-                AtualizarInformacoesDaArma();
 
                 if (selecao - scrool > armas.Length - 1)
                 {
                     scrool += numeroDeColunas;
                 }
+
+                AtualizarScroolDasArmas();
+                AtualizarInformacoesDaArma();
 
                 generalManager.Hud.SonsDeMenus.TocarSom(SonsDeMenus.Som.Movimento2);
             }
@@ -294,16 +400,116 @@ public class LojaDeArmas : MonoBehaviour
 
             generalManager.Hud.SonsDeMenus.TocarSom(SonsDeMenus.Som.Voltar);
         }
+
+        //Confirmar
+        if (InputManager.Confirmar())
+        {
+            switch (listaDeArmas[selecao].Tipo)
+            {
+                case InventarioLoja.ArmaLoja.TipoCompra.Arma:
+                    if(generalManager.Player.Inventario.Dinheiro >= listaDeArmas[selecao].PrecoArma)
+                    {
+                        ComprarArma();
+
+                        generalManager.Hud.SonsDeMenus.TocarSom(SonsDeMenus.Som.Comprar);
+                    }
+                    else
+                    {
+                        generalManager.Hud.SonsDeMenus.TocarSom(SonsDeMenus.Som.Falha);
+                    }
+                    break;
+
+                case InventarioLoja.ArmaLoja.TipoCompra.Municao:
+                    if(MaximoDeMunicaoAdicionavel() > 0)
+                    {
+                        SetMenuAtual(Menu.EscolhendoQuantidadeMunicao);
+
+                        IniciarQuantidadeMunicao();
+                        AtualizarPainelQuantidadeMunicao();
+
+                        generalManager.Hud.SonsDeMenus.TocarSom(SonsDeMenus.Som.Confirmar);
+                    }
+                    else
+                    {
+                        generalManager.Hud.SonsDeMenus.TocarSom(SonsDeMenus.Som.Falha);
+                    }
+                    break;
+            }
+        }
     }
 
     private void EscolhendoQuantidadeMunicao()
     {
+        if (InputManager.EsquerdaSegurar() == false && InputManager.DireitaSegurar() == false)
+        {
+            apertouOsBotoes = false;
+        }
+
+        if (intervaloInput > 0)
+        {
+            //Deve-se usar o unscaledDeltaTime, pois neste menu o jogo estara pausado, e o timeScale sera 0
+            intervaloInput -= Time.unscaledDeltaTime;
+        }
+
+        //Diminuir Municao
+        if (InputManager.EsquerdaSegurar() == true && intervaloInput <= 0)
+        {
+            if(quantidadeMunicao > 1)
+            {
+                quantidadeMunicao--;
+                AtualizarPainelQuantidadeMunicao();
+
+                intervaloInput = intervaloInputMax;
+
+                if (apertouOsBotoes == false)
+                {
+                    generalManager.Hud.SonsDeMenus.TocarSom(SonsDeMenus.Som.Movimento1);
+                    apertouOsBotoes = true;
+                }
+            }
+        }
+
+        //Aumentar Municao
+        if (InputManager.DireitaSegurar() == true && intervaloInput <= 0)
+        {
+            if(quantidadeMunicao < MaximoDeMunicaoAdicionavel())
+            {
+                quantidadeMunicao++;
+                AtualizarPainelQuantidadeMunicao();
+
+                intervaloInput = intervaloInputMax;
+
+                if (apertouOsBotoes == false)
+                {
+                    generalManager.Hud.SonsDeMenus.TocarSom(SonsDeMenus.Som.Movimento2);
+                    apertouOsBotoes = true;
+                }
+            }
+        }
+
         //Voltar
         if (InputManager.Voltar())
         {
             SetMenuAtual(Menu.Inicio);
 
             generalManager.Hud.SonsDeMenus.TocarSom(SonsDeMenus.Som.Voltar);
+        }
+
+        //Confirmar
+        if (InputManager.Confirmar())
+        {
+            if (generalManager.Player.Inventario.Dinheiro >= (listaDeArmas[selecao].PrecoMunicao * quantidadeMunicao))
+            {
+                ComprarMunicao();
+
+                SetMenuAtual(Menu.Inicio);
+
+                generalManager.Hud.SonsDeMenus.TocarSom(SonsDeMenus.Som.Comprar);
+            }
+            else
+            {
+                generalManager.Hud.SonsDeMenus.TocarSom(SonsDeMenus.Som.Falha);
+            }
         }
     }
 }
