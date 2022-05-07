@@ -73,7 +73,7 @@ public class EnemyVisionScript : MonoBehaviour
         novoFieldOfView.transform.parent = generalManager.FieldView.transform.parent;
 
         fieldOfView = novoFieldOfView.GetComponent<FieldOfView>();
-        fieldOfView.SetPai(enemy);
+        fieldOfView.SetPai(enemy.gameObject);
         //fieldOfView.SetArea(fov, distancia);
     }
     
@@ -220,14 +220,35 @@ public class EnemyVisionScript : MonoBehaviour
         if (collision.CompareTag("HitboxDano"))
         {
             EntityModel entityModelTemp = collision.transform.parent.gameObject.GetComponent<EntityModel>();
+            SpriteRenderer sprite = collision.transform.parent.GetComponentInChildren<SpriteRenderer>();
 
             if (entityModelTemp != null)
             {
-                RaycastHit2D hits;
-                hits = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y),
-                    new Vector2(entityModelTemp.transform.position.x - transform.position.x, entityModelTemp.transform.position.y - transform.position.y), distancia, mask.value);
+                bool viuEntidade = false;
+                RaycastHit2D[] hits = new RaycastHit2D[4];
 
-                if (!hits)
+                hits[0] = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y),
+                    new Vector2((entityModelTemp.transform.position.x - sprite.size.x / 2) - transform.position.x, entityModelTemp.transform.position.y - transform.position.y), distancia, mask.value);
+
+                hits[1] = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y),
+                    new Vector2((entityModelTemp.transform.position.x + sprite.size.x / 2) - transform.position.x, entityModelTemp.transform.position.y - transform.position.y), distancia, mask.value);
+
+                hits[2] = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y),
+                    new Vector2((entityModelTemp.transform.position.x - sprite.size.x / 2) - transform.position.x, (entityModelTemp.transform.position.y + sprite.size.y) - transform.position.y), distancia, mask.value);
+
+                hits[3] = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y),
+                    new Vector2((entityModelTemp.transform.position.x + sprite.size.x / 2) - transform.position.x, (entityModelTemp.transform.position.y + sprite.size.y) - transform.position.y), distancia, mask.value);
+
+                for(int i = 0; i < hits.Length; i++)
+                {
+                    if(hits[i] == false)
+                    {
+                        viuEntidade = true;
+                        break;
+                    }
+                }
+
+                if (viuEntidade == true)
                 {
                     if (entityModelTemp is Enemy)
                     {
@@ -238,10 +259,6 @@ public class EnemyVisionScript : MonoBehaviour
                     {
                         vendoPlayer = true;
                     }
-                }
-                if (hits)
-                {
-                    Debug.DrawRay(new Vector2(transform.position.x, transform.position.y), new Vector2(hits.transform.position.x - transform.position.x, hits.transform.position.y - transform.position.y), Color.red);
                 }
             }
         }

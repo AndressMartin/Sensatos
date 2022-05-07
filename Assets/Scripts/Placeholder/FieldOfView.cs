@@ -12,14 +12,14 @@ public class FieldOfView : MonoBehaviour
     private float fov;
     private float viewDistance;
 
-    private Enemy pai;
+    private GameObject pai;
     private List<Vector2> pontos = new List<Vector2>();
     public Mesh GetMesh => mesh;
     public List<Vector2> GetPontos => pontos;
 
-    public void SetPai(Enemy enemy)
+    public void SetPai(GameObject pai)
     {
-        pai = enemy;
+        this.pai = pai;
     }
 
     void Start()
@@ -39,9 +39,9 @@ public class FieldOfView : MonoBehaviour
     {
         if(pai != null)
         {
-            meshRenderer.enabled = pai.gameObject.activeSelf;
+            meshRenderer.enabled = pai.activeSelf;
 
-            if(pai.gameObject.activeSelf == false)
+            if(pai.activeSelf == false)
             {
                 return;
             }
