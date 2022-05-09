@@ -34,7 +34,7 @@ public class SelecaoArma : SelecaoDoInventario
 
     public override void Confirmar(MenuDoInventario menuDoInventario)
     {
-        if (GameManager.instance.ModoDeJogo == GameManager.Modo.Cidade)
+        if (GameManager.instance.ModoDeJogo == GameManager.Modo.Cidade && menuDoInventario.GeneralManager.Player.Inventario.ArmaSlot[indiceArmaAtual] != null)
         {
             menuDoInventario.SetMenuAtual(MenuDoInventario.Menu.Arma);
             menuDoInventario.MenuDasArmas.AtualizarPosicaoDoScroolDasArmas(transform.position.y);

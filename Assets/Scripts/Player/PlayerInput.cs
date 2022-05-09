@@ -74,12 +74,12 @@ public class PlayerInput : MonoBehaviour
                             generalManager.Hud.AtualizarPlayerHUD();
                         }
                     }
-                }
 
-                //Recarregar
-                if (InputManager.RecarregarArma())
-                {
-                    player.Recarregar();
+                    //Recarregar
+                    if (InputManager.RecarregarArma())
+                    {
+                        player.Recarregar();
+                    }
                 }
 
                 //Atacar
@@ -87,30 +87,30 @@ public class PlayerInput : MonoBehaviour
                 {
                     player.Atacar();
                 }
+            }
 
-                //Usar o item no atalho 1
-                if (InputManager.Atalho1())
-                {
-                    player.UsarItemAtalho(0);
-                }
+            //Usar o item no atalho 1
+            if (InputManager.Atalho1())
+            {
+                player.UsarItemAtalho(0);
+            }
 
-                //Usar o item no atalho 2
-                if (InputManager.Atalho2())
-                {
-                    player.UsarItemAtalho(1);
-                }
+            //Usar o item no atalho 2
+            if (InputManager.Atalho2())
+            {
+                player.UsarItemAtalho(1);
+            }
 
-                //Usar o item no atalho 3
-                if (InputManager.Atalho3())
-                {
-                    player.UsarItemAtalho(2);
-                }
+            //Usar o item no atalho 3
+            if (InputManager.Atalho3())
+            {
+                player.UsarItemAtalho(2);
+            }
 
-                //Usar o item no atalho 4
-                if (InputManager.Atalho4())
-                {
-                    player.UsarItemAtalho(3);
-                }
+            //Usar o item no atalho 4
+            if (InputManager.Atalho4())
+            {
+                player.UsarItemAtalho(3);
             }
 
             //Botão de interação
