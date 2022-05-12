@@ -220,26 +220,46 @@ public class EnemyVisionScript : MonoBehaviour
         if (collision.CompareTag("HitboxDano"))
         {
             EntityModel entityModelTemp = collision.transform.parent.gameObject.GetComponent<EntityModel>();
-            SpriteRenderer sprite = collision.transform.parent.GetComponentInChildren<SpriteRenderer>();
 
             if (entityModelTemp != null)
             {
                 bool viuEntidade = false;
-                RaycastHit2D[] hits = new RaycastHit2D[4];
+                RaycastHit2D[] hits = new RaycastHit2D[5];
 
-                hits[0] = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y),
-                    new Vector2((entityModelTemp.transform.position.x - sprite.size.x / 2) - transform.position.x, entityModelTemp.transform.position.y - transform.position.y), distancia, mask.value);
+                hits[0] = Physics2D.Raycast(v1 + (Vector2)transform.position,
+                    new Vector2((entityModelTemp.transform.position.x - collision.bounds.size.x / 2) - v1.x - transform.position.x, entityModelTemp.transform.position.y - v1.y - transform.position.y), distancia, mask.value);
 
-                hits[1] = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y),
-                    new Vector2((entityModelTemp.transform.position.x + sprite.size.x / 2) - transform.position.x, entityModelTemp.transform.position.y - transform.position.y), distancia, mask.value);
+                hits[1] = Physics2D.Raycast(v1 + (Vector2)transform.position,
+                    new Vector2((entityModelTemp.transform.position.x + collision.bounds.size.x / 2) - v1.x - transform.position.x, entityModelTemp.transform.position.y - v1.y - transform.position.y), distancia, mask.value);
 
-                hits[2] = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y),
-                    new Vector2((entityModelTemp.transform.position.x - sprite.size.x / 2) - transform.position.x, (entityModelTemp.transform.position.y + sprite.size.y) - transform.position.y), distancia, mask.value);
+                hits[2] = Physics2D.Raycast(v1 + (Vector2)transform.position,
+                    new Vector2((entityModelTemp.transform.position.x - collision.bounds.size.x / 2) - v1.x - transform.position.x, (entityModelTemp.transform.position.y + collision.bounds.size.y) - v1.y - transform.position.y), distancia, mask.value);
 
-                hits[3] = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y),
-                    new Vector2((entityModelTemp.transform.position.x + sprite.size.x / 2) - transform.position.x, (entityModelTemp.transform.position.y + sprite.size.y) - transform.position.y), distancia, mask.value);
+                hits[3] = Physics2D.Raycast(v1 + (Vector2)transform.position,
+                    new Vector2((entityModelTemp.transform.position.x + collision.bounds.size.x / 2) - v1.x - transform.position.x, (entityModelTemp.transform.position.y + collision.bounds.size.y) - v1.y - transform.position.y), distancia, mask.value);
 
-                for(int i = 0; i < hits.Length; i++)
+                hits[4] = Physics2D.Raycast(v1 + (Vector2)transform.position,
+                    new Vector2((entityModelTemp.transform.position.x) - v1.x - transform.position.x, (entityModelTemp.transform.position.y + collision.bounds.size.y / 2) - v1.y - transform.position.y), distancia, mask.value);
+
+                //Debugs
+                /*
+                Debug.DrawRay(v1 + (Vector2)transform.position,
+                    new Vector2((entityModelTemp.transform.position.x - collision.bounds.size.x / 2) - v1.x - transform.position.x, entityModelTemp.transform.position.y - v1.y - transform.position.y), Color.black);
+
+                Debug.DrawRay(v1 + (Vector2)transform.position,
+                    new Vector2((entityModelTemp.transform.position.x + collision.bounds.size.x / 2) - v1.x - transform.position.x, entityModelTemp.transform.position.y - v1.y - transform.position.y), Color.black);
+
+                Debug.DrawRay(v1 + (Vector2)transform.position,
+                    new Vector2((entityModelTemp.transform.position.x - collision.bounds.size.x / 2) - v1.x - transform.position.x, (entityModelTemp.transform.position.y + collision.bounds.size.y) - v1.y - transform.position.y), Color.black);
+
+                Debug.DrawRay(v1 + (Vector2)transform.position,
+                    new Vector2((entityModelTemp.transform.position.x + collision.bounds.size.x / 2) - v1.x - transform.position.x, (entityModelTemp.transform.position.y + collision.bounds.size.y) - v1.y - transform.position.y), Color.black);
+
+                Debug.DrawRay(v1 + (Vector2)transform.position,
+                    new Vector2((entityModelTemp.transform.position.x) - v1.x - transform.position.x, (entityModelTemp.transform.position.y + collision.bounds.size.y / 2) - v1.y - transform.position.y), Color.black);
+                */
+
+                for (int i = 0; i < hits.Length; i++)
                 {
                     if(hits[i] == false)
                     {

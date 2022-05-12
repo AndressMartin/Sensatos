@@ -545,22 +545,27 @@ public class Enemy : EntityModel
         DistanciaX = alvo.x - transform.position.x;
         DistanciaY = alvo.y - transform.position.y;
 
-        if (DistanciaY < 0)
+        if(Mathf.Abs(DistanciaX) > Mathf.Abs(DistanciaY))
         {
-            ChangeDirection(EntityModel.Direcao.Baixo);
+            if (DistanciaX > 0)
+            {
+                ChangeDirection(EntityModel.Direcao.Direita);
+            }
+            else
+            {
+                ChangeDirection(EntityModel.Direcao.Esquerda);
+            }
         }
         else
         {
-            ChangeDirection(EntityModel.Direcao.Cima);
-        }
-
-        if (DistanciaX > 0.6)
-        {
-            ChangeDirection(EntityModel.Direcao.Direita);
-        }
-        else if (DistanciaX < -0.6)
-        {
-            ChangeDirection(EntityModel.Direcao.Esquerda);
+            if (DistanciaY < 0)
+            {
+                ChangeDirection(EntityModel.Direcao.Baixo);
+            }
+            else
+            {
+                ChangeDirection(EntityModel.Direcao.Cima);
+            }
         }
     }
     
