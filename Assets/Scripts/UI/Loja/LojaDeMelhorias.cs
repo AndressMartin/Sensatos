@@ -392,13 +392,16 @@ public class LojaDeMelhorias : MonoBehaviour
         //Confirmar
         if (InputManager.Confirmar())
         {
-            if (generalManager.Player.Inventario.Dinheiro >= listaDeMelhorias[selecao].Preco)
+            if(listaDeMelhorias.Count > 0)
             {
-                ComprarMelhoria();
-            }
-            else
-            {
-                generalManager.Hud.SonsDeMenus.TocarSom(SonsDeMenus.Som.Falha);
+                if (generalManager.Player.Inventario.Dinheiro >= listaDeMelhorias[selecao].Preco)
+                {
+                    ComprarMelhoria();
+                }
+                else
+                {
+                    generalManager.Hud.SonsDeMenus.TocarSom(SonsDeMenus.Som.Falha);
+                }
             }
         }
     }

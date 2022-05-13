@@ -421,36 +421,39 @@ public class LojaDeArmas : MonoBehaviour
         //Confirmar
         if (InputManager.Confirmar())
         {
-            switch (listaDeArmas[selecao].Tipo)
+            if(listaDeArmas.Count > 0)
             {
-                case InventarioLoja.ArmaLoja.TipoCompra.Arma:
-                    if(generalManager.Player.Inventario.Dinheiro >= listaDeArmas[selecao].PrecoArma)
-                    {
-                        ComprarArma();
+                switch (listaDeArmas[selecao].Tipo)
+                {
+                    case InventarioLoja.ArmaLoja.TipoCompra.Arma:
+                        if (generalManager.Player.Inventario.Dinheiro >= listaDeArmas[selecao].PrecoArma)
+                        {
+                            ComprarArma();
 
-                        generalManager.Hud.SonsDeMenus.TocarSom(SonsDeMenus.Som.Comprar);
-                    }
-                    else
-                    {
-                        generalManager.Hud.SonsDeMenus.TocarSom(SonsDeMenus.Som.Falha);
-                    }
-                    break;
+                            generalManager.Hud.SonsDeMenus.TocarSom(SonsDeMenus.Som.Comprar);
+                        }
+                        else
+                        {
+                            generalManager.Hud.SonsDeMenus.TocarSom(SonsDeMenus.Som.Falha);
+                        }
+                        break;
 
-                case InventarioLoja.ArmaLoja.TipoCompra.Municao:
-                    if(MaximoDeMunicaoAdicionavel() > 0)
-                    {
-                        SetMenuAtual(Menu.EscolhendoQuantidadeMunicao);
+                    case InventarioLoja.ArmaLoja.TipoCompra.Municao:
+                        if (MaximoDeMunicaoAdicionavel() > 0)
+                        {
+                            SetMenuAtual(Menu.EscolhendoQuantidadeMunicao);
 
-                        IniciarQuantidadeMunicao();
-                        AtualizarPainelQuantidadeMunicao();
+                            IniciarQuantidadeMunicao();
+                            AtualizarPainelQuantidadeMunicao();
 
-                        generalManager.Hud.SonsDeMenus.TocarSom(SonsDeMenus.Som.Confirmar);
-                    }
-                    else
-                    {
-                        generalManager.Hud.SonsDeMenus.TocarSom(SonsDeMenus.Som.Falha);
-                    }
-                    break;
+                            generalManager.Hud.SonsDeMenus.TocarSom(SonsDeMenus.Som.Confirmar);
+                        }
+                        else
+                        {
+                            generalManager.Hud.SonsDeMenus.TocarSom(SonsDeMenus.Som.Falha);
+                        }
+                        break;
+                }
             }
         }
     }

@@ -95,23 +95,20 @@ public class ArmaDeFogo : ItemDoInventario
 
     public void AdicionarMunicao(int quantidade)
     {
-        if (municao < GetStatus.MunicaoMax)
+        municao += quantidade;
+
+        if (municao > GetStatus.MunicaoMax)
         {
-            municao += quantidade;
+            quantidade = municao - GetStatus.MunicaoMax;
+            municao = GetStatus.MunicaoMax;
 
-            if (municao > GetStatus.MunicaoMax)
+            if (municaoCartucho < GetStatus.MunicaoMaxCartucho)
             {
-                quantidade = municao - GetStatus.MunicaoMax;
-                municao = GetStatus.MunicaoMax;
+                municaoCartucho += quantidade;
 
-                if (municaoCartucho < GetStatus.MunicaoMaxCartucho)
+                if (municaoCartucho > GetStatus.MunicaoMaxCartucho)
                 {
-                    municaoCartucho += quantidade;
-
-                    if (municaoCartucho > GetStatus.MunicaoMaxCartucho)
-                    {
-                        municaoCartucho = GetStatus.MunicaoMaxCartucho;
-                    }
+                    municaoCartucho = GetStatus.MunicaoMaxCartucho;
                 }
             }
         }

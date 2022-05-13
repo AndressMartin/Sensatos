@@ -362,13 +362,16 @@ public class LojaDeItens : MonoBehaviour
         //Confirmar
         if (InputManager.Confirmar())
         {
-            if (generalManager.Player.Inventario.Dinheiro >= listaDeItens[selecao].Preco)
+            if (listaDeItens.Count > 0)
             {
-                ComprarItem();
-            }
-            else
-            {
-                generalManager.Hud.SonsDeMenus.TocarSom(SonsDeMenus.Som.Falha);
+                if (generalManager.Player.Inventario.Dinheiro >= listaDeItens[selecao].Preco)
+                {
+                    ComprarItem();
+                }
+                else
+                {
+                    generalManager.Hud.SonsDeMenus.TocarSom(SonsDeMenus.Som.Falha);
+                }
             }
         }
     }
