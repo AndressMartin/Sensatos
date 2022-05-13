@@ -2,119 +2,77 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
-public class EnemyVisionScript : MonoBehaviour 
+public class CameraJogo : MonoBehaviour
 {
 
-    //variaveis
-    [SerializeField] LayerMask mask;
-    [SerializeField] private float fovNormal, distanciaNormal;
-    [SerializeField] private float fovAlerta, distanciaAlerta;
-    [SerializeField] private float raioVisaoCircular;
-    [SerializeField] private float offSet;
- 
-    private float fov, distancia;
-    private float offSetOrigemX, offSetOrigemY;
-    private float larguraVisao, alturaVisao;
-
-    Vector2 v1, v2 = new Vector2(0, 0), v3 = new Vector2(0, 0);
-    EntityModel.Direcao direcao;
-
-    //Variaveis de controle
-    [SerializeField] private bool vendoPlayer;
-    [SerializeField] private bool vendoPlayerCircular;
-    [SerializeField] private float intervaloDeTempo;
-
-    EntityModel.Direcao direcaoAntiga;
-
-    private float tempo;
-    bool controle;
-
-    //Componentes
-    private Enemy enemy;
-    private VisaoCircularEnemy visaoCircularEnemy;
+    //componente
     private PolygonCollider2D polygonCollider;
     private FieldOfView fieldOfView;
+    private GeneralManagerScript generalManager;
 
-    //Getters
-    public bool GetVendoPlayer => vendoPlayer;
-    public bool GetVendoPlayerCircular => vendoPlayerCircular;
+    //variavel
+    [SerializeField] EntityModel.Direcao direcao;
+    [SerializeField] LayerMask mask;
+    [SerializeField] private float fovNormal, distanciaNormal;
+    [SerializeField] private float offSet;
+    Vector2 v1, v2 = new Vector2(0, 0), v3 = new Vector2(0, 0);
+    Vector2 posicaoInimigoMorto;
 
+    private float fov, distancia;
+    private float larguraVisao, alturaVisao;
+    private float offSetOrigemX, offSetOrigemY;
+    private float tempoFazerRaycast;
+    private float tempoDetectarPlayer;
+
+    //controle
+    [SerializeField] private float tempoFazerRaycastMax;
+    [SerializeField] private float tempoDetectarPlayerMax;
+    private bool vendoPlayer, playerDetectado;
+    private bool emLockdown;
+    private bool vendoInimigo;
+    private bool fazerPollygonCollider;
+
+
+    // Start is called before the first frame update
     void Start()
     {
-        direcaoAntiga = direcao;
-        //transform.Rotate(0, 0, -90);
 
-        fov = fovNormal;
-        distancia = distanciaNormal;
-
-        offSetOrigemX = 0;
-        offSetOrigemY = 0;
-
-        tempo = 0;
-
-        visaoCircularEnemy = GetComponentInChildren<VisaoCircularEnemy>();
-        //Debug.Log("tenho "+visaoCircularEnemy);
         polygonCollider = GetComponent<PolygonCollider2D>();
-        enemy = GetComponentInParent<Enemy>();
-
-        visaoCircularEnemy.ValorRaioInicial(raioVisaoCircular);
-
-        //visaoCircularEnemy.ValorRaioInicial(Mathf.Sqrt((larguraConeVisao - larguraVisao) * (larguraConeVisao - larguraVisao) + (alturaConeVisao - alturaVisao) * (alturaConeVisao - alturaVisao)));
-        
-        v1 = new Vector2(offSetOrigemX, offSetOrigemY);
-
-        MudarVisao(false);
-
-        //Field of View
-        GeneralManagerScript generalManager = FindObjectOfType<GeneralManagerScript>();
-
+        generalManager = FindObjectOfType<GeneralManagerScript>();
+        generalManager.ObjectManager.AdicionarAsCameras(this);
         GameObject novoFieldOfView = Instantiate(generalManager.FieldView);
         novoFieldOfView.transform.parent = generalManager.FieldView.transform.parent;
 
         fieldOfView = novoFieldOfView.GetComponent<FieldOfView>();
-        fieldOfView.SetPai(enemy.gameObject);
-        //fieldOfView.SetArea(fov, distancia);
-    }
-    
-    public void Main()
-    {
-        vendoPlayerCircular=visaoCircularEnemy.VendoPlayer;
-        direcao = enemy.GetDirecao;
+        fieldOfView.SetPai(gameObject);
+
+        fov = fovNormal;
+        distancia = distanciaNormal;
+        tempoFazerRaycast = 0;
+        fazerPollygonCollider = true;
+        emLockdown = false;
+
+        FieldOfViewAtiva(true);
         AtualizarFieldView();
-        MudarDirecaoConeVisao();
+    }
 
-        if(enemy.GetIAEnemy.GetEstadoDeteccaoPlayer == IAEnemy.EstadoDeteccaoPlayer.PlayerDetectado)
+    // Update is called once per frame
+    void Update()
+    {
+        if (!emLockdown)
         {
-            Vector2[] vectors = new Vector2[1] {new Vector2(0,0)};
-            polygonCollider.points = vectors;
-            vendoPlayer = false;
-        }
-        else
-        {
+            MudarDirecaoConeVisao();
+            AtualizarFieldView();
             AtualizarPollygonCollider();
+            DetectarPlayer();
+            AtivarLockdown();
         }
-    }
 
-    public void ResetarVariaveisDeControle()
-    {
-        fov = fovNormal;
-        distancia = distanciaNormal;
-        vendoPlayer = false;
     }
-    public void EntrarModoPatrulha()
+    private void AtualizarFieldView()
     {
-        fov = fovAlerta;
-        distancia = distanciaAlerta;
-    }
-    public void SairModoPatrulha()
-    {
-        fov = fovNormal;
-        distancia = distanciaNormal;
-    }
-    void ZerarVariaveis()
-    {
-        vendoPlayer = false;
+        fieldOfView.SetOrigin(gameObject.transform.position);
+        fieldOfView.SetArea(fov, distancia);
     }
     void MudarDirecaoConeVisao()
     {
@@ -126,7 +84,7 @@ public class EnemyVisionScript : MonoBehaviour
                 v2 = new Vector2((offSetOrigemX - offSet - larguraVisao), (offSetOrigemY + alturaVisao));
                 v3 = new Vector2((offSetOrigemX - offSet - larguraVisao), (offSetOrigemY - alturaVisao));
 
-                fieldOfView.SetOrigin((Vector2)enemy.transform.position + v1);
+                fieldOfView.SetOrigin((Vector2)gameObject.transform.position + v1);
                 fieldOfView.SetDirection(Vector2.down);
                 break;
 
@@ -135,7 +93,7 @@ public class EnemyVisionScript : MonoBehaviour
                 v2 = new Vector2((offSetOrigemX + offSet + larguraVisao), (offSetOrigemY + alturaVisao));
                 v3 = new Vector2((offSetOrigemX + offSet + larguraVisao), (offSetOrigemY - alturaVisao));
 
-                fieldOfView.SetOrigin((Vector2)enemy.transform.position + v1);
+                fieldOfView.SetOrigin((Vector2)gameObject.transform.position + v1);
                 fieldOfView.SetDirection(Vector2.up);
                 break;
 
@@ -144,7 +102,7 @@ public class EnemyVisionScript : MonoBehaviour
                 v2 = new Vector2((offSetOrigemX - alturaVisao), (offSetOrigemY + offSet + larguraVisao));
                 v3 = new Vector2((offSetOrigemX + alturaVisao), (offSetOrigemY + offSet + larguraVisao));
 
-                fieldOfView.SetOrigin((Vector2)enemy.transform.position + v1);
+                fieldOfView.SetOrigin((Vector2)gameObject.transform.position + v1);
                 fieldOfView.SetDirection(Vector2.left);
                 break;
 
@@ -153,66 +111,90 @@ public class EnemyVisionScript : MonoBehaviour
                 v2 = new Vector2((offSetOrigemX + alturaVisao), (offSetOrigemY - offSet - larguraVisao));
                 v3 = new Vector2((offSetOrigemX - alturaVisao), (offSetOrigemY - offSet - larguraVisao));
 
-                fieldOfView.SetOrigin((Vector2)enemy.transform.position + v1);
+                fieldOfView.SetOrigin((Vector2)gameObject.transform.position + v1);
                 fieldOfView.SetDirection(Vector2.right);
                 break;
         }
-        if(direcaoAntiga != direcao)
+        if (fazerPollygonCollider)
         {
-            direcaoAntiga = direcao;
             AtualizarPollygonCollider();
-
-        }
-        //float h2 = (larguraConeVisao - pontoX) * (larguraConeVisao - pontoX) + (alturaConeVisao - pontoY) * (alturaConeVisao - pontoY);
-
-    }
-    public void MudarVisao(bool estado)
-    {
-        if (estado && !controle)
-        {
-            EntrarModoPatrulha();
-            controle = true;
-        }
-        else if (!estado)
-        {
-            SairModoPatrulha();
-            controle = false;
+            fazerPollygonCollider = false;
         }
     }
-
-    private void AtualizarFieldView()
-    {
-        fieldOfView.SetOrigin(enemy.transform.position);
-        fieldOfView.SetArea(fov, distancia);
-    }
-
     public void FieldOfViewAtiva(bool ativa)
     {
-        if(fieldOfView != null)
+        if (fieldOfView != null)
         {
             fieldOfView.gameObject.SetActive(ativa);
         }
     }
     void AtualizarPollygonCollider()
-    {
+    {   
         List<Vector2> temp = new List<Vector2>();
         for (int i = 0; i < fieldOfView.GetPontos.Count; i++)
         {
             Vector2 ponto = fieldOfView.GetPontos[i];
-            var pontoCorrigido = ponto - ((Vector2)enemy.transform.position);
+            var pontoCorrigido = ponto - ((Vector2)fieldOfView.GetPai.transform.position);
             temp.Add(pontoCorrigido);
         }
         if (polygonCollider != null)
         {
             polygonCollider.points = temp.ToArray();
+        } 
+    }
+
+    void DetectarPlayer()
+    {
+        if(vendoPlayer && !playerDetectado)
+        {
+            tempoDetectarPlayer += Time.deltaTime * generalManager.Player.Inventario.RoupaAtual.FatorDePercepcao;
+            if(tempoDetectarPlayer >= tempoDetectarPlayerMax)
+            {
+                tempoDetectarPlayer = 0;
+                playerDetectado = true;
+                emLockdown = true;
+                Debug.Log("Detectei o troxa");
+            }
+            else
+            {
+                Debug.Log("To vendo o player mas n detectei ainda");
+            }
         }
+        else
+        {
+            tempoDetectarPlayer-= Time.deltaTime;
+            if (tempoDetectarPlayer <= 0)
+                tempoDetectarPlayer = 0;
+        }
+    }
+    private void AtivarLockdown()
+    {
+        if (playerDetectado || vendoInimigo)
+        {
+            if (playerDetectado)
+            {
+                generalManager.ObjectManager.ListaAlarmes[0].AtivarLockDown(generalManager.Player.transform.position);
+                return;
+            }
+            generalManager.ObjectManager.ListaAlarmes[0].AtivarLockDown(posicaoInimigoMorto);
+        }
+    }
+    public void ReceberLockdown(bool valor)
+    {
+        emLockdown = valor;
+
+        fazerPollygonCollider = true; //habilita a camera a redesenhar o collider
+        playerDetectado = false; 
+        FieldOfViewAtiva(!valor); //fieldView inverso a se esta em lockDown
+        tempoDetectarPlayer = 0;
+        tempoFazerRaycast = 0;
     }
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        tempo += Time.deltaTime;
+        tempoFazerRaycast += Time.deltaTime;
 
-        if (tempo < intervaloDeTempo)
+        if (tempoFazerRaycast < tempoFazerRaycastMax)
         {
             return;
         }
@@ -220,6 +202,7 @@ public class EnemyVisionScript : MonoBehaviour
         if (collision.CompareTag("HitboxDano"))
         {
             EntityModel entityModelTemp = collision.transform.parent.gameObject.GetComponent<EntityModel>();
+            SpriteRenderer sprite = collision.transform.parent.GetComponentInChildren<SpriteRenderer>();
 
             if (entityModelTemp != null)
             {
@@ -227,22 +210,22 @@ public class EnemyVisionScript : MonoBehaviour
                 RaycastHit2D[] hits = new RaycastHit2D[5];
 
                 hits[0] = Physics2D.Raycast(v1 + (Vector2)transform.position,
-                    new Vector2((entityModelTemp.transform.position.x - collision.bounds.size.x / 2) - v1.x - transform.position.x, entityModelTemp.transform.position.y - v1.y - transform.position.y), distancia, mask.value);
+                    new Vector2((entityModelTemp.transform.position.x - collision.bounds.size.x / 2) - v1.x - transform.position.x, entityModelTemp.transform.position.y - v1.y - transform.position.y), distancia, mask);
 
                 hits[1] = Physics2D.Raycast(v1 + (Vector2)transform.position,
-                    new Vector2((entityModelTemp.transform.position.x + collision.bounds.size.x / 2) - v1.x - transform.position.x, entityModelTemp.transform.position.y - v1.y - transform.position.y), distancia, mask.value);
+                    new Vector2((entityModelTemp.transform.position.x + collision.bounds.size.x / 2) - v1.x - transform.position.x, entityModelTemp.transform.position.y - v1.y - transform.position.y), distancia, mask);
 
                 hits[2] = Physics2D.Raycast(v1 + (Vector2)transform.position,
-                    new Vector2((entityModelTemp.transform.position.x - collision.bounds.size.x / 2) - v1.x - transform.position.x, (entityModelTemp.transform.position.y + collision.bounds.size.y) - v1.y - transform.position.y), distancia, mask.value);
+                    new Vector2((entityModelTemp.transform.position.x - collision.bounds.size.x / 2) - v1.x - transform.position.x, (entityModelTemp.transform.position.y + collision.bounds.size.y) - v1.y - transform.position.y), distancia, mask);
 
                 hits[3] = Physics2D.Raycast(v1 + (Vector2)transform.position,
-                    new Vector2((entityModelTemp.transform.position.x + collision.bounds.size.x / 2) - v1.x - transform.position.x, (entityModelTemp.transform.position.y + collision.bounds.size.y) - v1.y - transform.position.y), distancia, mask.value);
+                    new Vector2((entityModelTemp.transform.position.x + collision.bounds.size.x / 2) - v1.x - transform.position.x, (entityModelTemp.transform.position.y + collision.bounds.size.y) - v1.y - transform.position.y), distancia, mask);
 
                 hits[4] = Physics2D.Raycast(v1 + (Vector2)transform.position,
-                    new Vector2((entityModelTemp.transform.position.x) - v1.x - transform.position.x, (entityModelTemp.transform.position.y + collision.bounds.size.y / 2) - v1.y - transform.position.y), distancia, mask.value);
+                    new Vector2((entityModelTemp.transform.position.x) - v1.x - transform.position.x, (entityModelTemp.transform.position.y + collision.bounds.size.y / 2) - v1.y - transform.position.y), distancia, mask);
 
                 //Debugs
-                /*
+                
                 Debug.DrawRay(v1 + (Vector2)transform.position,
                     new Vector2((entityModelTemp.transform.position.x - collision.bounds.size.x / 2) - v1.x - transform.position.x, entityModelTemp.transform.position.y - v1.y - transform.position.y), Color.black);
 
@@ -257,11 +240,12 @@ public class EnemyVisionScript : MonoBehaviour
 
                 Debug.DrawRay(v1 + (Vector2)transform.position,
                     new Vector2((entityModelTemp.transform.position.x) - v1.x - transform.position.x, (entityModelTemp.transform.position.y + collision.bounds.size.y / 2) - v1.y - transform.position.y), Color.black);
-                */
+                
+
 
                 for (int i = 0; i < hits.Length; i++)
                 {
-                    if(hits[i] == false)
+                    if (hits[i] == false)
                     {
                         viuEntidade = true;
                         break;
@@ -272,7 +256,12 @@ public class EnemyVisionScript : MonoBehaviour
                 {
                     if (entityModelTemp is Enemy)
                     {
-                        enemy.GetIAEnemy.VendoOutroInimigo((Enemy)entityModelTemp);
+                        Enemy enemy = (Enemy)entityModelTemp;
+                        if (enemy.Morto)
+                        {
+                            vendoInimigo = true;
+                            posicaoInimigoMorto = enemy.transform.position;
+                        }
                     }
 
                     if (entityModelTemp is Player)
@@ -284,21 +273,20 @@ public class EnemyVisionScript : MonoBehaviour
                 {
                     vendoPlayer = false;
                 }
+                hits = null;
             }
         }
 
-        tempo = 0;
+        tempoFazerRaycast = 0;
     }
-
     private void OnTriggerExit2D(Collider2D collision)
     {
-
         if (collision.gameObject.CompareTag("HitboxDano"))
         {
             Player player = collision.transform.parent.GetComponent<Player>();
             if (player != null)
             {
-                ZerarVariaveis();
+                vendoPlayer = false;
             }
         }
 

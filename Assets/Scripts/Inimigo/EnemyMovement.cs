@@ -20,7 +20,6 @@ public class EnemyMovement : MonoBehaviour
     private float velY;
     [SerializeField] private float velocidadeModoNormal;
     [SerializeField] private float velocidadeModoLockdown;
-
     private Vector2 vetorKnockBack;
 
     private List<Transform> pontosDeProcura;
@@ -239,7 +238,7 @@ public class EnemyMovement : MonoBehaviour
         aiPath.enabled = true;
         aiPath.canMove = true;
 
-        if (ia_Enemy.GetEstadoDeteccaoPlayer == IAEnemy.EstadoDeteccaoPlayer.PlayerDetectado)
+        if (ia_Enemy.GetEstadoDeteccaoPlayer == IAEnemy.EstadoDeteccaoPlayer.PlayerDetectado || ia_Enemy.OuviuTiro || ia_Enemy.GetInimigoEstados == IAEnemy.InimigoEstados.IndoAtivarLockDown)
         {
             velocidade = velocidadeModoLockdown;
         }

@@ -75,6 +75,10 @@ public class LockDownManagerScript : MonoBehaviour
                 enemy.SeDesativarNoLockdown();
             }
         }
+        foreach (CameraJogo cameraJogo in generalManager.ObjectManager.GetCameraJogo)
+        {
+            cameraJogo.ReceberLockdown(true);
+        }
 
         TrancarPortas();
 
@@ -94,6 +98,10 @@ public class LockDownManagerScript : MonoBehaviour
         foreach (Enemy enemy in generalManager.ObjectManager.ListaInimigos)
         {
             enemy.GetIAEnemy.DesativarLockDown();
+        }
+        foreach (CameraJogo cameraJogo in generalManager.ObjectManager.GetCameraJogo)
+        {
+            cameraJogo.ReceberLockdown(false);
         }
 
         DestrancarPortas();

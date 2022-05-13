@@ -101,6 +101,7 @@ public class IAEnemy : MonoBehaviour
     public EstadoDeteccaoPlayer GetEstadoDeteccaoPlayer => estadoDeteccaoPlayer;
     public TipoInimigo GetTipoInimigo => tipoInimigo;
     public bool GetEmLockdown => emLockDown;
+    public bool OuviuTiro => somTiro;
     public virtual void Start()
     {
         Iniciar();
@@ -687,9 +688,19 @@ public class IAEnemy : MonoBehaviour
         //to fazendo a rotina do lockdow
         if(emLockDown)
         {
-            if (VerificarChegouAteAlvo(enemyMovement.PontoDeProcura))
+            if (!verifiqueiUltimaPosicaoJogador)
             {
-                enemyMovement.GerarNovoPonto(true);
+                if(VerificarChegouAteAlvo(posicaoUltimoLugarVisto))
+                {
+                    verifiqueiUltimaPosicaoJogador = true;
+                }
+            }
+            else
+            {
+                if (VerificarChegouAteAlvo(enemyMovement.PontoDeProcura))
+                {
+                    enemyMovement.GerarNovoPonto(true);
+                }
             }
             return false;
         }
@@ -879,6 +890,7 @@ public class IAEnemy : MonoBehaviour
             emLockDown = true;
             posicaoUltimoLugarVisto = _posicaoPlayer;
             enemyMovement.SetPontosDeProcura(pontosDeProcura);
+            verifiqueiUltimaPosicaoJogador = false;
         }
         else if (enemy.Animacao.AnimacaoAtual != "Vazio")
         {

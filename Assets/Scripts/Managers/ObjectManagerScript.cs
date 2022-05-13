@@ -10,13 +10,15 @@ public class ObjectManagerScript : MonoBehaviour
     [SerializeField] private List<Enemy> listaInimigos;
     [SerializeField] private List<LockDownButton> listaAlarmes;
     [SerializeField] private List<Porta> listaPortas;
+    [SerializeField] private List<CameraJogo> cameraJogo;
 
     //Getters
-    [SerializeField] public List<ObjetoInteragivel> ListaObjetosInteragiveis => listaObjetosInteragiveis;
-    [SerializeField] public List<ParedeModel> ListaParedesQuebraveis => listaParedesQuebraveis;
-    [SerializeField] public List<Enemy> ListaInimigos => listaInimigos;
-    [SerializeField] public List<LockDownButton> ListaAlarmes => listaAlarmes;
-    [SerializeField] public List<Porta> ListaPortas => listaPortas;
+    public List<ObjetoInteragivel> ListaObjetosInteragiveis => listaObjetosInteragiveis;
+    public List<ParedeModel> ListaParedesQuebraveis => listaParedesQuebraveis;
+    public List<Enemy> ListaInimigos => listaInimigos;
+    public List<LockDownButton> ListaAlarmes => listaAlarmes;
+    public List<Porta> ListaPortas => listaPortas;
+    public List<CameraJogo> GetCameraJogo => cameraJogo;
 
     public void AdicionarAosObjetosInteragiveis(ObjetoInteragivel objetoInteragivel)
     {
@@ -69,5 +71,13 @@ public class ObjectManagerScript : MonoBehaviour
     public void RemoverDasPortas(Porta porta)
     {
         listaPortas.Remove(porta);
+    }
+    public void AdicionarAsCameras(CameraJogo camera)
+    {
+        cameraJogo.Add(camera);
+    }
+    public void RemoverDasCameras(CameraJogo camera)
+    {
+        cameraJogo.Remove(camera);
     }
 }

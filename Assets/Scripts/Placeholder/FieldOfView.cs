@@ -16,7 +16,7 @@ public class FieldOfView : MonoBehaviour
     private List<Vector2> pontos = new List<Vector2>();
     public Mesh GetMesh => mesh;
     public List<Vector2> GetPontos => pontos;
-
+    public GameObject GetPai=> pai;
     public void SetPai(GameObject pai)
     {
         this.pai = pai;
