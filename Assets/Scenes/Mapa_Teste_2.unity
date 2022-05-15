@@ -10325,6 +10325,26 @@ Tilemap:
       m_TileObjectToInstantiateIndex: 65535
       dummyAlignment: 0
       m_AllTileFlags: 1073741825
+  - first: {x: 10, y: -7, z: 0}
+    second:
+      serializedVersion: 2
+      m_TileIndex: 39
+      m_TileSpriteIndex: 39
+      m_TileMatrixIndex: 0
+      m_TileColorIndex: 0
+      m_TileObjectToInstantiateIndex: 65535
+      dummyAlignment: 0
+      m_AllTileFlags: 0
+  - first: {x: 11, y: -7, z: 0}
+    second:
+      serializedVersion: 2
+      m_TileIndex: 39
+      m_TileSpriteIndex: 39
+      m_TileMatrixIndex: 0
+      m_TileColorIndex: 0
+      m_TileObjectToInstantiateIndex: 65535
+      dummyAlignment: 0
+      m_AllTileFlags: 0
   - first: {x: -10, y: -6, z: 0}
     second:
       serializedVersion: 2
@@ -10525,6 +10545,26 @@ Tilemap:
       m_TileObjectToInstantiateIndex: 65535
       dummyAlignment: 0
       m_AllTileFlags: 1073741825
+  - first: {x: 10, y: -6, z: 0}
+    second:
+      serializedVersion: 2
+      m_TileIndex: 39
+      m_TileSpriteIndex: 39
+      m_TileMatrixIndex: 0
+      m_TileColorIndex: 0
+      m_TileObjectToInstantiateIndex: 65535
+      dummyAlignment: 0
+      m_AllTileFlags: 0
+  - first: {x: 11, y: -6, z: 0}
+    second:
+      serializedVersion: 2
+      m_TileIndex: 39
+      m_TileSpriteIndex: 39
+      m_TileMatrixIndex: 0
+      m_TileColorIndex: 0
+      m_TileObjectToInstantiateIndex: 65535
+      dummyAlignment: 0
+      m_AllTileFlags: 0
   - first: {x: -10, y: -5, z: 0}
     second:
       serializedVersion: 2
@@ -17895,7 +17935,63 @@ Tilemap:
       m_TileObjectToInstantiateIndex: 65535
       dummyAlignment: 0
       m_AllTileFlags: 1073741825
-  m_AnimatedTiles: {}
+  m_AnimatedTiles:
+  - first: {x: 10, y: -7, z: 0}
+    second:
+      m_AnimatedSprites:
+      - {fileID: 114374991, guid: 48e939d168b29ac48b1ffac9ecb0bd47, type: 3}
+      - {fileID: 1740428487, guid: 48e939d168b29ac48b1ffac9ecb0bd47, type: 3}
+      - {fileID: -1059823458, guid: 48e939d168b29ac48b1ffac9ecb0bd47, type: 3}
+      - {fileID: -6830239, guid: 48e939d168b29ac48b1ffac9ecb0bd47, type: 3}
+      - {fileID: -1048517365, guid: 48e939d168b29ac48b1ffac9ecb0bd47, type: 3}
+      - {fileID: -1832702643, guid: 48e939d168b29ac48b1ffac9ecb0bd47, type: 3}
+      - {fileID: -1498134005, guid: 48e939d168b29ac48b1ffac9ecb0bd47, type: 3}
+      - {fileID: -1949276599, guid: 48e939d168b29ac48b1ffac9ecb0bd47, type: 3}
+      m_AnimationSpeed: 1.4
+      m_AnimationTimeOffset: 0
+      m_IsLooping: 1
+  - first: {x: 11, y: -7, z: 0}
+    second:
+      m_AnimatedSprites:
+      - {fileID: 114374991, guid: 48e939d168b29ac48b1ffac9ecb0bd47, type: 3}
+      - {fileID: 1740428487, guid: 48e939d168b29ac48b1ffac9ecb0bd47, type: 3}
+      - {fileID: -1059823458, guid: 48e939d168b29ac48b1ffac9ecb0bd47, type: 3}
+      - {fileID: -6830239, guid: 48e939d168b29ac48b1ffac9ecb0bd47, type: 3}
+      - {fileID: -1048517365, guid: 48e939d168b29ac48b1ffac9ecb0bd47, type: 3}
+      - {fileID: -1832702643, guid: 48e939d168b29ac48b1ffac9ecb0bd47, type: 3}
+      - {fileID: -1498134005, guid: 48e939d168b29ac48b1ffac9ecb0bd47, type: 3}
+      - {fileID: -1949276599, guid: 48e939d168b29ac48b1ffac9ecb0bd47, type: 3}
+      m_AnimationSpeed: 1.4
+      m_AnimationTimeOffset: 0
+      m_IsLooping: 1
+  - first: {x: 10, y: -6, z: 0}
+    second:
+      m_AnimatedSprites:
+      - {fileID: 114374991, guid: 48e939d168b29ac48b1ffac9ecb0bd47, type: 3}
+      - {fileID: 1740428487, guid: 48e939d168b29ac48b1ffac9ecb0bd47, type: 3}
+      - {fileID: -1059823458, guid: 48e939d168b29ac48b1ffac9ecb0bd47, type: 3}
+      - {fileID: -6830239, guid: 48e939d168b29ac48b1ffac9ecb0bd47, type: 3}
+      - {fileID: -1048517365, guid: 48e939d168b29ac48b1ffac9ecb0bd47, type: 3}
+      - {fileID: -1832702643, guid: 48e939d168b29ac48b1ffac9ecb0bd47, type: 3}
+      - {fileID: -1498134005, guid: 48e939d168b29ac48b1ffac9ecb0bd47, type: 3}
+      - {fileID: -1949276599, guid: 48e939d168b29ac48b1ffac9ecb0bd47, type: 3}
+      m_AnimationSpeed: 1.4
+      m_AnimationTimeOffset: 0
+      m_IsLooping: 1
+  - first: {x: 11, y: -6, z: 0}
+    second:
+      m_AnimatedSprites:
+      - {fileID: 114374991, guid: 48e939d168b29ac48b1ffac9ecb0bd47, type: 3}
+      - {fileID: 1740428487, guid: 48e939d168b29ac48b1ffac9ecb0bd47, type: 3}
+      - {fileID: -1059823458, guid: 48e939d168b29ac48b1ffac9ecb0bd47, type: 3}
+      - {fileID: -6830239, guid: 48e939d168b29ac48b1ffac9ecb0bd47, type: 3}
+      - {fileID: -1048517365, guid: 48e939d168b29ac48b1ffac9ecb0bd47, type: 3}
+      - {fileID: -1832702643, guid: 48e939d168b29ac48b1ffac9ecb0bd47, type: 3}
+      - {fileID: -1498134005, guid: 48e939d168b29ac48b1ffac9ecb0bd47, type: 3}
+      - {fileID: -1949276599, guid: 48e939d168b29ac48b1ffac9ecb0bd47, type: 3}
+      m_AnimationSpeed: 1.4
+      m_AnimationTimeOffset: 0
+      m_IsLooping: 1
   m_TileAssetArray:
   - m_RefCount: 0
     m_Data: {fileID: 0}
@@ -17975,8 +18071,8 @@ Tilemap:
     m_Data: {fileID: 0}
   - m_RefCount: 0
     m_Data: {fileID: 0}
-  - m_RefCount: 0
-    m_Data: {fileID: 0}
+  - m_RefCount: 4
+    m_Data: {fileID: 11400000, guid: 483c4d2ae1bd71f40a52dfc1c62f370a, type: 2}
   - m_RefCount: 1
     m_Data: {fileID: 11400000, guid: 0b5d5a53bcca3d444a6ed9a1bed826fb, type: 2}
   - m_RefCount: 661
@@ -18080,8 +18176,8 @@ Tilemap:
     m_Data: {fileID: 0}
   - m_RefCount: 0
     m_Data: {fileID: 0}
-  - m_RefCount: 0
-    m_Data: {fileID: 0}
+  - m_RefCount: 4
+    m_Data: {fileID: -1949276599, guid: 48e939d168b29ac48b1ffac9ecb0bd47, type: 3}
   - m_RefCount: 1
     m_Data: {fileID: 2770173440172777326, guid: 88117dd097d21ce4fad5db39ced625ac, type: 3}
   - m_RefCount: 661
@@ -18107,7 +18203,7 @@ Tilemap:
   - m_RefCount: 3
     m_Data: {fileID: 301088490313913968, guid: 88117dd097d21ce4fad5db39ced625ac, type: 3}
   m_TileMatrixArray:
-  - m_RefCount: 917
+  - m_RefCount: 921
     m_Data:
       e00: 1
       e01: 0
@@ -18126,7 +18222,7 @@ Tilemap:
       e32: 0
       e33: 1
   m_TileColorArray:
-  - m_RefCount: 917
+  - m_RefCount: 921
     m_Data: {r: 1, g: 1, b: 1, a: 1}
   m_TileObjectToInstantiateArray: []
   m_AnimationFrameRate: 1

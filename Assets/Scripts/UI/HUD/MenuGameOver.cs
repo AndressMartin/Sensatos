@@ -67,7 +67,6 @@ public class MenuGameOver : MonoBehaviour
         opcoesConfirmacaoParaVoltarACidade.gameObject.SetActive(false);
     }
 
-
     private void Update()
     {
         if (ativo == false)

@@ -1,3 +1,4 @@
+using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -22,12 +23,14 @@ public class GeneralManagerScript : MonoBehaviour
     private DebugModeManagerScript debugModeManager;
     private AssaltoManager assaltoManager;
     private NpcManager npcManager;
+    private ModoDeJogoManager modoDeJogoManager;
 
     //Componentes
     private Player player;
     private HUDScript hud;
     private DialogueUI dialogueUI;
     private GameObject fieldView;
+    private CinemachineVirtualCamera cameraPrincipal;
 
     //Getters
     public IdiomaManager IdiomaManager => idiomaManager;
@@ -49,8 +52,10 @@ public class GeneralManagerScript : MonoBehaviour
     public HUDScript Hud => hud;
     public DialogueUI DialogueUI => dialogueUI;
     public GameObject FieldView => fieldView;
+    public CinemachineVirtualCamera CameraPrincipal => cameraPrincipal;
     public AssaltoManager AssaltoManager => assaltoManager;
     public NpcManager NpcManager => npcManager;
+    public ModoDeJogoManager ModoDeJogoManager => modoDeJogoManager;
 
     private void Awake()
     {
@@ -72,11 +77,13 @@ public class GeneralManagerScript : MonoBehaviour
         debugModeManager = FindObjectOfType<DebugModeManagerScript>();
         assaltoManager = FindObjectOfType<AssaltoManager>();
         npcManager = FindObjectOfType<NpcManager>();
+        modoDeJogoManager = FindObjectOfType<ModoDeJogoManager>();
 
         //Componentes
         player = FindObjectOfType<Player>();
         hud = FindObjectOfType<HUDScript>();
         dialogueUI = FindObjectOfType<DialogueUI>();
         fieldView = FindObjectOfType<FieldOfView>(true)?.gameObject;
+        cameraPrincipal = FindObjectOfType<CinemachineVirtualCamera>();
     }
 }

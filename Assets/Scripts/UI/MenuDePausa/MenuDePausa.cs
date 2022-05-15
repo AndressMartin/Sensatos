@@ -222,7 +222,7 @@ public class MenuDePausa : MonoBehaviour
                     break;
 
                 case 1:
-                    if(GameManager.instance.ModoDeJogo == GameManager.Modo.Cidade)
+                    if(GameManager.instance.ModoDeJogo == GameManager.Modo.Cidade && generalManager.ModoDeJogoManager.SaveLiberado == true)
                     {
                         SetMenuAtual(Menu.Salvar);
 
