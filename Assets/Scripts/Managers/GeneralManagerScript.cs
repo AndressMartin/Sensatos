@@ -22,7 +22,6 @@ public class GeneralManagerScript : MonoBehaviour
     private AssaltoInfo assaltoInfo;
     private DebugModeManagerScript debugModeManager;
     private AssaltoManager assaltoManager;
-    private NpcManager npcManager;
     private ModoDeJogoManager modoDeJogoManager;
 
     //Componentes
@@ -54,7 +53,6 @@ public class GeneralManagerScript : MonoBehaviour
     public GameObject FieldView => fieldView;
     public CinemachineVirtualCamera CameraPrincipal => cameraPrincipal;
     public AssaltoManager AssaltoManager => assaltoManager;
-    public NpcManager NpcManager => npcManager;
     public ModoDeJogoManager ModoDeJogoManager => modoDeJogoManager;
 
     private void Awake()
@@ -76,7 +74,6 @@ public class GeneralManagerScript : MonoBehaviour
         assaltoInfo = FindObjectOfType<AssaltoInfo>();
         debugModeManager = FindObjectOfType<DebugModeManagerScript>();
         assaltoManager = FindObjectOfType<AssaltoManager>();
-        npcManager = FindObjectOfType<NpcManager>();
         modoDeJogoManager = FindObjectOfType<ModoDeJogoManager>();
 
         //Componentes

@@ -15,9 +15,8 @@ public class EnemyVisionScript : MonoBehaviour
  
     private float fov, distancia;
     private float offSetOrigemX, offSetOrigemY;
-    private float larguraVisao, alturaVisao;
 
-    Vector2 v1, v2 = new Vector2(0, 0), v3 = new Vector2(0, 0);
+    Vector2 v1;
     EntityModel.Direcao direcao;
 
     //Variaveis de controle
@@ -123,8 +122,6 @@ public class EnemyVisionScript : MonoBehaviour
             //rodar plano cartesiano
             case EntityModel.Direcao.Esquerda:
                 v1 = new Vector2(offSetOrigemX - offSet, offSetOrigemY);
-                v2 = new Vector2((offSetOrigemX - offSet - larguraVisao), (offSetOrigemY + alturaVisao));
-                v3 = new Vector2((offSetOrigemX - offSet - larguraVisao), (offSetOrigemY - alturaVisao));
 
                 fieldOfView.SetOrigin((Vector2)enemy.transform.position + v1);
                 fieldOfView.SetDirection(Vector2.down);
@@ -132,8 +129,6 @@ public class EnemyVisionScript : MonoBehaviour
 
             case EntityModel.Direcao.Direita:
                 v1 = new Vector2(offSetOrigemX + offSet, offSetOrigemY);
-                v2 = new Vector2((offSetOrigemX + offSet + larguraVisao), (offSetOrigemY + alturaVisao));
-                v3 = new Vector2((offSetOrigemX + offSet + larguraVisao), (offSetOrigemY - alturaVisao));
 
                 fieldOfView.SetOrigin((Vector2)enemy.transform.position + v1);
                 fieldOfView.SetDirection(Vector2.up);
@@ -141,8 +136,6 @@ public class EnemyVisionScript : MonoBehaviour
 
             case EntityModel.Direcao.Cima:
                 v1 = new Vector2(offSetOrigemX, offSetOrigemY + offSet);
-                v2 = new Vector2((offSetOrigemX - alturaVisao), (offSetOrigemY + offSet + larguraVisao));
-                v3 = new Vector2((offSetOrigemX + alturaVisao), (offSetOrigemY + offSet + larguraVisao));
 
                 fieldOfView.SetOrigin((Vector2)enemy.transform.position + v1);
                 fieldOfView.SetDirection(Vector2.left);
@@ -150,8 +143,6 @@ public class EnemyVisionScript : MonoBehaviour
 
             case EntityModel.Direcao.Baixo:
                 v1 = new Vector2(offSetOrigemX, offSetOrigemY - offSet);
-                v2 = new Vector2((offSetOrigemX + alturaVisao), (offSetOrigemY - offSet - larguraVisao));
-                v3 = new Vector2((offSetOrigemX - alturaVisao), (offSetOrigemY - offSet - larguraVisao));
 
                 fieldOfView.SetOrigin((Vector2)enemy.transform.position + v1);
                 fieldOfView.SetDirection(Vector2.right);
@@ -182,7 +173,7 @@ public class EnemyVisionScript : MonoBehaviour
 
     private void AtualizarFieldView()
     {
-        fieldOfView.SetOrigin(enemy.transform.position);
+        fieldOfView.SetOrigin((Vector2)gameObject.transform.position + v1);
         fieldOfView.SetArea(fov, distancia);
     }
 

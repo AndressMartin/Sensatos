@@ -10,7 +10,9 @@ public class ObjectManagerScript : MonoBehaviour
     [SerializeField] private List<Enemy> listaInimigos;
     [SerializeField] private List<LockDownButton> listaAlarmes;
     [SerializeField] private List<Porta> listaPortas;
-    [SerializeField] private List<CameraJogo> cameraJogo;
+    [SerializeField] private List<CameraLockdown> listaDeCamerasLockdown;
+
+    [SerializeField] private List<NPC> listaDeNPCs;
 
     //Getters
     public List<ObjetoInteragivel> ListaObjetosInteragiveis => listaObjetosInteragiveis;
@@ -18,7 +20,8 @@ public class ObjectManagerScript : MonoBehaviour
     public List<Enemy> ListaInimigos => listaInimigos;
     public List<LockDownButton> ListaAlarmes => listaAlarmes;
     public List<Porta> ListaPortas => listaPortas;
-    public List<CameraJogo> GetCameraJogo => cameraJogo;
+    public List<CameraLockdown> ListaDeCamerasLockdown => listaDeCamerasLockdown;
+    public List<NPC> ListaDeNPCs => listaDeNPCs;
 
     public void AdicionarAosObjetosInteragiveis(ObjetoInteragivel objetoInteragivel)
     {
@@ -72,12 +75,24 @@ public class ObjectManagerScript : MonoBehaviour
     {
         listaPortas.Remove(porta);
     }
-    public void AdicionarAsCameras(CameraJogo camera)
+
+    public void AdicionarAsCameras(CameraLockdown camera)
     {
-        cameraJogo.Add(camera);
+        listaDeCamerasLockdown.Add(camera);
     }
-    public void RemoverDasCameras(CameraJogo camera)
+
+    public void RemoverDasCameras(CameraLockdown camera)
     {
-        cameraJogo.Remove(camera);
+        listaDeCamerasLockdown.Remove(camera);
+    }
+
+    public void AdicionarAosNPCs(NPC npc)
+    {
+        listaDeNPCs.Add(npc);
+    }
+
+    public void RemoverDosNPCs(NPC npc)
+    {
+        listaDeNPCs.Remove(npc);
     }
 }

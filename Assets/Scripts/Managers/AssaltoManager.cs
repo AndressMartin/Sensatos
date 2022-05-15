@@ -48,7 +48,22 @@ public class AssaltoManager : MonoBehaviour
     public void SetarAssalto(Assalto _assalto)
     {
         assaltoAtual = _assalto;
-        generalManager.NpcManager.PassarAssalto(_assalto);
+        PassarAssalto(_assalto);
+    }
+
+    public void PassarAssalto(Assalto _assalto)
+    {
+        StartCoroutine(PassarAssaltoCorrotina(_assalto));
+    }
+
+    private IEnumerator PassarAssaltoCorrotina(Assalto assalto)
+    {
+        yield return null;
+
+        foreach (NPC npc in generalManager.ObjectManager.ListaDeNPCs)
+        {
+            npc.ReceberAssaltoDoManager(assalto);
+        }
     }
 
     private void TrocarIdioma()

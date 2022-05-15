@@ -8,7 +8,10 @@ public class ZoneManagerScript : MonoBehaviour
     private GeneralManagerScript generalManager;
 
     //Variaveis
-    [SerializeField] private int zonaAtual;
+    [SerializeField] private bool controlarInimigos;
+    [SerializeField] private bool controlarNpcs;
+
+    private int zonaAtual;
     [SerializeField] Zona[] zonas;
 
     //Getters
@@ -37,7 +40,15 @@ public class ZoneManagerScript : MonoBehaviour
     {
         generalManager = FindObjectOfType<GeneralManagerScript>();
 
-        StartCoroutine(AtivarEDesativarInimigos());
+        if(controlarInimigos == true)
+        {
+            StartCoroutine(AtivarEDesativarInimigos());
+        }
+
+        if (controlarNpcs == true)
+        {
+            StartCoroutine(AtivarEDesativarNPCs());
+        }
     }
 
     private void AtivarInimigo(Enemy enemy)
@@ -53,6 +64,16 @@ public class ZoneManagerScript : MonoBehaviour
     private void DesativarInimigo(Enemy enemy)
     {
         enemy.gameObject.SetActive(false);
+    }
+
+    private void AtivarNPC(NPC npc)
+    {
+        npc.gameObject.SetActive(true);
+    }
+
+    private void DesativarNPC(NPC npc)
+    {
+        npc.gameObject.SetActive(false);
     }
 
     public List<Transform> GetPontosDeProcura()
@@ -96,6 +117,32 @@ public class ZoneManagerScript : MonoBehaviour
                     if (enemy.gameObject.activeSelf == false)
                     {
                         AtivarInimigo(enemy);
+                    }
+                }
+            }
+
+            yield return new WaitForSeconds(1f);
+        }
+    }
+
+    private IEnumerator AtivarEDesativarNPCs()
+    {
+        while (true)
+        {
+            foreach (NPC npc in generalManager.ObjectManager.ListaDeNPCs)
+            {
+                if (npc.Zona != zonaAtual)
+                {
+                    if (npc.gameObject.activeSelf == true)
+                    {
+                        DesativarNPC(npc);
+                    }
+                }
+                else
+                {
+                    if (npc.gameObject.activeSelf == false)
+                    {
+                        AtivarNPC(npc);
                     }
                 }
             }

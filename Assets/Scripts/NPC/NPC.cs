@@ -9,29 +9,41 @@ public class NPC : MonoBehaviour
     private GeneralManagerScript generalManager;
 
     //Componentes
+    private BoxCollider2D colisao;
+
     NPCDialogo NpcDialogo;
     NpcMissao npcMissao;
 
-
     //Variaveis
+    [SerializeField] LayerMask layerDasZonas;
+
     Assalto assaltoAtual;
     private Missao missaoAtual;
     private DialogueList listaDialogoAtual;
     [SerializeField] List<CapituloDialogoNpc> capituloDialogoNpc;
 
+    private int zona;
 
+    //Getters
     public Missao GetMissaoAtual => missaoAtual;
     public NpcMissao GetNpcMissao => npcMissao;
     public DialogueList GetDialogueListSemMissao => RetornarDialogoGenericoAtual().GetDialogueList;
     public GeneralManagerScript GetGeneralManager => generalManager;
+    public int Zona => zona;
 
     void Start()
     {
+        //Managers
         generalManager = FindObjectOfType<GeneralManagerScript>();
+
+        //Se adicionar a lista de inimigos do ObjectManager
+        generalManager.ObjectManager.AdicionarAosNPCs(this);
+
+        //Componentes
+        colisao = GetComponent<BoxCollider2D>();
         NpcDialogo = GetComponent<NPCDialogo>();
         npcMissao = GetComponent<NpcMissao>();
 
-        generalManager.NpcManager.AddList(this);
         NpcDialogo.Iniciar(this);
 
         foreach (var item in capituloDialogoNpc)
@@ -44,6 +56,8 @@ public class NPC : MonoBehaviour
         NpcDialogo.TrocarDialogoComponenteLista(listaDialogoAtual.GetDialogueList[0]);
 
         missaoAtual = null;
+
+        SetarZona();
     }
 
     public void TrocarMissaoAtual(Missao _missao)
@@ -129,6 +143,7 @@ public class NPC : MonoBehaviour
             }
         }
     }
+
     public void CompletarMissao()
     {
         missaoAtual.SetEstado(Missoes.Estado.Concluida);
@@ -145,7 +160,21 @@ public class NPC : MonoBehaviour
         }
         return null;
     }
+
+    private void SetarZona()
+    {
+        Collider2D[] hitColliders = Physics2D.OverlapBoxAll(colisao.bounds.center, colisao.bounds.extents, 0, layerDasZonas);
+        foreach (Collider2D objeto in hitColliders)
+        {
+            if (objeto.GetComponent<Zona>())
+            {
+                zona = objeto.GetComponent<Zona>().GetZona;
+                break;
+            }
+        }
+    }
 }
+
 [System.Serializable]
 public class CapituloDialogoNpc
 {

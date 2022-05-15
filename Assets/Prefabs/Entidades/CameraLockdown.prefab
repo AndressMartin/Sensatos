@@ -10,10 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 6207573094302675266}
   - component: {fileID: 6207573094302675267}
-  - component: {fileID: 6207573094302675264}
+  - component: {fileID: 6408935210611926216}
   - component: {fileID: 6207573094302675265}
   m_Layer: 0
-  m_Name: Camera
+  m_Name: CameraLockdown
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -86,7 +86,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &6207573094302675264
+--- !u!114 &6408935210611926216
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -95,7 +95,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6207573094302675270}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 05c0e22d8dcdfb3408dbd491867c2f8e, type: 3}
+  m_Script: {fileID: 11500000, guid: 598ad34facd2f2646be5ff28dc7df533, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   direcao: 0
@@ -103,10 +103,10 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   fovNormal: 90
-  distanciaNormal: 5
-  offSet: 0.75
+  distanciaNormal: 6
+  offSet: 0.5
   tempoFazerRaycastMax: 0.2
-  tempoDetectarPlayerMax: 2
+  tempoDetectarPlayerMax: 1
 --- !u!60 &6207573094302675265
 PolygonCollider2D:
   m_ObjectHideFlags: 0

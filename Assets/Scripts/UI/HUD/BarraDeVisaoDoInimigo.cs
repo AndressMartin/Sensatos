@@ -54,12 +54,12 @@ public class BarraDeVisaoDoInimigo : MonoBehaviour
         barraDeVisao.fillAmount = tempoVisao / tempoVisaoMax;
     }
 
-    public void AtualizarPosicao(Camera camera, Enemy enemy, SpriteRenderer sprite)
+    public void AtualizarPosicao(Camera camera, GameObject objeto, SpriteRenderer sprite)
     {
         float diferencaY = 0.2f;
         Vector2 diferenca = new Vector2(0, sprite.bounds.extents.y + diferencaY);
 
-        transform.position = (Vector2)enemy.transform.position + diferenca;
+        transform.position = (Vector2)objeto.transform.position + diferenca;
     }
 
     private IEnumerator AlertaAtivo()

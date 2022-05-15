@@ -259,7 +259,7 @@ public class IAEnemy : MonoBehaviour
 
         if(barraDeVisao.IconeAtivo == true)
         {
-            generalManager.Hud.AtualizarBarraDeVisao(enemy, barraDeVisao, enemy.Animacao.CorpoSprite);
+            generalManager.Hud.AtualizarBarraDeVisao(enemy.gameObject, barraDeVisao, enemy.Animacao.CorpoSprite);
         }
     }
 

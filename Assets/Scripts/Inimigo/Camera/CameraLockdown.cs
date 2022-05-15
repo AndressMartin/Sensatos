@@ -2,24 +2,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraJogo : MonoBehaviour
+public class CameraLockdown : MonoBehaviour
 {
+    //Managers
+    private GeneralManagerScript generalManager;
 
-    //componente
+    //Componentes
+    private SpriteRenderer sprite;
     private PolygonCollider2D polygonCollider;
     private FieldOfView fieldOfView;
-    private GeneralManagerScript generalManager;
+
+    private BarraDeVisaoDoInimigo barraDeVisao;
 
     //variavel
     [SerializeField] EntityModel.Direcao direcao;
     [SerializeField] LayerMask mask;
     [SerializeField] private float fovNormal, distanciaNormal;
     [SerializeField] private float offSet;
-    Vector2 v1, v2 = new Vector2(0, 0), v3 = new Vector2(0, 0);
+    Vector2 v1;
     Vector2 posicaoInimigoMorto;
 
     private float fov, distancia;
-    private float larguraVisao, alturaVisao;
     private float offSetOrigemX, offSetOrigemY;
     private float tempoFazerRaycast;
     private float tempoDetectarPlayer;
@@ -36,21 +39,40 @@ public class CameraJogo : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
-        polygonCollider = GetComponent<PolygonCollider2D>();
+        //Managers
         generalManager = FindObjectOfType<GeneralManagerScript>();
+
+        //Se adicionar a lista de cameras
         generalManager.ObjectManager.AdicionarAsCameras(this);
+
+        //Componentes
+        sprite = GetComponent<SpriteRenderer>();
+        polygonCollider = GetComponent<PolygonCollider2D>();
+
+        //Field of view
         GameObject novoFieldOfView = Instantiate(generalManager.FieldView);
         novoFieldOfView.transform.parent = generalManager.FieldView.transform.parent;
 
         fieldOfView = novoFieldOfView.GetComponent<FieldOfView>();
         fieldOfView.SetPai(gameObject);
 
+        //Barra de visao
+        var barraDeVisaoTemp = Instantiate(generalManager.Hud.BarraDeVisaoDoInimigo.gameObject);
+        barraDeVisaoTemp.GetComponent<RectTransform>().SetParent(generalManager.Hud.BarraDeVisaoDoInimigo.transform.parent, false);
+        barraDeVisaoTemp.gameObject.SetActive(true);
+
+        barraDeVisao = barraDeVisaoTemp.GetComponent<BarraDeVisaoDoInimigo>();
+
+        //Variaveis
         fov = fovNormal;
         distancia = distanciaNormal;
         tempoFazerRaycast = 0;
         fazerPollygonCollider = true;
         emLockdown = false;
+
+        tempoDetectarPlayer = 0;
+
+        v1 = new Vector2(offSetOrigemX, offSetOrigemY);
 
         FieldOfViewAtiva(true);
         AtualizarFieldView();
@@ -66,12 +88,34 @@ public class CameraJogo : MonoBehaviour
             AtualizarPollygonCollider();
             DetectarPlayer();
             AtivarLockdown();
-        }
 
+            if (vendoPlayer)
+            {
+                barraDeVisao.BarraDeVisaoAtiva(true);
+                barraDeVisao.IconeDeAlertaAtivo(false);
+
+                barraDeVisao.AtualizarBarraDeVisao(tempoDetectarPlayer, tempoDetectarPlayerMax);
+            }
+            else
+            {
+                barraDeVisao.BarraDeVisaoAtiva(false);
+                barraDeVisao.IconeDeAlertaAtivo(false);
+            }
+
+            if (barraDeVisao.IconeAtivo == true)
+            {
+                generalManager.Hud.AtualizarBarraDeVisao(gameObject, barraDeVisao, sprite);
+            }
+        }
+        else
+        {
+            barraDeVisao.BarraDeVisaoAtiva(false);
+            barraDeVisao.IconeDeAlertaAtivo(false);
+        }
     }
     private void AtualizarFieldView()
     {
-        fieldOfView.SetOrigin(gameObject.transform.position);
+        fieldOfView.SetOrigin((Vector2)gameObject.transform.position + v1);
         fieldOfView.SetArea(fov, distancia);
     }
     void MudarDirecaoConeVisao()
@@ -81,8 +125,6 @@ public class CameraJogo : MonoBehaviour
             //rodar plano cartesiano
             case EntityModel.Direcao.Esquerda:
                 v1 = new Vector2(offSetOrigemX - offSet, offSetOrigemY);
-                v2 = new Vector2((offSetOrigemX - offSet - larguraVisao), (offSetOrigemY + alturaVisao));
-                v3 = new Vector2((offSetOrigemX - offSet - larguraVisao), (offSetOrigemY - alturaVisao));
 
                 fieldOfView.SetOrigin((Vector2)gameObject.transform.position + v1);
                 fieldOfView.SetDirection(Vector2.down);
@@ -90,8 +132,6 @@ public class CameraJogo : MonoBehaviour
 
             case EntityModel.Direcao.Direita:
                 v1 = new Vector2(offSetOrigemX + offSet, offSetOrigemY);
-                v2 = new Vector2((offSetOrigemX + offSet + larguraVisao), (offSetOrigemY + alturaVisao));
-                v3 = new Vector2((offSetOrigemX + offSet + larguraVisao), (offSetOrigemY - alturaVisao));
 
                 fieldOfView.SetOrigin((Vector2)gameObject.transform.position + v1);
                 fieldOfView.SetDirection(Vector2.up);
@@ -99,8 +139,6 @@ public class CameraJogo : MonoBehaviour
 
             case EntityModel.Direcao.Cima:
                 v1 = new Vector2(offSetOrigemX, offSetOrigemY + offSet);
-                v2 = new Vector2((offSetOrigemX - alturaVisao), (offSetOrigemY + offSet + larguraVisao));
-                v3 = new Vector2((offSetOrigemX + alturaVisao), (offSetOrigemY + offSet + larguraVisao));
 
                 fieldOfView.SetOrigin((Vector2)gameObject.transform.position + v1);
                 fieldOfView.SetDirection(Vector2.left);
@@ -108,8 +146,6 @@ public class CameraJogo : MonoBehaviour
 
             case EntityModel.Direcao.Baixo:
                 v1 = new Vector2(offSetOrigemX, offSetOrigemY - offSet);
-                v2 = new Vector2((offSetOrigemX + alturaVisao), (offSetOrigemY - offSet - larguraVisao));
-                v3 = new Vector2((offSetOrigemX - alturaVisao), (offSetOrigemY - offSet - larguraVisao));
 
                 fieldOfView.SetOrigin((Vector2)gameObject.transform.position + v1);
                 fieldOfView.SetDirection(Vector2.right);
@@ -153,11 +189,6 @@ public class CameraJogo : MonoBehaviour
                 tempoDetectarPlayer = 0;
                 playerDetectado = true;
                 emLockdown = true;
-                Debug.Log("Detectei o troxa");
-            }
-            else
-            {
-                Debug.Log("To vendo o player mas n detectei ainda");
             }
         }
         else
