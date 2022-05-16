@@ -11,7 +11,7 @@ public class ZoneManagerScript : MonoBehaviour
     [SerializeField] private bool controlarInimigos;
     [SerializeField] private bool controlarNpcs;
 
-    private int zonaAtual;
+    [SerializeField] private int zonaAtual;
     [SerializeField] Zona[] zonas;
 
     //Getters

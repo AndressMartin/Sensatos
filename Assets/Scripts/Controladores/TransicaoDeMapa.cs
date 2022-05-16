@@ -6,20 +6,20 @@ using UnityEngine;
 public class TransicaoDeMapa : MonoBehaviour
 {
     //Managers
-    private GeneralManagerScript generalManager;
+    protected GeneralManagerScript generalManager;
 
     //Variaveis
-    [SerializeField] private Vector3 posicaoPlayer;
+    [SerializeField] protected Vector3 posicaoPlayer;
 
-    [SerializeField] private CompositeCollider2D limiteDaCamera;
+    [SerializeField] protected CompositeCollider2D limiteDaCamera;
 
-    private void Start()
+    protected virtual void Start()
     {
         //Managers
         generalManager = FindObjectOfType<GeneralManagerScript>();
     }
 
-    public void FazerTransicao()
+    public virtual void FazerTransicao()
     {
         generalManager.Player.transform.position = posicaoPlayer;
 
@@ -27,7 +27,7 @@ public class TransicaoDeMapa : MonoBehaviour
         generalManager.CameraPrincipal.transform.position = posicaoPlayer;
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
         generalManager.Hud.TelaTransicaoDeMapa.IniciarTransicao(this);
     }
