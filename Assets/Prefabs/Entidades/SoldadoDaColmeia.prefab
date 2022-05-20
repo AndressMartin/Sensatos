@@ -90,7 +90,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 8707647212259532305, guid: 9b5dac16ab841c4409527f310683f640, type: 3}
+  m_Sprite: {fileID: -539758480917538688, guid: a4bf85f84f179744388a8881310d1e85, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -111,7 +111,7 @@ Animator:
   m_GameObject: {fileID: 180495874}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 086b0203114b78843bfb29740f2157f8, type: 2}
+  m_Controller: {fileID: 9100000, guid: f45b77c2cd91c8644ac13b002e4b2051, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -234,7 +234,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 4318859486119454387, guid: 624afd69f0c1894458fdc652b719f76b, type: 3}
+  m_Sprite: {fileID: 7019957739100416809, guid: 28baa88afd396084da11ed88b2f7828b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -255,7 +255,7 @@ Animator:
   m_GameObject: {fileID: 380813994}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 905bde5070bd6b64183c74b6d4900f8b, type: 2}
+  m_Controller: {fileID: 9100000, guid: 2ccd4fe5a6f5cee4cab60c6b68f1d328, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -373,7 +373,7 @@ GameObject:
   - component: {fileID: 852616414}
   - component: {fileID: 2478677569781594311}
   m_Layer: 0
-  m_Name: EnemyIsmaias
+  m_Name: SoldadoDaColmeia
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -414,7 +414,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: -0.018347323}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -425,7 +425,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.8208039, y: 0.3607687}
+  m_Size: {x: 0.69354975, y: 0.36233914}
   m_EdgeRadius: 0
 --- !u!50 &6297625325533714480
 Rigidbody2D:
@@ -475,7 +475,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   vidaInicial: 100
-  velocidadeAnimacaoCorrendo: 1.5
   corEfeitoTomandoDano: {r: 0.8207547, g: 0.081301175, b: 0.081301175, a: 1}
   velocidadeEfeitoTomandoDano: 6
 --- !u!114 &6885532772316150975
@@ -532,7 +531,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2587169484bc8a459d4281161b7e112, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  armaSlotTemporario: {fileID: 11400000, guid: d7b87461518b6154884ad3ae22a317f3, type: 2}
+  armaSlotTemporario: {fileID: 11400000, guid: b0e4861c42486ac459a98161d59df32d, type: 2}
 --- !u!114 &1338069366
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -832,7 +831,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.95465493}
+  m_Offset: {x: 0, y: 0.9235184}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.22}
@@ -843,7 +842,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 2.237434}
+  m_Size: {x: 0.6966495, y: 2.243095}
   m_EdgeRadius: 0
 --- !u!1 &7145623290142229261
 GameObject:

@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87dc09563ceff534f841683ee5ca485c, type: 3}
+  m_Name: MetralhadoraInimigo
+  m_EditorClassIdentifier: 
+  imagemInventario: {fileID: 21300000, guid: 3ca67bc0f2df06a47abb39a05f95a863, type: 3}
+  nome: Metralhadora do Inimigo
+  descricao: "Arma usada pelos inimigos, n\xE3o deve ser dada ao jogador."
+  nomeAnimacao: Arma2
+  raioDoSomDoTiro: 0
+  rapidFire: 1
+  statusBase:
+    projetil: {fileID: 8583994499093954915, guid: f4376ad71d743964f8fad577b404e7d2, type: 3}
+    somDoTiro: {fileID: 8300000, guid: 4d2f41dcef6d6a64e9e0d206d28317bb, type: 3}
+    dano: 10
+    velocidadeProjetil: 10
+    knockBack: 2
+    knockBackTrigger: 0
+    distanciaMaxProjetil: 30
+    cadenciaDosTiros: 0.2
+    tempoParaRecarregar: 3
+    municaoMaxCartucho: 10
+    municaoMax: 0
+  melhorias: []

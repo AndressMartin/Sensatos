@@ -84,12 +84,6 @@ public class AnimacaoJogador : MonoBehaviour
         bracoSprite.enabled = visivel;
     }
 
-    public void SetVelocidade(float velocidade)
-    {
-        corpo.speed = velocidade;
-        braco.speed = velocidade;
-    }
-
     public void SetTintEffect(Color cor, float velocidadeEfeito)
     {
         corpoEfeitosVisuais.SetTintEffect(cor, velocidadeEfeito);

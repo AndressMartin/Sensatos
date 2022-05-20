@@ -68,7 +68,11 @@ public class ProjetilEscopeta : ProjetilScript
     {
         EntityModel temp;
         temp = alvoAcertado.transform.parent.GetComponent<EntityModel>();
-        temp.TomarDano(dano, knockBack, knockBackTrigger, direcao);
+
+        if (temp.IsMorto() == false)
+        {
+            temp.TomarDano(dano, knockBack, knockBackTrigger, direcao);
+        }
     }
 
     protected override void OnTriggerEnter2D(Collider2D collision)

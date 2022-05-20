@@ -103,8 +103,12 @@ public class ProjetilScript : MonoBehaviour
     {
         EntityModel temp;
         temp = alvoAcertado.transform.parent.GetComponent<EntityModel>();
-        temp.TomarDano(dano, knockBack, knockBackTrigger, direcao);
-        AnimacaoSeDestruir();
+
+        if(temp.IsMorto() == false)
+        {
+            temp.TomarDano(dano, knockBack, knockBackTrigger, direcao);
+            AnimacaoSeDestruir();
+        }
     }
 
     protected void SeDestruir()

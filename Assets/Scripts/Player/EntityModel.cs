@@ -16,6 +16,11 @@ public class EntityModel : MonoBehaviour
     //Getters
     public Direcao GetDirecao => direcao;
 
+    public virtual bool IsMorto()
+    {
+        return false;
+    }
+
     public virtual void TomarDano(int _dano, float _knockBack, float _knockBackTrigger, Vector2 _direcaoKnockBack)
     { }
 

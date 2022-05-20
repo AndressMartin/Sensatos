@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Pathfinding;
+using UnityEngine.Rendering;
 
 public class Enemy : EntityModel
 {
@@ -21,6 +22,7 @@ public class Enemy : EntityModel
     private IAEnemy ia_Enemy;
     private SomDosTiros somDosTiros;
     private SonsDoInimigo sonsDoInimigo;
+    private SortingGroup sortingGroup;
 
     private Player player;
 
@@ -28,7 +30,6 @@ public class Enemy : EntityModel
     [SerializeField] LayerMask layerDasZonas;
 
     [SerializeField] private int vidaInicial;
-    [SerializeField] private float velocidadeAnimacaoCorrendo;
 
     [SerializeField] private Color corEfeitoTomandoDano;
     [SerializeField] private float velocidadeEfeitoTomandoDano;
@@ -76,6 +77,11 @@ public class Enemy : EntityModel
     public SonsDoInimigo SonsDoInimigo => sonsDoInimigo;
     public Vector2 VetorVelocidade => vetorVelocidade;
 
+    public override bool IsMorto()
+    {
+        return morto;
+    }
+
     //Setters
     public void SetMortoRespawn(bool morto)
     {
@@ -117,6 +123,7 @@ public class Enemy : EntityModel
         rb = GetComponent<Rigidbody2D>();
         somDosTiros = GetComponentInChildren<SomDosTiros>();
         sonsDoInimigo = GetComponent<SonsDoInimigo>();
+        sortingGroup = GetComponent<SortingGroup>();
 
         player = generalManager.Player;
 
@@ -215,8 +222,9 @@ public class Enemy : EntityModel
         hitboxDano.enabled = true;
         rb.bodyType = RigidbodyType2D.Dynamic;
 
+        sortingGroup.sortingOrder = 0;
+
         animacao.AtivarSpriteRenderers();
-        animacao.SetVelocidade(1);
 
         somDosTiros.PararSom();
 
@@ -294,15 +302,6 @@ public class Enemy : EntityModel
     {
         animacao.AtualizarDirecao(direcao, direcao);
 
-        if (animacao.AnimacaoAtual == "Andando" && enemyMovement.GetVelocidade > enemyMovement.GetVelocidadeModoNormal)
-        {
-            animacao.SetVelocidade(velocidadeAnimacaoCorrendo);
-        }
-        else
-        {
-            animacao.SetVelocidade(1);
-        }
-
         switch (estado)
         {
             case Estado.Normal:
@@ -310,9 +309,13 @@ public class Enemy : EntityModel
                 {
                     animacao.TrocarAnimacao("Idle");
                 }
-                else if ((vetorVelocidade.x != 0 || vetorVelocidade.y != 0) && animacao.AnimacaoAtual != "Andando")
+                else if ((vetorVelocidade.x != 0 || vetorVelocidade.y != 0) && enemyMovement.GetVelocidade <= enemyMovement.GetVelocidadeModoNormal && animacao.AnimacaoAtual != "Andando")
                 {
                     animacao.TrocarAnimacao("Andando");
+                }
+                else if ((vetorVelocidade.x != 0 || vetorVelocidade.y != 0) && enemyMovement.GetVelocidade > enemyMovement.GetVelocidadeModoNormal && animacao.AnimacaoAtual != "Correndo")
+                {
+                    animacao.TrocarAnimacao("Correndo");
                 }
                 break;
 
@@ -384,7 +387,6 @@ public class Enemy : EntityModel
 
             if (vida <= 0)
             {
-                animacao.SetVelocidade(1);
                 animacao.AtualizarArmaBracos("");
                 animacao.TrocarAnimacao("Morto");
                 Morrer();
@@ -437,23 +439,28 @@ public class Enemy : EntityModel
         enemyVision.gameObject.SetActive(false);
         enemyAttackRange.gameObject.SetActive(false);
 
-        rb.bodyType = RigidbodyType2D.Kinematic;
+        rb.bodyType = RigidbodyType2D.Static;
+
+        colisao.enabled = false;
 
         animacao.AtualizarDirecao(direcao, direcao);
 
         sonsDoInimigo.TocarSom(SonsDoInimigo.Som.Morte);
     }
 
+    public void MudarOrdemLayer()
+    {
+        sortingGroup.sortingOrder = -1;
+    }
+
     public void AnimacaoDesaparecendo()
     {
-        animacao.SetVelocidade(1);
         animacao.AtualizarArmaBracos("");
         animacao.TrocarAnimacao("Desaparecendo");
     }
 
     public void Desaparecer()
     {
-        animacao.SetVelocidade(1);
         animacao.AtualizarArmaBracos("");
         animacao.TrocarAnimacao("Vazio");
 
@@ -482,7 +489,6 @@ public class Enemy : EntityModel
                 break;
         }
 
-        animacao.SetVelocidade(1);
         animacao.AtualizarArmaBracos("");
         animacao.TrocarAnimacao("MortoSorrateiramente");
         Morrer();
@@ -505,10 +511,10 @@ public class Enemy : EntityModel
                 case "Arma1":
                     offSet = direcao switch
                     {
-                        Direcao.Baixo => new Vector2(-0.284f, 0.787f),
-                        Direcao.Esquerda => new Vector2(-0.486f, 1.224f),
-                        Direcao.Cima => new Vector2(0.283f, 1.56f),
-                        Direcao.Direita => new Vector2(0.486f, 1.224f),
+                        Direcao.Baixo => new Vector2(-0.22f, 0.737f),
+                        Direcao.Esquerda => new Vector2(-0.697f, 1.232f),
+                        Direcao.Cima => new Vector2(0.22f, 1.562f),
+                        Direcao.Direita => new Vector2(0.697f, 1.232f),
                         _ => Vector2.zero,
                     };
                     return offSet;
@@ -516,10 +522,10 @@ public class Enemy : EntityModel
                 case "Arma2":
                     offSet = direcao switch
                     {
-                        Direcao.Baixo => new Vector2(-0.188f, 0.62f),
-                        Direcao.Esquerda => new Vector2(-0.715f, 1.227f),
-                        Direcao.Cima => new Vector2(0.157f, 1.727f),
-                        Direcao.Direita => new Vector2(0.715f, 1.227f),
+                        Direcao.Baixo => new Vector2(-0.125f, 0.488f),
+                        Direcao.Esquerda => new Vector2(-1.003f, 1.234f),
+                        Direcao.Cima => new Vector2(0.125f, 1.632f),
+                        Direcao.Direita => new Vector2(1.003f, 1.234f),
                         _ => Vector2.zero,
                     };
                     return offSet;
@@ -608,7 +614,6 @@ public class Enemy : EntityModel
     private IEnumerator SeDesativarNoLockdownCorrotina()
     {
         yield return null;
-        animacao.SetVelocidade(1);
         animacao.AtualizarArmaBracos("");
         animacao.TrocarAnimacao("MortoSorrateiramente");
         Morrer();

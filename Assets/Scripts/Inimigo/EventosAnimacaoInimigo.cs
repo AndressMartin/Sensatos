@@ -17,4 +17,9 @@ public class EventosAnimacaoInimigo : MonoBehaviour
     {
         enemy.Desaparecer();
     }
+
+    public void MudarOrdemLayer()
+    {
+        enemy.MudarOrdemLayer();
+    }
 }
