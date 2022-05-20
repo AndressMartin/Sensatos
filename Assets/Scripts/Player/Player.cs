@@ -564,6 +564,17 @@ public class Player : EntityModel
                     };
                     return offSet;
 
+                case "Arma3":
+                    offSet = direcao switch
+                    {
+                        Direcao.Baixo => new Vector2(-0.19f, 0.493f),
+                        Direcao.Esquerda => new Vector2(-0.908f, 1.274f),
+                        Direcao.Cima => new Vector2(0.157f, 1.682f),
+                        Direcao.Direita => new Vector2(0.908f, 1.274f),
+                        _ => Vector2.zero,
+                    };
+                    return offSet;
+
                 default:
                     return Vector2.zero;
             }

@@ -18042,7 +18042,7 @@ Tilemap:
       - {fileID: -1832702643, guid: 48e939d168b29ac48b1ffac9ecb0bd47, type: 3}
       - {fileID: -1498134005, guid: 48e939d168b29ac48b1ffac9ecb0bd47, type: 3}
       - {fileID: -1949276599, guid: 48e939d168b29ac48b1ffac9ecb0bd47, type: 3}
-      m_AnimationSpeed: 1.4000001
+      m_AnimationSpeed: 1.4
       m_AnimationTimeOffset: 0
       m_IsLooping: 1
   - first: {x: 11, y: -7, z: 0}
@@ -18070,7 +18070,7 @@ Tilemap:
       - {fileID: -1832702643, guid: 48e939d168b29ac48b1ffac9ecb0bd47, type: 3}
       - {fileID: -1498134005, guid: 48e939d168b29ac48b1ffac9ecb0bd47, type: 3}
       - {fileID: -1949276599, guid: 48e939d168b29ac48b1ffac9ecb0bd47, type: 3}
-      m_AnimationSpeed: 1.4000001
+      m_AnimationSpeed: 1.4
       m_AnimationTimeOffset: 0
       m_IsLooping: 1
   - first: {x: 11, y: -6, z: 0}
@@ -36835,6 +36835,10 @@ PrefabInstance:
       propertyPath: roupasIniciais.Array.size
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3804622901711434850, guid: f2d0952262ae8b943a2447b395605648, type: 3}
+      propertyPath: armasIniciais.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: 84d62827a1830a145938af1f4d34662f, type: 2}
     - target: {fileID: 3804622901711434850, guid: f2d0952262ae8b943a2447b395605648, type: 3}
       propertyPath: roupasIniciais.Array.data[0]
       value: 
