@@ -439,7 +439,7 @@ public class Enemy : EntityModel
         enemyVision.gameObject.SetActive(false);
         enemyAttackRange.gameObject.SetActive(false);
 
-        rb.bodyType = RigidbodyType2D.Static;
+        rb.bodyType = RigidbodyType2D.Kinematic;
 
         colisao.enabled = false;
 
