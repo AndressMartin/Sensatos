@@ -27,8 +27,6 @@ public class FieldOfView : MonoBehaviour
         mesh = new Mesh();
 
         meshRenderer = GetComponent<MeshRenderer>();
-        meshRenderer.sortingLayerName = "Default";
-        meshRenderer.sortingOrder = -1;
 
         GetComponent<MeshFilter>().mesh = mesh;
 
