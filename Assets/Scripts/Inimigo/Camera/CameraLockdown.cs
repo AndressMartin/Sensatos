@@ -34,7 +34,7 @@ public class CameraLockdown : MonoBehaviour
     private bool emLockdown;
     private bool vendoInimigo;
     private bool fazerPollygonCollider;
-
+    private bool ativada;
 
     // Start is called before the first frame update
     void Start()
@@ -69,6 +69,7 @@ public class CameraLockdown : MonoBehaviour
         tempoFazerRaycast = 0;
         fazerPollygonCollider = true;
         emLockdown = false;
+        ativada = true;
 
         tempoDetectarPlayer = 0;
 
@@ -81,7 +82,7 @@ public class CameraLockdown : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!emLockdown)
+        if (!emLockdown || !ativada)
         {
             MudarDirecaoConeVisao();
             AtualizarFieldView();
@@ -209,6 +210,10 @@ public class CameraLockdown : MonoBehaviour
             }
             generalManager.ObjectManager.ListaAlarmes[0].AtivarLockDown(posicaoInimigoMorto);
         }
+    }
+    public void ReceberDesativarAtivarCamera(bool valor)
+    {
+        ativada = valor;
     }
     public void ReceberLockdown(bool valor)
     {
