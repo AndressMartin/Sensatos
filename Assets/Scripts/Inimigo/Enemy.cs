@@ -253,6 +253,8 @@ public class Enemy : EntityModel
 
     private void SetarZona()
     {
+        zona = 0;
+
         Collider2D[] hitColliders = Physics2D.OverlapBoxAll(colisao.bounds.center, colisao.bounds.extents, 0, layerDasZonas);
         foreach (Collider2D objeto in hitColliders)
         {
