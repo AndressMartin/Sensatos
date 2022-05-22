@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class SelecaoRoupa : SelecaoDoInventario
 {
     //Componentes
-    private Image imagem;
+    private Animator animacao;
     private InformacoesDaRoupa informacoesDaRoupa;
 
     private bool iniciado = false;
@@ -23,7 +23,7 @@ public class SelecaoRoupa : SelecaoDoInventario
             return;
         }
 
-        imagem = GetComponent<Image>();
+        animacao = GetComponent<Animator>();
         informacoesDaRoupa = GetComponent<InformacoesDaRoupa>();
 
         iniciado = true;
@@ -56,11 +56,11 @@ public class SelecaoRoupa : SelecaoDoInventario
     {
         if (selecionado == true)
         {
-            imagem.color = Color.blue;
+            animacao.SetBool("Selecionado", true);
         }
         else
         {
-            imagem.color = Color.red;
+            animacao.SetBool("Selecionado", false);
         }
     }
 }

@@ -8,6 +8,7 @@ public class InformacoesDoItem : MonoBehaviour
 {
     //Componentes
     [SerializeField] private Image imagem;
+    [SerializeField] private Image pino;
     [SerializeField] private RectTransform barraDeUsoObjeto;
     [SerializeField] private Image barraDeUso;
     [SerializeField] private RectTransform numeroAtalhoObjeto;
@@ -16,11 +17,13 @@ public class InformacoesDoItem : MonoBehaviour
     public void ZerarInformacoes()
     {
         imagem.sprite = null;
+        imagem.gameObject.SetActive(false);
         barraDeUsoObjeto.gameObject.SetActive(false);
     }
 
     public void AtualizarInformacoes(Item item)
     {
+        imagem.gameObject.SetActive(true);
         imagem.sprite = item.ImagemInventario;
         barraDeUsoObjeto.gameObject.SetActive(false);
 
@@ -38,6 +41,7 @@ public class InformacoesDoItem : MonoBehaviour
 
     public void AtualizarNumeroAtalho(int numero)
     {
+        pino?.gameObject.SetActive(false);
         numeroAtalhoObjeto.gameObject.SetActive(true);
         numeroAtalho.text = numero.ToString();
     }

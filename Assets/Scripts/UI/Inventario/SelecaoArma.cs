@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class SelecaoArma : SelecaoDoInventario
 {
     //Componentes
-    private Image imagem;
+    private Animator animacao;
     private InformacoesDaArma informacoesDaArma;
 
     //Variaveis
@@ -26,7 +26,7 @@ public class SelecaoArma : SelecaoDoInventario
             return;
         }
 
-        imagem = GetComponent<Image>();
+        animacao = GetComponent<Animator>();
         informacoesDaArma = GetComponent<InformacoesDaArma>();
 
         iniciado = true;
@@ -58,13 +58,13 @@ public class SelecaoArma : SelecaoDoInventario
 
     public override void Selecionado(bool selecionado)
     {
-        if(selecionado == true)
+        if (selecionado == true)
         {
-            imagem.color = Color.blue;
+            animacao.SetBool("Selecionado", true);
         }
         else
         {
-            imagem.color = Color.red;
+            animacao.SetBool("Selecionado", false);
         }
     }
 }

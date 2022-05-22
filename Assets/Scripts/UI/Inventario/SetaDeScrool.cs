@@ -6,17 +6,17 @@ using UnityEngine.UI;
 public class SetaDeScrool : MonoBehaviour
 {
     //Componentes
-    [SerializeField] private Image imagem;
+    [SerializeField] private Animator animacao;
 
     public void Ativa(bool ativa)
     {
         if (ativa == true)
         {
-            imagem.color = Color.white;
+            animacao.SetBool("Selecionado", true);
         }
         else
         {
-            imagem.color = Color.red;
+            animacao.SetBool("Selecionado", false);
         }
     }
 }

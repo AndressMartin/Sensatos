@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 6716222481326088541}
   - component: {fileID: 2647784130759996004}
   - component: {fileID: 1121748744090934985}
+  - component: {fileID: 5135622575977616752}
   - component: {fileID: 3737564437229754204}
   m_Layer: 5
   m_Name: SetaDeScrool
@@ -29,6 +30,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -66,7 +68,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 96ab75ad937bcbc41acd78d9ec3aa749, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 8f3362b1a36eb614585299dcbf8ab221, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -76,6 +78,26 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!95 &5135622575977616752
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1009187021437732395}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 22100000, guid: 19108b5b6bfd1614ab0f1a1f31192c21, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 2
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &3737564437229754204
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -88,4 +110,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24976fbe4acd57a40a3efd5d20762f64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  imagem: {fileID: 1121748744090934985}
+  animacao: {fileID: 5135622575977616752}

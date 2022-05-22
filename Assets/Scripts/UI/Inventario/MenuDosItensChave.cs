@@ -64,6 +64,7 @@ public class MenuDosItensChave : MonoBehaviour
         {
             listaSlot.Iniciar();
             listaSlot.ZerarInformacoes();
+            listaSlot.SetCor(ListaSlot.Cor.Vermelho);
         }
 
         //Trocar o idioma uma vez para iniciar o objeto com o idioma correto
@@ -144,6 +145,12 @@ public class MenuDosItensChave : MonoBehaviour
         else
         {
             AtualizarInformacoesSemItem();
+        }
+
+        //Cor dos slots da lista
+        foreach (ListaSlot listaSlot in itens)
+        {
+            listaSlot.SetCor(ListaSlot.Cor.Vermelho);
         }
 
         generalManager.Hud.SonsDeMenus.TocarSom(SonsDeMenus.Som.Confirmar);

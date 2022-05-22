@@ -11,9 +11,14 @@ public class ListaSlot : MonoBehaviour
     [SerializeField] private TMP_Text numero;
     [SerializeField] private Image imagem;
 
-    private Image imagemFundo;
+    private Animator animacao;
+
+    //Enuns
+    public enum Cor { Branco, Vermelho, Amarelho }
 
     //Variaveis
+    private Cor cor;
+
     private bool iniciado = false;
 
     private void Start()
@@ -28,7 +33,11 @@ public class ListaSlot : MonoBehaviour
             return;
         }
 
-        imagemFundo = GetComponent<Image>();
+        animacao = GetComponent<Animator>();
+
+        cor = Cor.Branco;
+
+        SetCor(cor);
 
         iniciado = true;
     }
@@ -63,22 +72,16 @@ public class ListaSlot : MonoBehaviour
     {
         if (selecionado == true)
         {
-            imagemFundo.color = Color.blue;
-            nome.color = Color.white;
-            numero.color = Color.white;
+            animacao.SetBool("Selecionado", true);
         }
         else
         {
-            imagemFundo.color = Color.white;
-            nome.color = Color.black;
-            numero.color = Color.black;
+            animacao.SetBool("Selecionado", false);
         }
     }
 
-    public void SelecionadoCor(Color corLetra, Color corFundo)
+    public void SetCor(Cor cor)
     {
-        imagemFundo.color = corFundo;
-        nome.color = corLetra;
-        numero.color = corLetra;
+        animacao.SetFloat("Cor", (float)cor);
     }
 }

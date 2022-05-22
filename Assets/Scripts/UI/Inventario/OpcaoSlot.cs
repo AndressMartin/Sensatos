@@ -6,20 +6,18 @@ using UnityEngine.UI;
 
 public class OpcaoSlot : MonoBehaviour
 {
-    [SerializeField] private Image imagem;
+    [SerializeField] private Animator animacao;
     [SerializeField] private TMP_Text texto;
 
     public void Selecionado(bool selecionado)
     {
         if (selecionado == true)
         {
-            imagem.color = Color.white;
-            texto.color = Color.red;
+            animacao.SetBool("Selecionado", true);
         }
         else
         {
-            imagem.color = new Color(0.2392157f, 0.5568628f, 0.654902f);
-            texto.color = Color.black;
+            animacao.SetBool("Selecionado", false);
         }
     }
 }

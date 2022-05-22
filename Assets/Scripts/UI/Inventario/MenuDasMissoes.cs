@@ -66,6 +66,7 @@ public class MenuDasMissoes : MonoBehaviour
         {
             missao.Iniciar();
             missao.ZerarInformacoes();
+            missao.SetCor(ListaSlot.Cor.Vermelho);
         }
 
         //Trocar o idioma uma vez para iniciar o objeto com o idioma correto
@@ -107,17 +108,19 @@ public class MenuDasMissoes : MonoBehaviour
                     missoes[i].AtualizarImagem(imagemMissaoNaoConcluida);
                 }
 
+                missoes[i].gameObject.SetActive(true);
+
+                missoes[i].Selecionado(false);
+
                 //Muda a cor do slot de acordo com o tipo da missao
-                if(listaDeMissoes[scrool + i].TipoMissao == ReferenciaMissao.Tipo.Principal)
+                if (listaDeMissoes[scrool + i].TipoMissao == ReferenciaMissao.Tipo.Principal)
                 {
-                    missoes[i].SelecionadoCor(Color.black, Color.red);
+                    missoes[i].SetCor(ListaSlot.Cor.Vermelho);
                 }
                 else
                 {
-                    missoes[i].SelecionadoCor(Color.black, Color.yellow);
+                    missoes[i].SetCor(ListaSlot.Cor.Amarelho);
                 }
-
-                missoes[i].gameObject.SetActive(true);
             }
         }
 
