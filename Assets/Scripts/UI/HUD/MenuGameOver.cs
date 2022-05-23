@@ -41,6 +41,8 @@ public class MenuGameOver : MonoBehaviour
         {
             case Menu.Inicio:
                 opcoesConfirmacaoParaVoltarACidade.gameObject.SetActive(false);
+
+                AtualizarPainelDeEscolha(opcoesMenuInicial, selecao);
                 break;
 
             case Menu.ConfirmacaoVoltarACidade:
@@ -209,11 +211,11 @@ public class MenuGameOver : MonoBehaviour
         selecao = 0;
         selecao2 = 0;
 
+        menu.gameObject.SetActive(true);
+
         AtualizarPainelDeEscolha(opcoesMenuInicial, 0);
 
         animacao.Play("Iniciar");
-
-        menu.gameObject.SetActive(true);
     }
 
     public void DesativarMenuGameOver()

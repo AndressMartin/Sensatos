@@ -41,6 +41,8 @@ public class MenuDePausa : MonoBehaviour
                 menuSalvar.gameObject.SetActive(false);
                 menuOpcoes.gameObject.SetActive(false);
                 opcoesConfirmacaoParaVoltarAoMenuInicial.gameObject.SetActive(false);
+
+                AtualizarPainelDeEscolha(opcoesMenuInicial, selecao);
                 break;
 
             case Menu.Salvar:

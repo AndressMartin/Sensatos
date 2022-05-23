@@ -113,6 +113,8 @@ public class MenuDosItens : MonoBehaviour
                 painelDeExplicacaoDosItens.gameObject.SetActive(true);
                 selecaoDoItem.gameObject.SetActive(false);
                 telaEscura.gameObject.SetActive(true);
+
+                AtualizarPainelDeEscolha(painelDeEscolhaDosItens, selecaoPainelDeEscolha);
                 break;
 
             case MenuItemEnum.AdicionandoNosAtalhos:
@@ -501,6 +503,8 @@ public class MenuDosItens : MonoBehaviour
                 painelDeExplicacaoDosItens.gameObject.SetActive(true);
                 selecaoDoItem.gameObject.SetActive(false);
                 telaEscura.gameObject.SetActive(true);
+
+                AtualizarPainelDeEscolha(painelDeEscolhaDosAtalhos, selecaoPainelDeEscolha);
                 break;
 
             case MenuAtalhoEnum.TrocandoPosicao:

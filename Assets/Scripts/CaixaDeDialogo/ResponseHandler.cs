@@ -54,7 +54,7 @@ public class ResponseHandler : MonoBehaviour
             //Confere se um arquivo de texto com o texto da resposta foi encontrado, e usa o texto dele. Caso nao tenha sido encontrado, usa o texto que esta no objeto da resposta
             if (achouArquivoDeTexto == true && dataDeDialogo.respostas.Length > i)
             {
-                responseButton.GetComponent<TMP_Text>().text = dataDeDialogo.respostas[i].texto;
+                responseButton.GetComponentInChildren<TMP_Text>().text = dataDeDialogo.respostas[i].texto;
             }
             else
             {
@@ -63,7 +63,7 @@ public class ResponseHandler : MonoBehaviour
                     Debug.LogWarning("Ha menos respostas no arquivo do que no objeto de respostas!");
                 }
 
-                responseButton.GetComponent<TMP_Text>().text = response.ResponseText;
+                responseButton.GetComponentInChildren<TMP_Text>().text = response.ResponseText;
             }
 
             //responseButton.GetComponent<Button>().onClick.AddListener(() => OnPickResponse(response, responseIndex)); //Adiciona um metodo ao botao, a mesma coisa que se faz atraves do editor do Unity, mas por codigo
@@ -143,11 +143,11 @@ public class ResponseHandler : MonoBehaviour
         {
             if(i == selection)
             {
-                tempResponseButtons[i].GetComponent<TMP_Text>().color = new Color(255, 255, 255, 1);
+                tempResponseButtons[i].GetComponent<Animator>().SetBool("Selecionado", true);
             }
             else
             {
-                tempResponseButtons[i].GetComponent<TMP_Text>().color = new Color(0, 0, 0, 1);
+                tempResponseButtons[i].GetComponent<Animator>().SetBool("Selecionado", false);
             }
         }
     }

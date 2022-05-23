@@ -18,7 +18,7 @@ public class MenuPrincipal : MonoBehaviour
     [SerializeField] private PainelDeEscolha painelDeConfirmacaoParaSairDoJogo;
 
     //Enums
-    public enum Menu { Inicio, NovoJogo, CarregarJogo, Opcoes, ConfirmacaoParaSairDoJogo }
+    public enum Menu { Inicio, NovoJogo, CarregarJogo, Opcoes, ConfirmacaoParaSairDoJogo, Controles, Creditos }
 
     //Variaveis
     private bool ativo;
@@ -49,6 +49,8 @@ public class MenuPrincipal : MonoBehaviour
                 menuCarregarJogo.gameObject.SetActive(false);
                 menuOpcoes.gameObject.SetActive(false);
                 painelDeConfirmacaoParaSairDoJogo.gameObject.SetActive(false);
+
+                AtualizarPainelDeEscolha(opcoesMenuInicial, selecao);
                 break;
 
             case Menu.NovoJogo:
@@ -206,12 +208,18 @@ public class MenuPrincipal : MonoBehaviour
                     break;
 
                 case 3:
-                    //Tela de Creditos
+                    //Tela de Comandos
 
                     generalManager.Hud.SonsDeMenus.TocarSom(SonsDeMenus.Som.Confirmar);
                     break;
 
                 case 4:
+                    //Tela de Creditos
+
+                    generalManager.Hud.SonsDeMenus.TocarSom(SonsDeMenus.Som.Confirmar);
+                    break;
+
+                case 5:
                     SetMenuAtual(Menu.ConfirmacaoParaSairDoJogo);
 
                     selecao2 = 0;

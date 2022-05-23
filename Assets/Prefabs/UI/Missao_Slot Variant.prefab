@@ -7,19 +7,33 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 609032237227506496, guid: 55c5d9e6a94b66b448782bed8a48941d, type: 3}
+      propertyPath: m_Color.b
+      value: 0.27450982
+      objectReference: {fileID: 0}
+    - target: {fileID: 609032237227506496, guid: 55c5d9e6a94b66b448782bed8a48941d, type: 3}
+      propertyPath: m_Color.g
+      value: 0.37254903
+      objectReference: {fileID: 0}
+    - target: {fileID: 609032237227506496, guid: 55c5d9e6a94b66b448782bed8a48941d, type: 3}
+      propertyPath: m_Color.r
+      value: 0.8235294
+      objectReference: {fileID: 0}
     - target: {fileID: 1471640488887193518, guid: 55c5d9e6a94b66b448782bed8a48941d, type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3465158842451911981, guid: 55c5d9e6a94b66b448782bed8a48941d, type: 3}
       propertyPath: m_text
-      value: 'Nome Nome Nome
-
-        Grande Grande Grande'
+      value: "Nome da Miss\xE3o"
       objectReference: {fileID: 0}
     - target: {fileID: 3465158842451911981, guid: 55c5d9e6a94b66b448782bed8a48941d, type: 3}
       propertyPath: m_fontSize
-      value: 40
+      value: 45
+      objectReference: {fileID: 0}
+    - target: {fileID: 3465158842451911981, guid: 55c5d9e6a94b66b448782bed8a48941d, type: 3}
+      propertyPath: m_lineSpacing
+      value: -50
       objectReference: {fileID: 0}
     - target: {fileID: 3465158842451911981, guid: 55c5d9e6a94b66b448782bed8a48941d, type: 3}
       propertyPath: m_fontSizeBase
@@ -43,7 +57,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4835124299801528570, guid: 55c5d9e6a94b66b448782bed8a48941d, type: 3}
       propertyPath: m_Name
-      value: Missao_Slot
+      value: Missao_Slot Variant
       objectReference: {fileID: 0}
     - target: {fileID: 5663908699733201539, guid: 55c5d9e6a94b66b448782bed8a48941d, type: 3}
       propertyPath: m_Pivot.x
@@ -129,6 +143,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8680809840823199857, guid: 55c5d9e6a94b66b448782bed8a48941d, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 3649e0ed0b0c1d2469fa880bec64ca2b, type: 3}
     - target: {fileID: 8897505040953133754, guid: 55c5d9e6a94b66b448782bed8a48941d, type: 3}
       propertyPath: m_SizeDelta.x
       value: 80

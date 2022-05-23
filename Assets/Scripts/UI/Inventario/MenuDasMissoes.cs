@@ -146,18 +146,21 @@ public class MenuDasMissoes : MonoBehaviour
         listaDeMissoes.Clear();
         listaDeMissoes = new List<ReferenciaMissao>();
 
-        if(generalManager.AssaltoManager.GetAssaltoAtual != null)
+        if(generalManager.AssaltoManager != null)
         {
-            foreach (Missao missao in generalManager.AssaltoManager.GetAssaltoAtual.GetMissoesPrincipais)
+            if (generalManager.AssaltoManager.GetAssaltoAtual != null)
             {
-                listaDeMissoes.Add(new ReferenciaMissao(missao, ReferenciaMissao.Tipo.Principal));
-            }
-
-            foreach (Missao missao in generalManager.AssaltoManager.GetAssaltoAtual.GetMissoesSecundarias)
-            {
-                if (missao.GetEstado != Missoes.Estado.Inativa)
+                foreach (Missao missao in generalManager.AssaltoManager.GetAssaltoAtual.GetMissoesPrincipais)
                 {
-                    listaDeMissoes.Add(new ReferenciaMissao(missao, ReferenciaMissao.Tipo.Secundaria));
+                    listaDeMissoes.Add(new ReferenciaMissao(missao, ReferenciaMissao.Tipo.Principal));
+                }
+
+                foreach (Missao missao in generalManager.AssaltoManager.GetAssaltoAtual.GetMissoesSecundarias)
+                {
+                    if (missao.GetEstado != Missoes.Estado.Inativa)
+                    {
+                        listaDeMissoes.Add(new ReferenciaMissao(missao, ReferenciaMissao.Tipo.Secundaria));
+                    }
                 }
             }
         }

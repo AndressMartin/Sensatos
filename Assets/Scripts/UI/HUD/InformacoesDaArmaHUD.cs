@@ -25,4 +25,9 @@ public class InformacoesDaArmaHUD : MonoBehaviour
         imagem.sprite = arma.ImagemInventario;
         municao.text = arma.MunicaoCartucho.ToString() + "/" + arma.Municao.ToString();
     }
+
+    public void BarraDeMunicaoAtiva(bool ativa)
+    {
+        borda.gameObject.SetActive(ativa);
+    }
 }

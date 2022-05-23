@@ -91,11 +91,11 @@ public class MenuFimDoAssalto : MonoBehaviour
         generalManager.Hud.SetMenuAberto(HUDScript.Menu.FimDoAssalto);
         generalManager.PauseManager.SetPermitirInput(false);
 
+        menu.gameObject.SetActive(true);
+
         AtualizarPainelDeEscolha(opcoesMenuInicial, 0);
 
         animacao.Play("Iniciar");
-
-        menu.gameObject.SetActive(true);
     }
 
     private void IniciarVoltarParaACidade()

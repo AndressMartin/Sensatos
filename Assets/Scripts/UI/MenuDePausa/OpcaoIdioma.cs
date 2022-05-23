@@ -14,6 +14,8 @@ public class OpcaoIdioma : Opcao
 
     [SerializeField] private IdiomaManager.Idioma[] listaIdiomas;
 
+    [SerializeField] private Animator animacao;
+
     //Variaveis
     private int selecao;
 
@@ -77,16 +79,17 @@ public class OpcaoIdioma : Opcao
             if(listaIdiomas[i] == IdiomaManager.GetIdiomaEnum)
             {
                 selecao = i;
+                break;
             }
         }
 
         if (selecionado == true)
         {
-            nomeOpcao.color = Color.red;
+            animacao.SetBool("Selecionado", true);
         }
         else
         {
-            nomeOpcao.color = Color.black;
+            animacao.SetBool("Selecionado", false);
         }
     }
 }

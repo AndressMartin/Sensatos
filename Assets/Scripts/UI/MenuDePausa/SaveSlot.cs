@@ -15,6 +15,8 @@ public class SaveSlot : MonoBehaviour
     [SerializeField] private TMP_Text data;
     [SerializeField] private TMP_Text hora;
 
+    [SerializeField] private Animator animacao;
+
     //Variaveis
     private bool saveExiste = false;
 
@@ -67,11 +69,11 @@ public class SaveSlot : MonoBehaviour
     {
         if (selecionado == true)
         {
-            nome.color = Color.white;
+            animacao.SetBool("Selecionado", true);
         }
         else
         {
-            nome.color = Color.black;
+            animacao.SetBool("Selecionado", false);
         }
     }
 }

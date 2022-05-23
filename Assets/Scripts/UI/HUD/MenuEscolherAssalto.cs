@@ -270,13 +270,13 @@ public class MenuEscolherAssalto : MonoBehaviour
         generalManager.Hud.SetMenuAberto(HUDScript.Menu.EscolherAssalto);
         generalManager.PauseManager.SetPermitirInput(false);
 
+        menu.gameObject.SetActive(true);
+
         botaoSelecionarAssalto.SemSelecao();
 
         IniciarSelecao();
 
         AtivarMenu();
-
-        menu.gameObject.SetActive(true);
     }
 
     public void DesativarMenu()
@@ -300,6 +300,8 @@ public class MenuEscolherAssalto : MonoBehaviour
 
     public void ComecarAssalto()
     {
+        SaveManager.instance.AutoSave();
+
         generalManager.Player.SetInventarioAntesDoAssalto();
         LevelLoaderScript.Instance.CarregarNivel(generalManager.AssaltoManager.GetAssaltoAtual.NomeDaCena);
     }

@@ -43,6 +43,8 @@ public class MenuDaLoja : MonoBehaviour
                 lojaDeArmas.gameObject.SetActive(false);
                 lojaDeMelhorias.gameObject.SetActive(false);
                 lojaDeItens.gameObject.SetActive(false);
+
+                AtualizarPainelDeEscolha(opcoesMenuInicial, selecao);
                 break;
 
             case Menu.Armas:

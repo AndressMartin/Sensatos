@@ -10,6 +10,11 @@ public class SetaDeScrool : MonoBehaviour
 
     public void Ativa(bool ativa)
     {
+        if (gameObject.activeInHierarchy == false)
+        {
+            return;
+        }
+
         if (ativa == true)
         {
             animacao.SetBool("Selecionado", true);

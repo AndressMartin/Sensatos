@@ -10,7 +10,7 @@ public class ItemLojaSlot : MonoBehaviour
     [SerializeField] private Image imagem;
     [SerializeField] private TMP_Text preco;
 
-    private Image imagemFundo;
+    private Animator animacao;
 
     //Variaveis
     protected bool iniciado = false;
@@ -27,7 +27,7 @@ public class ItemLojaSlot : MonoBehaviour
             return;
         }
 
-        imagemFundo = GetComponent<Image>();
+        animacao = GetComponent<Animator>();
 
         iniciado = true;
     }
@@ -48,11 +48,11 @@ public class ItemLojaSlot : MonoBehaviour
     {
         if (selecionado == true)
         {
-            imagemFundo.color = Color.blue;
+            animacao.SetBool("Selecionado", true);
         }
         else
         {
-            imagemFundo.color = Color.red;
+            animacao.SetBool("Selecionado", false);
         }
     }
 }

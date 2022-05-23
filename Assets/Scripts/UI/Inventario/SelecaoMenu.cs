@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class SelecaoMenu : SelecaoDoInventario
 {
     //Componentes
-    private Image imagem;
+    private Animator animacao;
 
     //Enums
     public enum Menu { ItensChave, Missoes, Conquistas }
@@ -28,7 +28,7 @@ public class SelecaoMenu : SelecaoDoInventario
             return;
         }
 
-        imagem = GetComponent<Image>();
+        animacao = GetComponent<Animator>();
 
         iniciado = true;
     }
@@ -57,11 +57,11 @@ public class SelecaoMenu : SelecaoDoInventario
     {
         if (selecionado == true)
         {
-            imagem.color = Color.blue;
+            animacao.SetBool("Selecionado", true);
         }
         else
         {
-            imagem.color = Color.white;
+            animacao.SetBool("Selecionado", false);
         }
     }
 }

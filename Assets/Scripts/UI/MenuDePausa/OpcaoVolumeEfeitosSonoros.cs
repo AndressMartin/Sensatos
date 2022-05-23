@@ -11,6 +11,8 @@ public class OpcaoVolumeEfeitosSonoros : Opcao
     [SerializeField] private TMP_Text textoVolume;
     [SerializeField] private Image barraVolume;
 
+    [SerializeField] private Animator animacao;
+
     //Variaveis
     private int volume;
     private float intervaloInput = 0;
@@ -82,11 +84,11 @@ public class OpcaoVolumeEfeitosSonoros : Opcao
 
         if (selecionado == true)
         {
-            nomeOpcao.color = Color.red;
+            animacao.SetBool("Selecionado", true);
         }
         else
         {
-            nomeOpcao.color = Color.black;
+            animacao.SetBool("Selecionado", false);
         }
     }
 }

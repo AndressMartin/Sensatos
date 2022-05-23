@@ -12,7 +12,7 @@ public class ArmaLojaSlot : MonoBehaviour
     [SerializeField] private Image imagem;
     [SerializeField] private Image imagemMunicao;
 
-    private Image imagemFundo;
+    private Animator animacao;
 
     //Variaveis
     private bool iniciado = false;
@@ -29,7 +29,7 @@ public class ArmaLojaSlot : MonoBehaviour
             return;
         }
 
-        imagemFundo = GetComponent<Image>();
+        animacao = GetComponent<Animator>();
 
         iniciado = true;
     }
@@ -58,11 +58,11 @@ public class ArmaLojaSlot : MonoBehaviour
     {
         if (selecionado == true)
         {
-            imagemFundo.color = Color.blue;
+            animacao.SetBool("Selecionado", true);
         }
         else
         {
-            imagemFundo.color = Color.red;
+            animacao.SetBool("Selecionado", false);
         }
     }
 }

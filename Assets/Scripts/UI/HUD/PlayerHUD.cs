@@ -62,6 +62,7 @@ public class PlayerHUD : MonoBehaviour
         if (generalManager.Player.Inventario.ArmaSlot[indiceOutraArma] != null)
         {
             armas[1].AtualizarInformacoes(generalManager.Player.Inventario.ArmaSlot[indiceOutraArma]);
+            armas[1].BarraDeMunicaoAtiva(false);
         }
         else
         {
