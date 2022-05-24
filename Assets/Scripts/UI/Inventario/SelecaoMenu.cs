@@ -6,7 +6,8 @@ using UnityEngine.UI;
 public class SelecaoMenu : SelecaoDoInventario
 {
     //Componentes
-    private Animator animacao;
+    [SerializeField] private Animator animacao;
+    [SerializeField] private Animator animacaoIcone;
 
     //Enums
     public enum Menu { ItensChave, Missoes, Conquistas }
@@ -27,8 +28,6 @@ public class SelecaoMenu : SelecaoDoInventario
         {
             return;
         }
-
-        animacao = GetComponent<Animator>();
 
         iniciado = true;
     }
@@ -58,6 +57,7 @@ public class SelecaoMenu : SelecaoDoInventario
         if (selecionado == true)
         {
             animacao.SetBool("Selecionado", true);
+            animacaoIcone.SetTrigger("Selecionado");
         }
         else
         {

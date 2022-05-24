@@ -73,6 +73,7 @@ public class MenuEscolherAssalto : MonoBehaviour
         {
             missao.Iniciar();
             missao.ZerarInformacoes();
+            missao.SetCor(ListaSlot.Cor.Vermelho);
         }
 
         //Trocar o idioma uma vez para iniciar o objeto com o idioma correto
@@ -194,6 +195,7 @@ public class MenuEscolherAssalto : MonoBehaviour
         foreach (ListaSlot missao in missoes)
         {
             missao.Selecionado(false);
+            missao.SetCor(ListaSlot.Cor.Vermelho);
         }
     }
 
