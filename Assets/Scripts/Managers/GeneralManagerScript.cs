@@ -23,6 +23,7 @@ public class GeneralManagerScript : MonoBehaviour
     private DebugModeManagerScript debugModeManager;
     private AssaltoManager assaltoManager;
     private ModoDeJogoManager modoDeJogoManager;
+    private MusicasDoMapa musicasDoMapa;
 
     //Componentes
     private Player player;
@@ -54,6 +55,7 @@ public class GeneralManagerScript : MonoBehaviour
     public CinemachineVirtualCamera CameraPrincipal => cameraPrincipal;
     public AssaltoManager AssaltoManager => assaltoManager;
     public ModoDeJogoManager ModoDeJogoManager => modoDeJogoManager;
+    public MusicasDoMapa MusicasDoMapa => musicasDoMapa;
 
     private void Awake()
     {
@@ -75,6 +77,7 @@ public class GeneralManagerScript : MonoBehaviour
         debugModeManager = FindObjectOfType<DebugModeManagerScript>();
         assaltoManager = FindObjectOfType<AssaltoManager>();
         modoDeJogoManager = FindObjectOfType<ModoDeJogoManager>();
+        musicasDoMapa = FindObjectOfType<MusicasDoMapa>();
 
         //Componentes
         player = FindObjectOfType<Player>();

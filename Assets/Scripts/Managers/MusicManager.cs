@@ -28,24 +28,24 @@ public class MusicManager : MonoBehaviour
 
         if (audioSource != null)
         {
-            SetMusic(musica);
+            SetMusica(musica);
         }
 
         SetVolume(volume);
-        PlayMusic();
+        TocarMusica();
     }
 
-    public void SetMusic(AudioClip musica)
+    public void SetMusica(AudioClip musica)
     {
         this.audioSource.clip = musica;
     }
 
-    public void PlayMusic()
+    public void TocarMusica()
     {
         audioSource.Play();
     }
 
-    public void StopMusic()
+    public void PararMusica()
     {
         audioSource.Stop();
     }

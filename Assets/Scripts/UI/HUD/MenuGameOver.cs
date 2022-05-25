@@ -240,6 +240,8 @@ public class MenuGameOver : MonoBehaviour
 
         generalManager.PauseManager.Pausar(false);
         generalManager.PauseManager.SetPermitirInput(true);
+
+        generalManager.MusicasDoMapa.TocarMusica(MusicasDoMapa.Musica.Principal);
     }
 
     private void IniciarVoltarParaACidade()

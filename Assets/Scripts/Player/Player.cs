@@ -502,6 +502,8 @@ public class Player : EntityModel
         FinalizarRecarregamento();
 
         sonsDoJogador.TocarSom(SonsDoJogador.Som.Morte);
+
+        generalManager.MusicManager.PararMusica();
     }
 
     public void GerarSom(float raio, bool somTiro)
