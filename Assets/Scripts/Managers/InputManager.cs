@@ -38,12 +38,12 @@ public static class InputManager
 
     public static bool Confirmar()
     {
-        return Input.GetKeyDown(KeyCode.Z);
+        return Input.GetKeyDown(KeyCode.Z) || Input.GetKeyDown(KeyCode.Return);
     }
 
     public static bool Voltar()
     {
-        return Input.GetKeyDown(KeyCode.X);
+        return Input.GetKeyDown(KeyCode.X) || Input.GetKeyDown(KeyCode.Backspace);
     }
 
     public static bool Pausar()
@@ -58,7 +58,7 @@ public static class InputManager
 
     public static bool AvancarDialogo()
     {
-        return Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.Z);
+        return Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.Z) || Input.GetKeyDown(KeyCode.Return);
     }
 
     #endregion
