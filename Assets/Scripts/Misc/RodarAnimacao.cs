@@ -24,4 +24,9 @@ public class RodarAnimacao : MonoBehaviour
 
         animacao.Play(nomeDaAnimacao);
     }
+
+    private void OnEnable()
+    {
+        TocarAnimacao();
+    }
 }

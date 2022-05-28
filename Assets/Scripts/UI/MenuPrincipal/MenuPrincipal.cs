@@ -14,11 +14,15 @@ public class MenuPrincipal : MonoBehaviour
     [SerializeField] private MenuCarregarJogo menuCarregarJogo;
     [SerializeField] private MenuOpcoes menuOpcoes;
 
+    [SerializeField] private RectTransform menuSobreOJogo;
+    [SerializeField] private RectTransform menuControles;
+    [SerializeField] private TelaDeCreditos menuCreditos;
+
     [SerializeField] private PainelDeEscolha opcoesMenuInicial;
     [SerializeField] private PainelDeEscolha painelDeConfirmacaoParaSairDoJogo;
 
     //Enums
-    public enum Menu { Inicio, NovoJogo, CarregarJogo, Opcoes, ConfirmacaoParaSairDoJogo, Controles, Creditos }
+    public enum Menu { Inicio, NovoJogo, CarregarJogo, Opcoes, ConfirmacaoParaSairDoJogo, SobreOJogo, Controles, Creditos }
 
     //Variaveis
     private bool ativo;
@@ -50,6 +54,10 @@ public class MenuPrincipal : MonoBehaviour
                 menuOpcoes.gameObject.SetActive(false);
                 painelDeConfirmacaoParaSairDoJogo.gameObject.SetActive(false);
 
+                menuSobreOJogo.gameObject.SetActive(false);
+                menuControles.gameObject.SetActive(false);
+                menuCreditos.gameObject.SetActive(false);
+
                 AtualizarPainelDeEscolha(opcoesMenuInicial, selecao);
                 break;
 
@@ -59,6 +67,10 @@ public class MenuPrincipal : MonoBehaviour
                 menuCarregarJogo.gameObject.SetActive(false);
                 menuOpcoes.gameObject.SetActive(false);
                 painelDeConfirmacaoParaSairDoJogo.gameObject.SetActive(false);
+
+                menuSobreOJogo.gameObject.SetActive(false);
+                menuControles.gameObject.SetActive(false);
+                menuCreditos.gameObject.SetActive(false);
                 break;
 
             case Menu.CarregarJogo:
@@ -67,6 +79,10 @@ public class MenuPrincipal : MonoBehaviour
                 menuCarregarJogo.gameObject.SetActive(true);
                 menuOpcoes.gameObject.SetActive(false);
                 painelDeConfirmacaoParaSairDoJogo.gameObject.SetActive(false);
+
+                menuSobreOJogo.gameObject.SetActive(false);
+                menuControles.gameObject.SetActive(false);
+                menuCreditos.gameObject.SetActive(false);
                 break;
 
             case Menu.Opcoes:
@@ -75,6 +91,10 @@ public class MenuPrincipal : MonoBehaviour
                 menuCarregarJogo.gameObject.SetActive(false);
                 menuOpcoes.gameObject.SetActive(true);
                 painelDeConfirmacaoParaSairDoJogo.gameObject.SetActive(false);
+
+                menuSobreOJogo.gameObject.SetActive(false);
+                menuControles.gameObject.SetActive(false);
+                menuCreditos.gameObject.SetActive(false);
                 break;
 
             case Menu.ConfirmacaoParaSairDoJogo:
@@ -83,6 +103,46 @@ public class MenuPrincipal : MonoBehaviour
                 menuCarregarJogo.gameObject.SetActive(false);
                 menuOpcoes.gameObject.SetActive(false);
                 painelDeConfirmacaoParaSairDoJogo.gameObject.SetActive(true);
+
+                menuSobreOJogo.gameObject.SetActive(false);
+                menuControles.gameObject.SetActive(false);
+                menuCreditos.gameObject.SetActive(false);
+                break;
+
+            case Menu.SobreOJogo:
+                telaInicial.gameObject.SetActive(false);
+                menuNovoJogo.gameObject.SetActive(false);
+                menuCarregarJogo.gameObject.SetActive(false);
+                menuOpcoes.gameObject.SetActive(false);
+                painelDeConfirmacaoParaSairDoJogo.gameObject.SetActive(false);
+
+                menuSobreOJogo.gameObject.SetActive(true);
+                menuControles.gameObject.SetActive(false);
+                menuCreditos.gameObject.SetActive(false);
+                break;
+
+            case Menu.Controles:
+                telaInicial.gameObject.SetActive(false);
+                menuNovoJogo.gameObject.SetActive(false);
+                menuCarregarJogo.gameObject.SetActive(false);
+                menuOpcoes.gameObject.SetActive(false);
+                painelDeConfirmacaoParaSairDoJogo.gameObject.SetActive(false);
+
+                menuSobreOJogo.gameObject.SetActive(false);
+                menuControles.gameObject.SetActive(true);
+                menuCreditos.gameObject.SetActive(false);
+                break;
+
+            case Menu.Creditos:
+                telaInicial.gameObject.SetActive(false);
+                menuNovoJogo.gameObject.SetActive(false);
+                menuCarregarJogo.gameObject.SetActive(false);
+                menuOpcoes.gameObject.SetActive(false);
+                painelDeConfirmacaoParaSairDoJogo.gameObject.SetActive(false);
+
+                menuSobreOJogo.gameObject.SetActive(false);
+                menuControles.gameObject.SetActive(false);
+                menuCreditos.gameObject.SetActive(true);
                 break;
         }
     }
@@ -116,6 +176,7 @@ public class MenuPrincipal : MonoBehaviour
         menuNovoJogo.Iniciar();
         menuCarregarJogo.Iniciar();
         menuOpcoes.Iniciar();
+        menuCreditos.Iniciar();
     }
 
     private void Update()
@@ -142,6 +203,18 @@ public class MenuPrincipal : MonoBehaviour
 
             case Menu.Opcoes:
                 MenuOpcoes();
+                break;
+
+            case Menu.SobreOJogo:
+                MenuSobreOJogo();
+                break;
+
+            case Menu.Controles:
+                MenuControles();
+                break;
+
+            case Menu.Creditos:
+                MenuCreditos();
                 break;
 
             case Menu.ConfirmacaoParaSairDoJogo:
@@ -208,18 +281,26 @@ public class MenuPrincipal : MonoBehaviour
                     break;
 
                 case 3:
-                    //Tela de Comandos
+                    SetMenuAtual(Menu.SobreOJogo);
 
                     generalManager.Hud.SonsDeMenus.TocarSom(SonsDeMenus.Som.Confirmar);
                     break;
 
                 case 4:
-                    //Tela de Creditos
+                    SetMenuAtual(Menu.Controles);
 
                     generalManager.Hud.SonsDeMenus.TocarSom(SonsDeMenus.Som.Confirmar);
                     break;
 
                 case 5:
+                    SetMenuAtual(Menu.Creditos);
+
+                    menuCreditos.IniciarAnimacao();
+
+                    generalManager.Hud.SonsDeMenus.TocarSom(SonsDeMenus.Som.Confirmar);
+                    break;
+
+                case 6:
                     SetMenuAtual(Menu.ConfirmacaoParaSairDoJogo);
 
                     selecao2 = 0;
@@ -251,6 +332,41 @@ public class MenuPrincipal : MonoBehaviour
             //Salva as configuracoes do jogo
             SaveConfiguracoes.AtualizarConfiguracoes();
             SaveConfiguracoes.SalvarConfiguracoes();
+
+            SetMenuAtual(Menu.Inicio);
+
+            generalManager.Hud.SonsDeMenus.TocarSom(SonsDeMenus.Som.Voltar);
+        }
+    }
+
+    private void MenuSobreOJogo()
+    {
+        //Voltar
+        if (InputManager.Voltar())
+        {
+            SetMenuAtual(Menu.Inicio);
+
+            generalManager.Hud.SonsDeMenus.TocarSom(SonsDeMenus.Som.Voltar);
+        }
+    }
+
+    private void MenuControles()
+    {
+        //Voltar
+        if (InputManager.Voltar())
+        {
+            SetMenuAtual(Menu.Inicio);
+
+            generalManager.Hud.SonsDeMenus.TocarSom(SonsDeMenus.Som.Voltar);
+        }
+    }
+
+    private void MenuCreditos()
+    {
+        //Voltar
+        if (InputManager.Voltar())
+        {
+            menuCreditos.FicarInvisivel();
 
             SetMenuAtual(Menu.Inicio);
 
