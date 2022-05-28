@@ -57,7 +57,11 @@ PrefabInstance:
       objectReference: {fileID: -8527632256051650509, guid: aadd9d9eb77ea0f4c9a3852cbb31e7c7, type: 3}
     - target: {fileID: 6207573094302675270, guid: 6a5a0ef04f1d63942b791507d78438b8, type: 3}
       propertyPath: m_Name
-      value: CameraDeSeguranca_Cima
+      value: CameraDeSeguranca_Cima Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 6408935210611926216, guid: 6a5a0ef04f1d63942b791507d78438b8, type: 3}
+      propertyPath: posicaoCamera
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6408935210611926216, guid: 6a5a0ef04f1d63942b791507d78438b8, type: 3}
       propertyPath: posicoesDaCamera.Array.data[0].direcao

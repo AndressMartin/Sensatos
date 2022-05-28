@@ -82,7 +82,7 @@ public static class InputManager
 
     public static bool AndarSorrateiramente()
     {
-        return Input.GetKeyDown(KeyCode.A);
+        return Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.RightShift);
     }
 
     public static bool Lockstrafe()

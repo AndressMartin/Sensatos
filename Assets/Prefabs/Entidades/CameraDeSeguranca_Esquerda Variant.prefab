@@ -57,7 +57,11 @@ PrefabInstance:
       objectReference: {fileID: -3884532311442816193, guid: aadd9d9eb77ea0f4c9a3852cbb31e7c7, type: 3}
     - target: {fileID: 6207573094302675270, guid: 6a5a0ef04f1d63942b791507d78438b8, type: 3}
       propertyPath: m_Name
-      value: CameraDeSeguranca_Esquerda
+      value: CameraDeSeguranca_Esquerda Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 6408935210611926216, guid: 6a5a0ef04f1d63942b791507d78438b8, type: 3}
+      propertyPath: posicaoCamera
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6a5a0ef04f1d63942b791507d78438b8, type: 3}
