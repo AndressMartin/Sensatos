@@ -42,6 +42,7 @@ public class EnemyMovement : MonoBehaviour
     //Getters
     public Vector2 GetUltimaPosicaoOrigem => ultimaPosicaoEnquantoFaziaRota;
     public Vector2 PontosDeRota => pontosDeRota[indiceListaNaoLockdown].position;
+    public List<Transform> PontoRota => pontosDeRota;
     public Vector2 PontoDeProcura => pontosDeProcura[indiceListaLockdown].position;
     public float GetVelocidade => velocidade;
     public float GetVelocidadeModoNormal => velocidadeModoNormal;

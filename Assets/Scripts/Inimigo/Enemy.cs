@@ -27,13 +27,13 @@ public class Enemy : EntityModel
     private Player player;
 
     //Variaveis
+    [SerializeField] private Direcao direcaoParaOlhar;
     [SerializeField] LayerMask layerDasZonas;
 
     [SerializeField] private int vidaInicial;
 
     [SerializeField] private Color corEfeitoTomandoDano;
     [SerializeField] private float velocidadeEfeitoTomandoDano;
-
     private int zona;
 
     public enum Estado { Normal, TomandoDano };
@@ -152,6 +152,7 @@ public class Enemy : EntityModel
         SetarZona();
 
         iniciado = true;
+        direcao = direcaoParaOlhar;
     }
 
     void Update()
@@ -210,6 +211,8 @@ public class Enemy : EntityModel
     {
         vida = vidaInicial;
         transform.position = posicaoRespawn;
+        direcao = direcaoParaOlhar;
+
         ChangeDirection(direcaoRespawn);
 
         ia_Enemy.Respawn();
@@ -223,6 +226,7 @@ public class Enemy : EntityModel
         rb.bodyType = RigidbodyType2D.Dynamic;
 
         sortingGroup.sortingOrder = 0;
+
 
         animacao.AtivarSpriteRenderers();
 

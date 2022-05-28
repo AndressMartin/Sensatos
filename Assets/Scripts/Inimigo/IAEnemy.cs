@@ -536,11 +536,13 @@ public class IAEnemy : MonoBehaviour
     }
     protected virtual void Patrulhar()
     {
-        if(VerificarChegouAteAlvo(enemyMovement.PontosDeRota))
+        if (enemyMovement.PontoRota.Count > 0)
         {
-            enemyMovement.GerarNovoPonto(false);
+            if (VerificarChegouAteAlvo(enemyMovement.PontosDeRota))
+            {
+                enemyMovement.GerarNovoPonto(false);
+            }
         }
-
     }
     protected virtual void  TomeiDanoSemVerJogador()
     {
