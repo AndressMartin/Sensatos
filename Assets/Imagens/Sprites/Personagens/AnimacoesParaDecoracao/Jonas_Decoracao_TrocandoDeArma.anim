@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Jonas_Decoracao_Idle_Escopeta
+  m_Name: Jonas_Decoracao_TrocandoDeArma
   serializedVersion: 6
   m_Legacy: 0
   m_Compressed: 0
@@ -89,31 +89,31 @@ AnimationClip:
     script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   - curve:
     - time: 0
-      value: {fileID: 3952458540269823535, guid: 056c5d940c72a97478edb1000984b59f, type: 3}
+      value: {fileID: 6347692846588103695, guid: 056c5d940c72a97478edb1000984b59f, type: 3}
     - time: 0.25
-      value: {fileID: 5544288093656344916, guid: 056c5d940c72a97478edb1000984b59f, type: 3}
+      value: {fileID: -5062340437731864414, guid: 056c5d940c72a97478edb1000984b59f, type: 3}
     - time: 0.5
-      value: {fileID: -1185644278627981030, guid: 056c5d940c72a97478edb1000984b59f, type: 3}
+      value: {fileID: -4277214461310292334, guid: 056c5d940c72a97478edb1000984b59f, type: 3}
     - time: 0.75
-      value: {fileID: 2162340884295652729, guid: 056c5d940c72a97478edb1000984b59f, type: 3}
+      value: {fileID: -514283765047404497, guid: 056c5d940c72a97478edb1000984b59f, type: 3}
     - time: 1
-      value: {fileID: 6139773244946027199, guid: 056c5d940c72a97478edb1000984b59f, type: 3}
+      value: {fileID: 5861448888297784347, guid: 056c5d940c72a97478edb1000984b59f, type: 3}
     - time: 1.25
-      value: {fileID: -2749701193034322319, guid: 056c5d940c72a97478edb1000984b59f, type: 3}
+      value: {fileID: 5282083399392244062, guid: 056c5d940c72a97478edb1000984b59f, type: 3}
     - time: 1.5
-      value: {fileID: 4305125339982722126, guid: 056c5d940c72a97478edb1000984b59f, type: 3}
+      value: {fileID: -5894962402540999262, guid: 056c5d940c72a97478edb1000984b59f, type: 3}
     - time: 1.75
-      value: {fileID: 7700850248890335053, guid: 056c5d940c72a97478edb1000984b59f, type: 3}
+      value: {fileID: -3117119145878301996, guid: 056c5d940c72a97478edb1000984b59f, type: 3}
     - time: 2
-      value: {fileID: -6532163942575043264, guid: 056c5d940c72a97478edb1000984b59f, type: 3}
+      value: {fileID: 1109179190901395147, guid: 056c5d940c72a97478edb1000984b59f, type: 3}
     - time: 2.25
-      value: {fileID: 5250904649108033725, guid: 056c5d940c72a97478edb1000984b59f, type: 3}
+      value: {fileID: 2787312883948097216, guid: 056c5d940c72a97478edb1000984b59f, type: 3}
     - time: 2.5
-      value: {fileID: -3931147024411885596, guid: 056c5d940c72a97478edb1000984b59f, type: 3}
+      value: {fileID: 6651508886082264187, guid: 056c5d940c72a97478edb1000984b59f, type: 3}
     - time: 2.75
-      value: {fileID: 281678323934416948, guid: 056c5d940c72a97478edb1000984b59f, type: 3}
+      value: {fileID: 3463073890229094809, guid: 056c5d940c72a97478edb1000984b59f, type: 3}
     - time: 2.9833333
-      value: {fileID: 281678323934416948, guid: 056c5d940c72a97478edb1000984b59f, type: 3}
+      value: {fileID: 3463073890229094809, guid: 056c5d940c72a97478edb1000984b59f, type: 3}
     attribute: m_Sprite
     path: Bracos
     classID: 114
@@ -181,19 +181,19 @@ AnimationClip:
     - {fileID: -3866393327056336275, guid: c17339db9f9350647979e198fd599c0d, type: 3}
     - {fileID: -2396442836690593187, guid: c17339db9f9350647979e198fd599c0d, type: 3}
     - {fileID: -2396442836690593187, guid: c17339db9f9350647979e198fd599c0d, type: 3}
-    - {fileID: 3952458540269823535, guid: 056c5d940c72a97478edb1000984b59f, type: 3}
-    - {fileID: 5544288093656344916, guid: 056c5d940c72a97478edb1000984b59f, type: 3}
-    - {fileID: -1185644278627981030, guid: 056c5d940c72a97478edb1000984b59f, type: 3}
-    - {fileID: 2162340884295652729, guid: 056c5d940c72a97478edb1000984b59f, type: 3}
-    - {fileID: 6139773244946027199, guid: 056c5d940c72a97478edb1000984b59f, type: 3}
-    - {fileID: -2749701193034322319, guid: 056c5d940c72a97478edb1000984b59f, type: 3}
-    - {fileID: 4305125339982722126, guid: 056c5d940c72a97478edb1000984b59f, type: 3}
-    - {fileID: 7700850248890335053, guid: 056c5d940c72a97478edb1000984b59f, type: 3}
-    - {fileID: -6532163942575043264, guid: 056c5d940c72a97478edb1000984b59f, type: 3}
-    - {fileID: 5250904649108033725, guid: 056c5d940c72a97478edb1000984b59f, type: 3}
-    - {fileID: -3931147024411885596, guid: 056c5d940c72a97478edb1000984b59f, type: 3}
-    - {fileID: 281678323934416948, guid: 056c5d940c72a97478edb1000984b59f, type: 3}
-    - {fileID: 281678323934416948, guid: 056c5d940c72a97478edb1000984b59f, type: 3}
+    - {fileID: 6347692846588103695, guid: 056c5d940c72a97478edb1000984b59f, type: 3}
+    - {fileID: -5062340437731864414, guid: 056c5d940c72a97478edb1000984b59f, type: 3}
+    - {fileID: -4277214461310292334, guid: 056c5d940c72a97478edb1000984b59f, type: 3}
+    - {fileID: -514283765047404497, guid: 056c5d940c72a97478edb1000984b59f, type: 3}
+    - {fileID: 5861448888297784347, guid: 056c5d940c72a97478edb1000984b59f, type: 3}
+    - {fileID: 5282083399392244062, guid: 056c5d940c72a97478edb1000984b59f, type: 3}
+    - {fileID: -5894962402540999262, guid: 056c5d940c72a97478edb1000984b59f, type: 3}
+    - {fileID: -3117119145878301996, guid: 056c5d940c72a97478edb1000984b59f, type: 3}
+    - {fileID: 1109179190901395147, guid: 056c5d940c72a97478edb1000984b59f, type: 3}
+    - {fileID: 2787312883948097216, guid: 056c5d940c72a97478edb1000984b59f, type: 3}
+    - {fileID: 6651508886082264187, guid: 056c5d940c72a97478edb1000984b59f, type: 3}
+    - {fileID: 3463073890229094809, guid: 056c5d940c72a97478edb1000984b59f, type: 3}
+    - {fileID: 3463073890229094809, guid: 056c5d940c72a97478edb1000984b59f, type: 3}
     - {fileID: -1530329135974392075, guid: 736b06dc2bdb8c84a8d289c010dfc482, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
