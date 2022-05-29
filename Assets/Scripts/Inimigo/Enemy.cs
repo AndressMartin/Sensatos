@@ -147,12 +147,13 @@ public class Enemy : EntityModel
         enemyMovement.Iniciar();
         animacao.Iniciar();
 
+        ChangeDirection(direcaoParaOlhar);
+
         SetRespawnInicial();
 
         SetarZona();
 
         iniciado = true;
-        direcao = direcaoParaOlhar;
     }
 
     void Update()
@@ -211,7 +212,6 @@ public class Enemy : EntityModel
     {
         vida = vidaInicial;
         transform.position = posicaoRespawn;
-        direcao = direcaoParaOlhar;
 
         ChangeDirection(direcaoRespawn);
 

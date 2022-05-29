@@ -109,6 +109,7 @@ public class CameraDeSeguranca : MonoBehaviour
     {
         if (!emLockdown && ativada && zona == generalManager.ZoneManager.ZonaAtual)
         {
+            FieldOfViewAtiva(true);
             MudarDirecaoConeVisao();
             AtualizarFieldView();
             AtualizarPollygonCollider();
@@ -142,6 +143,7 @@ public class CameraDeSeguranca : MonoBehaviour
         {
             barraDeVisao.BarraDeVisaoAtiva(false);
             barraDeVisao.IconeDeAlertaAtivo(false);
+            FieldOfViewAtiva(false);
         }
 
         Animar();

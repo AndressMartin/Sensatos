@@ -73,14 +73,13 @@ public class EnemyVisionScript : MonoBehaviour
 
         fieldOfView = novoFieldOfView.GetComponent<FieldOfView>();
         fieldOfView.SetPai(enemy.gameObject);
-        //fieldOfView.SetArea(fov, distancia);
+        fieldOfView.SetArea(fov, distancia);
     }
     
     public void Main()
     {
         vendoPlayerCircular=visaoCircularEnemy.VendoPlayer;
         direcao = enemy.GetDirecao;
-        AtualizarFieldView();
         MudarDirecaoConeVisao();
 
         if(enemy.GetIAEnemy.GetEstadoDeteccaoPlayer == IAEnemy.EstadoDeteccaoPlayer.PlayerDetectado)
@@ -91,8 +90,9 @@ public class EnemyVisionScript : MonoBehaviour
         }
         else
         {
-            AtualizarPollygonCollider();
+            AtualizarFieldView();
         }
+
     }
 
     public void ResetarVariaveisDeControle()
@@ -152,7 +152,6 @@ public class EnemyVisionScript : MonoBehaviour
         {
             direcaoAntiga = direcao;
             AtualizarPollygonCollider();
-
         }
         //float h2 = (larguraConeVisao - pontoX) * (larguraConeVisao - pontoX) + (alturaConeVisao - pontoY) * (alturaConeVisao - pontoY);
 
@@ -173,7 +172,7 @@ public class EnemyVisionScript : MonoBehaviour
 
     private void AtualizarFieldView()
     {
-        fieldOfView.SetOrigin((Vector2)gameObject.transform.position + v1);
+        //fieldOfView.SetOrigin((Vector2)gameObject.transform.position + v1);
         fieldOfView.SetArea(fov, distancia);
     }
 

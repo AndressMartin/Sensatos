@@ -31,6 +31,8 @@ public class GeneralManagerScript : MonoBehaviour
     private DialogueUI dialogueUI;
     private GameObject fieldView;
     private CinemachineVirtualCamera cameraPrincipal;
+    private SalaSeguranca salaSeguranca;
+
 
     //Getters
     public IdiomaManager IdiomaManager => idiomaManager;
@@ -56,6 +58,7 @@ public class GeneralManagerScript : MonoBehaviour
     public AssaltoManager AssaltoManager => assaltoManager;
     public ModoDeJogoManager ModoDeJogoManager => modoDeJogoManager;
     public MusicasDoMapa MusicasDoMapa => musicasDoMapa;
+    public SalaSeguranca SalaSeguranca => salaSeguranca;
 
     private void Awake()
     {
@@ -85,5 +88,6 @@ public class GeneralManagerScript : MonoBehaviour
         dialogueUI = FindObjectOfType<DialogueUI>();
         fieldView = FindObjectOfType<FieldOfView>(true)?.gameObject;
         cameraPrincipal = FindObjectOfType<CinemachineVirtualCamera>();
+        salaSeguranca = FindObjectOfType<SalaSeguranca>();
     }
 }
