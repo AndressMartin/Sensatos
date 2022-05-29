@@ -33,7 +33,10 @@ public class DialogueUI : MonoBehaviour
         responseHandler = GetComponent<ResponseHandler>();
         dialogueJSONReader = GetComponent<DialogueJSONReader>();
 
-        CloseDialogueBox();
+        IsOpen = false;
+        portrait.gameObject.SetActive(false);
+        dialogueBox.SetActive(false);
+        textLabel.text = string.Empty;
     }
 
     public void ShowDialogue(DialogueObject dialogueObject)

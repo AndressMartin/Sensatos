@@ -17,6 +17,7 @@ public class HUDScript : MonoBehaviour
     [SerializeField] private TelaItemPrincipalPego telaItemPrincipalPego;
     [SerializeField] private MenuDaLoja menuDaLoja;
     [SerializeField] private TelaTransicaoDeMapa telaTransicaoDeMapa;
+    [SerializeField] private TransicaoDeTela transicaoDeTela;
     [SerializeField] private LockDownUI lockDownUI;
     [SerializeField] private PlayerUIScript playerUI;
     [SerializeField] private BarraDeVisaoDoInimigo barraDeVisaoDoInimigo;
@@ -38,6 +39,7 @@ public class HUDScript : MonoBehaviour
     public TelaItemPrincipalPego TelaItemPrincipalPego => telaItemPrincipalPego;
     public MenuDaLoja MenuDaLoja => menuDaLoja;
     public TelaTransicaoDeMapa TelaTransicaoDeMapa => telaTransicaoDeMapa;
+    public TransicaoDeTela TransicaoDeTela => transicaoDeTela;
     public BarraDeVisaoDoInimigo BarraDeVisaoDoInimigo => barraDeVisaoDoInimigo;
     public SonsDeMenus SonsDeMenus => sonsDeMenus;
     public Menu MenuAberto => menuAberto;
@@ -47,21 +49,28 @@ public class HUDScript : MonoBehaviour
     {
         this.menuAberto = menuAberto;
 
+        if(menuAberto == Menu.Transicao)
+        {
+            return;
+        }
+
         AtualizarPlayerHUD();
+    }
+
+    private void Awake()
+    {
+        menuAberto = Menu.Nenhum;
     }
 
     private void Start()
     {
-        //Variaveis
-        menuAberto = Menu.Nenhum;
-
         LockDownUIAtiva(false);
         BarraDeRecarregamentoAtiva(false);
     }
 
     public void AtualizarPlayerHUD()
     {
-        playerHUD.AtualizarInformacoes();
+        playerHUD?.AtualizarInformacoes();
     }
 
     public void BarraDeRecarregamentoAtiva(bool ativa)

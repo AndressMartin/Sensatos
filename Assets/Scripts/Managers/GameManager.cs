@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
 
     //Componentes
     private NomesDeCenas nomesDeCenas;
+    private VariaveisGlobais variaveisGlobais;
 
     //Enuns
     public enum Modo { Cidade, Assalto }
@@ -23,6 +24,7 @@ public class GameManager : MonoBehaviour
 
     //Getters
     public NomesDeCenas NomesDeCenas => nomesDeCenas;
+    public VariaveisGlobais VariaveisGlobais => variaveisGlobais;
     public float TempoDeJogo => tempoDeJogo;
     public Modo ModoDeJogo => modoDeJogo;
     public Capitulo CapituloAtual => capituloAtual;
@@ -67,6 +69,7 @@ public class GameManager : MonoBehaviour
 
         //Componentes
         nomesDeCenas = GetComponent<NomesDeCenas>();
+        variaveisGlobais = GetComponent<VariaveisGlobais>();
 
         //Inicia o contador de tempo
         StartCoroutine(contadorDeTempo());
@@ -103,7 +106,7 @@ public class GameManager : MonoBehaviour
 
     public void IniciarJogo()
     {
-        LevelLoaderScript.Instance.CarregarNivel(nomesDeCenas.Cidade);
+        FindObjectOfType<GeneralManagerScript>().Hud.TransicaoDeTela.TransicaoDeCena(nomesDeCenas.Cidade);
     }
 
     private void ResetarVariaveisDoJogo()
@@ -116,6 +119,8 @@ public class GameManager : MonoBehaviour
         capituloAtual = Capitulo.Inicio;
         Missoes.ResetarEstadosDasMissoes();
         Flags.ResetarFlags();
+
+        variaveisGlobais.CompletouUmAssalto = false;
     }
 
     private IEnumerator contadorDeTempo()

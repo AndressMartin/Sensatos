@@ -17,7 +17,7 @@ public class MenuNovoJogo : MonoBehaviour
     [SerializeField] private PainelDeEscolha opcoesContinuarSemSalvar;
 
     //Enuns
-    public enum Menu { Inicio, ConfirmandoSobrescreverSave, ConfirmandoContinuarSemSalvar }
+    public enum Menu { Inicio, ConfirmandoSobrescreverSave, ConfirmandoContinuarSemSalvar}
 
     //Variaveis
     private int selecao;

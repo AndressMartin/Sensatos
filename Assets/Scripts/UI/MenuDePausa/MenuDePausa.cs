@@ -17,7 +17,7 @@ public class MenuDePausa : MonoBehaviour
     [SerializeField] private PainelDeEscolha opcoesConfirmacaoParaVoltarAoMenuInicial;
 
     //Enums
-    public enum Menu { Inicio, Salvar, Opcoes, ConfirmacaoMenuPrincipal }
+    public enum Menu { Inicio, Salvar, Opcoes, ConfirmacaoMenuPrincipal, BloquearComandos }
 
     //Variaveis
     private bool ativo;
@@ -109,6 +109,11 @@ public class MenuDePausa : MonoBehaviour
                 }
             }
 
+            return;
+        }
+
+        if(menuAtual == Menu.BloquearComandos)
+        {
             return;
         }
 
@@ -329,7 +334,9 @@ public class MenuDePausa : MonoBehaviour
                     break;
 
                 case 1:
-                    LevelLoaderScript.Instance.CarregarNivel("MenuPrincipal");
+                    generalManager.Hud.TransicaoDeTela.TransicaoDeCena("MenuPrincipal");
+
+                    SetMenuAtual(Menu.BloquearComandos);
 
                     generalManager.Hud.SonsDeMenus.TocarSom(SonsDeMenus.Som.Confirmar);
                     break;

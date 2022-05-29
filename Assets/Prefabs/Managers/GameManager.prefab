@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 2393263651078082590}
   - component: {fileID: 5577645986089980915}
   - component: {fileID: 5147144601267735876}
+  - component: {fileID: 6517361929652423692}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -101,3 +102,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cidade: Mapa_Cidade
+--- !u!114 &6517361929652423692
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8654927992598386979}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ceb303cfb29b9a4baa9cf5137a09187, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -156,6 +156,9 @@ public class MenuDaLoja : MonoBehaviour
 
     private void FecharOMenuDaLoja()
     {
+        //Faz um auto save
+        SaveManager.instance.AutoSave();
+
         //Zera o inventario da loja
         this.inventarioLoja = null;
 

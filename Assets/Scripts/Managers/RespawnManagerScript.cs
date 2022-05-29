@@ -39,7 +39,7 @@ public class RespawnManagerScript : MonoBehaviour
             porta.SetRespawn();
         }
 
-        generalManager.SalaSeguranca.SetRespaw();
+        generalManager.SalaSeguranca?.SetRespaw();
     }
 
     public void Respawn()
@@ -73,7 +73,7 @@ public class RespawnManagerScript : MonoBehaviour
             porta.Respawn();
         }
 
-        generalManager.SalaSeguranca.Respawn();
+        generalManager.SalaSeguranca?.Respawn();
         generalManager.LockDownManager.Respawn();
         generalManager.BulletManager.DeletarProjeteis();
         generalManager.EnemyManager.Respawn();

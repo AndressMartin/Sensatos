@@ -107,6 +107,8 @@ public class MenuFimDoAssalto : MonoBehaviour
 
     public void VoltarParaACidade()
     {
+        GameManager.instance.VariaveisGlobais.CompletouUmAssalto = true;
+
         LevelLoaderScript.Instance.CarregarNivel(GameManager.instance.NomesDeCenas.Cidade);
     }
 }

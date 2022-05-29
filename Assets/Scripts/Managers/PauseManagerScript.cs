@@ -10,7 +10,7 @@ public class PauseManagerScript : MonoBehaviour
     public bool JogoPausado => jogoPausado;
     public bool PermitirInput => permitirInput;
 
-    void Start()
+    void Awake()
     {
         jogoPausado = false;
         permitirInput = true; //Permite que o jogador use comandos da gameplay principal, isto nao inclui os menus, inventario, lojas e caixas de dialogo

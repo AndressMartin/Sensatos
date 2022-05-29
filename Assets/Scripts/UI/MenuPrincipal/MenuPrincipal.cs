@@ -25,7 +25,7 @@ public class MenuPrincipal : MonoBehaviour
     [SerializeField] private Animator animacaoTitulo;
 
     //Enums
-    public enum Menu { AperteStart, Inicio, NovoJogo, CarregarJogo, Opcoes, ConfirmacaoParaSairDoJogo, SobreOJogo, Controles, Creditos }
+    public enum Menu { AperteStart, Inicio, NovoJogo, CarregarJogo, Opcoes, ConfirmacaoParaSairDoJogo, SobreOJogo, Controles, Creditos, BloquearComandos }
 
     //Variaveis
     private bool ativo;
@@ -259,6 +259,8 @@ public class MenuPrincipal : MonoBehaviour
         if(InputManager.QualquerBotao())
         {
             SetMenuAtual(Menu.Inicio);
+
+            generalManager.Hud.SonsDeMenus.TocarSom(SonsDeMenus.Som.Confirmar);
         }
     }
 
@@ -481,11 +483,15 @@ public class MenuPrincipal : MonoBehaviour
 
     public void IniciarNovoJogo()
     {
+        SetMenuAtual(Menu.BloquearComandos);
+
         GameManager.instance.IniciarNovoJogo();
     }
 
     public void IniciarJogo()
     {
+        SetMenuAtual(Menu.BloquearComandos);
+
         GameManager.instance.IniciarJogo();
     }
 }

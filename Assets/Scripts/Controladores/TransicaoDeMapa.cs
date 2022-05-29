@@ -29,6 +29,9 @@ public class TransicaoDeMapa : MonoBehaviour
 
     protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
-        generalManager.Hud.TelaTransicaoDeMapa.IniciarTransicao(this);
+        if(collision.CompareTag("Player"))
+        {
+            generalManager.Hud.TelaTransicaoDeMapa.IniciarTransicao(this);
+        }
     }
 }
