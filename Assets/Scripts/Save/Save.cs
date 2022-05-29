@@ -48,11 +48,12 @@ public static class Save
 
         string caminhoDoArquivo = Path.Combine(Application.dataPath, "Saves", "save" + slot.ToString() + ".txt");
 
-        string texto = JsonUtility.ToJson(save, true);
+        string texto = JsonUtility.ToJson(save);
 
         if (texto != null)
         {
-            File.WriteAllText(caminhoDoArquivo, texto);
+            Criptografador.WriteFile(caminhoDoArquivo, texto);
+            //File.WriteAllText(caminhoDoArquivo, texto);
 
             //Se o save for bem sucedido, altera  o save atual para o que acabou de ser salvo
             saveAtual = slot;
@@ -73,6 +74,9 @@ public static class Save
 
         string texto;
 
+        texto = Criptografador.ReadFile(caminhoDoArquivo);
+
+        /*
         try
         {
             texto = File.ReadAllText(caminhoDoArquivo);
@@ -81,6 +85,7 @@ public static class Save
         {
             texto = null;
         }
+        */
 
         if (texto != null)
         {
@@ -89,6 +94,9 @@ public static class Save
             SaveData.SetSaveAtual(save);
 
             PassarInformacoesDoSave(SaveData.SaveAtual);
+
+            //Se o carregamento for bem sucedido, altera  o save atual para o que acabou de ser carregado
+            saveAtual = slot;
 
             return true;
         }
@@ -106,7 +114,8 @@ public static class Save
 
         string texto;
 
-        texto = File.ReadAllText(caminhoDoArquivo);
+        texto = Criptografador.ReadFile(caminhoDoArquivo);
+        //texto = File.ReadAllText(caminhoDoArquivo);
 
 
         if (texto != null)

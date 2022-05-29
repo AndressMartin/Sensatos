@@ -168,6 +168,8 @@ public class MenuDaLoja : MonoBehaviour
 
         FecharOsMenus();
 
+        generalManager.Hud.SonsDeMenus.TocarSom(SonsDeMenus.Som.Voltar);
+
         ativo = false;
     }
 
@@ -246,8 +248,6 @@ public class MenuDaLoja : MonoBehaviour
 
                 case 3:
                     FecharOMenuDaLoja();
-
-                    generalManager.Hud.SonsDeMenus.TocarSom(SonsDeMenus.Som.Voltar);
                     break;
             }
         }

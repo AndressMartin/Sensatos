@@ -28,5 +28,23 @@ public class ModoDeJogoManager : MonoBehaviour
         GameManager.instance.SetModoDeJogo(modoDeJogo);
 
         saveLiberado = true;
+
+        StartCoroutine(SetarModoDeCombate());
+    }
+
+    private IEnumerator SetarModoDeCombate()
+    {
+        yield return null;
+
+        GeneralManagerScript generalManager = FindObjectOfType<GeneralManagerScript>();
+
+        if (modoDeJogo == GameManager.Modo.Cidade)
+        {
+            generalManager.Player.SetModoDeCombate(false);
+        }
+        else
+        {
+            generalManager.Player.SetModoDeCombate(true);
+        }
     }
 }
