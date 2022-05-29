@@ -38,6 +38,11 @@ public class SonsDoLogoBergamota : MonoBehaviour
         TocarSom(Som.SomDoLogo);
     }
 
+    public void MostrarTitulo()
+    {
+        menuPrincipal.MostrarTitulo();
+    }
+
     public void LiberarMenu()
     {
         menuPrincipal.SetAtivo(true);

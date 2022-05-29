@@ -11,6 +11,11 @@ public class OpcaoSlot : MonoBehaviour
 
     public void Selecionado(bool selecionado)
     {
+        if (gameObject.activeInHierarchy == false)
+        {
+            return;
+        }
+
         if (selecionado == true)
         {
             animacao.SetBool("Selecionado", true);

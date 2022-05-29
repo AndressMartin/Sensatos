@@ -61,6 +61,11 @@ public static class InputManager
         return Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.Z) || Input.GetKeyDown(KeyCode.Return);
     }
 
+    public static bool QualquerBotao()
+    {
+        return Input.anyKeyDown;
+    }
+
     #endregion
 
     #region Gameplay Principal

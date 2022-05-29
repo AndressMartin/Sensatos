@@ -9,6 +9,7 @@ public class MenuPrincipal : MonoBehaviour
 
     //Componentes
     [SerializeField] private RectTransform telaDoLogo;
+    [SerializeField] private RectTransform telaAperteStart;
     [SerializeField] private RectTransform telaInicial;
     [SerializeField] private MenuNovoJogo menuNovoJogo;
     [SerializeField] private MenuCarregarJogo menuCarregarJogo;
@@ -21,8 +22,10 @@ public class MenuPrincipal : MonoBehaviour
     [SerializeField] private PainelDeEscolha opcoesMenuInicial;
     [SerializeField] private PainelDeEscolha painelDeConfirmacaoParaSairDoJogo;
 
+    [SerializeField] private Animator animacaoTitulo;
+
     //Enums
-    public enum Menu { Inicio, NovoJogo, CarregarJogo, Opcoes, ConfirmacaoParaSairDoJogo, SobreOJogo, Controles, Creditos }
+    public enum Menu { AperteStart, Inicio, NovoJogo, CarregarJogo, Opcoes, ConfirmacaoParaSairDoJogo, SobreOJogo, Controles, Creditos }
 
     //Variaveis
     private bool ativo;
@@ -39,6 +42,12 @@ public class MenuPrincipal : MonoBehaviour
     public void SetAtivo(bool ativo)
     {
         this.ativo = ativo;
+        SetMenuAtual(Menu.AperteStart);
+    }
+
+    public void MostrarTitulo()
+    {
+        animacaoTitulo.Play("Aparecendo");
     }
 
     public void SetMenuAtual(Menu menuAtual)
@@ -47,7 +56,21 @@ public class MenuPrincipal : MonoBehaviour
 
         switch (this.menuAtual)
         {
+            case Menu.AperteStart:
+                telaAperteStart.gameObject.SetActive(true);
+                telaInicial.gameObject.SetActive(false);
+                menuNovoJogo.gameObject.SetActive(false);
+                menuCarregarJogo.gameObject.SetActive(false);
+                menuOpcoes.gameObject.SetActive(false);
+                painelDeConfirmacaoParaSairDoJogo.gameObject.SetActive(false);
+
+                menuSobreOJogo.gameObject.SetActive(false);
+                menuControles.gameObject.SetActive(false);
+                menuCreditos.gameObject.SetActive(false);
+                break;
+
             case Menu.Inicio:
+                telaAperteStart.gameObject.SetActive(false);
                 telaInicial.gameObject.SetActive(true);
                 menuNovoJogo.gameObject.SetActive(false);
                 menuCarregarJogo.gameObject.SetActive(false);
@@ -62,6 +85,7 @@ public class MenuPrincipal : MonoBehaviour
                 break;
 
             case Menu.NovoJogo:
+                telaAperteStart.gameObject.SetActive(false);
                 telaInicial.gameObject.SetActive(false);
                 menuNovoJogo.gameObject.SetActive(true);
                 menuCarregarJogo.gameObject.SetActive(false);
@@ -74,6 +98,7 @@ public class MenuPrincipal : MonoBehaviour
                 break;
 
             case Menu.CarregarJogo:
+                telaAperteStart.gameObject.SetActive(false);
                 telaInicial.gameObject.SetActive(false);
                 menuNovoJogo.gameObject.SetActive(false);
                 menuCarregarJogo.gameObject.SetActive(true);
@@ -86,6 +111,7 @@ public class MenuPrincipal : MonoBehaviour
                 break;
 
             case Menu.Opcoes:
+                telaAperteStart.gameObject.SetActive(false);
                 telaInicial.gameObject.SetActive(false);
                 menuNovoJogo.gameObject.SetActive(false);
                 menuCarregarJogo.gameObject.SetActive(false);
@@ -98,6 +124,7 @@ public class MenuPrincipal : MonoBehaviour
                 break;
 
             case Menu.ConfirmacaoParaSairDoJogo:
+                telaAperteStart.gameObject.SetActive(false);
                 telaInicial.gameObject.SetActive(false);
                 menuNovoJogo.gameObject.SetActive(false);
                 menuCarregarJogo.gameObject.SetActive(false);
@@ -110,6 +137,7 @@ public class MenuPrincipal : MonoBehaviour
                 break;
 
             case Menu.SobreOJogo:
+                telaAperteStart.gameObject.SetActive(false);
                 telaInicial.gameObject.SetActive(false);
                 menuNovoJogo.gameObject.SetActive(false);
                 menuCarregarJogo.gameObject.SetActive(false);
@@ -122,6 +150,7 @@ public class MenuPrincipal : MonoBehaviour
                 break;
 
             case Menu.Controles:
+                telaAperteStart.gameObject.SetActive(false);
                 telaInicial.gameObject.SetActive(false);
                 menuNovoJogo.gameObject.SetActive(false);
                 menuCarregarJogo.gameObject.SetActive(false);
@@ -134,6 +163,7 @@ public class MenuPrincipal : MonoBehaviour
                 break;
 
             case Menu.Creditos:
+                telaAperteStart.gameObject.SetActive(false);
                 telaInicial.gameObject.SetActive(false);
                 menuNovoJogo.gameObject.SetActive(false);
                 menuCarregarJogo.gameObject.SetActive(false);
@@ -154,7 +184,6 @@ public class MenuPrincipal : MonoBehaviour
 
         //Variaveis
         ativo = false;
-        menuAtual = Menu.Inicio;
         selecao = 0;
         selecao2 = 0;
 
@@ -162,11 +191,9 @@ public class MenuPrincipal : MonoBehaviour
 
         telaDoLogo.gameObject.SetActive(true);
 
-        telaInicial.gameObject.SetActive(true);
-        menuNovoJogo.gameObject.SetActive(false);
-        menuCarregarJogo.gameObject.SetActive(false);
-        menuOpcoes.gameObject.SetActive(false);
-        painelDeConfirmacaoParaSairDoJogo.gameObject.SetActive(false);
+        SetMenuAtual(Menu.AperteStart);
+
+        telaAperteStart.gameObject.SetActive(false);
     }
 
     private void IniciarComponentes()
@@ -189,6 +216,10 @@ public class MenuPrincipal : MonoBehaviour
         //Executa as funcoes do menu atual
         switch (menuAtual)
         {
+            case Menu.AperteStart:
+                MenuAperteStart();
+                break;
+
             case Menu.Inicio:
                 MenuInicial();
                 break;
@@ -220,6 +251,14 @@ public class MenuPrincipal : MonoBehaviour
             case Menu.ConfirmacaoParaSairDoJogo:
                 ConfirmacaoParaSairDoJogo();
                 break;
+        }
+    }
+
+    private void MenuAperteStart()
+    {
+        if(InputManager.QualquerBotao())
+        {
+            SetMenuAtual(Menu.Inicio);
         }
     }
 
