@@ -6,12 +6,12 @@ public class Spawner : MonoBehaviour
 {
     //Variaveis
     [SerializeField] LayerMask layerDasZonas;
-    [SerializeField] private int zona;
 
     [SerializeField] Enemy prefabInimigo;
     [SerializeField] int quantidadeInimigos;
-    [SerializeField] List<Enemy> enemyList;
 
+    private int zona;
+    List<Enemy> enemyList;
     //Getters
     public List<Enemy> EnemyList => enemyList;
     public int Zona => zona;

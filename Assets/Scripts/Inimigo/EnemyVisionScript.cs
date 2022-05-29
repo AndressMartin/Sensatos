@@ -18,13 +18,14 @@ public class EnemyVisionScript : MonoBehaviour
 
     Vector2 v1;
     EntityModel.Direcao direcao;
+    EntityModel.Direcao direcaoAntiga;
+
 
     //Variaveis de controle
     [SerializeField] private bool vendoPlayer;
     [SerializeField] private bool vendoPlayerCircular;
     [SerializeField] private float intervaloDeTempo;
 
-    EntityModel.Direcao direcaoAntiga;
 
     private float tempo;
     bool controle;
@@ -41,7 +42,6 @@ public class EnemyVisionScript : MonoBehaviour
 
     void Start()
     {
-        direcaoAntiga = direcao;
         //transform.Rotate(0, 0, -90);
 
         fov = fovNormal;
@@ -74,23 +74,29 @@ public class EnemyVisionScript : MonoBehaviour
         fieldOfView = novoFieldOfView.GetComponent<FieldOfView>();
         fieldOfView.SetPai(enemy.gameObject);
         fieldOfView.SetArea(fov, distancia);
+
     }
-    
+
     public void Main()
     {
         vendoPlayerCircular=visaoCircularEnemy.VendoPlayer;
+        direcaoAntiga = direcao;
         direcao = enemy.GetDirecao;
         MudarDirecaoConeVisao();
+        AtualizarFieldView();
 
-        if(enemy.GetIAEnemy.GetEstadoDeteccaoPlayer == IAEnemy.EstadoDeteccaoPlayer.PlayerDetectado)
+        if (enemy.GetIAEnemy.GetEstadoDeteccaoPlayer == IAEnemy.EstadoDeteccaoPlayer.PlayerDetectado)
         {
-            Vector2[] vectors = new Vector2[1] {new Vector2(0,0)};
+            Vector2[] vectors = new Vector2[1] { new Vector2(0, 0) };
             polygonCollider.points = vectors;
             vendoPlayer = false;
         }
         else
         {
-            AtualizarFieldView();
+            if (direcaoAntiga == direcao)
+            {
+                AtualizarPollygonCollider();
+            }
         }
 
     }
@@ -148,13 +154,6 @@ public class EnemyVisionScript : MonoBehaviour
                 fieldOfView.SetDirection(Vector2.right);
                 break;
         }
-        if(direcaoAntiga != direcao)
-        {
-            direcaoAntiga = direcao;
-            AtualizarPollygonCollider();
-        }
-        //float h2 = (larguraConeVisao - pontoX) * (larguraConeVisao - pontoX) + (alturaConeVisao - pontoY) * (alturaConeVisao - pontoY);
-
     }
     public void MudarVisao(bool estado)
     {
