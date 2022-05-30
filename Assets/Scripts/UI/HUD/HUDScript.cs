@@ -15,6 +15,7 @@ public class HUDScript : MonoBehaviour
     [SerializeField] private MenuFimDoAssalto menuFimDoAssalto;
     [SerializeField] private MenuEscolherAssalto menuEscolherAssalto;
     [SerializeField] private TelaItemPrincipalPego telaItemPrincipalPego;
+    [SerializeField] private TelaMissaoConcluida telaMissaoConcluida;
     [SerializeField] private MenuDaLoja menuDaLoja;
     [SerializeField] private TelaTransicaoDeMapa telaTransicaoDeMapa;
     [SerializeField] private TransicaoDeTela transicaoDeTela;
@@ -25,7 +26,7 @@ public class HUDScript : MonoBehaviour
     [SerializeField] private SonsDeMenus sonsDeMenus;
 
     //Enuns
-    public enum Menu { Nenhum, Pausa, Inventario, GameOver, FimDoAssalto, EscolherAssalto, TelaItemPrincipalPego, Loja, Transicao }
+    public enum Menu { Nenhum, Pausa, Inventario, GameOver, FimDoAssalto, EscolherAssalto, TelaItemPrincipalPego, Loja, Transicao, TelaMissaoConcluida }
 
     //Variaveis
     private Menu menuAberto;
@@ -37,6 +38,7 @@ public class HUDScript : MonoBehaviour
     public MenuFimDoAssalto MenuFimDoAssalto => menuFimDoAssalto;
     public MenuEscolherAssalto MenuEscolherAssalto => menuEscolherAssalto;
     public TelaItemPrincipalPego TelaItemPrincipalPego => telaItemPrincipalPego;
+    public TelaMissaoConcluida TelaMissaoConcluida => telaMissaoConcluida;
     public MenuDaLoja MenuDaLoja => menuDaLoja;
     public TelaTransicaoDeMapa TelaTransicaoDeMapa => telaTransicaoDeMapa;
     public TransicaoDeTela TransicaoDeTela => transicaoDeTela;

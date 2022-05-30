@@ -175,6 +175,11 @@ public class NPC : MonoBehaviour
             }
         }
     }
+
+    public void AtivarTelaDeMissaoConcluida()
+    {
+        generalManager.Hud.TelaMissaoConcluida.IniciarTela(missaoAtual.Nome);
+    }
 }
 
 [System.Serializable]
