@@ -112,7 +112,7 @@ Animator:
   m_Enabled: 1
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: f45b77c2cd91c8644ac13b002e4b2051, type: 2}
-  m_CullingMode: 0
+  m_CullingMode: 2
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
@@ -256,7 +256,7 @@ Animator:
   m_Enabled: 1
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 2ccd4fe5a6f5cee4cab60c6b68f1d328, type: 2}
-  m_CullingMode: 0
+  m_CullingMode: 2
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
@@ -471,6 +471,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df579fa12e6a574458c64b26b6ec49f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  direcaoParaOlhar: 0
   layerDasZonas:
     serializedVersion: 2
     m_Bits: 256
