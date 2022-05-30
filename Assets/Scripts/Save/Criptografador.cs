@@ -10,7 +10,6 @@ public class Criptografador : MonoBehaviour
     static FileStream dataStream;
 
     // Key for reading and writing encrypted data.
-    // (Chave super secreta, significa: Tomas Turbando)
     static byte[] savedKey = { 0x12, 0x14, 0x13, 0x11, 0x17, 0x15, 0x15, 0x15, 0x18, 0x16, 0x11, 0x12, 0x19, 0x18, 0x14, 0x17 };
 
     public static string ReadFile(string caminhoDoArquivo)

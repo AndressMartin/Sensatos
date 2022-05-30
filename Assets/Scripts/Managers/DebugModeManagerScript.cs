@@ -119,6 +119,11 @@ public class DebugModeManagerScript : MonoBehaviour
             Flags.SetFlag(Flags.Flag.Teste3, false);
             Flags.SetFlag(Flags.Flag.Teste4, false);
         }
+
+        if(Input.GetKeyDown(KeyCode.U))
+        {
+            generalManager.Player.Inventario.ArmaSlot[generalManager.Player.Inventario.ArmaAtual].SetNivelMelhoria(generalManager.Player.Inventario.ArmaSlot[generalManager.Player.Inventario.ArmaAtual].NivelMelhoria + 1);
+        }
     }
 
     private void ContadorDeFPS()
