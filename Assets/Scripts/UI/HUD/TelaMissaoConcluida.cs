@@ -62,4 +62,9 @@ public class TelaMissaoConcluida : MonoBehaviour
     {
         LiberarInput(false);
     }
+
+    public void AutoSave()
+    {
+        SaveManager.instance.AutoSave();
+    }
 }

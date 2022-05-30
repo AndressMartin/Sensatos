@@ -12,6 +12,10 @@ public class ArmaDeFogo : ItemDoInventario
     [SerializeField] private float raioDoSomDoTiro;
     [SerializeField] private bool rapidFire;
 
+    [SerializeField] private bool tremerATela;
+    [SerializeField] private float intensidade;
+    [SerializeField] private float tempo;
+
     private int municaoCartucho = 0;
     private int municao = 0;
 
@@ -55,6 +59,11 @@ public class ArmaDeFogo : ItemDoInventario
                 municaoCartucho--;
                 player.SetCadenciaTiro(GetStatus.CadenciaDosTiros);
                 player.GerarSomDoTiro();
+
+                if(tremerATela == true)
+                {
+                    player.GeneralManager.ScreenShake.ShakeCamera(intensidade, tempo);
+                }
             }
             else if (municao > 0)
             {
