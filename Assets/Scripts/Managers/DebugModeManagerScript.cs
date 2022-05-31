@@ -124,6 +124,10 @@ public class DebugModeManagerScript : MonoBehaviour
         {
             generalManager.Player.Inventario.ArmaSlot[generalManager.Player.Inventario.ArmaAtual].SetNivelMelhoria(generalManager.Player.Inventario.ArmaSlot[generalManager.Player.Inventario.ArmaAtual].NivelMelhoria + 1);
         }
+        if (Input.GetKeyDown(KeyCode.Y))
+        {
+            generalManager.Player.Inventario.ArmaSlot[generalManager.Player.Inventario.ArmaAtual].SetNivelMelhoria(generalManager.Player.Inventario.ArmaSlot[generalManager.Player.Inventario.ArmaAtual].NivelMelhoria + 1);
+        }
     }
 
     private void ContadorDeFPS()

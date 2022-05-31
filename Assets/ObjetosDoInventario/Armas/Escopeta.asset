@@ -1,0 +1,66 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87dc09563ceff534f841683ee5ca485c, type: 3}
+  m_Name: Escopeta
+  m_EditorClassIdentifier: 
+  imagemInventario: {fileID: 21300000, guid: 2abff2a3b0df83a45982946068bb6d78, type: 3}
+  nome: Escopeta
+  descricao: Arma de fogo melee.
+  nomeAnimacao: Arma2
+  raioDoSomDoTiro: 10
+  rapidFire: 0
+  tremerATela: 1
+  intensidade: 2
+  tempo: 0.5
+  statusBase:
+    projetil: {fileID: -3273666588168549129, guid: cde5861db3c7034458bf0dc15e2300b4, type: 3}
+    somDoTiro: {fileID: 8300000, guid: 223c02718fda69847b46ec22db0eb4ba, type: 3}
+    dano: 34
+    velocidadeProjetil: 0
+    knockBack: 5
+    knockBackTrigger: 3.5
+    distanciaMaxProjetil: 0
+    cadenciaDosTiros: 0.5
+    tempoParaRecarregar: 1.5
+    municaoMaxCartucho: 8
+    municaoMax: 24
+  melhorias:
+  - imagemMelhoria: {fileID: 21300000, guid: 8ec42969e576d6c4a8a727cfc1b14f4c, type: 3}
+    nome: Escopeta SemiAutomatica
+    descricao: 
+    status:
+      projetil: {fileID: -3273666588168549129, guid: cde5861db3c7034458bf0dc15e2300b4, type: 3}
+      somDoTiro: {fileID: 8300000, guid: 223c02718fda69847b46ec22db0eb4ba, type: 3}
+      dano: 34
+      velocidadeProjetil: 0
+      knockBack: 7
+      knockBackTrigger: 5
+      distanciaMaxProjetil: 0
+      cadenciaDosTiros: 0.4
+      tempoParaRecarregar: 1.3
+      municaoMaxCartucho: 8
+      municaoMax: 36
+  - imagemMelhoria: {fileID: 21300000, guid: da068b0efcbe36c40aa466bfc9f6d385, type: 3}
+    nome: Escopeta Automatica
+    descricao: 
+    status:
+      projetil: {fileID: -3273666588168549129, guid: cde5861db3c7034458bf0dc15e2300b4, type: 3}
+      somDoTiro: {fileID: 8300000, guid: 223c02718fda69847b46ec22db0eb4ba, type: 3}
+      dano: 50
+      velocidadeProjetil: 0
+      knockBack: 9
+      knockBackTrigger: 10
+      distanciaMaxProjetil: 0
+      cadenciaDosTiros: 0.3
+      tempoParaRecarregar: 1.1
+      municaoMaxCartucho: 8
+      municaoMax: 45

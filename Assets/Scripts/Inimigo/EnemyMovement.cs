@@ -22,7 +22,7 @@ public class EnemyMovement : MonoBehaviour
     [SerializeField] private float velocidadeModoLockdown;
     private Vector2 vetorKnockBack;
 
-    private List<Transform> pontosDeProcura;
+    private List<Transform> pontosDeProcura = new List<Transform>();
 
     bool iniciado = false;
 
@@ -83,6 +83,7 @@ public class EnemyMovement : MonoBehaviour
 
         VerificarPontoPatrulhaMaisPerto();
         RotaIdaVolta();
+        GerarPontoAleatorio();
 
         iniciado = true;
     }
