@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87dc09563ceff534f841683ee5ca485c, type: 3}
   m_Name: Escopeta
   m_EditorClassIdentifier: 
-  imagemInventario: {fileID: 21300000, guid: 2abff2a3b0df83a45982946068bb6d78, type: 3}
+  imagemInventario: {fileID: 21300000, guid: de0176a140b75bb43882b03485c73f03, type: 3}
   nome: Escopeta
   descricao: Arma de fogo melee.
   nomeAnimacao: Arma2
@@ -34,7 +34,7 @@ MonoBehaviour:
     municaoMaxCartucho: 8
     municaoMax: 24
   melhorias:
-  - imagemMelhoria: {fileID: 21300000, guid: 8ec42969e576d6c4a8a727cfc1b14f4c, type: 3}
+  - imagemMelhoria: {fileID: 21300000, guid: 099e76cc5749b924db0faa0ef6965dc0, type: 3}
     nome: Escopeta SemiAutomatica
     descricao: 
     status:
@@ -49,7 +49,7 @@ MonoBehaviour:
       tempoParaRecarregar: 1.3
       municaoMaxCartucho: 8
       municaoMax: 36
-  - imagemMelhoria: {fileID: 21300000, guid: da068b0efcbe36c40aa466bfc9f6d385, type: 3}
+  - imagemMelhoria: {fileID: 21300000, guid: 099e76cc5749b924db0faa0ef6965dc0, type: 3}
     nome: Escopeta Automatica
     descricao: 
     status:

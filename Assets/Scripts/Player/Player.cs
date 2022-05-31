@@ -482,6 +482,7 @@ public class Player : EntityModel
             }
 
             generalManager.Hud.AtualizarPlayerHUD();
+            generalManager.Hud.TremerBarraDeVida();
         }
     }
 

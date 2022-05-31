@@ -12,6 +12,7 @@ public class PlayerHUD : MonoBehaviour
     //Componentes
     [SerializeField] private Image barraDeVida;
     [SerializeField] private TMP_Text vidaTexto;
+    [SerializeField] private Animator barraDeVidaAnimacao;
 
     [SerializeField] private InformacoesDaArmaHUD[] armas;
     [SerializeField] private InformacoesDoItem[] atalhos;
@@ -35,6 +36,11 @@ public class PlayerHUD : MonoBehaviour
     {
         barraDeVida.fillAmount = (float)generalManager.Player.Vida / (float)generalManager.Player.VidaMax;
         vidaTexto.text = generalManager.Player.Vida.ToString() + "/" + generalManager.Player.VidaMax.ToString();
+    }
+
+    public void TremerBarraDeVida()
+    {
+        barraDeVidaAnimacao.SetTrigger("Tremer");
     }
 
     private void AtualizarArmas()

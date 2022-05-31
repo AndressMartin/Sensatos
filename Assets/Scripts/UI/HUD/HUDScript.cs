@@ -75,6 +75,11 @@ public class HUDScript : MonoBehaviour
         playerHUD?.AtualizarInformacoes();
     }
 
+    public void TremerBarraDeVida()
+    {
+        playerHUD?.TremerBarraDeVida();
+    }
+
     public void BarraDeRecarregamentoAtiva(bool ativa)
     {
         playerUI.BarraDeRecarregamentoAtiva(ativa);

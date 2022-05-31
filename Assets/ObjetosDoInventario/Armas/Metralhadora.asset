@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 87dc09563ceff534f841683ee5ca485c, type: 3}
-  m_Name: Metranca
+  m_Name: Metralhadora
   m_EditorClassIdentifier: 
-  imagemInventario: {fileID: 21300000, guid: 3ca67bc0f2df06a47abb39a05f95a863, type: 3}
+  imagemInventario: {fileID: 21300000, guid: 8076f741035b10d439cedcab2b146343, type: 3}
   nome: Metrancalhadora
   descricao: Uma metralhadora dos guardas da colmeia
   nomeAnimacao: Arma3
@@ -34,7 +34,7 @@ MonoBehaviour:
     municaoMaxCartucho: 20
     municaoMax: 200
   melhorias:
-  - imagemMelhoria: {fileID: 21300000, guid: 9ef5f38129b15e047b3794e58caaa800, type: 3}
+  - imagemMelhoria: {fileID: 21300000, guid: 1123a2705c9bf2e47a9f0325e277f26b, type: 3}
     nome: Tecnologia Zaits
     descricao: Ricardo consegui um projeto de melhoria para a metralhadora.
     status:

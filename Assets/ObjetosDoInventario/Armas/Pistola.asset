@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 87dc09563ceff534f841683ee5ca485c, type: 3}
-  m_Name: Revolver
+  m_Name: Pistola
   m_EditorClassIdentifier: 
-  imagemInventario: {fileID: 21300000, guid: 1d0c3d2e265c2fa4da59c0344e23c53e, type: 3}
+  imagemInventario: {fileID: 21300000, guid: 0a5c68dc90ab2e942a97844c7b3e5146, type: 3}
   nome: Revolver de detetive
   descricao: um revolver dado a quem passa no curso de Senai de detetives.
   nomeAnimacao: Arma1
@@ -34,7 +34,7 @@ MonoBehaviour:
     municaoMaxCartucho: 6
     municaoMax: 30
   melhorias:
-  - imagemMelhoria: {fileID: 21300000, guid: 105aa59dbe1bb244ebd4a1273c5ea1ed, type: 3}
+  - imagemMelhoria: {fileID: 21300000, guid: a4690c1c10aef5e4dae231bb26b3c409, type: 3}
     nome: Revolver de detetive MK1
     descricao: Teste de melhoria de Ricardo
     status:
@@ -49,7 +49,7 @@ MonoBehaviour:
       tempoParaRecarregar: 1.25
       municaoMaxCartucho: 7
       municaoMax: 40
-  - imagemMelhoria: {fileID: 21300000, guid: 105aa59dbe1bb244ebd4a1273c5ea1ed, type: 3}
+  - imagemMelhoria: {fileID: 21300000, guid: 347f09ab11628874093837f6d08ee610, type: 3}
     nome: Revolver de detetive Ultra
     descricao: melhoria definitiva de Ricardo
     status:
