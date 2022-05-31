@@ -472,17 +472,31 @@ public class MenuDosItens : MonoBehaviour
 
     private void UsarItemNoInventario()
     {
-        if(generalManager.Player.Inventario.Itens[selecao].UsarNoInventario(generalManager.Player) == true)
+        if(generalManager.Player.Inventario.Itens[selecao].Tipo == Item.TipoItem.Ferramenta)
         {
-            generalManager.Hud.MenuDoInventario.FecharOInventario();
+            if (generalManager.Player.Inventario.Itens[selecao].UsarNoInventario(generalManager.Player) == true)
+            {
+                generalManager.Hud.MenuDoInventario.FecharOInventario();
 
-            generalManager.Player.UsarItem(generalManager.Player.Inventario.Itens[selecao]);
+                generalManager.Player.UsarItem(generalManager.Player.Inventario.Itens[selecao]);
 
-            generalManager.Hud.SonsDeMenus.TocarSom(SonsDeMenus.Som.Confirmar);
+                generalManager.Hud.SonsDeMenus.TocarSom(SonsDeMenus.Som.Confirmar);
+            }
+            else
+            {
+                generalManager.Hud.SonsDeMenus.TocarSom(SonsDeMenus.Som.Falha);
+            }
         }
-        else
+        else if(generalManager.Player.Inventario.Itens[selecao].Tipo == Item.TipoItem.Consumivel)
         {
-            generalManager.Hud.SonsDeMenus.TocarSom(SonsDeMenus.Som.Falha);
+            if (generalManager.Player.Inventario.Itens[selecao].UsarNoInventario(generalManager.Player) == true)
+            {
+                generalManager.Hud.MenuDoInventario.SetMenuAtual(MenuDoInventario.Menu.Inicio);
+            }
+            else
+            {
+                generalManager.Hud.SonsDeMenus.TocarSom(SonsDeMenus.Som.Falha);
+            }
         }
     }
 

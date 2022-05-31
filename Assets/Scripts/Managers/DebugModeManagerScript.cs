@@ -47,7 +47,7 @@ public class DebugModeManagerScript : MonoBehaviour
         //Tomar dano
         if (Input.GetKeyDown(KeyCode.F))
         {
-            generalManager.Player.TomarDano(0, 2, 0, new Vector2(UnityEngine.Random.Range(-1f, 1f), UnityEngine.Random.Range(-1f, 1f)));
+            generalManager.Player.TomarDano(10, 2, 0, new Vector2(UnityEngine.Random.Range(-1f, 1f), UnityEngine.Random.Range(-1f, 1f)));
         }
 
         //Ativar/Desativar o modo de combate

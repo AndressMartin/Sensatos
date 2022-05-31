@@ -486,6 +486,16 @@ public class Player : EntityModel
         }
     }
 
+    public void RecuperarVida(int quantidadeRecuperacao)
+    {
+        vida += quantidadeRecuperacao;
+
+        if(vida > vidaMax)
+        {
+            vida = vidaMax;
+        }
+    }
+
     public override void KnockBack(float _knockBack, Vector2 _direcaoKnockBack)
     {
         playerMovement.KnockBack(_knockBack, _direcaoKnockBack);
