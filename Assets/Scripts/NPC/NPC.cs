@@ -96,7 +96,14 @@ public class NPC : MonoBehaviour
             {
                 missaoAtual = null;
                 listaDialogoAtual = RetornarDialogoGenericoAtual().GetDialogueList;
-                NpcDialogo.TrocarDialogoComponenteLista(listaDialogoAtual.GetDialogueList[0]);
+                for (int i = 0; i < capituloDialogoNpc.Count; i++)
+                {
+                    if (capituloDialogoNpc[i].GetCapitulo == GameManager.instance.CapituloAtual)
+                    {
+                        NpcDialogo.TrocarDialogoComponenteLista(capituloDialogoNpc[i].GetDialogueList.GetDialogueList[0]);
+                    }
+
+                }
             }
 
             else
@@ -128,7 +135,14 @@ public class NPC : MonoBehaviour
             if (missaoAtual.GetEstado == Missoes.Estado.Concluida)
             {
                 listaDialogoAtual = RetornarDialogoGenericoAtual().GetDialogueList;
-                NpcDialogo.TrocarDialogoComponenteLista(listaDialogoAtual.GetDialogueList[0]);
+                for (int i = 0; i < capituloDialogoNpc.Count; i++)
+                {
+                    if (capituloDialogoNpc[i].GetCapitulo == GameManager.instance.CapituloAtual)
+                    {
+                        NpcDialogo.TrocarDialogoComponenteLista(capituloDialogoNpc[i].GetDialogueList.GetDialogueList[0]);
+                    }
+
+                }
             }
             else if (missaoAtual.GetEstado == Missoes.Estado.Ativa)
             {
