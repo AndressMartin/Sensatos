@@ -124,8 +124,8 @@ GameObject:
   - component: {fileID: 2218896435165293427}
   - component: {fileID: 5047805744023553737}
   - component: {fileID: 5950340463644720800}
-  - component: {fileID: 7733064493856252274}
   - component: {fileID: 4151446924412555459}
+  - component: {fileID: 7733064493856252274}
   - component: {fileID: 4612344820053729261}
   m_Layer: 0
   m_Name: PortaDeTransicao
@@ -247,6 +247,18 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &4151446924412555459
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 716111965259052107}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e2ec3f4f618e174491ae2530de60366, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &7733064493856252274
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -260,18 +272,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   direcao: 0
---- !u!114 &4151446924412555459
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 716111965259052107}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1e2ec3f4f618e174491ae2530de60366, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  chave: {fileID: 0}
 --- !u!114 &4612344820053729261
 MonoBehaviour:
   m_ObjectHideFlags: 0

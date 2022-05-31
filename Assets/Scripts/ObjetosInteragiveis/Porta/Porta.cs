@@ -118,6 +118,7 @@ public class Porta : ObjetoInteragivel
                     if(item.ID == this.chave.ID)
                     {
                         Destrancar();
+                        break;
                     }
                 }
             }
