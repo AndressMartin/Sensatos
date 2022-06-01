@@ -18,27 +18,44 @@ public class NpcRecompensa : MonoBehaviour
         {
             if (recompensa.GetItem is ItemChave chave)
             {
-                for (int i = 0; i < recompensa.GetQuantidade; i++)
+                if (recompensa.GetItem != null)
                 {
-                    npc.GetGeneralManager.Player.InventarioMissao.AdicionarItem(chave);
+                    for (int i = 0; i < recompensa.GetQuantidade; i++)
+                    {
+                        npc.GetGeneralManager.Player.InventarioMissao.AdicionarItem(chave);
+                    }
                 }
             }
             else
             {
-                for (int i = 0; i < recompensa.GetQuantidade; i++)
+                if (recompensa.GetItem != null)
                 {
-                    npc.GetGeneralManager.Player.Inventario.AdicionarItem(recompensa.GetItem);
+                    for (int i = 0; i < recompensa.GetQuantidade; i++)
+                    {
+                        npc.GetGeneralManager.Player.Inventario.AdicionarItem(recompensa.GetItem);
+                    }
+                }
+                if (recompensa.GetRoupa != null)
+                {
+                    for (int i = 0; i < recompensa.GetQuantidade; i++)
+                    {
+                        npc.GetGeneralManager.Player.Inventario.AdicionarRoupa(recompensa.GetRoupa);
+                    }
                 }
             }
-        } 
+        }
     }
     [Serializable]
     public class Recompensa
     {
         [SerializeField] private Item itemRecompensa;
+        [SerializeField] private RoupaDeCamuflagem roupaDeCamuflagem;
+
         [SerializeField] private int quantidadeitem;
 
         public Item GetItem => itemRecompensa;
+        public RoupaDeCamuflagem GetRoupa => roupaDeCamuflagem;
+
         public int GetQuantidade => quantidadeitem;
     }
 }
