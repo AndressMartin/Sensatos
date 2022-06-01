@@ -28,6 +28,13 @@ public class NpcRecompensa : MonoBehaviour
             }
             else
             {
+                if (recompensa.GetArma != null)
+                {
+                    for (int i = 0; i < recompensa.GetQuantidade; i++)
+                    {
+                        npc.GetGeneralManager.Player.Inventario.AdicionarArma(recompensa.GetArma);
+                    }
+                }
                 if (recompensa.GetItem != null)
                 {
                     for (int i = 0; i < recompensa.GetQuantidade; i++)
@@ -48,6 +55,8 @@ public class NpcRecompensa : MonoBehaviour
     [Serializable]
     public class Recompensa
     {
+        [SerializeField] private ArmaDeFogo arma;
+
         [SerializeField] private Item itemRecompensa;
         [SerializeField] private RoupaDeCamuflagem roupaDeCamuflagem;
 
@@ -55,6 +64,8 @@ public class NpcRecompensa : MonoBehaviour
 
         public Item GetItem => itemRecompensa;
         public RoupaDeCamuflagem GetRoupa => roupaDeCamuflagem;
+        public ArmaDeFogo GetArma => arma;
+
 
         public int GetQuantidade => quantidadeitem;
     }
