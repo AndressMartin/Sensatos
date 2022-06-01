@@ -94,6 +94,8 @@ public class ResponseHandler : MonoBehaviour
                 {
                     selection--;
                     UpdateButtonSelectionEffect(selection);
+
+                    dialogueUI.GeneralManager.Hud.SonsDeMenus.TocarSom(SonsDeMenus.Som.Movimento1);
                 }
             }
             else if (InputManager.Baixo()) //Mover para baixo
@@ -102,11 +104,13 @@ public class ResponseHandler : MonoBehaviour
                 {
                     selection++;
                     UpdateButtonSelectionEffect(selection);
+                    dialogueUI.GeneralManager.Hud.SonsDeMenus.TocarSom(SonsDeMenus.Som.Movimento2);
                 }
             }
             else if (InputManager.AvancarDialogo()) //Confirmar
             {
                 responsePicked = true;
+                dialogueUI.GeneralManager.Hud.SonsDeMenus.TocarSom(SonsDeMenus.Som.Confirmar);
             }
         }
 

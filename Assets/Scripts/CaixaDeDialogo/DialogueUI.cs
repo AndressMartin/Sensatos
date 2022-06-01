@@ -23,6 +23,9 @@ public class DialogueUI : MonoBehaviour
 
     private DialogueJSONReader dialogueJSONReader;
 
+    //Getters
+    public GeneralManagerScript GeneralManager => generalManager;
+
     void Start()
     {
         //Managers
@@ -141,6 +144,8 @@ public class DialogueUI : MonoBehaviour
 
             yield return null;
             yield return new WaitUntil(() => InputManager.AvancarDialogo());
+
+            generalManager.Hud.SonsDeMenus.TocarSom(SonsDeMenus.Som.Confirmar);
         }
 
         if(dialogueObject.HasResponses)
