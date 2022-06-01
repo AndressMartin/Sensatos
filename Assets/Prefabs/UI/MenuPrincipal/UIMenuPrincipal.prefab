@@ -747,6 +747,7 @@ MonoBehaviour:
   menuFimDoAssalto: {fileID: 0}
   menuEscolherAssalto: {fileID: 0}
   telaItemPrincipalPego: {fileID: 0}
+  telaMissaoConcluida: {fileID: 0}
   menuDaLoja: {fileID: 0}
   telaTransicaoDeMapa: {fileID: 0}
   transicaoDeTela: {fileID: 367960088340641627}
@@ -1077,6 +1078,10 @@ PrefabInstance:
     - target: {fileID: 2827596823790974316, guid: 8d70feeeb95e1354f9c07dfbb4015f14, type: 3}
       propertyPath: m_Name
       value: TransicoesDeTela
+      objectReference: {fileID: 0}
+    - target: {fileID: 6549306823116320975, guid: 8d70feeeb95e1354f9c07dfbb4015f14, type: 3}
+      propertyPath: m_UpdateMode
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7617427441574170921, guid: 8d70feeeb95e1354f9c07dfbb4015f14, type: 3}
       propertyPath: m_Pivot.x
