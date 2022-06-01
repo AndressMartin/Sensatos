@@ -226,14 +226,46 @@ PrefabInstance:
       propertyPath: listaMissao.Array.data[0].testes.Array.data[2].dialogo
       value: 
       objectReference: {fileID: 11400000, guid: 0532ae18ece1aee47bc1079daca3d6e5, type: 2}
+    - target: {fileID: 5054191628257583958, guid: 6666353addaa090479541a42835982dd, type: 3}
+      propertyPath: m_Size.x
+      value: 0.9026946
+      objectReference: {fileID: 0}
+    - target: {fileID: 5054191628257583958, guid: 6666353addaa090479541a42835982dd, type: 3}
+      propertyPath: m_Size.y
+      value: 0.400167
+      objectReference: {fileID: 0}
+    - target: {fileID: 5054191628257583958, guid: 6666353addaa090479541a42835982dd, type: 3}
+      propertyPath: m_Offset.y
+      value: 0.034940958
+      objectReference: {fileID: 0}
+    - target: {fileID: 5054191628257583958, guid: 6666353addaa090479541a42835982dd, type: 3}
+      propertyPath: m_SpriteTilingProperty.pivot.y
+      value: 0.07
+      objectReference: {fileID: 0}
+    - target: {fileID: 5054191628257583958, guid: 6666353addaa090479541a42835982dd, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.x
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5054191628257583958, guid: 6666353addaa090479541a42835982dd, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.y
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5054191628257583959, guid: 6666353addaa090479541a42835982dd, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: af15450a6c75be649886a48fc5686e35, type: 2}
     - target: {fileID: 5054191628257583966, guid: 6666353addaa090479541a42835982dd, type: 3}
       propertyPath: m_Name
-      value: Ricardo
+      value: Ricardo Variant
       objectReference: {fileID: 0}
     - target: {fileID: 5054191628257583966, guid: 6666353addaa090479541a42835982dd, type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5054191628257583977, guid: 6666353addaa090479541a42835982dd, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -2551567236541640770, guid: c88d5fe7d34bcfe4db0be060adc31ce3, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6666353addaa090479541a42835982dd, type: 3}
 --- !u!4 &7803043841833161923 stripped
