@@ -240,7 +240,10 @@ public class EnemyMovement : MonoBehaviour
         aiPath.enabled = true;
         aiPath.canMove = true;
 
-        if (ia_Enemy.GetEstadoDeteccaoPlayer == IAEnemy.EstadoDeteccaoPlayer.PlayerDetectado || ia_Enemy.OuviuTiro || ia_Enemy.GetInimigoEstados == IAEnemy.InimigoEstados.IndoAtivarLockDown)
+        if (ia_Enemy.GetEstadoDeteccaoPlayer == IAEnemy.EstadoDeteccaoPlayer.PlayerDetectado
+            || ia_Enemy.GetInimigoEstados == IAEnemy.InimigoEstados.IndoAtivarLockDown
+            || ia_Enemy.GetInimigoEstados == IAEnemy.InimigoEstados.TomeiDano
+            || ia_Enemy.OuviuTiro )
         {
             velocidade = velocidadeModoLockdown;
         }
