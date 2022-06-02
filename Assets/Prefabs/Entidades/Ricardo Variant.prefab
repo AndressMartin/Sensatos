@@ -1,5 +1,39 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &391366669
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 391366670}
+  m_Layer: 0
+  m_Name: Estacao
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &391366670
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 391366669}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 7803043842788670886}
+  - {fileID: 823100228}
+  - {fileID: 779810076}
+  m_Father: {fileID: 7803043842330135272}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &756045253
 GameObject:
   m_ObjectHideFlags: 0
@@ -47,6 +81,320 @@ MonoBehaviour:
   itensParaRemover:
   - itemRecompensa: {fileID: 11400000, guid: 85e460894e32ff849b76242d6633a6f7, type: 2}
     quantidadeitem: 1
+--- !u!1 &779810075
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 779810076}
+  - component: {fileID: 779810077}
+  m_Layer: 0
+  m_Name: EventoMudarCapitulo
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &779810076
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 779810075}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 391366670}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &779810077
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 779810075}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2186733a4c2976145ba454a408e213c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  capituloParaMudar: 1
+--- !u!1 &823100227
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 823100228}
+  - component: {fileID: 823100229}
+  m_Layer: 0
+  m_Name: Recompensa_01
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &823100228
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 823100227}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 391366670}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &823100229
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 823100227}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c19ae78ff5a9dd14aac0fa3cdf23a1f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemRecompensaList:
+  - arma: {fileID: 0}
+    itemRecompensa: {fileID: 11400000, guid: 7a086cd5db748b44fb1a2f68d2343d8f, type: 2}
+    roupaDeCamuflagem: {fileID: 0}
+    quantidadeitem: 1
+--- !u!1 &493802588678431057
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6426878312679883439}
+  - component: {fileID: 7911363986494503264}
+  m_Layer: 0
+  m_Name: EventoMudarCapitulo
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6426878312679883439
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 493802588678431057}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6724568489426679938}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7911363986494503264
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 493802588678431057}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2186733a4c2976145ba454a408e213c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  capituloParaMudar: 1
+--- !u!1 &2082936891241494490
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6724568489426679938}
+  m_Layer: 0
+  m_Name: Estacao
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6724568489426679938
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2082936891241494490}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 4439695813770793736}
+  - {fileID: 8518497145587428400}
+  - {fileID: 6426878312679883439}
+  m_Father: {fileID: 7803043842330135272}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &4030985218637986518
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8518497145587428400}
+  - component: {fileID: 7986884529566898415}
+  m_Layer: 0
+  m_Name: Recompensa_01
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8518497145587428400
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4030985218637986518}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6724568489426679938}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7986884529566898415
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4030985218637986518}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c19ae78ff5a9dd14aac0fa3cdf23a1f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemRecompensaList:
+  - arma: {fileID: 0}
+    itemRecompensa: {fileID: 11400000, guid: 7a086cd5db748b44fb1a2f68d2343d8f, type: 2}
+    roupaDeCamuflagem: {fileID: 0}
+    quantidadeitem: 1
+--- !u!1 &7789883816360493040
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4439695813770793736}
+  - component: {fileID: 5144883324321836988}
+  m_Layer: 0
+  m_Name: Assalto_01
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4439695813770793736
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7789883816360493040}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6724568489426679938}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5144883324321836988
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7789883816360493040}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f407ce48a656e044b7d39160467b389, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogueList:
+  - {fileID: 11400000, guid: f665b322dcac59d45927890287c5f659, type: 2}
+--- !u!1 &7803043842788670885
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7803043842788670886}
+  - component: {fileID: 2858965878720065316}
+  m_Layer: 0
+  m_Name: Dialogo_01
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7803043842788670886
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7803043842788670885}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 391366670}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2858965878720065316
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7803043842788670885}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f407ce48a656e044b7d39160467b389, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogueList:
+  - {fileID: 11400000, guid: f665b322dcac59d45927890287c5f659, type: 2}
 --- !u!1001 &3057349902589290937
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -54,6 +402,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5054191626674191739, guid: 6666353addaa090479541a42835982dd, type: 3}
+      propertyPath: m_Name
+      value: Assalto_01
+      objectReference: {fileID: 0}
     - target: {fileID: 5054191626749179307, guid: 6666353addaa090479541a42835982dd, type: 3}
       propertyPath: itemRecompensaList.Array.size
       value: 1
@@ -66,6 +418,10 @@ PrefabInstance:
       propertyPath: itemRecompensaList.Array.data[0].roupaDeCamuflagem
       value: 
       objectReference: {fileID: 11400000, guid: 488999ea83e8873489dc11bb323bd211, type: 2}
+    - target: {fileID: 5054191627667461148, guid: 6666353addaa090479541a42835982dd, type: 3}
+      propertyPath: m_Name
+      value: Assalto_01
+      objectReference: {fileID: 0}
     - target: {fileID: 5054191627667461150, guid: 6666353addaa090479541a42835982dd, type: 3}
       propertyPath: dialogueList.Array.size
       value: 2
@@ -128,7 +484,7 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: 0532ae18ece1aee47bc1079daca3d6e5, type: 2}
     - target: {fileID: 5054191628257583954, guid: 6666353addaa090479541a42835982dd, type: 3}
       propertyPath: events.onPickedResponse.m_PersistentCalls.m_Calls.Array.size
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5054191628257583954, guid: 6666353addaa090479541a42835982dd, type: 3}
       propertyPath: events.onPickedResponse.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
@@ -136,6 +492,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5054191628257583954, guid: 6666353addaa090479541a42835982dd, type: 3}
       propertyPath: events.onPickedResponse.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5054191628257583954, guid: 6666353addaa090479541a42835982dd, type: 3}
+      propertyPath: events.onPickedResponse.m_PersistentCalls.m_Calls.Array.data[2].m_Mode
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5054191628257583954, guid: 6666353addaa090479541a42835982dd, type: 3}
@@ -147,11 +507,19 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 756045255}
     - target: {fileID: 5054191628257583954, guid: 6666353addaa090479541a42835982dd, type: 3}
+      propertyPath: events.onPickedResponse.m_PersistentCalls.m_Calls.Array.data[2].m_Target
+      value: 
+      objectReference: {fileID: 7803043842330135277}
+    - target: {fileID: 5054191628257583954, guid: 6666353addaa090479541a42835982dd, type: 3}
       propertyPath: events.onPickedResponse.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5054191628257583954, guid: 6666353addaa090479541a42835982dd, type: 3}
       propertyPath: events.onPickedResponse.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5054191628257583954, guid: 6666353addaa090479541a42835982dd, type: 3}
+      propertyPath: events.onPickedResponse.m_PersistentCalls.m_Calls.Array.data[2].m_CallState
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5054191628257583954, guid: 6666353addaa090479541a42835982dd, type: 3}
@@ -163,6 +531,10 @@ PrefabInstance:
       value: RemoverItemPlayer
       objectReference: {fileID: 0}
     - target: {fileID: 5054191628257583954, guid: 6666353addaa090479541a42835982dd, type: 3}
+      propertyPath: events.onPickedResponse.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
+      value: AtivarTelaDeMissaoConcluida
+      objectReference: {fileID: 0}
+    - target: {fileID: 5054191628257583954, guid: 6666353addaa090479541a42835982dd, type: 3}
       propertyPath: events.onPickedResponse.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: NpcRecompensa, Assembly-CSharp
       objectReference: {fileID: 0}
@@ -171,11 +543,19 @@ PrefabInstance:
       value: NPCRemoverItem, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 5054191628257583954, guid: 6666353addaa090479541a42835982dd, type: 3}
+      propertyPath: events.onPickedResponse.m_PersistentCalls.m_Calls.Array.data[2].m_TargetAssemblyTypeName
+      value: NPC, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 5054191628257583954, guid: 6666353addaa090479541a42835982dd, type: 3}
       propertyPath: events.onPickedResponse.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 5054191628257583954, guid: 6666353addaa090479541a42835982dd, type: 3}
       propertyPath: events.onPickedResponse.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 5054191628257583954, guid: 6666353addaa090479541a42835982dd, type: 3}
+      propertyPath: events.onPickedResponse.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 5054191628257583956, guid: 6666353addaa090479541a42835982dd, type: 3}
@@ -189,7 +569,7 @@ PrefabInstance:
     - target: {fileID: 5054191628257583956, guid: 6666353addaa090479541a42835982dd, type: 3}
       propertyPath: capituloDialogoNpc.Array.data[0].dialogueList
       value: 
-      objectReference: {fileID: 7803043842788670887}
+      objectReference: {fileID: 2858965878720065316}
     - target: {fileID: 5054191628257583956, guid: 6666353addaa090479541a42835982dd, type: 3}
       propertyPath: capituloDialogoNpc.Array.data[1].dialogueList
       value: 
@@ -256,7 +636,7 @@ PrefabInstance:
       objectReference: {fileID: 9100000, guid: af15450a6c75be649886a48fc5686e35, type: 2}
     - target: {fileID: 5054191628257583966, guid: 6666353addaa090479541a42835982dd, type: 3}
       propertyPath: m_Name
-      value: Ricardo Variant
+      value: Ricardo
       objectReference: {fileID: 0}
     - target: {fileID: 5054191628257583966, guid: 6666353addaa090479541a42835982dd, type: 3}
       propertyPath: m_IsActive
@@ -282,6 +662,111 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c19ae78ff5a9dd14aac0fa3cdf23a1f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &7803043842330135271 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5054191628257583966, guid: 6666353addaa090479541a42835982dd, type: 3}
+  m_PrefabInstance: {fileID: 3057349902589290937}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1891937380
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7803043842330135271}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c9066802fc20074782c7b3ae1d6b503, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogueObject: {fileID: 11400000, guid: f665b322dcac59d45927890287c5f659, type: 2}
+  events:
+    name: 
+    onPickedResponse:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 7911363986494503264}
+          m_TargetAssemblyTypeName: MudarCapitulo, Assembly-CSharp
+          m_MethodName: MudarCapituloEvento
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 7986884529566898415}
+          m_TargetAssemblyTypeName: NpcRecompensa, Assembly-CSharp
+          m_MethodName: PassarItemPlayer
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+--- !u!114 &1376764666420894837
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7803043842330135271}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c9066802fc20074782c7b3ae1d6b503, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogueObject: {fileID: 11400000, guid: f665b322dcac59d45927890287c5f659, type: 2}
+  events:
+    name: 
+    onPickedResponse:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 779810077}
+          m_TargetAssemblyTypeName: MudarCapitulo, Assembly-CSharp
+          m_MethodName: MudarCapituloEvento
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 823100229}
+          m_TargetAssemblyTypeName: NpcRecompensa, Assembly-CSharp
+          m_MethodName: PassarItemPlayer
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+--- !u!4 &7803043842330135272 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5054191628257583953, guid: 6666353addaa090479541a42835982dd, type: 3}
+  m_PrefabInstance: {fileID: 3057349902589290937}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &7803043842330135277 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5054191628257583956, guid: 6666353addaa090479541a42835982dd, type: 3}
+  m_PrefabInstance: {fileID: 3057349902589290937}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7803043842330135271}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9423e859547c1148a85744e9397d53d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &7803043842788670887 stripped
