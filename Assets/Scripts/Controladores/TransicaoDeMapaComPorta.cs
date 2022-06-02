@@ -9,7 +9,8 @@ public class TransicaoDeMapaComPorta : TransicaoDeMapa
 
     protected override void Start()
     {
-        base.Start();
+        //Managers
+        generalManager = FindObjectOfType<GeneralManagerScript>();
 
         portaDeTransicao = GetComponent<PortaDeTransicao>();
     }

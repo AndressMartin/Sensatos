@@ -10,6 +10,7 @@ public class TransicaoDeMapa : MonoBehaviour
 
     //Variaveis
     [SerializeField] protected Transform posicaoPlayer;
+    [SerializeField] protected EntityModel.Direcao direcao;
 
     [SerializeField] protected CompositeCollider2D limiteDaCamera;
 
@@ -17,11 +18,15 @@ public class TransicaoDeMapa : MonoBehaviour
     {
         //Managers
         generalManager = FindObjectOfType<GeneralManagerScript>();
+
+        //Desativar sprite renderer
+        GetComponent<SpriteRenderer>().enabled = false;
     }
 
     public virtual void FazerTransicao()
     {
         generalManager.Player.transform.position = posicaoPlayer.position;
+        generalManager.Player.ChangeDirection(direcao);
 
         generalManager.CameraPrincipal.GetComponent<CinemachineConfiner>().m_BoundingShape2D = limiteDaCamera;
         generalManager.CameraPrincipal.gameObject.transform.parent.transform.position = posicaoPlayer.position;

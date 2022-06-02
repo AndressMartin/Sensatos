@@ -14,6 +14,9 @@ public class EscolherAssaltoTrigger : ObjetoInteragivel
 
         //Se adicionar a lista de objetos interagiveis do ObjectManager
         generalManager.ObjectManager.AdicionarAosObjetosInteragiveis(this);
+
+        //Desativar o sprite renderer
+        GetComponent<SpriteRenderer>().enabled = false;
     }
 
     public override void Interagir(Player player)
