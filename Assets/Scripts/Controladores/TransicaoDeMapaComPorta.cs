@@ -16,10 +16,7 @@ public class TransicaoDeMapaComPorta : TransicaoDeMapa
 
     public override void FazerTransicao()
     {
-        generalManager.Player.transform.position = posicaoPlayer;
-
-        generalManager.CameraPrincipal.GetComponent<CinemachineConfiner>().m_BoundingShape2D = limiteDaCamera;
-        generalManager.CameraPrincipal.transform.position = posicaoPlayer;
+        base.FazerTransicao();
 
         portaDeTransicao.FecharPorta();
     }

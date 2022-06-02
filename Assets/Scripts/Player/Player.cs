@@ -198,6 +198,8 @@ public class Player : EntityModel
         ChangeDirection(direcaoRespawn);
         playerMovement.ResetarVariaveisDeControle();
 
+        generalManager.CameraPrincipal.gameObject.transform.parent.transform.position = posicaoRespawn;
+
         inventario.Respawn();
         inventarioMissao.Respawn();
 

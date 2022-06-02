@@ -9,7 +9,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 667406800544006835, guid: 19f224fad8fc56b4b9e6377e6e7eebb5, type: 3}
       propertyPath: m_Name
-      value: Casa_Julia
+      value: Casa_Julia Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 716111965259052107, guid: 19f224fad8fc56b4b9e6377e6e7eebb5, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2495501763686488318, guid: 19f224fad8fc56b4b9e6377e6e7eebb5, type: 3}
       propertyPath: m_Sprite

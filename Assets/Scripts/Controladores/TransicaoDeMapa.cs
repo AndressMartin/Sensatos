@@ -9,7 +9,7 @@ public class TransicaoDeMapa : MonoBehaviour
     protected GeneralManagerScript generalManager;
 
     //Variaveis
-    [SerializeField] protected Vector3 posicaoPlayer;
+    [SerializeField] protected Transform posicaoPlayer;
 
     [SerializeField] protected CompositeCollider2D limiteDaCamera;
 
@@ -21,10 +21,10 @@ public class TransicaoDeMapa : MonoBehaviour
 
     public virtual void FazerTransicao()
     {
-        generalManager.Player.transform.position = posicaoPlayer;
+        generalManager.Player.transform.position = posicaoPlayer.position;
 
         generalManager.CameraPrincipal.GetComponent<CinemachineConfiner>().m_BoundingShape2D = limiteDaCamera;
-        generalManager.CameraPrincipal.transform.position = posicaoPlayer;
+        generalManager.CameraPrincipal.gameObject.transform.parent.transform.position = posicaoPlayer.position;
     }
 
     protected virtual void OnTriggerEnter2D(Collider2D collision)

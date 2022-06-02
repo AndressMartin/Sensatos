@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Porta_Armario
+  m_Controller: {fileID: 9100000, guid: f484806926a651c44848e96e4aed6a0f, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: 48f733a0af1bc8a46aee04c4e9423b0f, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: fb65af4afc8acd14192ea67a1dc53350, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 81ef61635ab224a4fb712dc721f845aa, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 326b3d14810b6ae4ea75c586e461532d, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 4f6ec3adbe2f851499bfa5ba8a44d7ef, type: 2}
+    m_OverrideClip: {fileID: 0}
+  - m_OriginalClip: {fileID: 7400000, guid: d221414a24781ca41bc806fb13dd0473, type: 2}
+    m_OverrideClip: {fileID: 0}

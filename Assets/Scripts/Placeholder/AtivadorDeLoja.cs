@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TesteLoja : ObjetoInteragivel
+public class AtivadorDeLoja : ObjetoInteragivel
 {
     //Managers
     private GeneralManagerScript generalManager;
