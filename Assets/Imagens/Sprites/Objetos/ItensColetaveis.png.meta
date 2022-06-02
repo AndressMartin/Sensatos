@@ -1,19 +1,7 @@
 fileFormatVersion: 2
-guid: d0148682b38065e4fbcc677fced61751
+guid: 71ebde9d55fb78d4cb0b2bb30151a65d
 TextureImporter:
-  internalIDToNameTable:
-  - first:
-      213: 5032793114976222254
-    second: Chave_0
-  - first:
-      213: 7017013411354226801
-    second: Chave_1
-  - first:
-      213: 4883759904006740808
-    second: Chave_2
-  - first:
-      213: -9009005689028143693
-    second: Chave_3
+  internalIDToNameTable: []
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -101,19 +89,7 @@ TextureImporter:
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
-    buildTarget: iPhone
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 0
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 3
-    buildTarget: Android
+    buildTarget: Server
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -128,13 +104,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Chave_Cinza
+      name: ItensColetavel_CaixaDeFerramenta
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 16
-        height: 16
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -142,41 +118,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e2c70365ca218d540800000000000000
-      internalID: 5032793114976222254
+      spriteID: 793e2fb607865a94aa91966705c304b1
+      internalID: -671032351
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Chave_Azul
-      rect:
-        serializedVersion: 2
-        x: 16
-        y: 0
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 170bbe71580716160800000000000000
-      internalID: 7017013411354226801
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Chave_Amarela
+      name: ItensColetavel_ChaveComum_Cinza
       rect:
         serializedVersion: 2
         x: 32
         y: 0
-        width: 16
-        height: 16
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -184,20 +139,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 84b1e96e1c996c340800000000000000
-      internalID: 4883759904006740808
+      spriteID: 647fd7c2f7382224f8d7e0f424e9880b
+      internalID: 88948680
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Chave_Vermelha
+      name: ItensColetavel_ChaveComum_Azul
       rect:
         serializedVersion: 2
-        x: 48
+        x: 64
         y: 0
-        width: 16
-        height: 16
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -205,8 +160,92 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3b5110ebe0599f280800000000000000
-      internalID: -9009005689028143693
+      spriteID: 5b0a4b067f529dd4db3cfe11bdf6aec6
+      internalID: 480105164
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ItensColetavel_ChaveComum_Amarela
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8ec65594c45754749baddba5c526d37e
+      internalID: -763074955
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ItensColetavel_ChaveComum_Vermelha
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7404b3efefdf7e940ac73b1170f90e96
+      internalID: -2010224374
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ItensColetavel_TicketDoBaldius
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b36820c9722a0474fa7c73f9e0b4679a
+      internalID: 316315237
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ItensColetavel_CartaoDeAcessoDaColmeia
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 53498647c8ea4e649bf5fa61c95ac16a
+      internalID: -696821828
       vertices: []
       indices: 
       edges: []
@@ -222,10 +261,13 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Chave_Amarela: 4883759904006740808
-      Chave_Azul: 7017013411354226801
-      Chave_Cinza: 5032793114976222254
-      Chave_Vermelha: -9009005689028143693
+      ItensColetavel_CartaoDeAcessoDaColmeia: -696821828
+      ItensColetavel_ChaveComum_Cinza: 88948680
+      ItensColetavel_TicketDoBaldius: 316315237
+      ItensColetavel_CaixaDeFerramenta: -671032351
+      ItensColetavel_ChaveComum_Amarela: -763074955
+      ItensColetavel_ChaveComum_Vermelha: -2010224374
+      ItensColetavel_ChaveComum_Azul: 480105164
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
