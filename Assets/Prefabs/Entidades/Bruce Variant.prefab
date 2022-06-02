@@ -326,6 +326,14 @@ PrefabInstance:
       value: 0.06
       objectReference: {fileID: 0}
     - target: {fileID: 5054191628257583958, guid: 6666353addaa090479541a42835982dd, type: 3}
+      propertyPath: m_SpriteTilingProperty.newSize.x
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5054191628257583958, guid: 6666353addaa090479541a42835982dd, type: 3}
+      propertyPath: m_SpriteTilingProperty.newSize.y
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5054191628257583958, guid: 6666353addaa090479541a42835982dd, type: 3}
       propertyPath: m_SpriteTilingProperty.oldSize.x
       value: 1.5
       objectReference: {fileID: 0}
@@ -340,6 +348,14 @@ PrefabInstance:
     - target: {fileID: 5054191628257583966, guid: 6666353addaa090479541a42835982dd, type: 3}
       propertyPath: m_Name
       value: Bruce Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 5054191628257583977, guid: 6666353addaa090479541a42835982dd, type: 3}
+      propertyPath: m_Size.x
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5054191628257583977, guid: 6666353addaa090479541a42835982dd, type: 3}
+      propertyPath: m_Size.y
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5054191628257583977, guid: 6666353addaa090479541a42835982dd, type: 3}
       propertyPath: m_Sprite
