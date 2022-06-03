@@ -11,6 +11,9 @@ public class TriggerDoFimDoAssalto : MonoBehaviour
     {
         //Managers
         generalManager = FindObjectOfType<GeneralManagerScript>();
+
+        //Desativar sprite renderer
+        GetComponent<SpriteRenderer>().enabled = false;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
