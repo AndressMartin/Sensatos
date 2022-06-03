@@ -14,11 +14,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialogue:
   - portrait: {fileID: 21300000, guid: 4757cb7248f3e9b45959f53fb486cc12, type: 3}
-    text: Ah obrigado, onde estavam?
+    text: Ah, obrigado, onde estavam?
   - portrait: {fileID: 21300000, guid: 9502506bcf576b544bef3589712d5551, type: 3}
     text: "Estavam l\xE1."
   - portrait: {fileID: 21300000, guid: 4757cb7248f3e9b45959f53fb486cc12, type: 3}
-    text: "Olha s\xF3 quem diria que elas estavam l\xE1, voc\xEA parece ser boa pessoa."
+    text: "Olha s\xF3,quem diria que elas estavam l\xE1, voc\xEA parece ser boa pessoa."
   - portrait: {fileID: 21300000, guid: 4757cb7248f3e9b45959f53fb486cc12, type: 3}
-    text: "Entre, que eu vou lhe vender o qu\xEA voc\xEA quiser."
+    text: Aqui, pode usar a minha chave reserva para entrar na loja, e eu lhe venderei
+      o que quiser... desde que seja algo relacionado com armas.
+  - portrait: {fileID: 21300000, guid: 9502506bcf576b544bef3589712d5551, type: 3}
+    text: "Perai, voc\xEA tinha uma chave reserva esse tempo todo? Por que n\xE3o
+      usou ela pra entra rna loja?"
+  - portrait: {fileID: 21300000, guid: 4757cb7248f3e9b45959f53fb486cc12, type: 3}
+    text: "Porque \xE9 a minha chave reserva, apenas para situa\xE7\xF5es de emerg\xEAncia."
+  - portrait: {fileID: 21300000, guid: 9502506bcf576b544bef3589712d5551, type: 3}
+    text: ...
   responses: []
