@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: Pistola
   m_EditorClassIdentifier: 
   imagemInventario: {fileID: 21300000, guid: 0a5c68dc90ab2e942a97844c7b3e5146, type: 3}
-  nome: Revolver de detetive
-  descricao: um revolver dado a quem passa no curso de Senai de detetives.
+  nome: Pistola de Detetive
+  descricao: "Uma pistola, todo bom detetive deve ter para fazer bem o seu trabalho,
+    principalmente quado pegar pistas sem ser percebido d\xE1 errado."
   nomeAnimacao: Arma1
   raioDoSomDoTiro: 10
   rapidFire: 0
@@ -35,8 +36,8 @@ MonoBehaviour:
     municaoMax: 30
   melhorias:
   - imagemMelhoria: {fileID: 21300000, guid: a4690c1c10aef5e4dae231bb26b3c409, type: 3}
-    nome: Revolver de detetive MK1
-    descricao: Teste de melhoria de Ricardo
+    nome: Carregador Estendido
+    descricao: "Mais muni\xE7\xE3o para a arma, \xE9 sempre bom!"
     status:
       projetil: {fileID: 6097792137987419900, guid: f7e423f80e06b7c44b6cf52f573de597, type: 3}
       somDoTiro: {fileID: 8300000, guid: 4d2f41dcef6d6a64e9e0d206d28317bb, type: 3}
@@ -50,8 +51,9 @@ MonoBehaviour:
       municaoMaxCartucho: 7
       municaoMax: 40
   - imagemMelhoria: {fileID: 21300000, guid: 347f09ab11628874093837f6d08ee610, type: 3}
-    nome: Revolver de detetive Ultra
-    descricao: melhoria definitiva de Ricardo
+    nome: "Balas Refor\xE7adas"
+    descricao: "Com esse refor\xE7o as balas penetrar\xE3o melhor a armadura dos
+      soldados da Colmeia, causando mais dano. Acabe com aqueles abelhudos!"
     status:
       projetil: {fileID: 8583994499093954915, guid: f4376ad71d743964f8fad577b404e7d2, type: 3}
       somDoTiro: {fileID: 8300000, guid: 4d2f41dcef6d6a64e9e0d206d28317bb, type: 3}

@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Metralhadora
   m_EditorClassIdentifier: 
   imagemInventario: {fileID: 21300000, guid: 8076f741035b10d439cedcab2b146343, type: 3}
-  nome: Metrancalhadora
-  descricao: Uma metralhadora dos guardas da colmeia
+  nome: Metralhadora
+  descricao: "Uma metralhadora, para voc\xEA atirar r\xE1pido igual o Soos."
   nomeAnimacao: Arma3
   raioDoSomDoTiro: 10
   rapidFire: 1
@@ -35,8 +35,9 @@ MonoBehaviour:
     municaoMax: 200
   melhorias:
   - imagemMelhoria: {fileID: 21300000, guid: 1123a2705c9bf2e47a9f0325e277f26b, type: 3}
-    nome: Tecnologia Zaits
-    descricao: Ricardo consegui um projeto de melhoria para a metralhadora.
+    nome: "Tecnologia de Aceleta\xE7\xE3o Zatz"
+    descricao: "Tecnologia desenvolvida pelo pr\xF3prio Ricardo Zatz, com isso nem
+      o Soos vai te parar!"
     status:
       projetil: {fileID: 936774549155902364, guid: fb367ceda656c1941a264f3c3a00be42, type: 3}
       somDoTiro: {fileID: 8300000, guid: 4d2f41dcef6d6a64e9e0d206d28317bb, type: 3}
