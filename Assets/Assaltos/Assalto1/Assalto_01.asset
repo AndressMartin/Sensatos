@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3b4866ce76d18b4e9ecb2d22f67b300, type: 3}
+  m_Name: Assalto_01
+  m_EditorClassIdentifier: 
+  nomePortugues: "Invas\xE3o \xE0 Colmeia"
+  nomeIngles: Hive Invasion
+  nomeDaCena: Assalto_1
+  imagem: {fileID: -6830239, guid: 48e939d168b29ac48b1ffac9ecb0bd47, type: 3}
+  missoesPrincipais:
+  - {fileID: 11400000, guid: 5ff6b81fd9ea1a048b8041426af2662d, type: 2}
+  missoesSecundarias:
+  - {fileID: 11400000, guid: ad288d898c4708341a75cabcc722f746, type: 2}
+  - {fileID: 11400000, guid: c2637d596084ec14c8f83e6e420e97fb, type: 2}
+  - {fileID: 11400000, guid: 7b9f6082efa081d4d97c67ffd0cea103, type: 2}
+  - {fileID: 11400000, guid: e24694d2db4b59d44ae91104f39ad5b0, type: 2}

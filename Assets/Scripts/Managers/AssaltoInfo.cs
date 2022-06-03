@@ -12,7 +12,7 @@ public class AssaltoInfo : MonoBehaviour
     [SerializeField] private ItemDeAssalto itemPrincipal;
     [SerializeField] private List<ItemDeAssalto> itensSecundarios;
     [SerializeField] private List<ItemChave> itensParaExcluirNoFimDoAssalto;
-    [SerializeField] private Vector2 posicaoDoCheckpoint;
+    [SerializeField] private Transform posicaoDoCheckpoint;
     [SerializeField] private EntityModel.Direcao direcaoDoCheckpoint;
     [SerializeField] private UnityEvent eventosItemPrincipalColetado;
 
@@ -123,7 +123,7 @@ public class AssaltoInfo : MonoBehaviour
     private void SetarCheckpoint()
     {
         generalManager.RespawnManager.RespawnarInimigos();
-        generalManager.RespawnManager.SetCheckpoint(posicaoDoCheckpoint, direcaoDoCheckpoint);
+        generalManager.RespawnManager.SetCheckpoint(posicaoDoCheckpoint.transform.position, direcaoDoCheckpoint);
     }
 
     public void FinalizarOAssalto()
