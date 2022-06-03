@@ -41,7 +41,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 991020142394502252}
-  - component: {fileID: 2198169220673156351}
+  - component: {fileID: 2269602605403460464}
   m_Layer: 0
   m_Name: Assalto_01
   m_TagString: Untagged
@@ -64,7 +64,7 @@ Transform:
   m_Father: {fileID: 318969197}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2198169220673156351
+--- !u!114 &2269602605403460464
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -132,15 +132,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5054191628257583953, guid: 6666353addaa090479541a42835982dd, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.8
+      value: 129.72
       objectReference: {fileID: 0}
     - target: {fileID: 5054191628257583953, guid: 6666353addaa090479541a42835982dd, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 8.97
+      value: 43.24375
       objectReference: {fileID: 0}
     - target: {fileID: 5054191628257583953, guid: 6666353addaa090479541a42835982dd, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -5.7944565
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5054191628257583953, guid: 6666353addaa090479541a42835982dd, type: 3}
       propertyPath: m_LocalRotation.w
@@ -173,7 +173,7 @@ PrefabInstance:
     - target: {fileID: 5054191628257583954, guid: 6666353addaa090479541a42835982dd, type: 3}
       propertyPath: dialogueObject
       value: 
-      objectReference: {fileID: 11400000, guid: 9138aebf525920c41b12ad59f34dbeb6, type: 2}
+      objectReference: {fileID: 11400000, guid: 5726fd70d52e34f4b96384fb49eec24c, type: 2}
     - target: {fileID: 5054191628257583954, guid: 6666353addaa090479541a42835982dd, type: 3}
       propertyPath: events.onPickedResponse.m_PersistentCalls.m_Calls.Array.size
       value: 3
@@ -261,7 +261,7 @@ PrefabInstance:
     - target: {fileID: 5054191628257583956, guid: 6666353addaa090479541a42835982dd, type: 3}
       propertyPath: capituloDialogoNpc.Array.data[0].dialogueList
       value: 
-      objectReference: {fileID: 2198169220673156351}
+      objectReference: {fileID: 2269602605403460464}
     - target: {fileID: 5054191628257583956, guid: 6666353addaa090479541a42835982dd, type: 3}
       propertyPath: capituloDialogoNpc.Array.data[1].dialogueList
       value: 

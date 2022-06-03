@@ -14,7 +14,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialogue:
   - portrait: {fileID: 21300000, guid: 4757cb7248f3e9b45959f53fb486cc12, type: 3}
-    text: "Ei, seu nome \xE9 jonas n\xE3o? soube que voc\xEA \xE9 detetive, caso
-      esteja precisando de armamento novo ou algo assim, me ajude a encontrar a minha
-      chave."
+    text: Ei filho qual seu nome?
+  - portrait: {fileID: 21300000, guid: 9502506bcf576b544bef3589712d5551, type: 3}
+    text: "\xC9 Jonas."
+  - portrait: {fileID: 21300000, guid: 4757cb7248f3e9b45959f53fb486cc12, type: 3}
+    text: "Jonas o Ricardo me falou de voc\xEA, ent\xE3o voc\xEA quer dar um jeito
+      nesses amarelinhos."
+  - portrait: {fileID: 21300000, guid: 9502506bcf576b544bef3589712d5551, type: 3}
+    text: "\xC9, exatamente isso, eu gostaria de comprar na sua loja,alguma coisa
+      que pudesse me ajudar."
+  - portrait: {fileID: 21300000, guid: 4757cb7248f3e9b45959f53fb486cc12, type: 3}
+    text: "Eu at\xE9 lhe venderia, por\xE9m perdi minhas chaves e n\xE3o consigo
+      encontra-l\xE1s, se achar algo eu lhe vendo sem problemas."
   responses: []

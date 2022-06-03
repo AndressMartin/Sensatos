@@ -237,15 +237,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5054191628257583953, guid: 6666353addaa090479541a42835982dd, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -141.49
+      value: -11
       objectReference: {fileID: 0}
     - target: {fileID: 5054191628257583953, guid: 6666353addaa090479541a42835982dd, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -43.59
+      value: -12
       objectReference: {fileID: 0}
     - target: {fileID: 5054191628257583953, guid: 6666353addaa090479541a42835982dd, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -5.7944565
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5054191628257583953, guid: 6666353addaa090479541a42835982dd, type: 3}
       propertyPath: m_LocalRotation.w
@@ -306,7 +306,7 @@ PrefabInstance:
     - target: {fileID: 5054191628257583954, guid: 6666353addaa090479541a42835982dd, type: 3}
       propertyPath: events.onPickedResponse.m_PersistentCalls.m_Calls.Array.data[2].m_Target
       value: 
-      objectReference: {fileID: 390379565902782597}
+      objectReference: {fileID: 131590069627734105}
     - target: {fileID: 5054191628257583954, guid: 6666353addaa090479541a42835982dd, type: 3}
       propertyPath: events.onPickedResponse.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
@@ -341,7 +341,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5054191628257583954, guid: 6666353addaa090479541a42835982dd, type: 3}
       propertyPath: events.onPickedResponse.m_PersistentCalls.m_Calls.Array.data[2].m_TargetAssemblyTypeName
-      value: NPCRemoverItem, Assembly-CSharp
+      value: NPC, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 5054191628257583954, guid: 6666353addaa090479541a42835982dd, type: 3}
       propertyPath: events.onPickedResponse.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
@@ -445,7 +445,7 @@ PrefabInstance:
       objectReference: {fileID: 9100000, guid: 1b3c9cdccda74e74fa9ed72e51cf1216, type: 2}
     - target: {fileID: 5054191628257583966, guid: 6666353addaa090479541a42835982dd, type: 3}
       propertyPath: m_Name
-      value: Sandalation Variant
+      value: Sandalation
       objectReference: {fileID: 0}
     - target: {fileID: 5054191628257583977, guid: 6666353addaa090479541a42835982dd, type: 3}
       propertyPath: m_Size.x
@@ -470,7 +470,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5054191628257583956, guid: 6666353addaa090479541a42835982dd, type: 3}
   m_PrefabInstance: {fileID: 5185781692919098119}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 131590069627734105}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f9423e859547c1148a85744e9397d53d, type: 3}
@@ -479,6 +479,11 @@ MonoBehaviour:
 --- !u!4 &131590069627734102 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5054191628257583953, guid: 6666353addaa090479541a42835982dd, type: 3}
+  m_PrefabInstance: {fileID: 5185781692919098119}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &131590069627734105 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5054191628257583966, guid: 6666353addaa090479541a42835982dd, type: 3}
   m_PrefabInstance: {fileID: 5185781692919098119}
   m_PrefabAsset: {fileID: 0}
 --- !u!114 &131590070111436569 stripped

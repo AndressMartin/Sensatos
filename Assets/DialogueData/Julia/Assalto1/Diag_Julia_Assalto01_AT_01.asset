@@ -14,12 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialogue:
   - portrait: {fileID: 21300000, guid: 5d0f7f04c5597894fa72cd630c124d36, type: 3}
-    text: "Eu estava pensando em desenhar a paisagem, qual delas voc\xEA acha que
-      devo escolher?"
+    text: "Eu estava pensando em desenhar algo ou algu\xEAm,alguma sugest\xE3o?"
   responses:
   - responseText: Trem
-    dialogueObject: {fileID: 11400000, guid: 9138aebf525920c41b12ad59f34dbeb6, type: 2}
-  - responseText: "Ribeir\xE3o"
-    dialogueObject: {fileID: 11400000, guid: 9138aebf525920c41b12ad59f34dbeb6, type: 2}
-  - responseText: Moinho
-    dialogueObject: {fileID: 11400000, guid: 9138aebf525920c41b12ad59f34dbeb6, type: 2}
+    dialogueObject: {fileID: 11400000, guid: 1b6206281c0848441a9972b295ab9b9f, type: 2}
+  - responseText: Sandalation
+    dialogueObject: {fileID: 11400000, guid: 5726fd70d52e34f4b96384fb49eec24c, type: 2}
+  - responseText: Colmeia
+    dialogueObject: {fileID: 11400000, guid: 969ce5acc92c53143899d9625d6ca52a, type: 2}
+  - responseText: Cientista
+    dialogueObject: {fileID: 11400000, guid: 5571864962e5c4f49ada5a4bb7015c65, type: 2}
