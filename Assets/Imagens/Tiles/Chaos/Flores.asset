@@ -10,17 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9d1514134bc4fbd41bb739b1b9a49231, type: 3}
-  m_Name: Grama (Override)
+  m_Name: Aleatorio (Override)
   m_EditorClassIdentifier: 
   m_DefaultSprite: {fileID: -875038851, guid: a90e31165d06d2944b3446a6b3cbcdb7, type: 3}
   m_DefaultGameObject: {fileID: 0}
-  m_DefaultColliderType: 0
+  m_DefaultColliderType: 1
   m_TilingRules:
   - m_Id: 0
     m_Sprites:
     - {fileID: -875038851, guid: a90e31165d06d2944b3446a6b3cbcdb7, type: 3}
     - {fileID: 493741468, guid: a90e31165d06d2944b3446a6b3cbcdb7, type: 3}
     - {fileID: -2032828550, guid: a90e31165d06d2944b3446a6b3cbcdb7, type: 3}
+    - {fileID: 832975329, guid: a90e31165d06d2944b3446a6b3cbcdb7, type: 3}
+    - {fileID: -1821804882, guid: a90e31165d06d2944b3446a6b3cbcdb7, type: 3}
+    - {fileID: -847058977, guid: a90e31165d06d2944b3446a6b3cbcdb7, type: 3}
     m_GameObject: {fileID: 0}
     m_MinAnimationSpeed: 1
     m_MaxAnimationSpeed: 1
@@ -51,13 +54,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c779848d9dd029409ca676b49e10a18, type: 3}
   m_Name: Flores
   m_EditorClassIdentifier: 
-  m_Tile: {fileID: 11400000, guid: 16aca4a4e798eff4bb233725a1f5589b, type: 2}
+  m_Tile: {fileID: 11400000, guid: 410db45685e6be34c9b3e23ccce4543c, type: 2}
   m_Sprites:
-  - m_OriginalSprite: {fileID: 1887872157, guid: 3126740df2cca054e9faa7787df8bb91, type: 3}
+  - m_OriginalSprite: {fileID: 114374991, guid: 48e939d168b29ac48b1ffac9ecb0bd47, type: 3}
     m_OverrideSprite: {fileID: -875038851, guid: a90e31165d06d2944b3446a6b3cbcdb7, type: 3}
-  - m_OriginalSprite: {fileID: -1234461463, guid: 3126740df2cca054e9faa7787df8bb91, type: 3}
+  - m_OriginalSprite: {fileID: 1740428487, guid: 48e939d168b29ac48b1ffac9ecb0bd47, type: 3}
     m_OverrideSprite: {fileID: 493741468, guid: a90e31165d06d2944b3446a6b3cbcdb7, type: 3}
-  - m_OriginalSprite: {fileID: 1436138518, guid: 3126740df2cca054e9faa7787df8bb91, type: 3}
+  - m_OriginalSprite: {fileID: -1059823458, guid: 48e939d168b29ac48b1ffac9ecb0bd47, type: 3}
     m_OverrideSprite: {fileID: -2032828550, guid: a90e31165d06d2944b3446a6b3cbcdb7, type: 3}
+  - m_OriginalSprite: {fileID: -6830239, guid: 48e939d168b29ac48b1ffac9ecb0bd47, type: 3}
+    m_OverrideSprite: {fileID: 832975329, guid: a90e31165d06d2944b3446a6b3cbcdb7, type: 3}
+  - m_OriginalSprite: {fileID: -1048517365, guid: 48e939d168b29ac48b1ffac9ecb0bd47, type: 3}
+    m_OverrideSprite: {fileID: -1821804882, guid: a90e31165d06d2944b3446a6b3cbcdb7, type: 3}
+  - m_OriginalSprite: {fileID: -1832702643, guid: 48e939d168b29ac48b1ffac9ecb0bd47, type: 3}
+    m_OverrideSprite: {fileID: -847058977, guid: a90e31165d06d2944b3446a6b3cbcdb7, type: 3}
   m_GameObjects: []
   m_InstanceTile: {fileID: -8112482098312599948}

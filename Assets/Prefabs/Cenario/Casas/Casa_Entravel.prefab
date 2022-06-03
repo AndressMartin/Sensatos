@@ -285,5 +285,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57499e02272e88d45a79011faf865bc1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  posicaoPlayer: {x: 0, y: 0, z: 0}
+  posicaoPlayer: {fileID: 0}
+  direcao: 0
   limiteDaCamera: {fileID: 0}
