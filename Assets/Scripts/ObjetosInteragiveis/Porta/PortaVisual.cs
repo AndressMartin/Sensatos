@@ -18,6 +18,12 @@ public class PortaVisual : ObjetoInteragivel
     private bool trancado;
     private bool aberto;
 
+    [SerializeField] private float distanciaParaTocarSom;
+
+    [SerializeField] private AudioClip somTrancada;
+    [SerializeField] private AudioClip somAbrir;
+    [SerializeField] private AudioClip somFechar;
+
     private void Awake()
     {
         //Managers
@@ -65,6 +71,7 @@ public class PortaVisual : ObjetoInteragivel
 
             if (trancado == true)
             {
+                TocarSom(somTrancada);
                 return;
             }
         }
@@ -78,10 +85,39 @@ public class PortaVisual : ObjetoInteragivel
         if(aberto == true)
         {
             animacao.TrocarAnimacao("Aberta", direcao);
+            TocarSom(somAbrir);
         }
         else
         {
             animacao.TrocarAnimacao("Fechada", direcao);
+            TocarSom(somFechar);
+        }
+    }
+
+    private bool DistanciaDoPlayer()
+    {
+        //Ve se a distancia do projetil do seu ponto inicial e maior que a distancia maxima que ele pode percorrer, usando sqrMagnitude para ser um pouco mais otimizado
+        Vector3 diferenca = transform.position - generalManager.Player.transform.position;
+        float distancia = diferenca.sqrMagnitude;
+
+        if (distancia < distanciaParaTocarSom * distanciaParaTocarSom)
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    private void TocarSom(AudioClip audioClip)
+    {
+        if (audioClip == null)
+        {
+            return;
+        }
+
+        if (DistanciaDoPlayer() == true)
+        {
+            generalManager.SoundManager.TocarSom(audioClip);
         }
     }
 }

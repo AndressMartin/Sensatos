@@ -43,6 +43,8 @@ public class TransicaoDeTela : MonoBehaviour
 
         animacao.Play("Desaparecendo");
 
+        StartCoroutine(EsperarUmTempo());
+
         fundo.gameObject.SetActive(true);
     }
 
@@ -83,5 +85,14 @@ public class TransicaoDeTela : MonoBehaviour
 
             GameManager.instance.VariaveisGlobais.CompletouUmAssalto = false;
         }
+    }
+
+    private IEnumerator EsperarUmTempo()
+    {
+        animacao.speed = 0;
+
+        yield return new WaitForSeconds(1f);
+
+        animacao.speed = 1;
     }
 }

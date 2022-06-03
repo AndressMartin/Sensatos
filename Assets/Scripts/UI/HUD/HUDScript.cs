@@ -17,6 +17,7 @@ public class HUDScript : MonoBehaviour
     [SerializeField] private TelaItemPrincipalPego telaItemPrincipalPego;
     [SerializeField] private TelaMissaoConcluida telaMissaoConcluida;
     [SerializeField] private MenuDaLoja menuDaLoja;
+    [SerializeField] private EfeitosDeTela efeitosDeTela;
     [SerializeField] private TelaTransicaoDeMapa telaTransicaoDeMapa;
     [SerializeField] private TransicaoDeTela transicaoDeTela;
     [SerializeField] private LockDownUI lockDownUI;
@@ -40,6 +41,7 @@ public class HUDScript : MonoBehaviour
     public TelaItemPrincipalPego TelaItemPrincipalPego => telaItemPrincipalPego;
     public TelaMissaoConcluida TelaMissaoConcluida => telaMissaoConcluida;
     public MenuDaLoja MenuDaLoja => menuDaLoja;
+    public EfeitosDeTela EfeitosDeTela => efeitosDeTela;
     public TelaTransicaoDeMapa TelaTransicaoDeMapa => telaTransicaoDeMapa;
     public TransicaoDeTela TransicaoDeTela => transicaoDeTela;
     public BarraDeVisaoDoInimigo BarraDeVisaoDoInimigo => barraDeVisaoDoInimigo;

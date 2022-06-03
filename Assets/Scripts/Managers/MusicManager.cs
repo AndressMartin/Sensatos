@@ -15,11 +15,14 @@ public class MusicManager : MonoBehaviour
     public bool MusicaTocando => audioSource.isPlaying;
     public static int Volume => volume;
 
-    void Start()
+    private void Awake()
     {
         //Componentes
         audioSource = GetComponent<AudioSource>();
+    }
 
+    void Start()
+    {
         //Variaveis
         volume = SaveConfiguracoes.configuracoes.volumeMusica;
 

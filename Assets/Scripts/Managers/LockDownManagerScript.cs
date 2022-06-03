@@ -11,6 +11,8 @@ public class LockDownManagerScript : MonoBehaviour
 
     [SerializeField] float contadorTempoLockdown, contadorTempoLockdownMax;
 
+    [SerializeField] AudioClip somAlarme;
+
     void Start()
     {
         generalManager = FindObjectOfType<GeneralManagerScript>();
@@ -83,6 +85,10 @@ public class LockDownManagerScript : MonoBehaviour
         TrancarPortas();
 
         generalManager.Hud.LockDownUIAtiva(true);
+
+        generalManager.Hud.EfeitosDeTela.AnimacaoLockdown();
+
+        generalManager.SoundManager.TocarSom(somAlarme);
     }
 
     public void DesativarLockDown()

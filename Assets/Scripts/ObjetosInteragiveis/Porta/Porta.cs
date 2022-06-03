@@ -32,6 +32,13 @@ public class Porta : ObjetoInteragivel
 
     [SerializeField] private Direcao direcao;
 
+    [SerializeField] private float distanciaParaTocarSom;
+
+    [SerializeField] private AudioClip somTrancada;
+    [SerializeField] private AudioClip somDestrancar;
+    [SerializeField] private AudioClip somAbrir;
+    [SerializeField] private AudioClip somFechar;
+
     //Getters
     public bool Trancado => trancado;
     public TipoPorta GetTipoPorta => tipoPorta;
@@ -118,10 +125,14 @@ public class Porta : ObjetoInteragivel
                     if(item.ID == this.chave.ID)
                     {
                         Destrancar();
-                        break;
+                        TocarSom(somDestrancar);
+                        return;
                     }
                 }
             }
+
+            TocarSom(somTrancada);
+            print("Passou");
         }
         else
         {
@@ -204,6 +215,8 @@ public class Porta : ObjetoInteragivel
             colisao.enabled = !portaAberta;
             hitBoxTiro.enabled = !portaAberta;
             hitBoxVisao.enabled = !portaAberta;
+
+            TocarSom(somAbrir);
         }
         else
         {
@@ -217,6 +230,8 @@ public class Porta : ObjetoInteragivel
             {
                 generalManager.PathfinderManager.EscanearPathfinder(colisao);
             }
+
+            TocarSom(somFechar);
         }
     }
 
@@ -247,6 +262,33 @@ public class Porta : ObjetoInteragivel
                 default:
                     break;
             }
+        }
+    }
+
+    private bool DistanciaDoPlayer()
+    {
+        //Ve se a distancia do projetil do seu ponto inicial e maior que a distancia maxima que ele pode percorrer, usando sqrMagnitude para ser um pouco mais otimizado
+        Vector3 diferenca = transform.position - generalManager.Player.transform.position;
+        float distancia = diferenca.sqrMagnitude;
+
+        if (distancia < distanciaParaTocarSom * distanciaParaTocarSom)
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    private void TocarSom(AudioClip audioClip)
+    {
+        if(audioClip == null)
+        {
+            return;
+        }
+
+        if(DistanciaDoPlayer() == true)
+        {
+            generalManager.SoundManager.TocarSom(audioClip);
         }
     }
 }

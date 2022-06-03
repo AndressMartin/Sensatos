@@ -17,7 +17,7 @@ public class SoundManager : MonoBehaviour
     //Getters
     public static int Volume => volume;
 
-    void Start()
+    private void Awake()
     {
         //Managers
         generalManager = FindObjectOfType<GeneralManagerScript>();
@@ -29,7 +29,10 @@ public class SoundManager : MonoBehaviour
         audioSourceIgnorandoPause.ignoreListenerPause = true;
 
         CopiarAudioSource(audioSourceIgnorandoPause, audioSource);
+    }
 
+    void Start()
+    {
         //Variaveis
         volume = SaveConfiguracoes.configuracoes.volumeEfeitosSonoros;
 
