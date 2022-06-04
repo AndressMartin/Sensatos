@@ -31,6 +31,8 @@ public class IAEnemy : MonoBehaviour
 
     [SerializeField] protected TipoInimigo tipoInimigo;
 
+    [SerializeField] protected float diferencaYBarraDeVisao;
+
     protected bool iniciado = false;
 
     //Variaveis controle
@@ -259,7 +261,7 @@ public class IAEnemy : MonoBehaviour
 
         if(barraDeVisao.IconeAtivo == true)
         {
-            generalManager.Hud.AtualizarBarraDeVisao(enemy.gameObject, barraDeVisao, enemy.Animacao.CorpoSprite);
+            generalManager.Hud.AtualizarBarraDeVisao(enemy.gameObject, barraDeVisao, enemy.Animacao.CorpoSprite, diferencaYBarraDeVisao);
         }
     }
 
@@ -448,7 +450,7 @@ public class IAEnemy : MonoBehaviour
                             controladarEsqueciPlayer = true;
                             estadoDeteccaoPlayer = EstadoDeteccaoPlayer.NaoToVendoPlayer;
 
-                            if(emLockDown == true)
+                            if (emLockDown == true)
                             {
                                 inimigoEstados = InimigoEstados.FazerRotinaLockdown;
                             }
@@ -461,9 +463,12 @@ public class IAEnemy : MonoBehaviour
                         }
                         else
                         {
-                            tomeiDano = false;
-                            //Debug.Log("tempo " + tempoEsquecerPlayer);
-                            inimigoEstados = InimigoEstados.AndandoUltimaPosicaoPlayerConhecida;
+                            if (inimigoEstados != InimigoEstados.IndoAtivarLockDown)
+                            {
+                                tomeiDano = false;
+                                //Debug.Log("tempo " + tempoEsquecerPlayer);
+                                inimigoEstados = InimigoEstados.AndandoUltimaPosicaoPlayerConhecida;
+                            }
                         }
                     }
                     else // vendo player aumentar a detecao e verificar se esta na zona de ataque

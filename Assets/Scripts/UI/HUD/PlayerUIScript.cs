@@ -21,10 +21,10 @@ public class PlayerUIScript : MonoBehaviour
 
     public void AtualizarPosicaoDaBarraDeRecarregamento(Camera camera, Player player)
     {
-        float diferencaX = 0.9f;
+        float diferencaX = 1f;
         float diferencaY = 1.5f;
         Vector2 diferenca = new Vector2(diferencaX, diferencaY);
 
-        barraDeRecarregamentoObjeto.position = (Vector2)player.transform.position + diferenca;
+        barraDeRecarregamentoObjeto.position = camera.WorldToScreenPoint((Vector2)player.transform.position + diferenca);
     }
 }

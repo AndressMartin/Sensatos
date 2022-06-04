@@ -466,6 +466,9 @@ public class Enemy : EntityModel
     {
         animacao.AtualizarArmaBracos("");
         animacao.TrocarAnimacao("Desaparecendo");
+
+        colisao.enabled = false;
+        hitboxDano.enabled = false;
     }
 
     public void Desaparecer()

@@ -38,6 +38,10 @@ public class RespawnManagerScript : MonoBehaviour
         {
             porta.SetRespawn();
         }
+        foreach (CameraDeSeguranca camera in generalManager.ObjectManager.ListaDeCamerasLockdown)
+        {
+            camera.SetRespawn();
+        }
 
         generalManager.SalaSeguranca?.SetRespaw();
     }
@@ -71,6 +75,11 @@ public class RespawnManagerScript : MonoBehaviour
         foreach (Porta porta in generalManager.ObjectManager.ListaPortas)
         {
             porta.Respawn();
+
+        }
+        foreach (CameraDeSeguranca camera in generalManager.ObjectManager.ListaDeCamerasLockdown)
+        {
+            camera.Respawn();
         }
 
         generalManager.SalaSeguranca?.Respawn();

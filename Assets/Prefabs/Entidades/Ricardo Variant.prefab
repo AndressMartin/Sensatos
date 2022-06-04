@@ -424,16 +424,24 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5054191627667461150, guid: 6666353addaa090479541a42835982dd, type: 3}
       propertyPath: dialogueList.Array.size
-      value: 2
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 5054191627667461150, guid: 6666353addaa090479541a42835982dd, type: 3}
       propertyPath: dialogueList.Array.data[0]
       value: 
-      objectReference: {fileID: 11400000, guid: 1410cea802bfc8445bd69759d6614fc0, type: 2}
+      objectReference: {fileID: 11400000, guid: 66ffbd146e7efe945a6f2b8cea483134, type: 2}
     - target: {fileID: 5054191627667461150, guid: 6666353addaa090479541a42835982dd, type: 3}
       propertyPath: dialogueList.Array.data[1]
       value: 
+      objectReference: {fileID: 11400000, guid: 1410cea802bfc8445bd69759d6614fc0, type: 2}
+    - target: {fileID: 5054191627667461150, guid: 6666353addaa090479541a42835982dd, type: 3}
+      propertyPath: dialogueList.Array.data[2]
+      value: 
       objectReference: {fileID: 11400000, guid: eb38fc6381427d1469a36959df226d7f, type: 2}
+    - target: {fileID: 5054191627667461150, guid: 6666353addaa090479541a42835982dd, type: 3}
+      propertyPath: dialogueList.Array.data[3]
+      value: 
+      objectReference: {fileID: 11400000, guid: 13339641c87da2147aacc45a1e3a6578, type: 2}
     - target: {fileID: 5054191628257583953, guid: 6666353addaa090479541a42835982dd, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -636,7 +644,7 @@ PrefabInstance:
       objectReference: {fileID: 9100000, guid: af15450a6c75be649886a48fc5686e35, type: 2}
     - target: {fileID: 5054191628257583966, guid: 6666353addaa090479541a42835982dd, type: 3}
       propertyPath: m_Name
-      value: Ricardo
+      value: Ricardo Variant
       objectReference: {fileID: 0}
     - target: {fileID: 5054191628257583966, guid: 6666353addaa090479541a42835982dd, type: 3}
       propertyPath: m_IsActive

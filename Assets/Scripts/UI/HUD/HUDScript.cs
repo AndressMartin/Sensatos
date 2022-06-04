@@ -97,9 +97,9 @@ public class HUDScript : MonoBehaviour
         playerUI.AtualizarPosicaoDaBarraDeRecarregamento(cameraAtiva, player);
     }
 
-    public void AtualizarBarraDeVisao(GameObject objeto, BarraDeVisaoDoInimigo barraDeVisaoDoInimigo, SpriteRenderer sprite)
+    public void AtualizarBarraDeVisao(GameObject objeto, BarraDeVisaoDoInimigo barraDeVisaoDoInimigo, SpriteRenderer sprite, float diferencaY)
     {
-        barraDeVisaoDoInimigo.AtualizarPosicao(cameraAtiva, objeto, sprite);
+        barraDeVisaoDoInimigo.AtualizarPosicao(cameraAtiva, objeto, sprite, diferencaY);
     }
 
     public void LockDownUIAtiva(bool ativa)

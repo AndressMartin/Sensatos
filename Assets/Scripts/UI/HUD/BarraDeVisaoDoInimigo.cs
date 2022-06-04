@@ -54,12 +54,11 @@ public class BarraDeVisaoDoInimigo : MonoBehaviour
         barraDeVisao.fillAmount = tempoVisao / tempoVisaoMax;
     }
 
-    public void AtualizarPosicao(Camera camera, GameObject objeto, SpriteRenderer sprite)
+    public void AtualizarPosicao(Camera camera, GameObject objeto, SpriteRenderer sprite, float diferencaY)
     {
-        float diferencaY = 0.2f;
         Vector2 diferenca = new Vector2(0, sprite.bounds.extents.y + diferencaY);
 
-        transform.position = (Vector2)objeto.transform.position + diferenca;
+        transform.position = camera.WorldToScreenPoint((Vector2)objeto.transform.position + diferenca);
     }
 
     private IEnumerator AlertaAtivo()

@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71dc2b686cd518144986ef63d2ca13a3, type: 3}
+  m_Name: Diag_Sandalation_Gen_06
+  m_EditorClassIdentifier: 
+  dialogue:
+  - portrait: {fileID: 21300000, guid: 9f81907e7c4f98d43a093a9ae8f875b5, type: 3}
+    text: "Sabe, um corvo me contou que um dos soldados da Colmeia que passou por
+      aqui deixou cair um cart\xE3o de acesso. Deve estar perdido em algum lugar."
+  - portrait: {fileID: 21300000, guid: 9f81907e7c4f98d43a093a9ae8f875b5, type: 3}
+    text: "Soube que h\xE1 uma sala na base deles que controla todas as c\xE2meras
+      de seguran\xE7a do local, quem sabe esse cart\xE3o n\xE3o d\xE1 acesso \xE0
+      ela."
+  - portrait: {fileID: 21300000, guid: 9f81907e7c4f98d43a093a9ae8f875b5, type: 3}
+    text: "... \xC9, era um corvo, ele n\xE3o tinha medo de espantalhos."
+  responses: []

@@ -18,6 +18,8 @@ public class CameraDeSeguranca : MonoBehaviour
     //Variaveis
     [SerializeField] LayerMask layerDasZonas;
 
+    [SerializeField] protected float diferencaYBarraDeVisao;
+
     [SerializeField] EntityModel.Direcao posicaoCamera;
 
     EntityModel.Direcao direcao;
@@ -48,6 +50,8 @@ public class CameraDeSeguranca : MonoBehaviour
     private bool vendoInimigo;
     private bool fazerPollygonCollider;
     private bool ativada;
+
+    private bool ativadaRespawn;
 
     private int indicePosicao;
     private float tempoPosicao;
@@ -102,6 +106,7 @@ public class CameraDeSeguranca : MonoBehaviour
         AtualizarFieldView();
 
         SetarZona();
+        SetRespawn();
     }
 
     // Update is called once per frame
@@ -136,7 +141,7 @@ public class CameraDeSeguranca : MonoBehaviour
 
             if (barraDeVisao.IconeAtivo == true)
             {
-                generalManager.Hud.AtualizarBarraDeVisao(gameObject, barraDeVisao, sprite);
+                generalManager.Hud.AtualizarBarraDeVisao(gameObject, barraDeVisao, sprite, diferencaYBarraDeVisao);
             }
         }
         else
@@ -323,6 +328,8 @@ public class CameraDeSeguranca : MonoBehaviour
         FieldOfViewAtiva(!valor); //fieldView inverso a se esta em lockDown
         tempoDetectarPlayer = 0;
         tempoFazerRaycast = 0;
+        vendoPlayer = false;
+        vendoInimigo = false;
     }
 
     private void OnTriggerStay2D(Collider2D collision)
@@ -391,7 +398,7 @@ public class CameraDeSeguranca : MonoBehaviour
                     if (entityModelTemp is Enemy)
                     {
                         Enemy enemy = (Enemy)entityModelTemp;
-                        if (enemy.Morto)
+                        if (enemy.Morto || enemy.GetIAEnemy.GetEstadoDeteccaoPlayer == IAEnemy.EstadoDeteccaoPlayer.PlayerDetectado)
                         {
                             vendoInimigo = true;
                             posicaoInimigoMorto = enemy.transform.position;
@@ -414,6 +421,20 @@ public class CameraDeSeguranca : MonoBehaviour
         tempoFazerRaycast = 0;
     }
 
+    public void SetRespawn()
+    {
+        ativadaRespawn = ativada;
+
+    }
+    public void Respawn()
+    {
+        vendoPlayer = false;
+        playerDetectado = false;
+        emLockdown = false;
+        vendoInimigo = false;
+        fazerPollygonCollider = true;
+        ativada = ativadaRespawn;
+    }
     private void SetarZona()
     {
         zona = 0;
