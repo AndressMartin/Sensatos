@@ -18,6 +18,8 @@ public class CameraDeSeguranca : MonoBehaviour
     //Variaveis
     [SerializeField] LayerMask layerDasZonas;
 
+    [SerializeField] protected float diferencaYBarraDeVisao;
+
     [SerializeField] EntityModel.Direcao posicaoCamera;
 
     EntityModel.Direcao direcao;
@@ -139,7 +141,7 @@ public class CameraDeSeguranca : MonoBehaviour
 
             if (barraDeVisao.IconeAtivo == true)
             {
-                generalManager.Hud.AtualizarBarraDeVisao(gameObject, barraDeVisao, sprite);
+                generalManager.Hud.AtualizarBarraDeVisao(gameObject, barraDeVisao, sprite, diferencaYBarraDeVisao);
             }
         }
         else
