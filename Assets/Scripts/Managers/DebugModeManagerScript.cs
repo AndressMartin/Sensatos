@@ -12,6 +12,8 @@ public class DebugModeManagerScript : MonoBehaviour
     private DebugModeUIScript debugModeUI;
 
     //Variaveis
+    [SerializeField] private bool exibirInterfaceDeDebug;
+
     [SerializeField] private List<ArmaDeFogo> armasIniciais;
     [SerializeField] private List<RoupaDeCamuflagem> roupasIniciais;
     [SerializeField] private List<Item> itensIniciais;
@@ -31,7 +33,10 @@ public class DebugModeManagerScript : MonoBehaviour
         fps = 0;
         tempoFPS = 0;
 
-        debugModeUI.DebugModeUIAtiva(true);
+        if(exibirInterfaceDeDebug == true)
+        {
+            debugModeUI.DebugModeUIAtiva(true);
+        }
 
         StartCoroutine(SetarVariaveisDeTeste());
     }
@@ -39,7 +44,11 @@ public class DebugModeManagerScript : MonoBehaviour
     private void Update()
     {
         ComandosDeDebug();
-        ContadorDeFPS();
+
+        if(exibirInterfaceDeDebug == true)
+        {
+            ContadorDeFPS();
+        }
     }
 
     private void ComandosDeDebug()

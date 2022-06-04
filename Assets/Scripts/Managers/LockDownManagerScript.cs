@@ -105,6 +105,7 @@ public class LockDownManagerScript : MonoBehaviour
         {
             enemy.GetIAEnemy.DesativarLockDown();
         }
+
         foreach (CameraDeSeguranca cameraJogo in generalManager.ObjectManager.ListaDeCamerasLockdown)
         {
             cameraJogo.ReceberLockdown(false);
