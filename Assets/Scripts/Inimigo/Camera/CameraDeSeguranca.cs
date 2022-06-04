@@ -49,6 +49,8 @@ public class CameraDeSeguranca : MonoBehaviour
     private bool fazerPollygonCollider;
     private bool ativada;
 
+    private bool vendoPlayerRespawn, playerDetectadoRespawn, emLockdownRespawn, vendoInimigoRespawn, fazerPollygonColliderRespawn, ativadaRespawn;
+
     private int indicePosicao;
     private float tempoPosicao;
 
@@ -102,6 +104,7 @@ public class CameraDeSeguranca : MonoBehaviour
         AtualizarFieldView();
 
         SetarZona();
+        SetRespawn();
     }
 
     // Update is called once per frame
@@ -414,6 +417,25 @@ public class CameraDeSeguranca : MonoBehaviour
         tempoFazerRaycast = 0;
     }
 
+    public void SetRespawn()
+    {
+        vendoPlayerRespawn = vendoPlayer;
+        playerDetectadoRespawn = playerDetectado;
+        emLockdownRespawn = emLockdown;
+        vendoInimigoRespawn = vendoInimigo;
+        fazerPollygonColliderRespawn = fazerPollygonCollider;
+        ativadaRespawn = ativada;
+
+    }
+    public void Respawn()
+    {
+        vendoPlayer = vendoPlayerRespawn;
+        playerDetectado = playerDetectadoRespawn;
+        emLockdown = emLockdownRespawn;
+        vendoInimigo = vendoInimigoRespawn;
+        fazerPollygonCollider = fazerPollygonColliderRespawn;
+        ativada = ativadaRespawn;
+    }
     private void SetarZona()
     {
         zona = 0;

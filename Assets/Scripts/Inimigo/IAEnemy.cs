@@ -448,7 +448,7 @@ public class IAEnemy : MonoBehaviour
                             controladarEsqueciPlayer = true;
                             estadoDeteccaoPlayer = EstadoDeteccaoPlayer.NaoToVendoPlayer;
 
-                            if(emLockDown == true)
+                            if (emLockDown == true)
                             {
                                 inimigoEstados = InimigoEstados.FazerRotinaLockdown;
                             }
@@ -461,9 +461,12 @@ public class IAEnemy : MonoBehaviour
                         }
                         else
                         {
-                            tomeiDano = false;
-                            //Debug.Log("tempo " + tempoEsquecerPlayer);
-                            inimigoEstados = InimigoEstados.AndandoUltimaPosicaoPlayerConhecida;
+                            if (inimigoEstados != InimigoEstados.IndoAtivarLockDown)
+                            {
+                                tomeiDano = false;
+                                //Debug.Log("tempo " + tempoEsquecerPlayer);
+                                inimigoEstados = InimigoEstados.AndandoUltimaPosicaoPlayerConhecida;
+                            }
                         }
                     }
                     else // vendo player aumentar a detecao e verificar se esta na zona de ataque
