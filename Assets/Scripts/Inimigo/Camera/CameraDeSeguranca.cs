@@ -326,10 +326,8 @@ public class CameraDeSeguranca : MonoBehaviour
         FieldOfViewAtiva(!valor); //fieldView inverso a se esta em lockDown
         tempoDetectarPlayer = 0;
         tempoFazerRaycast = 0;
-        if(!valor)
-        {
-            Respawn();
-        }
+        vendoPlayer = false;
+        vendoInimigo = false;
     }
 
     private void OnTriggerStay2D(Collider2D collision)
