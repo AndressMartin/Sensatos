@@ -22,6 +22,16 @@ public class ZoneManagerScript : MonoBehaviour
     public void SetZonaAtual(int zona)
     {
         zonaAtual = zona;
+
+        if (controlarInimigos == true)
+        {
+            AtivarEDesativarInimigos();
+        }
+
+        if (controlarNpcs == true)
+        {
+            AtivarEDesativarNPCs();
+        }
     }
 
     private void Awake()
@@ -42,12 +52,7 @@ public class ZoneManagerScript : MonoBehaviour
 
         if(controlarInimigos == true)
         {
-            StartCoroutine(AtivarEDesativarInimigos());
-        }
-
-        if (controlarNpcs == true)
-        {
-            StartCoroutine(AtivarEDesativarNPCs());
+            StartCoroutine(AtivarEDesativarInimigosCorrotina());
         }
     }
 
@@ -91,63 +96,63 @@ public class ZoneManagerScript : MonoBehaviour
         return null;
     }
 
-    private IEnumerator AtivarEDesativarInimigos()
+    private void AtivarEDesativarInimigos()
     {
-        while(true)
+        foreach (Enemy enemy in generalManager.ObjectManager.ListaInimigos)
         {
-            foreach(Enemy enemy in generalManager.ObjectManager.ListaInimigos)
+            if (enemy.GetIAEnemy.GetTipoInimigo == IAEnemy.TipoInimigo.Lockdown)
             {
-                if(enemy.GetIAEnemy.GetTipoInimigo == IAEnemy.TipoInimigo.Lockdown)
-                {
-                    continue;
-                }
+                continue;
+            }
 
-                if(enemy.Zona != zonaAtual)
+            if (enemy.Zona != zonaAtual)
+            {
+                if (enemy.gameObject.activeSelf == true)
                 {
-                    if(enemy.gameObject.activeSelf == true)
+                    if (enemy.GetIAEnemy.GetInimigoEstados == IAEnemy.InimigoEstados.Patrulhar && enemy.GetIAEnemy.GetEstadoDeteccaoPlayer == IAEnemy.EstadoDeteccaoPlayer.NaoToVendoPlayer && enemy.GetIAEnemy.GetEmLockdown == false)
                     {
-                        if(enemy.GetIAEnemy.GetInimigoEstados == IAEnemy.InimigoEstados.Patrulhar && enemy.GetIAEnemy.GetEstadoDeteccaoPlayer == IAEnemy.EstadoDeteccaoPlayer.NaoToVendoPlayer && enemy.GetIAEnemy.GetEmLockdown == false)
-                        {
-                            DesativarInimigo(enemy);
-                        }
-                    }
-                }
-                else
-                {
-                    if (enemy.gameObject.activeSelf == false)
-                    {
-                        AtivarInimigo(enemy);
+                        DesativarInimigo(enemy);
                     }
                 }
             }
+            else
+            {
+                if (enemy.gameObject.activeSelf == false)
+                {
+                    AtivarInimigo(enemy);
+                }
+            }
+        }
+    }
+
+    private IEnumerator AtivarEDesativarInimigosCorrotina()
+    {
+        while(true)
+        {
+            AtivarEDesativarInimigos();
 
             yield return new WaitForSeconds(1f);
         }
     }
 
-    private IEnumerator AtivarEDesativarNPCs()
+    private void AtivarEDesativarNPCs()
     {
-        while (true)
+        foreach (NPC npc in generalManager.ObjectManager.ListaDeNPCs)
         {
-            foreach (NPC npc in generalManager.ObjectManager.ListaDeNPCs)
+            if (npc.Zona != zonaAtual)
             {
-                if (npc.Zona != zonaAtual)
+                if (npc.gameObject.activeSelf == true)
                 {
-                    if (npc.gameObject.activeSelf == true)
-                    {
-                        DesativarNPC(npc);
-                    }
-                }
-                else
-                {
-                    if (npc.gameObject.activeSelf == false)
-                    {
-                        AtivarNPC(npc);
-                    }
+                    DesativarNPC(npc);
                 }
             }
-
-            yield return new WaitForSeconds(1f);
+            else
+            {
+                if (npc.gameObject.activeSelf == false)
+                {
+                    AtivarNPC(npc);
+                }
+            }
         }
     }
 }

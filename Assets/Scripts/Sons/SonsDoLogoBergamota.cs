@@ -47,4 +47,9 @@ public class SonsDoLogoBergamota : MonoBehaviour
     {
         menuPrincipal.SetAtivo(true);
     }
+
+    public void TocarMusicaDoMenu()
+    {
+        menuPrincipal.TocarMusica();
+    }
 }

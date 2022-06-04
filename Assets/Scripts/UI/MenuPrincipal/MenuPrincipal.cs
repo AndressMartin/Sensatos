@@ -34,6 +34,8 @@ public class MenuPrincipal : MonoBehaviour
     private int selecao;
     private int selecao2;
 
+    [SerializeField] private AudioClip musicaMenuPrincipal;
+
     //Getters
     public MenuNovoJogo GetMenuNovoJogo => menuNovoJogo;
     public MenuCarregarJogo GetMenuCarregarJogo => menuCarregarJogo;
@@ -474,6 +476,12 @@ public class MenuPrincipal : MonoBehaviour
     private void AtualizarPainelDeEscolha(PainelDeEscolha painelDeEscolha, int selecao)
     {
         painelDeEscolha.Selecionar(selecao);
+    }
+
+    public void TocarMusica()
+    {
+        generalManager.MusicManager.SetMusica(musicaMenuPrincipal);
+        generalManager.MusicManager.TocarMusica();
     }
 
     private void FecharOJogo()

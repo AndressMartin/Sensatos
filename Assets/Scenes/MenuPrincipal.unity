@@ -7510,14 +7510,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1399893842}
     m_Modifications:
-    - target: {fileID: 6088694825221104227, guid: 4d1a3fa3ee8d98f4786e8556cdc72117, type: 3}
-      propertyPath: musica
-      value: 
-      objectReference: {fileID: 8300000, guid: 0d9759bd9e458674e869dbbec1e33055, type: 3}
-    - target: {fileID: 6088694825221104228, guid: 4d1a3fa3ee8d98f4786e8556cdc72117, type: 3}
-      propertyPath: m_audioClip
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 6088694825221104229, guid: 4d1a3fa3ee8d98f4786e8556cdc72117, type: 3}
       propertyPath: m_RootOrder
       value: 3
@@ -9955,9 +9947,9 @@ Camera:
   m_FocalLength: 50
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0.023195876
+    x: 0
     y: 0
-    width: 0.95303553
+    width: 1
     height: 1
   near clip plane: 0.1
   far clip plane: 5000
