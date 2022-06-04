@@ -396,7 +396,7 @@ public class CameraDeSeguranca : MonoBehaviour
                     if (entityModelTemp is Enemy)
                     {
                         Enemy enemy = (Enemy)entityModelTemp;
-                        if (enemy.Morto)
+                        if (enemy.Morto || enemy.GetIAEnemy.GetEstadoDeteccaoPlayer == IAEnemy.EstadoDeteccaoPlayer.PlayerDetectado)
                         {
                             vendoInimigo = true;
                             posicaoInimigoMorto = enemy.transform.position;
