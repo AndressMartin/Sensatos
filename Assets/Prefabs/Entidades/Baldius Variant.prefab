@@ -126,88 +126,6 @@ MonoBehaviour:
   dialogueList:
   - {fileID: 11400000, guid: 8eacaa118ce30424bb08e29127f6c902, type: 2}
   - {fileID: 11400000, guid: 83e3619d6334f7b4faccbef816675f16, type: 2}
-  - {fileID: 11400000, guid: d1279a3983c7b1743a4c7b76bba9ccd4, type: 2}
-  - {fileID: 11400000, guid: ef2786f224a4ef645a1537ed679e50fa, type: 2}
-  - {fileID: 11400000, guid: 8be7e591cef39f640ad64f1fa3ee08b2, type: 2}
---- !u!1 &1335559834697729773
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 5269714712843618905}
-  m_Layer: 0
-  m_Name: Assalto1
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &5269714712843618905
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1335559834697729773}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1592003967369239797}
-  m_Father: {fileID: 3580791608722098210}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &2452645939794260414
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1592003967369239797}
-  - component: {fileID: 183054825058383562}
-  m_Layer: 0
-  m_Name: Dialogo__Assalto01
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1592003967369239797
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2452645939794260414}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 5269714712843618905}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &183054825058383562
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2452645939794260414}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3f407ce48a656e044b7d39160467b389, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dialogueList:
-  - {fileID: 11400000, guid: 83e3619d6334f7b4faccbef816675f16, type: 2}
-  - {fileID: 11400000, guid: d1279a3983c7b1743a4c7b76bba9ccd4, type: 2}
   - {fileID: 11400000, guid: ef2786f224a4ef645a1537ed679e50fa, type: 2}
   - {fileID: 11400000, guid: 8be7e591cef39f640ad64f1fa3ee08b2, type: 2}
 --- !u!1 &2695195572070472738
@@ -283,11 +201,11 @@ PrefabInstance:
     - target: {fileID: 5054191627667461150, guid: 6666353addaa090479541a42835982dd, type: 3}
       propertyPath: dialogueList.Array.data[0]
       value: 
-      objectReference: {fileID: 11400000, guid: 83e3619d6334f7b4faccbef816675f16, type: 2}
+      objectReference: {fileID: 11400000, guid: d1279a3983c7b1743a4c7b76bba9ccd4, type: 2}
     - target: {fileID: 5054191627667461150, guid: 6666353addaa090479541a42835982dd, type: 3}
       propertyPath: dialogueList.Array.data[1]
       value: 
-      objectReference: {fileID: 11400000, guid: d1279a3983c7b1743a4c7b76bba9ccd4, type: 2}
+      objectReference: {fileID: 11400000, guid: 83e3619d6334f7b4faccbef816675f16, type: 2}
     - target: {fileID: 5054191627667461150, guid: 6666353addaa090479541a42835982dd, type: 3}
       propertyPath: dialogueList.Array.data[2]
       value: 

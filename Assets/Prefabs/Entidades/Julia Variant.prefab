@@ -116,14 +116,22 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5054191627667461150, guid: 6666353addaa090479541a42835982dd, type: 3}
       propertyPath: dialogueList.Array.size
-      value: 2
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 5054191627667461150, guid: 6666353addaa090479541a42835982dd, type: 3}
       propertyPath: dialogueList.Array.data[0]
       value: 
-      objectReference: {fileID: 11400000, guid: 7df88f3fffca8904bb93db71c9ea527c, type: 2}
+      objectReference: {fileID: 11400000, guid: a273bf9c471f1f34fbdd8f485f90ab1f, type: 2}
     - target: {fileID: 5054191627667461150, guid: 6666353addaa090479541a42835982dd, type: 3}
       propertyPath: dialogueList.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: de57c43b026dea7449d2504abc6e8374, type: 2}
+    - target: {fileID: 5054191627667461150, guid: 6666353addaa090479541a42835982dd, type: 3}
+      propertyPath: dialogueList.Array.data[2]
+      value: 
+      objectReference: {fileID: 11400000, guid: 7df88f3fffca8904bb93db71c9ea527c, type: 2}
+    - target: {fileID: 5054191627667461150, guid: 6666353addaa090479541a42835982dd, type: 3}
+      propertyPath: dialogueList.Array.data[3]
       value: 
       objectReference: {fileID: 11400000, guid: 8f95e97fa3e46214db4bbc0a83b96c62, type: 2}
     - target: {fileID: 5054191628257583953, guid: 6666353addaa090479541a42835982dd, type: 3}
@@ -300,7 +308,7 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: 9138aebf525920c41b12ad59f34dbeb6, type: 2}
     - target: {fileID: 5054191628257583966, guid: 6666353addaa090479541a42835982dd, type: 3}
       propertyPath: m_Name
-      value: Julia
+      value: Julia Variant
       objectReference: {fileID: 0}
     - target: {fileID: 5054191628257583966, guid: 6666353addaa090479541a42835982dd, type: 3}
       propertyPath: m_IsActive

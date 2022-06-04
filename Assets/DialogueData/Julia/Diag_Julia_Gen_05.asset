@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71dc2b686cd518144986ef63d2ca13a3, type: 3}
+  m_Name: Diag_Julia_Gen_05
+  m_EditorClassIdentifier: 
+  dialogue:
+  - portrait: {fileID: 21300000, guid: 5d0f7f04c5597894fa72cd630c124d36, type: 3}
+    text: "Eu gosto de escrever hist\xF3rias baseadas nos meus mangas favoitos! Voc\xEA
+      quer participar de uma delas?"
+  responses:
+  - responseText: Sim
+    dialogueObject: {fileID: 11400000, guid: 5ed93cc3ec59dd04ebd8312ded5458e7, type: 2}
+  - responseText: "N\xE3o"
+    dialogueObject: {fileID: 11400000, guid: 15c6d3fd0d632dd4a9d932b8abeafd5d, type: 2}
