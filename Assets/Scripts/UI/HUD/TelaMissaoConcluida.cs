@@ -15,6 +15,9 @@ public class TelaMissaoConcluida : MonoBehaviour
 
     [SerializeField] private TMP_Text nomeDaMissao;
 
+    //Variaveis
+    [SerializeField] AudioClip somMissaoConcluida;
+
     private void Start()
     {
         //Managers
@@ -66,5 +69,10 @@ public class TelaMissaoConcluida : MonoBehaviour
     public void AutoSave()
     {
         SaveManager.instance.AutoSave();
+    }
+
+    public void TocarSom()
+    {
+        generalManager.SoundManager.TocarSom(somMissaoConcluida);
     }
 }

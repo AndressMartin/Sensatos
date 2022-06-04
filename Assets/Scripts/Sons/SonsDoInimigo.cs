@@ -8,12 +8,14 @@ public class SonsDoInimigo : MonoBehaviour
     private GeneralManagerScript generalManager;
 
     //Componentes
+    [SerializeField] private AudioClip tomandoDano;
+
     [SerializeField] private AudioClip[] morte;
 
     [SerializeField] private AudioClip alerta;
 
     //Enums
-    public enum Som { Morte, Alerta };
+    public enum Som { TomandoDano, Morte, Alerta };
 
     private void Start()
     {
@@ -25,6 +27,10 @@ public class SonsDoInimigo : MonoBehaviour
     {
         switch (som)
         {
+            case Som.TomandoDano:
+                generalManager.SoundManager.TocarSom(tomandoDano);
+                break;
+
             case Som.Morte:
                 generalManager.SoundManager.TocarSom(morte[Random.Range(0, morte.Length)]);
                 break;

@@ -19,17 +19,20 @@ public class MenuFimDoAssalto : MonoBehaviour
 
     //Enums
     public enum Menu { Inicio, ConfirmacaoVoltarACidade }
+    public enum Som { TerminouAssalto, MadeiraCaiuNoChao }
 
     //Variaveis
     private bool ativo;
     private Menu menuAtual;
+
+    [SerializeField] private AudioClip somTerminouAssalto;
+    [SerializeField] private AudioClip somMadeiraCaiuNoChao;
 
     //Setters
     public void AtivarMenu()
     {
         ativo = true;
 
-        generalManager.PauseManager.Pausar(true);
         generalManager.PauseManager.SetPermitirInput(false);
     }
 
@@ -89,6 +92,8 @@ public class MenuFimDoAssalto : MonoBehaviour
     public void IniciarMenuFimDoAssalto()
     {
         generalManager.Hud.SetMenuAberto(HUDScript.Menu.FimDoAssalto);
+
+        generalManager.PauseManager.Pausar(true);
         generalManager.PauseManager.SetPermitirInput(false);
 
         menu.gameObject.SetActive(true);
@@ -96,6 +101,8 @@ public class MenuFimDoAssalto : MonoBehaviour
         AtualizarPainelDeEscolha(opcoesMenuInicial, 0);
 
         animacao.Play("Iniciar");
+
+        TocarSom(Som.TerminouAssalto);
     }
 
     private void IniciarVoltarParaACidade()
@@ -110,5 +117,19 @@ public class MenuFimDoAssalto : MonoBehaviour
         GameManager.instance.VariaveisGlobais.CompletouUmAssalto = true;
 
         LevelLoaderScript.Instance.CarregarNivel(GameManager.instance.NomesDeCenas.Cidade);
+    }
+
+    public void TocarSom(Som som)
+    {
+        switch(som)
+        {
+            case Som.TerminouAssalto:
+                generalManager.SoundManager.TocarSomIgnorandoPause(somTerminouAssalto);
+                break;
+
+            case Som.MadeiraCaiuNoChao:
+                generalManager.SoundManager.TocarSomIgnorandoPause(somMadeiraCaiuNoChao);
+                break;
+        }
     }
 }

@@ -395,6 +395,9 @@ public class Enemy : EntityModel
             {
                 animacao.AtualizarArmaBracos("");
                 animacao.TrocarAnimacao("Morto");
+
+                sonsDoInimigo.TocarSom(SonsDoInimigo.Som.Morte);
+
                 Morrer();
             }
             else
@@ -412,6 +415,8 @@ public class Enemy : EntityModel
                 }
 
                 EfeitoTomandoDano();
+
+                sonsDoInimigo.TocarSom(SonsDoInimigo.Som.TomandoDano);
             }
         } 
     }
@@ -450,8 +455,6 @@ public class Enemy : EntityModel
         colisao.enabled = false;
 
         animacao.AtualizarDirecao(direcao, direcao);
-
-        sonsDoInimigo.TocarSom(SonsDoInimigo.Som.Morte);
     }
 
     public void MudarOrdemLayer()
@@ -497,6 +500,9 @@ public class Enemy : EntityModel
 
         animacao.AtualizarArmaBracos("");
         animacao.TrocarAnimacao("MortoSorrateiramente");
+
+        sonsDoInimigo.TocarSom(SonsDoInimigo.Som.Morte);
+
         Morrer();
     }
 
