@@ -193,12 +193,14 @@ public class Player : EntityModel
 
     public void Respawn()
     {
+        Vector3 deltaPosition = posicaoRespawn - (Vector2)transform.position;
+
         vida = vidaMax;
         transform.position = posicaoRespawn;
         ChangeDirection(direcaoRespawn);
         playerMovement.ResetarVariaveisDeControle();
 
-        generalManager.CameraPrincipal.gameObject.transform.parent.transform.position = posicaoRespawn;
+        generalManager.CameraPrincipal.OnTargetObjectWarped(this.transform, deltaPosition);
 
         inventario.Respawn();
         inventarioMissao.Respawn();

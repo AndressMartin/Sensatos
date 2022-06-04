@@ -25,11 +25,14 @@ public class TransicaoDeMapa : MonoBehaviour
 
     public virtual void FazerTransicao()
     {
+        Vector3 deltaPosition = posicaoPlayer.transform.position - generalManager.Player.transform.position;
+
         generalManager.Player.transform.position = posicaoPlayer.position;
         generalManager.Player.ChangeDirection(direcao);
 
         generalManager.CameraPrincipal.GetComponent<CinemachineConfiner>().m_BoundingShape2D = limiteDaCamera;
-        generalManager.CameraPrincipal.gameObject.transform.parent.transform.position = posicaoPlayer.position;
+
+        generalManager.CameraPrincipal.OnTargetObjectWarped(generalManager.Player.transform, deltaPosition);
     }
 
     protected virtual void OnTriggerEnter2D(Collider2D collision)
