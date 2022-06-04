@@ -31,6 +31,8 @@ public class IAEnemy : MonoBehaviour
 
     [SerializeField] protected TipoInimigo tipoInimigo;
 
+    [SerializeField] protected float diferencaYBarraDeVisao;
+
     protected bool iniciado = false;
 
     //Variaveis controle
@@ -259,7 +261,7 @@ public class IAEnemy : MonoBehaviour
 
         if(barraDeVisao.IconeAtivo == true)
         {
-            generalManager.Hud.AtualizarBarraDeVisao(enemy.gameObject, barraDeVisao, enemy.Animacao.CorpoSprite);
+            generalManager.Hud.AtualizarBarraDeVisao(enemy.gameObject, barraDeVisao, enemy.Animacao.CorpoSprite, diferencaYBarraDeVisao);
         }
     }
 

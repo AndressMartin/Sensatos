@@ -124,6 +124,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialogueList:
+  - {fileID: 11400000, guid: 8eacaa118ce30424bb08e29127f6c902, type: 2}
   - {fileID: 11400000, guid: 83e3619d6334f7b4faccbef816675f16, type: 2}
   - {fileID: 11400000, guid: d1279a3983c7b1743a4c7b76bba9ccd4, type: 2}
   - {fileID: 11400000, guid: ef2786f224a4ef645a1537ed679e50fa, type: 2}
@@ -277,7 +278,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5054191627667461150, guid: 6666353addaa090479541a42835982dd, type: 3}
       propertyPath: dialogueList.Array.size
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 5054191627667461150, guid: 6666353addaa090479541a42835982dd, type: 3}
       propertyPath: dialogueList.Array.data[0]
@@ -295,6 +296,10 @@ PrefabInstance:
       propertyPath: dialogueList.Array.data[3]
       value: 
       objectReference: {fileID: 11400000, guid: 8be7e591cef39f640ad64f1fa3ee08b2, type: 2}
+    - target: {fileID: 5054191627667461150, guid: 6666353addaa090479541a42835982dd, type: 3}
+      propertyPath: dialogueList.Array.data[4]
+      value: 
+      objectReference: {fileID: 11400000, guid: 8eacaa118ce30424bb08e29127f6c902, type: 2}
     - target: {fileID: 5054191628257583953, guid: 6666353addaa090479541a42835982dd, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -497,7 +502,7 @@ PrefabInstance:
       objectReference: {fileID: 9100000, guid: 18bd9e1f1d44d924f8c273e6445fde5e, type: 2}
     - target: {fileID: 5054191628257583966, guid: 6666353addaa090479541a42835982dd, type: 3}
       propertyPath: m_Name
-      value: Baldius
+      value: Baldius Variant
       objectReference: {fileID: 0}
     - target: {fileID: 5054191628257583966, guid: 6666353addaa090479541a42835982dd, type: 3}
       propertyPath: m_IsActive

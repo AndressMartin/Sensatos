@@ -48,7 +48,6 @@ public class Spawner : MonoBehaviour
         {
             Enemy enemy;
             enemy = Instantiate(prefabInimigo, transform.position, Quaternion.identity);
-            enemy.name = "carlos " + i;
             enemy.SerSpawnado(transform.position);
             enemyList.Add(enemy);
         }
