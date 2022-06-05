@@ -15,20 +15,23 @@ MonoBehaviour:
   listaDeArmas:
   - arma: {fileID: 11400000, guid: 2b3fb1ff54fda6746bcd0f1af1f91c49, type: 2}
     precoArma: 0
-    precoMunicao: 0
-    precoMelhoria: 0000000000000000
-    flag: 0
+    precoMunicao: 60
+    precoMelhoria: a00f000028230000
+    flag: 14
   - arma: {fileID: 11400000, guid: 66994fafcc9411c4799eda98819674ed, type: 2}
-    precoArma: 0
-    precoMunicao: 0
-    precoMelhoria: 0000000000000000
-    flag: 0
+    precoArma: 4000
+    precoMunicao: 100
+    precoMelhoria: 581b0000f82a0000
+    flag: 14
   - arma: {fileID: 11400000, guid: 84d62827a1830a145938af1f4d34662f, type: 2}
-    precoArma: 0
-    precoMunicao: 0
-    precoMelhoria: 00000000
-    flag: 0
+    precoArma: 5000
+    precoMunicao: 40
+    precoMelhoria: 10270000
+    flag: 15
   listaDeItens:
   - item: {fileID: 11400000, guid: 2b2b5ab398318654db342a3fd9840b75, type: 2}
-    preco: 0
-    flag: 0
+    preco: 3000
+    flag: 12
+  - item: {fileID: 11400000, guid: 2b2b5ab398318654db342a3fd9840b75, type: 2}
+    preco: 1500
+    flag: 13

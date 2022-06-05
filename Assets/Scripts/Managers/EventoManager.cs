@@ -61,7 +61,7 @@ public class EventoManager : MonoBehaviour
     {
         Vector3 deltaPosition = posicao.position - generalManager.Player.transform.position;
 
-        generalManager.Player.transform.position = posicaoPlayerNovoJogo.position;
+        generalManager.Player.transform.position = posicao.position;
         generalManager.Player.ChangeDirection(direcao);
 
         generalManager.CameraPrincipal.GetComponent<CinemachineConfiner>().m_BoundingShape2D = limiteDaCamera;

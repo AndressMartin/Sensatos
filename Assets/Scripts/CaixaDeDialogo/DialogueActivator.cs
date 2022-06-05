@@ -11,6 +11,7 @@ public class DialogueActivator : MonoBehaviour
 
     public void ShowDialogue(GeneralManagerScript generalManager)
     {
+        print("Dialogo: " + dialogueObject.name + IdiomaManager.GetIdioma);
         if(generalManager.DialogueUI.IsOpen == false)
         {
             UpdateResponseEvents(generalManager, this.dialogueObject);

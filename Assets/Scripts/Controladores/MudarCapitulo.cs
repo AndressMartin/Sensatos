@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MudarCapitulo : MonoBehaviour
 {
-    public GameManager.Capitulo capituloParaMudar;
+    [SerializeField] private GameManager.Capitulo capituloParaMudar;
    
     public void MudarCapituloEvento()
     {

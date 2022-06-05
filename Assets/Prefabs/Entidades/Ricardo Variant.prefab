@@ -480,7 +480,8 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: -2551567236541640770, guid: c88d5fe7d34bcfe4db0be060adc31ce3, type: 3}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5054191628257583955, guid: 6666353addaa090479541a42835982dd, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 6666353addaa090479541a42835982dd, type: 3}
 --- !u!4 &7803043841833161923 stripped
 Transform:
@@ -563,6 +564,19 @@ MonoBehaviour:
     onPickedResponse:
       m_PersistentCalls:
         m_Calls: []
+--- !u!114 &2063728724969027011
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7803043842330135271}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf9786264c0b2454e84da4926671a3ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogoFimDoJogo: {fileID: 11400000, guid: 3da21a3dc9a6f1741ba448cbb7fe6b86, type: 2}
 --- !u!4 &7803043842330135272 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5054191628257583953, guid: 6666353addaa090479541a42835982dd, type: 3}

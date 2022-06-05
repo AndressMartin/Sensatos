@@ -12,9 +12,9 @@ public class PlayerMovement : MonoBehaviour
     [HideInInspector] public float horizontal;
     [HideInInspector] public float vertical;
 
-    private float velocidade,
-                  velocidadeAndando,
-                  velocidadeAndandoSorrateiramente;
+    private float velocidade;
+    [SerializeField] private float velocidadeAndando,
+                                   velocidadeAndandoSorrateiramente;
 
     private float movimentoX = 0;
     private float movimentoY = 0;
@@ -32,8 +32,6 @@ public class PlayerMovement : MonoBehaviour
         player = GetComponent<Player>();
 
         //Variaveis
-        velocidadeAndando = 5;
-        velocidadeAndandoSorrateiramente = 3f;
         velocidade = velocidadeAndando;
 
         //Variaveis de controle
