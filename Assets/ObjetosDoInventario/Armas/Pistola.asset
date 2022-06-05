@@ -17,19 +17,19 @@ MonoBehaviour:
   descricao: "Uma pistola, todo bom detetive deve ter para fazer bem o seu trabalho,
     principalmente quado pegar pistas sem ser percebido d\xE1 errado."
   nomeAnimacao: Arma1
-  raioDoSomDoTiro: 10
+  raioDoSomDoTiro: 15
   rapidFire: 0
   tremerATela: 1
   intensidade: 1
   tempo: 0.3
   statusBase:
     projetil: {fileID: 6097792137987419900, guid: f7e423f80e06b7c44b6cf52f573de597, type: 3}
-    somDoTiro: {fileID: 8300000, guid: 4d2f41dcef6d6a64e9e0d206d28317bb, type: 3}
+    somDoTiro: {fileID: 8300000, guid: 436fc659ced7b834499d9c3308324c53, type: 3}
     dano: 20
     velocidadeProjetil: 8
     knockBack: 4
     knockBackTrigger: 0
-    distanciaMaxProjetil: 10
+    distanciaMaxProjetil: 20
     cadenciaDosTiros: 0.5
     tempoParaRecarregar: 1.5
     municaoMaxCartucho: 6
@@ -40,7 +40,7 @@ MonoBehaviour:
     descricao: "Mais muni\xE7\xE3o para a arma, \xE9 sempre bom!"
     status:
       projetil: {fileID: 6097792137987419900, guid: f7e423f80e06b7c44b6cf52f573de597, type: 3}
-      somDoTiro: {fileID: 8300000, guid: 4d2f41dcef6d6a64e9e0d206d28317bb, type: 3}
+      somDoTiro: {fileID: 8300000, guid: 436fc659ced7b834499d9c3308324c53, type: 3}
       dano: 20
       velocidadeProjetil: 9
       knockBack: 4
@@ -56,7 +56,7 @@ MonoBehaviour:
       soldados da Colmeia, causando mais dano. Acabe com aqueles abelhudos!"
     status:
       projetil: {fileID: 8583994499093954915, guid: f4376ad71d743964f8fad577b404e7d2, type: 3}
-      somDoTiro: {fileID: 8300000, guid: 4d2f41dcef6d6a64e9e0d206d28317bb, type: 3}
+      somDoTiro: {fileID: 8300000, guid: 436fc659ced7b834499d9c3308324c53, type: 3}
       dano: 25
       velocidadeProjetil: 9
       knockBack: 4

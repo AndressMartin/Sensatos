@@ -22,7 +22,7 @@ public static class SaveConfiguracoes
     }
 
     //A instancia da classe Configuracoes
-    public static Configuracoes configuracoes = new Configuracoes(30, 100, IdiomaManager.Idioma.Portugues);
+    public static Configuracoes configuracoes = new Configuracoes(50, 60, IdiomaManager.Idioma.Portugues);
 
     public static void AtualizarConfiguracoes()
     {

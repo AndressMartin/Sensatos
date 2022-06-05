@@ -439,7 +439,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 313b87dc92dc45a47b25fadbe4cf708a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  somDoLogo: {fileID: 8300000, guid: bcbd3fe7351fd20499a270707e15406f, type: 3}
+  somDoLogo: {fileID: 8300000, guid: f77e0f87f3c29a74e9f77d6ad2398cc8, type: 3}
 --- !u!1 &8830379532794271877
 GameObject:
   m_ObjectHideFlags: 0
@@ -752,6 +752,7 @@ MonoBehaviour:
   efeitosDeTela: {fileID: 0}
   telaTransicaoDeMapa: {fileID: 0}
   transicaoDeTela: {fileID: 367960088340641627}
+  telaFimDoJogo: {fileID: 0}
   lockDownUI: {fileID: 0}
   playerUI: {fileID: 0}
   barraDeVisaoDoInimigo: {fileID: 0}
@@ -1080,6 +1081,10 @@ PrefabInstance:
     - target: {fileID: 2827596823790974316, guid: 8d70feeeb95e1354f9c07dfbb4015f14, type: 3}
       propertyPath: m_Name
       value: TransicoesDeTela
+      objectReference: {fileID: 0}
+    - target: {fileID: 4405461982639122329, guid: 8d70feeeb95e1354f9c07dfbb4015f14, type: 3}
+      propertyPath: AparecerQuandoIniciarACena
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6549306823116320975, guid: 8d70feeeb95e1354f9c07dfbb4015f14, type: 3}
       propertyPath: m_UpdateMode

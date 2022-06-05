@@ -17,14 +17,14 @@ MonoBehaviour:
   descricao: "Uma escopeta, nem sempre d\xE1 pra fazer as coisas de forma silenciosa,
     ent\xE3o o jeito \xE9 partir para a ignor\xE2ncia!"
   nomeAnimacao: Arma2
-  raioDoSomDoTiro: 10
+  raioDoSomDoTiro: 30
   rapidFire: 0
   tremerATela: 1
   intensidade: 2
   tempo: 0.5
   statusBase:
     projetil: {fileID: -3273666588168549129, guid: cde5861db3c7034458bf0dc15e2300b4, type: 3}
-    somDoTiro: {fileID: 8300000, guid: 223c02718fda69847b46ec22db0eb4ba, type: 3}
+    somDoTiro: {fileID: 8300000, guid: 5b400c1a53ccf104491ff69b363f598d, type: 3}
     dano: 34
     velocidadeProjetil: 0
     knockBack: 5
@@ -41,7 +41,7 @@ MonoBehaviour:
       com seus tiros!"
     status:
       projetil: {fileID: -3273666588168549129, guid: cde5861db3c7034458bf0dc15e2300b4, type: 3}
-      somDoTiro: {fileID: 8300000, guid: 223c02718fda69847b46ec22db0eb4ba, type: 3}
+      somDoTiro: {fileID: 8300000, guid: 5b400c1a53ccf104491ff69b363f598d, type: 3}
       dano: 34
       velocidadeProjetil: 0
       knockBack: 7
@@ -57,7 +57,7 @@ MonoBehaviour:
       Polinize as plantas no lugar deles!... na verdade, \xE9 melhor n\xE3o."
     status:
       projetil: {fileID: -3273666588168549129, guid: cde5861db3c7034458bf0dc15e2300b4, type: 3}
-      somDoTiro: {fileID: 8300000, guid: 223c02718fda69847b46ec22db0eb4ba, type: 3}
+      somDoTiro: {fileID: 8300000, guid: 5b400c1a53ccf104491ff69b363f598d, type: 3}
       dano: 50
       velocidadeProjetil: 0
       knockBack: 9

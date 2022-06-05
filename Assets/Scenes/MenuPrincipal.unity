@@ -10038,10 +10038,6 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.x
       value: 100
       objectReference: {fileID: 0}
-    - target: {fileID: 367960088340641627, guid: ffdcf712ce0fca247945bfe9ecd2ba89, type: 3}
-      propertyPath: AparecerQuandoIniciarACena
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 911672837287769605, guid: ffdcf712ce0fca247945bfe9ecd2ba89, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -10152,20 +10148,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8264437200367832293, guid: ffdcf712ce0fca247945bfe9ecd2ba89, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8830379532610890195, guid: ffdcf712ce0fca247945bfe9ecd2ba89, type: 3}
-      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8830379532858667406, guid: ffdcf712ce0fca247945bfe9ecd2ba89, type: 3}
       propertyPath: m_Name
       value: UIMenuPrincipal
       objectReference: {fileID: 0}
-    - target: {fileID: 8830379532858667410, guid: ffdcf712ce0fca247945bfe9ecd2ba89, type: 3}
-      propertyPath: m_Camera
-      value: 
-      objectReference: {fileID: 4313159731870462132}
     - target: {fileID: 8830379532858667413, guid: ffdcf712ce0fca247945bfe9ecd2ba89, type: 3}
       propertyPath: m_Pivot.x
       value: 0

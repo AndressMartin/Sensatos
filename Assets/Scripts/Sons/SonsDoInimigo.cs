@@ -8,7 +8,7 @@ public class SonsDoInimigo : MonoBehaviour
     private GeneralManagerScript generalManager;
 
     //Componentes
-    [SerializeField] private AudioClip tomandoDano;
+    [SerializeField] private AudioClip[] tomandoDano;
 
     [SerializeField] private AudioClip[] morte;
 
@@ -28,7 +28,7 @@ public class SonsDoInimigo : MonoBehaviour
         switch (som)
         {
             case Som.TomandoDano:
-                generalManager.SoundManager.TocarSom(tomandoDano);
+                generalManager.SoundManager.TocarSom(tomandoDano[Random.Range(0, tomandoDano.Length)]);
                 break;
 
             case Som.Morte:

@@ -558,9 +558,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d73993b8829db93418a74148bf0e4b95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tomandoDano: {fileID: 8300000, guid: 895d2fb0386db0844b87506cfcfc7699, type: 3}
+  tomandoDano:
+  - {fileID: 8300000, guid: ec21156b17e4e244da7847629c10371a, type: 3}
+  - {fileID: 8300000, guid: bc01b16b6edda634cbb3f01b27491225, type: 3}
   morte:
   - {fileID: 8300000, guid: 2ac3b192feb4a8846b624b30817600e2, type: 3}
+  - {fileID: 8300000, guid: c151aa464492f964786f7ca7ef1bcdb1, type: 3}
+  - {fileID: 8300000, guid: e54e501512d567e4f8dbb9c1829012ef, type: 3}
+  - {fileID: 8300000, guid: b59889e08cd1c834a931918caf78f4d4, type: 3}
   alerta: {fileID: 8300000, guid: 9fb2785d0da8e1747928750afeb2e048, type: 3}
 --- !u!114 &852616414
 MonoBehaviour:

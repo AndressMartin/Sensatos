@@ -16,14 +16,14 @@ MonoBehaviour:
   nome: Metralhadora
   descricao: "Uma metralhadora, para voc\xEA atirar r\xE1pido igual o Soos."
   nomeAnimacao: Arma3
-  raioDoSomDoTiro: 10
+  raioDoSomDoTiro: 20
   rapidFire: 1
   tremerATela: 1
   intensidade: 1.2
   tempo: 0.3
   statusBase:
     projetil: {fileID: 936774549155902364, guid: fb367ceda656c1941a264f3c3a00be42, type: 3}
-    somDoTiro: {fileID: 8300000, guid: 4d2f41dcef6d6a64e9e0d206d28317bb, type: 3}
+    somDoTiro: {fileID: 8300000, guid: 523e397b68be4cd4e8d11f0d2bd98d75, type: 3}
     dano: 10
     velocidadeProjetil: 10
     knockBack: 1
@@ -40,7 +40,7 @@ MonoBehaviour:
       o Soos vai te parar!"
     status:
       projetil: {fileID: 936774549155902364, guid: fb367ceda656c1941a264f3c3a00be42, type: 3}
-      somDoTiro: {fileID: 8300000, guid: 4d2f41dcef6d6a64e9e0d206d28317bb, type: 3}
+      somDoTiro: {fileID: 8300000, guid: 523e397b68be4cd4e8d11f0d2bd98d75, type: 3}
       dano: 12
       velocidadeProjetil: 12
       knockBack: 1
