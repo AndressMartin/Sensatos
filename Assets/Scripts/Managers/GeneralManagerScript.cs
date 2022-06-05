@@ -24,6 +24,7 @@ public class GeneralManagerScript : MonoBehaviour
     private AssaltoManager assaltoManager;
     private ModoDeJogoManager modoDeJogoManager;
     private MusicasDoMapa musicasDoMapa;
+    private EventoManager eventoManager;
 
     //Componentes
     private Player player;
@@ -60,6 +61,7 @@ public class GeneralManagerScript : MonoBehaviour
     public AssaltoManager AssaltoManager => assaltoManager;
     public ModoDeJogoManager ModoDeJogoManager => modoDeJogoManager;
     public MusicasDoMapa MusicasDoMapa => musicasDoMapa;
+    public EventoManager EventoManager => eventoManager;
     public SalaSeguranca SalaSeguranca => salaSeguranca;
 
     private void Awake()
@@ -83,6 +85,7 @@ public class GeneralManagerScript : MonoBehaviour
         assaltoManager = FindObjectOfType<AssaltoManager>();
         modoDeJogoManager = FindObjectOfType<ModoDeJogoManager>();
         musicasDoMapa = FindObjectOfType<MusicasDoMapa>();
+        eventoManager = FindObjectOfType<EventoManager>();
 
         //Componentes
         player = FindObjectOfType<Player>();

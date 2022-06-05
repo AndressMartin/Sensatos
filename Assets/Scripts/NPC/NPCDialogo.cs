@@ -5,10 +5,10 @@ using UnityEngine;
 public class NPCDialogo : ObjetoInteragivel
 {
     //Managers
-    private GeneralManagerScript generalManager;
+    protected GeneralManagerScript generalManager;
 
-    private DialogueActivator dialogueActivator;
-    private NPC npc;
+    protected DialogueActivator dialogueActivator;
+    protected NPC npc;
 
     public void Iniciar(NPC _npc)
     {
@@ -96,7 +96,7 @@ public class NPCDialogo : ObjetoInteragivel
         }
     }
 
-    void Contador()
+    protected void Contador()
     {
         npc.RetornarDialogoGenericoAtual().addCont();
     }

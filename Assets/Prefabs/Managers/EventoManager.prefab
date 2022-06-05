@@ -10,6 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1745615859635480832}
   - component: {fileID: 8953712342274625173}
+  - component: {fileID: 4319745838774546446}
+  - component: {fileID: 2340892858796260203}
   m_Layer: 0
   m_Name: EventoManager
   m_TagString: Untagged
@@ -44,3 +46,55 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa4c6b3859018ec44a03533d278da328, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dialogueActivator: {fileID: 4319745838774546446}
+  posicaoPlayerNovoJogo: {fileID: 0}
+  direcaoNovoJogo: 0
+  limiteDaCameraNovoJogo: {fileID: 0}
+  dinheiroParaCompletarOJogo: 0
+  posicaoPlayerFimDoJogo: {fileID: 0}
+  direcaoFimDoJogo: 0
+  limiteDaCameraFimDoJogo: {fileID: 0}
+  NPCsNoFimDoJogo: {fileID: 0}
+--- !u!114 &4319745838774546446
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1662320404655822246}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6cc40cf137bf5914c9377fd20562949a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogueObject: {fileID: 11400000, guid: fe46990702be1374aadff7d368ea16fc, type: 2}
+--- !u!114 &2340892858796260203
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1662320404655822246}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c9066802fc20074782c7b3ae1d6b503, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogueObject: {fileID: 11400000, guid: fe46990702be1374aadff7d368ea16fc, type: 2}
+  events:
+    name: 
+    onPickedResponse:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 8953712342274625173}
+          m_TargetAssemblyTypeName: EventoManager, Assembly-CSharp
+          m_MethodName: MostrarCreditos
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2

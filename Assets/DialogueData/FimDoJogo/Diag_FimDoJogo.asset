@@ -1,0 +1,70 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71dc2b686cd518144986ef63d2ca13a3, type: 3}
+  m_Name: Diag_FimDoJogo
+  m_EditorClassIdentifier: 
+  dialogue:
+  - portrait: {fileID: 21300000, guid: 5b35913604c416a4bb6d8c237f68471c, type: 3}
+    text: "\xC9 isso, pessoal, a m\xE1quina funcionou perfeitamente, e as abelhas
+      da Colmeia est\xE3o indo embora por causa do cheiro que est\xE1 infestando
+      a base deles!"
+  - portrait: {fileID: 21300000, guid: 5b35913604c416a4bb6d8c237f68471c, type: 3}
+    text: "Agrade\xE7am ao Jonas, ele tornou tudo isso poss\xEDvel!"
+  - portrait: {fileID: 21300000, guid: 5d0f7f04c5597894fa72cd630c124d36, type: 3}
+    text: "Obrigado, Jonas! Voc\xEA \xE9 incr\xEDvel!\nAgora vou poder andar tranquila
+      em volta da cidade e ver v\xE1rios lugares para desenhar!"
+  - portrait: {fileID: 21300000, guid: 5d0f7f04c5597894fa72cd630c124d36, type: 3}
+    text: "Eu vou fazer um mang\xE1 sobre voc\xEA em comemora\xE7\xE3o, e vai ter
+      v\xE1rios desenhos legais!"
+  - portrait: {fileID: 21300000, guid: 4757cb7248f3e9b45959f53fb486cc12, type: 3}
+    text: "Parab\xE9ns, jovem, voc\xEA n\xE3o era t\xE3o ruim quanto eu pensei, no
+      final das contas. Mandou aqueles abelhudos pra onde o sol n\xE3o brila... atr\xE1s
+      dele! Hahahaha!"
+  - portrait: {fileID: 21300000, guid: 9f81907e7c4f98d43a093a9ae8f875b5, type: 3}
+    text: "\xC9, valeu a\xED!"
+  - portrait: {fileID: 21300000, guid: e77c47ca80c2ad346a937c4bd896bdb2, type: 3}
+    text: "Eu n\xE3o imaginava que voc\xEA fosse fazer tudo isso quando desceu do
+      trem, Jonas, obrigado!"
+  - portrait: {fileID: 21300000, guid: 9502506bcf576b544bef3589712d5551, type: 3}
+    text: "Nossa, isso foi f\xE1cil, eu nem tive que descer o tiro em todo mundo."
+  - portrait: {fileID: 21300000, guid: 9502506bcf576b544bef3589712d5551, type: 3}
+    text: Que pena.
+  - portrait: {fileID: 21300000, guid: 9502506bcf576b544bef3589712d5551, type: 3}
+    text: "Est\xE1 ventando pra c\xE1, isso vai acabar fazendo com que o cheiro venha
+      pra cidade."
+  - portrait: {fileID: 21300000, guid: 5b35913604c416a4bb6d8c237f68471c, type: 3}
+    text: "Relaxa, a subst\xE2ncia tem cheiro de rosas.\nAs abelhas da Colmeia n\xE3o
+      gostam, eles preferem flores amarelas."
+  - portrait: {fileID: 21300000, guid: 9502506bcf576b544bef3589712d5551, type: 3}
+    text: "Ih, al\xE1. Elas n\xE3o gostam de rosa. Mais uma raz\xE3o pra odi\xE1-las."
+  - portrait: {fileID: 21300000, guid: 9f81907e7c4f98d43a093a9ae8f875b5, type: 3}
+    text: "Mas e a\xED, Jonas, voc\xEA conseguiu achar seu tio?"
+  - portrait: {fileID: 21300000, guid: 9502506bcf576b544bef3589712d5551, type: 3}
+    text: "Como voc\xEA sabe que eu estou procurando o meu tio?..."
+  - portrait: {fileID: 21300000, guid: 9502506bcf576b544bef3589712d5551, type: 3}
+    text: "Pera\xED! O meu tio! Eu esqueci dele!"
+  - portrait: {fileID: 21300000, guid: 9502506bcf576b544bef3589712d5551, type: 3}
+    text: "Pessoal, obrigado por tudo, mas tenho que ir agora!\nVoc\xEAs s\xE3o legais!
+      Mesmo tendo a tend\xEAncia de perder muitas coisas..."
+  - portrait: {fileID: 21300000, guid: 5d0f7f04c5597894fa72cd630c124d36, type: 3}
+    text: Tchau, Jonas, volta pra visitar a gente!
+  - portrait: {fileID: 21300000, guid: 9f81907e7c4f98d43a093a9ae8f875b5, type: 3}
+    text: Tchau!
+  - portrait: {fileID: 21300000, guid: 4757cb7248f3e9b45959f53fb486cc12, type: 3}
+    text: "At\xE9 logo, jovem!"
+  - portrait: {fileID: 21300000, guid: e77c47ca80c2ad346a937c4bd896bdb2, type: 3}
+    text: Tchau, Jonas!
+  - portrait: {fileID: 21300000, guid: 5b35913604c416a4bb6d8c237f68471c, type: 3}
+    text: "At\xE9 mais, jonas, fique bem! E obrigado por tudo!"
+  - portrait: {fileID: 21300000, guid: 9502506bcf576b544bef3589712d5551, type: 3}
+    text: "Fui, galera, at\xE9 mais!"
+  responses: []

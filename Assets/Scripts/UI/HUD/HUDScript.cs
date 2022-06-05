@@ -20,6 +20,7 @@ public class HUDScript : MonoBehaviour
     [SerializeField] private EfeitosDeTela efeitosDeTela;
     [SerializeField] private TelaTransicaoDeMapa telaTransicaoDeMapa;
     [SerializeField] private TransicaoDeTela transicaoDeTela;
+    [SerializeField] private TelaFimDoJogo telaFimDoJogo;
     [SerializeField] private LockDownUI lockDownUI;
     [SerializeField] private PlayerUIScript playerUI;
     [SerializeField] private BarraDeVisaoDoInimigo barraDeVisaoDoInimigo;
@@ -44,6 +45,7 @@ public class HUDScript : MonoBehaviour
     public EfeitosDeTela EfeitosDeTela => efeitosDeTela;
     public TelaTransicaoDeMapa TelaTransicaoDeMapa => telaTransicaoDeMapa;
     public TransicaoDeTela TransicaoDeTela => transicaoDeTela;
+    public TelaFimDoJogo TelaFimDoJogo => telaFimDoJogo;
     public BarraDeVisaoDoInimigo BarraDeVisaoDoInimigo => barraDeVisaoDoInimigo;
     public SonsDeMenus SonsDeMenus => sonsDeMenus;
     public Menu MenuAberto => menuAberto;

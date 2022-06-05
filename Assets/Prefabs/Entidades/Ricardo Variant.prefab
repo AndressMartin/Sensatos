@@ -503,48 +503,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 5054191628257583966, guid: 6666353addaa090479541a42835982dd, type: 3}
   m_PrefabInstance: {fileID: 3057349902589290937}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1891937380
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7803043842330135271}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8c9066802fc20074782c7b3ae1d6b503, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dialogueObject: {fileID: 11400000, guid: f665b322dcac59d45927890287c5f659, type: 2}
-  events:
-    name: 
-    onPickedResponse:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 0}
-          m_TargetAssemblyTypeName: MudarCapitulo, Assembly-CSharp
-          m_MethodName: MudarCapituloEvento
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-        - m_Target: {fileID: 0}
-          m_TargetAssemblyTypeName: NpcRecompensa, Assembly-CSharp
-          m_MethodName: PassarItemPlayer
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
 --- !u!114 &1376764666420894837
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -587,6 +545,24 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+--- !u!114 &6166583503863642555
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7803043842330135271}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c9066802fc20074782c7b3ae1d6b503, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogueObject: {fileID: 11400000, guid: 5bafb791294536042ae8fe6561dc8264, type: 2}
+  events:
+    name: 
+    onPickedResponse:
+      m_PersistentCalls:
+        m_Calls: []
 --- !u!4 &7803043842330135272 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5054191628257583953, guid: 6666353addaa090479541a42835982dd, type: 3}
