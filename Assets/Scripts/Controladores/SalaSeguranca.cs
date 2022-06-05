@@ -4,17 +4,31 @@ using UnityEngine;
 
 public class SalaSeguranca : ObjetoInteragivel
 {
-    GeneralManagerScript generalManager;
+    //Managers
+    private GeneralManagerScript generalManager;
 
-    bool camerasLigadas;
-    bool camerasLigadasRespawn;
+    //Componentes
+    private Animator animacao;
+
+    //Variaveis
+    private bool camerasLigadas;
+    private bool camerasLigadasRespawn;
 
     [SerializeField] private AudioClip somDesligarCameras;
 
     void Start()
     {
-        camerasLigadas = true;
+        //Managers
         generalManager = FindObjectOfType<GeneralManagerScript>();
+
+        //Componentes
+        animacao = GetComponent<Animator>();
+
+        //Variaveis
+        camerasLigadas = true;
+
+        //Se adicionar a lista de objetos interagiveis do ObjectManager
+        generalManager.ObjectManager.AdicionarAosObjetosInteragiveis(this);
 
         SetRespaw();
     }
@@ -44,6 +58,15 @@ public class SalaSeguranca : ObjetoInteragivel
         foreach (CameraDeSeguranca cameraDeSeguranca in generalManager.ObjectManager.ListaDeCamerasLockdown)
         {
             cameraDeSeguranca.ReceberDesativarAtivarCamera(valor);
+        }
+
+        if(valor == true)
+        {
+            animacao.Play("Ligada");
+        }
+        else
+        {
+            animacao.Play("Desligada");
         }
     }
 }

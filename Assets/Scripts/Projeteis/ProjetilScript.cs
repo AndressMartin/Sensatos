@@ -174,6 +174,10 @@ public class ProjetilScript : MonoBehaviour
                 }
             }
         }
+        else if (alvoAcertado.CompareTag("ObjetoDestrutivel"))
+        {
+            HitTarget(alvoAcertado);
+        }
         else if (alvoAcertado.CompareTag("ParedeTiro"))
         {
             AnimacaoSeDestruir();

@@ -38,6 +38,8 @@ public class TelaMissaoConcluida : MonoBehaviour
     {
         generalManager.Hud.SetMenuAberto(HUDScript.Menu.TelaMissaoConcluida);
 
+        LiberarInput(false);
+
         AtualizarInformacoes(nomeDaMissao);
 
         animacao.Play("MissaoConcluida");
@@ -58,12 +60,7 @@ public class TelaMissaoConcluida : MonoBehaviour
 
     private void LiberarInput(bool liberar)
     {
-        generalManager.PauseManager.SetPermitirInput(liberar);
-    }
-
-    public void BloquearInput()
-    {
-        LiberarInput(false);
+        generalManager.Player.GetComponent<PlayerInput>().enabled = liberar;
     }
 
     public void AutoSave()

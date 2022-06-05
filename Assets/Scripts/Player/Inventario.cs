@@ -331,7 +331,11 @@ public class Inventario : MonoBehaviour
         if(armas.Count > 0)
         {
             armaSlot[0] = armas[inventarioSave.armaSlot[0]];
-            armaSlot[1] = armas[inventarioSave.armaSlot[1]];
+
+            if(armas.Count > 1)
+            {
+                armaSlot[1] = armas[inventarioSave.armaSlot[1]];
+            }
         }
 
         //Lista de itens

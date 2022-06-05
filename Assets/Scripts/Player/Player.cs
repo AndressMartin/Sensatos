@@ -346,7 +346,7 @@ public class Player : EntityModel
 
     public void Recarregar()
     {
-        if(recarregando == false && (inventario.ArmaSlot[inventario.ArmaAtual].MunicaoCartucho < inventario.ArmaSlot[inventario.ArmaAtual].GetStatus.MunicaoMaxCartucho))
+        if(recarregando == false && (inventario.ArmaSlot[inventario.ArmaAtual].MunicaoCartucho < inventario.ArmaSlot[inventario.ArmaAtual].GetStatus.MunicaoMaxCartucho) && (inventario.ArmaSlot[inventario.ArmaAtual].Municao > 0))
         {
             recarregando = true;
             tempoRecarregar = 0;
