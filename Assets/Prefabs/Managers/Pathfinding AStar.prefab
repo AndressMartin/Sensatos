@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5559371194073686918}
   - component: {fileID: 5559371194073686919}
   - component: {fileID: 5559371194073686937}
+  - component: {fileID: 3803131425154180557}
   m_Layer: 0
   m_Name: Pathfinding AStar
   m_TagString: Untagged
@@ -28,6 +29,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -46,7 +48,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   version: 1
   data:
-    dataString: UEsDBBQAAAgIAACwn+tv3OsBWAIAABMFAAALACQAZ3JhcGgwLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQF1VMlu2zAQ/RWD56aQUgtVemu9pQfHRtwgF11ocmQRpkiBpLwF/vcOKclSXeTk8Zs3M28W6oMIZStgTpuFEXypOZAfI+Jt8mXUO5/hRHdabcQFOs674K7wJBo4r9QJjXjsw6wuwRnBfqqd9OQIwVqJXJtyxncw0dZZhHMqLaDLaOejFUIfI3LCn4cnH3JG6/G7ty5oPUWjK5oMlAPTUztiR2tYtWKSlhVwL7knJx07aWgKm2kZXjjTUgrbKiHuXIVON1UBBnyrXFBsLFSPviYIFCB2hfMyh9GrPLfgWk2GnqfC4ISatOSXbsZWUrtvhB2orIOCxzSIapIu//M/xMGdG10+d3XjyNdwhWD7V3pm1LrBXIfwtJceh/kcqdzTrYT3AtSLXhhdK45OZ2ofWlt4nPZ/b61NCmD7Hm+k3oF19fl2fA/X0P1pIkW5DZMcN8BG6jDwsHswuJrfKDhchm1TIOpVvFn4Q3fDE2odc2GsQ1fbpfLytro2nkrmaPjJs9pNtFFghgkqUFS68xrTuPsV3vk+j5pT/1ja4q2vewN3IQHu+VF051rr421ZttDHJdhiVTspFPST9o4XnNNEK9Vc2LClLmxTm5yyQdiuFvzf0yJxHNM0SZ+ibcyTnI0fGE+jZJykybd0G3GaknB7QmGfVK4boe14cGuqT67wzrpvyGhhaBWunRt6XIhLqW3PFCrXG2YA1KrJcBMOBovgs+QzLnBAG3BOqLBv8pERqdkeeHZLlIVOZydnaNZnyUglDtp5JCOT8NHIiIdvt7w2cBBw9MW7ZFdy/QtQSwMEFAAACAgAALCf6xkwkpNtAAAAeAAAAAkAJABtZXRhLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQGrVipLLSrOzM9TslIw0TPSMzTXUVBKL0osyCgGihiCOKWZKSB2tJKhoWGihamFpUGSYYppWrKJbnKKhYGpiamFqbFFkkFKooVSLFB9SWVBql9ibipET0BiSUZaZl5KZl66nntRZoo7yGil2FoAUEsBAi0AFAAACAgAALCf62/c6wFYAgAAEwUAAAsAJAAAAAAAAAAAAAAAAAAAAGdyYXBoMC5qc29uCgAgAAAAAAABABgAAIA+1d6xnQEAgD7V3rGdAQCAPtXesZ0BUEsBAi0AFAAACAgAALCf6xkwkpNtAAAAeAAAAAkAJAAAAAAAAAAAAAAApQIAAG1ldGEuanNvbgoAIAAAAAAAAQAYAACAPtXesZ0BAIA+1d6xnQEAgD7V3rGdAVBLBQYAAAAAAgACALgAAABdAwAAAAA=
+    dataString: UEsDBBQAAAgIAACwn+tLEjcLpwIAAKYFAAALACQAZ3JhcGgwLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQF1VF1v2jAU/SvIz2NKaFnp3jagdJPaomZTH5Y+GPuGWDh25I8CrfjvvXYCSdkmIcWc++F7zr3Xb0QoWwNz2iyM4HeaA/k6IOFMPg064y3s6FqrTLzC0edJcFcGJxp9HqkTGvE0hFldgTOCfVNrGZwTBL0ShTbVnK9hqq2zCBdUWkCT0S5EK4TeBmSHn+F1CNnjaXQVTq94uk4GBzwyUA5M3/WqdR1ejFrXxtMrJmlVAw9ldwGj0Zc2IB2PoqNCSq1PKJ9pKYVt6yFuX0e+WV2CgUCYC4r0Yg3J5zECJYh16ULqfvRDUVhwLXtD9zNhUKcmLfmuG/EqajdNaS9U+ljBaBKLapLe/WUfptFcGF3dHu9Nk3CHKwXbPNI9o9b11O3Ds670NCq0pXJDVxKeSlD3emG0VxyNzvgQ6i2MZt3fE7VpCWzT4U2pZ6CvO8mPzTy2MnA4RPa7qRTVKip52QCZ1FHwOAFgsDU/sOA4H7ZNgWio4reFX3TdH6TWcCOMdWhqWapQ3kp7E1zJPGoW2Hg31UaB6WeoQVHp9kvM4857eGb7f9QNDTvT3t7ajqtwFhLhzj9JzkxLve26ZeGnr+qlFsplQA0re/lsqbd3YMsH76RQ0PUhGO5RxalWqpk/+4+wzJuCsl6Yg53zBmbU0bgGWBOOCe+HoqIxQnkpw0RGFiH5H2QRfs9B5ZLivTLC5F6ruEEfvs9hEtZe8I9zTtI0pZPx5DpZpXxcsMsh45NkfDmejC8mq4TTCYmLIBRqTuWyEa1tFY6Q6rgoHPrjszZYGFrH1eOGbhfitdK28xSq0BkzAOqhyXAiCwYvwTeCz7lAmhk4J1QcPvKWE6nZBnh+SpRHYec7Z2jeZclJLV60C0hOpvEdy0mAT4u1NPAiYBsuPyY7kMM7UEsDBBQAAAgIAACwn+sZMJKTbQAAAHgAAAAJACQAbWV0YS5qc29uCgAgAAAAAAABABgAAIA+1d6xnQEAgD7V3rGdAQCAPtXesZ0Bq1YqSy0qzszPU7JSMNEz0jM011FQSi9KLMgoBooYgjilmSkgdrSSoaFhooWphaVBkmGKaVqyiW5yioWBqYmphamxRZJBSqKFUixQfUllQapfYm4qRE9AYklGWmZeSmZeup57UWaKO8hopdhaAFBLAQItABQAAAgIAACwn+tLEjcLpwIAAKYFAAALACQAAAAAAAAAAAAAAAAAAABncmFwaDAuanNvbgoAIAAAAAAAAQAYAACAPtXesZ0BAIA+1d6xnQEAgD7V3rGdAVBLAQItABQAAAgIAACwn+sZMJKTbQAAAHgAAAAJACQAAAAAAAAAAAAAAPQCAABtZXRhLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQFQSwUGAAAAAAIAAgC4AAAArAMAAAAA
     upgradeData: 
     file_cachedStartup: {fileID: 0}
     data_cachedStartup: 
@@ -77,8 +79,8 @@ MonoBehaviour:
   tagNames: []
   heuristic: 2
   heuristicScale: 1
-  threadCount: 1
-  maxFrameTime: 1
+  threadCount: -1
+  maxFrameTime: 10
   batchGraphUpdates: 0
   graphUpdateBatchingInterval: 0.2
   euclideanEmbedding:
@@ -99,3 +101,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9941525949b806e4aae8e3c275bbf107, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &3803131425154180557
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5559371194073686916}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1764de1de43cc4d19af52679d3eaae06, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 1
+  desiredSimulationFPS: 20
+  workerThreads: 2
+  doubleBuffering: 0
+  symmetryBreakingBias: 0.1
+  movementPlane: 1
+  drawObstacles: 1
