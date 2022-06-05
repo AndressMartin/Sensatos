@@ -11,6 +11,11 @@ public class EnemyManagerScript : MonoBehaviour
     //Getters
     public int QuantidadeInimigosVendoPlayer => quantidadeInimigosVendoPlayer;
 
+    private void Start()
+    {
+        StartCoroutine(IgnorarColisaoEntreOsInimigosCorrotina());
+    }
+
     public void Respawn()
     {
         quantidadeInimigosVendoPlayer = 0;
@@ -40,5 +45,28 @@ public class EnemyManagerScript : MonoBehaviour
             else
                 return true;
         }
+    }
+
+    private void IgnorarColisaoEntreOsInimigos()
+    {
+        GeneralManagerScript generalManager = FindObjectOfType<GeneralManagerScript>();
+        
+        foreach(Enemy inimigo in generalManager.ObjectManager.ListaInimigos)
+        {
+            foreach(Enemy inimigo2 in generalManager.ObjectManager.ListaInimigos)
+            {
+                if(inimigo != inimigo2)
+                {
+                    Physics2D.IgnoreCollision(inimigo.gameObject.GetComponent<Collider2D>(), inimigo2.gameObject.GetComponent<Collider2D>(), true);
+                }
+            }
+        }
+    }
+
+    private IEnumerator IgnorarColisaoEntreOsInimigosCorrotina()
+    {
+        yield return new WaitForSeconds(0.5f);
+
+        IgnorarColisaoEntreOsInimigos();
     }
 }

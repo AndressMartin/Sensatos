@@ -50,7 +50,7 @@ public class ProjetilEscopeta : ProjetilScript
         //Nada
     }
 
-    private void FixedUpdate()
+    private void LateUpdate()
     {
         if(temUmaPontaArma == true)
         {
