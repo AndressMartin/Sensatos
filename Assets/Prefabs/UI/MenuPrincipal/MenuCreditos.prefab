@@ -110,12 +110,12 @@ RectTransform:
   - {fileID: 911851225336006238}
   - {fileID: 911851224838862840}
   - {fileID: 911851225946167162}
+  - {fileID: 6623364480379600291}
   - {fileID: 911851224805150731}
   - {fileID: 911851226164180851}
   - {fileID: 911851225564217353}
   - {fileID: 911851224458263015}
   - {fileID: 7148600469516684655}
-  - {fileID: 6623364480379600291}
   m_Father: {fileID: 911851225966467766}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -382,11 +382,11 @@ RectTransform:
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 911851224445708446}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -1730}
+  m_AnchoredPosition: {x: 0, y: -2525.17}
   m_SizeDelta: {x: 1080, y: 140}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &911851224458263008
@@ -1448,11 +1448,11 @@ RectTransform:
   - {fileID: 911851224539094163}
   - {fileID: 911851225322860407}
   m_Father: {fileID: 911851224445708446}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -880}
+  m_AnchoredPosition: {x: 0, y: -1675.1699}
   m_SizeDelta: {x: 645, y: 120}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!1 &911851224821951069
@@ -2913,11 +2913,11 @@ RectTransform:
   - {fileID: 911851226520067775}
   - {fileID: 911851224903409706}
   m_Father: {fileID: 911851224445708446}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -1320}
+  m_AnchoredPosition: {x: 0, y: -2115.17}
   m_SizeDelta: {x: 645, y: 120}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!1 &911851225640307620
@@ -4838,11 +4838,11 @@ RectTransform:
   - {fileID: 911851224800065179}
   - {fileID: 911851226091048545}
   m_Father: {fileID: 911851224445708446}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -1050}
+  m_AnchoredPosition: {x: 0, y: -1845.17}
   m_SizeDelta: {x: 645, y: 220}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!1 &911851226257024163
@@ -5598,7 +5598,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Victor de Oliveira Belarmino
+  m_text: 'Henrique Martins da Silva
+
+    Kelvin dos Santos Dias'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 7285521a927d4c74eae82d8103983299, type: 2}
   m_sharedMaterial: {fileID: -6756808190696148001, guid: 7285521a927d4c74eae82d8103983299, type: 2}
@@ -5734,7 +5736,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Roteiro
+  m_text: Roteiro Extra
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 475f585dcf920e04f987c5bb47049d3f, type: 2}
   m_sharedMaterial: {fileID: -4593801248669314918, guid: 475f585dcf920e04f987c5bb47049d3f, type: 2}
@@ -5815,8 +5817,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79701fdbf3aab944fae7931eae9a0644, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  textoPortugues: Roteiro
-  textoIngles: Script
+  textoPortugues: Roteiro Extra
+  textoIngles: Extra Script
 --- !u!1 &6549728604103776029
 GameObject:
   m_ObjectHideFlags: 0
@@ -5849,12 +5851,12 @@ RectTransform:
   - {fileID: 8529155172683938096}
   - {fileID: 7590111185244930391}
   m_Father: {fileID: 911851224445708446}
-  m_RootOrder: 9
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -710}
-  m_SizeDelta: {x: 550, y: 120}
+  m_AnchoredPosition: {x: 0, y: -911}
+  m_SizeDelta: {x: 550, y: 170}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!1 &7225761432990754834
 GameObject:
@@ -6117,11 +6119,11 @@ RectTransform:
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 911851224445708446}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -2185}
+  m_AnchoredPosition: {x: 0, y: -2980.17}
   m_SizeDelta: {x: 1080, y: 128.66}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &4969549506548334653

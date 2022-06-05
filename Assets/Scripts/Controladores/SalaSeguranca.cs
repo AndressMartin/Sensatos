@@ -2,45 +2,46 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SalaSeguranca : MonoBehaviour
+public class SalaSeguranca : ObjetoInteragivel
 {
-    [SerializeField] Enemy inimigo;
-    GeneralManagerScript generalManagerScript;
+    GeneralManagerScript generalManager;
 
     bool camerasLigadas;
     bool camerasLigadasRespawn;
+
+    [SerializeField] private AudioClip somDesligarCameras;
+
     void Start()
     {
         camerasLigadas = true;
-        generalManagerScript = FindObjectOfType<GeneralManagerScript>();
+        generalManager = FindObjectOfType<GeneralManagerScript>();
 
         SetRespaw();
-    }
-
-    void Update()
-    {
-        if (!camerasLigadas)
-        {
-            return;
-        }
-        if(inimigo.IsMorto())
-        {
-            LigarDeslgiarCameras(false);
-            camerasLigadas = false;
-        }
     }
     public void SetRespaw()
     {
         camerasLigadasRespawn = camerasLigadas;
     }
-    public void Respawn()
+    public override void Respawn()
     {
         camerasLigadas = camerasLigadasRespawn;
-        LigarDeslgiarCameras(camerasLigadas);
+        LigarDesligarCameras(camerasLigadas);
     }
-    public void LigarDeslgiarCameras(bool valor)
+
+    public override void Interagir(Player player)
     {
-        foreach (CameraDeSeguranca cameraDeSeguranca in generalManagerScript.ObjectManager.ListaDeCamerasLockdown)
+        if(camerasLigadas == true)
+        {
+            LigarDesligarCameras(false);
+            camerasLigadas = false;
+
+            generalManager.SoundManager.TocarSom(somDesligarCameras);
+        }
+    }
+
+    public void LigarDesligarCameras(bool valor)
+    {
+        foreach (CameraDeSeguranca cameraDeSeguranca in generalManager.ObjectManager.ListaDeCamerasLockdown)
         {
             cameraDeSeguranca.ReceberDesativarAtivarCamera(valor);
         }
