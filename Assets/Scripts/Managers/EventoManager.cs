@@ -23,6 +23,7 @@ public class EventoManager : MonoBehaviour
     [SerializeField] private CompositeCollider2D limiteDaCameraFimDoJogo;
 
     [SerializeField] private GameObject NPCsNoFimDoJogo;
+    [SerializeField] private AudioClip musicaFimDoJogo;
 
     void Start()
     {
@@ -55,6 +56,9 @@ public class EventoManager : MonoBehaviour
     {
         NPCsNoFimDoJogo.SetActive(true);
         TeleportarJogador(posicaoPlayerFimDoJogo, direcaoFimDoJogo, limiteDaCameraFimDoJogo);
+
+        generalManager.MusicManager.SetMusica(musicaFimDoJogo);
+        generalManager.MusicManager.TocarMusica();
     }
 
     private void TeleportarJogador(Transform posicao, EntityModel.Direcao direcao, CompositeCollider2D limiteDaCamera)
