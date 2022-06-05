@@ -9,6 +9,7 @@ public class IniciadorDoPlayer : MonoBehaviour
 
     //Variaveis
     [SerializeField] private int vidaInicial;
+    [SerializeField] private int dinheiroInicial;
 
     [SerializeField] private List<ArmaDeFogo> armasIniciais;
     [SerializeField] private List<RoupaDeCamuflagem> roupasIniciais;
@@ -25,6 +26,8 @@ public class IniciadorDoPlayer : MonoBehaviour
     public void SetarVariaveis()
     {
         generalManager.Player.SetVidaMaxima(vidaInicial);
+
+        generalManager.Player.Inventario.SetDinheiro(dinheiroInicial);
 
         foreach (ArmaDeFogo arma in armasIniciais)
         {
