@@ -279,6 +279,8 @@ public class MenuEscolherAssalto : MonoBehaviour
         IniciarSelecao();
 
         AtivarMenu();
+
+        generalManager.Hud.SonsDeMenus.TocarSom(SonsDeMenus.Som.Pausar);
     }
 
     public void DesativarMenu()

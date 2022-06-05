@@ -152,6 +152,8 @@ public class MenuDaLoja : MonoBehaviour
 
         selecao = 0;
         AtualizarPainelDeEscolha(opcoesMenuInicial, selecao);
+
+        generalManager.Hud.SonsDeMenus.TocarSom(SonsDeMenus.Som.Pausar);
     }
 
     private void FecharOMenuDaLoja()
