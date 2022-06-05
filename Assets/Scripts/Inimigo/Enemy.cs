@@ -228,7 +228,7 @@ public class Enemy : EntityModel
         sortingGroup.sortingOrder = 0;
 
 
-        animacao.AtivarSpriteRenderers();
+        //animacao.SpriteRenderersAtivos(true);
 
         somDosTiros.PararSom();
 
@@ -475,6 +475,8 @@ public class Enemy : EntityModel
     {
         animacao.AtualizarArmaBracos("");
         animacao.TrocarAnimacao("Vazio");
+
+        //animacao.SpriteRenderersAtivos(true);
 
         colisao.enabled = false;
         hitboxDano.enabled = false;

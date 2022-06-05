@@ -96,9 +96,9 @@ public class AnimacaoJogador : MonoBehaviour
         bracoEfeitosVisuais.SetTintSolidEffect(cor, velocidadeEfeito);
     }
 
-    public void AtivarSpriteRenderers()
+    public void SpriteRenderersAtivos(bool ativo)
     {
-        corpoSprite.enabled = true;
-        bracoSprite.enabled = true;
+        corpoSprite.enabled = ativo;
+        bracoSprite.enabled = ativo;
     }
 }
