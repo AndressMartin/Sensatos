@@ -161,6 +161,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   direcao: 0
   chave: {fileID: 11400000, guid: 5ff9dc77f52a52f42a1a874cbf7b559c, type: 2}
+  distanciaParaTocarSom: 5
+  somTrancada: {fileID: 8300000, guid: ea4cc9bfa66f8b047a71e756a4a5dd35, type: 3}
+  somAbrir: {fileID: 8300000, guid: 079f5b8a1f1f7ff42b655eccaa5b7ab1, type: 3}
+  somFechar: {fileID: 8300000, guid: d2dfa0c6ee159b44fa29d7eff24db499, type: 3}
 --- !u!114 &5220921186722210419
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -173,7 +177,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57499e02272e88d45a79011faf865bc1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  posicaoPlayer: {x: 0, y: 0, z: 0}
+  posicaoPlayer: {fileID: 0}
+  direcao: 0
   limiteDaCamera: {fileID: 0}
 --- !u!1001 &2919980491914947480
 PrefabInstance:
