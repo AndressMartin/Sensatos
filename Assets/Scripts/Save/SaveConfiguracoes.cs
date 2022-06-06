@@ -5,6 +5,9 @@ using System.IO;
 
 public static class SaveConfiguracoes
 {
+    //Pasta dos saves
+    private static readonly string pastaDosSaves = Path.Combine(Application.persistentDataPath, "Saves");
+
     //Classe que contem as variaveis salvas
     [System.Serializable]
     public class Configuracoes
@@ -33,7 +36,10 @@ public static class SaveConfiguracoes
 
     public static void SalvarConfiguracoes()
     {
-        string caminhoDoArquivo = Path.Combine(Application.dataPath, "Saves", "configuracoes.txt");
+        //Cria a pasta de saves, se ela nao existir
+        Save.IniciarPasta();
+
+        string caminhoDoArquivo = Path.Combine(pastaDosSaves, "configuracoes.txt");
 
         string texto = JsonUtility.ToJson(configuracoes);
 
@@ -48,7 +54,10 @@ public static class SaveConfiguracoes
 
     public static void CarregarConfiguracoes()
     {
-        string caminhoDoArquivo = Path.Combine(Application.dataPath, "Saves", "configuracoes.txt");
+        //Cria a pasta de saves, se ela nao existir
+        Save.IniciarPasta();
+
+        string caminhoDoArquivo = Path.Combine(pastaDosSaves, "configuracoes.txt");
 
         string texto = "";
 

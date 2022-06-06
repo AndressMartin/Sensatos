@@ -6,7 +6,7 @@ using System.IO;
 public static class Save
 {
     //Pasta dos saves
-    private static readonly string pastaDosSaves = Path.Combine(Application.dataPath, "Saves");
+    private static readonly string pastaDosSaves = Path.Combine(Application.persistentDataPath, "Saves");
 
     //Save Slot atual
     private static int saveAtual = 0;
@@ -31,7 +31,10 @@ public static class Save
 
     public static bool SaveExiste(int slot)
     {
-        string caminhoDoArquivo = Path.Combine(Application.dataPath, "Saves", "save" + slot.ToString() + ".txt");
+        //Cria a pasta de saves, se ela nao existir
+        Save.IniciarPasta();
+
+        string caminhoDoArquivo = Path.Combine(pastaDosSaves, "save" + slot.ToString() + ".txt");
 
         if (File.Exists(caminhoDoArquivo))
         {
@@ -43,10 +46,13 @@ public static class Save
 
     public static bool Salvar(int slot)
     {
+        //Cria a pasta de saves, se ela nao existir
+        Save.IniciarPasta();
+
         //Classe de save
         SaveData.SaveFile save = SaveData.SaveAtual;
 
-        string caminhoDoArquivo = Path.Combine(Application.dataPath, "Saves", "save" + slot.ToString() + ".txt");
+        string caminhoDoArquivo = Path.Combine(pastaDosSaves, "save" + slot.ToString() + ".txt");
 
         string texto = JsonUtility.ToJson(save);
 
@@ -67,10 +73,13 @@ public static class Save
 
     public static bool Carregar(int slot)
     {
+        //Cria a pasta de saves, se ela nao existir
+        Save.IniciarPasta();
+
         //Classe de save
         SaveData.SaveFile save = SaveData.SaveAtual;
 
-        string caminhoDoArquivo = Path.Combine(Application.dataPath, "Saves", "save" + slot.ToString() + ".txt");
+        string caminhoDoArquivo = Path.Combine(pastaDosSaves, "save" + slot.ToString() + ".txt");
 
         string texto;
 
@@ -107,10 +116,13 @@ public static class Save
 
     public static SaveData.SaveFile CarregarInformacoes(int slot)
     {
+        //Cria a pasta de saves, se ela nao existir
+        Save.IniciarPasta();
+
         //Classe de save
         SaveData.SaveFile save = SaveData.SaveAtual;
 
-        string caminhoDoArquivo = Path.Combine(Application.dataPath, "Saves", "save" + slot.ToString() + ".txt");
+        string caminhoDoArquivo = Path.Combine(pastaDosSaves, "save" + slot.ToString() + ".txt");
 
         string texto;
 
