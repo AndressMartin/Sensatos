@@ -111,12 +111,17 @@ public class GameManager : MonoBehaviour
 
     private void ResetarVariaveisDoJogo()
     {
-        FindObjectOfType<GeneralManagerScript>().Player.ResetarPlayer();
+        GeneralManagerScript generalManager = FindObjectOfType<GeneralManagerScript>();
+
+        generalManager.Player.ResetarPlayer();
         FindObjectOfType<IniciadorDoPlayer>().SetarVariaveis();
 
         tempoDeJogo = 0;
-        assaltosLiberados = 0;
+        assaltosLiberados = 1;
         capituloAtual = Capitulo.Inicio;
+
+        generalManager.AssaltoManager.SetarAssalto(null);
+
         Missoes.ResetarEstadosDasMissoes();
         Flags.ResetarFlags();
 

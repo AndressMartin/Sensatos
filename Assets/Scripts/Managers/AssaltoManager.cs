@@ -60,9 +60,12 @@ public class AssaltoManager : MonoBehaviour
     {
         yield return null;
 
-        foreach (NPC npc in generalManager.ObjectManager.ListaDeNPCs)
+        if(generalManager.ObjectManager != null)
         {
-            npc.ReceberAssaltoDoManager(assalto);
+            foreach (NPC npc in generalManager.ObjectManager.ListaDeNPCs)
+            {
+                npc.ReceberAssaltoDoManager(assalto);
+            }
         }
     }
 
