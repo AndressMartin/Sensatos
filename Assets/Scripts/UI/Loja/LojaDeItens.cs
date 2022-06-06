@@ -105,6 +105,8 @@ public class LojaDeItens : MonoBehaviour
     {
         nomeDoItem.text = nomeSemItens;
         descricaoDoItem.text = descricaoSemItens;
+
+        dinheiroJogador.text = generalManager.Player.Inventario.Dinheiro.ToString();
     }
 
     private void AtualizarInformacoesDoItem()

@@ -249,7 +249,6 @@ public class Porta : ObjetoInteragivel
         if (tipoPorta != TipoPorta.Simples)
         {
             estado = Estado.NaoLockdown;
-            trancado = false;
 
             switch (tipoPorta)
             {

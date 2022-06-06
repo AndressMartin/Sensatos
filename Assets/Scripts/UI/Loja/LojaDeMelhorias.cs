@@ -95,6 +95,8 @@ public class LojaDeMelhorias : MonoBehaviour
     {
         nomeDaMelhoria.text = nomeSemMelhorias;
         descricaoDaMelhoria.text = descricaoSemMelhorias;
+
+        dinheiroJogador.text = generalManager.Player.Inventario.Dinheiro.ToString();
     }
 
     private void AtualizarInformacoesDaMelhoria()
