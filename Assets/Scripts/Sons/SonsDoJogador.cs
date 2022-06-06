@@ -46,7 +46,7 @@ public class SonsDoJogador : MonoBehaviour
                 break;
 
             case Som.Morte:
-                generalManager.SoundManager.TocarSom(morte);
+                generalManager.SoundManager.TocarSomIgnorandoPause(morte);
                 break;
 
             case Som.SemMunicao:
