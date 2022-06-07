@@ -96,7 +96,7 @@ MonoBehaviour:
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
+  m_MatchWidthOrHeight: 1
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
@@ -144,6 +144,7 @@ MonoBehaviour:
   efeitosDeTela: {fileID: 6539335751277023298}
   telaTransicaoDeMapa: {fileID: 1586051745922614472}
   transicaoDeTela: {fileID: 815904833634269852}
+  telaFimDoJogo: {fileID: 0}
   lockDownUI: {fileID: 8432726431717651456}
   playerUI: {fileID: 684794805}
   barraDeVisaoDoInimigo: {fileID: 5691894432049421449}
