@@ -34,6 +34,21 @@ public static class SaveConfiguracoes
         configuracoes.idioma = IdiomaManager.GetIdiomaEnum;
     }
 
+    public static bool SaveExiste()
+    {
+        //Cria a pasta de saves, se ela nao existir
+        Save.IniciarPasta();
+
+        string caminhoDoArquivo = Path.Combine(pastaDosSaves, "configuracoes.txt");
+
+        if (File.Exists(caminhoDoArquivo))
+        {
+            return true;
+        }
+
+        return false;
+    }
+
     public static void SalvarConfiguracoes()
     {
         //Cria a pasta de saves, se ela nao existir
@@ -67,8 +82,6 @@ public static class SaveConfiguracoes
         }
         catch (FileNotFoundException)
         {
-            //Se o arquivo nao existir, o jogo criara um
-            SalvarConfiguracoes();
             return;
         }
 

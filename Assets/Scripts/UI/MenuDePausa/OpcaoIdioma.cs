@@ -12,12 +12,12 @@ public class OpcaoIdioma : Opcao
     [SerializeField] private string nomePortugues;
     [SerializeField] private string nomeIngles;
 
-    [SerializeField] private IdiomaManager.Idioma[] listaIdiomas;
-
     [SerializeField] private Animator animacao;
 
     //Variaveis
     private int selecao;
+
+    [SerializeField] private IdiomaManager.Idioma[] listaIdiomas;
 
     public override void AtualizarInformacoes(GeneralManagerScript generalManager)
     {
